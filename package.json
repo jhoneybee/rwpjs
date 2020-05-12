@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "bootstrap": "lerna bootstrap"
+  },
+  "author": "zhangj",
+  "license": "MIT",
+  "name": "rwp",
+  "devDependencies": {
+    "lerna": "^3.20.2"
+  }
+}
