@@ -1,13 +1,27 @@
 {
   "name": "@rwp/core",
   "version": "0.0.2-alpha.0",
-  "description": "rwp",
-  "bin": {
-    "rwp": "bin/rwp.js"
-  },
+  "description": "",
+  "main": "./bin/rwp.js",
   "author": "zhangj",
   "license": "MIT",
   "dependencies": {
     "commander": "^5.1.0"
+  },
+  "bin":{
+    "rwp": "./bin/rwp.js"
+  },
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "files": [
+    "bin/"
+  ],
+  "bugs": {
+    "url": "https://github.com/jhoneybee/rwpjs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jhoneybee/rwpjs"
   }
 }

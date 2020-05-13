@@ -2,12 +2,18 @@
   "name": "@rwp/render-react",
   "version": "0.0.2-alpha.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "render/webpack.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "zhangj",
   "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "files": [
+    "src/"
+  ],
   "dependencies": {
     "jest": "^26.0.1",
     "react": "^16.13.1",
@@ -25,5 +31,16 @@
     "html-webpack-plugin": "^4.3.0",
     "webpack": "^4.43.0",
     "webpack-dev-server": "^3.11.0"
+  },
+  
+  "peerDependencies": {
+
+  },
+  "bugs": {
+    "url": "https://github.com/jhoneybee/rwpjs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jhoneybee/rwpjs"
   }
 }

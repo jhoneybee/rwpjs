@@ -12,7 +12,7 @@ exports.getDependenciesFilter = function (regular, fn){
     const dependencies = fn()
     const plugin = {}
     // 过滤依赖信息，获取当前符合条件的依赖
-    Object.keys(dependencies).forEach((key)=>{
+    Object.keys(dependencies).forEach(function(key){
         if(regular.test(key)) {
             plugin[key] = dependencies[key]
         }
@@ -26,7 +26,7 @@ exports.getDependenciesFilter = function (regular, fn){
  */
 exports.getDependenciesPlugin = function (){
     return exports.getDependenciesFilter(/^@rwp\/plugin-*/i,function(){
-        return exports.getRootPackage().peerDependencies
+        return exports.getRootPackage().dependencies
     })
 }
 

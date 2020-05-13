@@ -13,14 +13,14 @@ const { getDependenciesRender, getDependenciesPlugin } = require('./utils/projec
  *   - devtool 用户配置 sourcemap 类型
  */
 function getConfig(){
-    return require(`${process.cwd()}/.rwp.js`)
+    return require(`${process.cwd()}/.rwp.js`).default()
 }
 
 exports.default = function (){
     // 获取 render 的解析器
     const name = Object.keys(getDependenciesRender())[0]
-    const render = require(name)
-    if(typeof(render) !== 'function') {
+    const render = require(`${process.cwd()}/node_modules/${name}`)
+    if(typeof(render.default) !== 'function') {
         throw new Error(`renderer format error, it should be a function. [${name}]`)
     }
 
@@ -31,7 +31,7 @@ exports.default = function (){
     })
     // 执行render逻辑,初始化webpack或者其他的打包工具。根据package.json的渲染器来进行工作
     render.default({
-        config: getConfig()(),
+        config: getConfig(),
         plugins
     })
 }

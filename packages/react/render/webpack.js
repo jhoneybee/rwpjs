@@ -1,6 +1,7 @@
 
 const Webpack = require('webpack')
 const WebpackDevServer = require("webpack-dev-server");
+const HtmlWebpackPlugin = require("html-webpack-plugin")
 
 exports.default = function ({config, plugins}){
 
@@ -9,6 +10,13 @@ exports.default = function ({config, plugins}){
         mode: 'development',
         resolve: {
             extensions: ['.ts', '.tsx', '.js']
+        },
+        entry: {
+            home: `${__dirname}/../src/entry.js`, 
+        },
+        output: {
+            filename: 'rwp.js', 
+            path: `${process.cwd()}/dist`,
         },
         module: {
             rules: [
@@ -26,6 +34,7 @@ exports.default = function ({config, plugins}){
         plugins: [
             new HtmlWebpackPlugin({
                 hash: true,
+                template: `${__dirname}/../src/document.ejs`
             })
         ]
     }

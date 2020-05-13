@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { program } = require('commander')
 const packages = require('../package.json')
 const { getDependenciesPlugin, getDependenciesRender } = require('./utils/project')
