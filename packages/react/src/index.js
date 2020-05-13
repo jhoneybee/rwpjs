@@ -1,7 +1,11 @@
 
-exports.default = function (){
+const Webpack = require('webpack')
+const WebpackDevServer = require("webpack-dev-server");
+
+exports.default = function ({config, plugins}){
+
     // 预设webpack属性
-    const webpackConfig = {
+    let webpackConfig = {
         mode: 'development',
         resolve: {
             extensions: ['.ts', '.tsx', '.js']
@@ -20,13 +24,35 @@ exports.default = function (){
             ]
         },
         plugins: [
-            new HtmlWebpackPlugin()
+            new HtmlWebpackPlugin({
+                hash: true,
+            })
         ]
     }
+
+    // 添加devWebpackServer预设
+    let devWebpackServerConfig = {
+        hot: true,
+        host: config.devServer && config.devServer.host ? config.devServer.host : '0.0.0.0'
+    }
+
+    // 加载插件信息, 初始化webpack信息
+    Object.keys(plugins).forEach(function(plugin){
+        const pluginConfig = plugin.default({
+            webpackConfig,
+            devWebpackServerConfig,
+        })
+        webpackConfig = pluginConfig.webpackConfig
+        devWebpackServerConfig = pluginConfig.devWebpackServerConfig
+    })
+
     const compiler = Webpack(webpackConfig)
-    const server = new WebpackDevServer(compiler, {
-        hot: true
-    });
-    server.listen(8000)
+    const server = new WebpackDevServer(compiler, devWebpackServerConfig);
+
+    if(config.devServer && config.devServer.port){
+        server.listen(Number.parseInt(config.devServer.port, 10))
+    }else{
+        server.listen(8000)
+    }
 }
 

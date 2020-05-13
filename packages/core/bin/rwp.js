@@ -1,10 +1,9 @@
 const { program } = require('commander')
 const packages = require('../package.json')
-const { getRootPackagePlugin, getDependenciesRender } = require('./utils/project')
+const { getDependenciesPlugin, getDependenciesRender } = require('./utils/project')
 
 // 执行启动脚本
 const devMain = require('./dev')
-
 /**
  * 
  * 这是rwp (React Webpack) 中支持的cli 
@@ -34,7 +33,7 @@ program
  * 启动本地开发服务器进行项目的开发调试
  */
 if (program.dev) {
-    devMain()
+    devMain.default()
     return;
 }
 
@@ -51,7 +50,7 @@ if (program.generate) {
 // 当前使用的插件
 if (program.plugin) {
     const render = getDependenciesRender()
-    const plugins = getRootPackagePlugin()
+    const plugins = getDependenciesPlugin()
     console.log('+- render')
     Object.keys(render).forEach(key => {
         console.log(`+- ${key}@${plugin[key]}`)

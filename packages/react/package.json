@@ -1,5 +1,5 @@
 {
-  "name": "react",
+  "name": "@rwp/render-react",
   "version": "0.0.1",
   "description": "",
   "main": "src/index.js",
@@ -10,10 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "jest": "^26.0.1",
-    "lodash": "^4.17.15",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "webpack": "^4.43.0"
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
@@ -25,6 +23,7 @@
     "@babel/preset-typescript": "^7.9.0",
     "babel-loader": "^8.1.0",
     "html-webpack-plugin": "^4.3.0",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "webpack": "^4.43.0"
   }
 }

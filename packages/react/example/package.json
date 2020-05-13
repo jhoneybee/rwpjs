@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "rwp --dev=true"
+  },
+  "dependencies": {
+    "@rwp/core": "file:../../core/",
+    "@rwp/render-react": "file:.."
+  }
+}
