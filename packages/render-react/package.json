@@ -2,9 +2,9 @@
   "name": "@rwp/render-react",
   "version": "0.0.2-alpha.0",
   "description": "",
-  "main": "render/webpack.js",
+  "main": "src/bootstrap.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "zhangj",
   "license": "MIT",
@@ -15,11 +15,13 @@
     "src/"
   ],
   "dependencies": {
-    "jest": "^26.0.1",
+    "fs-extra": "^9.0.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
+    "jest": "^26.0.1",
     "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.9.6",
@@ -30,11 +32,8 @@
     "babel-loader": "^8.1.0",
     "html-webpack-plugin": "^4.3.0",
     "webpack": "^4.43.0",
-    "webpack-dev-server": "^3.11.0"
-  },
-  
-  "peerDependencies": {
-
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^4.2.2"
   },
   "bugs": {
     "url": "https://github.com/jhoneybee/rwpjs/issues"
