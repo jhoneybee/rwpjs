@@ -1,7 +1,8 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
+import RouteConfig from './router'
 
 ReactDOM.render(
-  <h1> ---- </h1>,
+  <RouteConfig />,
   document.getElementById('root')
 )

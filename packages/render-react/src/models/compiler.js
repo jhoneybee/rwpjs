@@ -1,16 +1,12 @@
 const fs = require('fs-extra')
 const path = require('path')
 
-async function copy(souce, targe){
-    return await fs.copy(souce, targe)
+function copy(souce, targe){
+    return fs.copySync(souce, targe)
 }
 
-exports.default = function (compiler){
+const dirFile = path.join(process.cwd(),'src','pages','.rwp') 
 
-    compiler.hooks.beforeCompile.tapAsync('@rwp/render-react-run',function(compilation, callback){
-
-        copy(path.join(__dirname,'..','template'), path.join(process.cwd(),'src','pages','.rwp') ).then(function(){
-            callback()
-        })
-    })
+exports.default = function (){
+    copy(path.join(__dirname,'..','template'), dirFile)
 }

@@ -3,15 +3,10 @@ const Webpack = require('webpack')
 const WebpackDevServer = require("webpack-dev-server");
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 
-const Routers = require('./models/routers')
 const HookCompiler = require('./models/compiler')
 
 async function initWebPack(config) {
-    const routers = await Routers.getSrcRouter(path.join(process.cwd(),'src','pages'), function(element){
-        return Object.assign(element,{
-            name: element.path.replace(path.join(process.cwd(),'src','pages'), '').replace(/\.[A-Za-z1-9]+$/g,'')
-        })
-    })
+
 
     // 预设webpack属性
     let webpackConfig = {
@@ -37,6 +32,10 @@ async function initWebPack(config) {
                         presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
                         plugins: ['@babel/proposal-class-properties', '@babel/proposal-object-rest-spread']
                     },
+                },{
+                    loader: path.join(__dirname,'models','loader.js'),
+                    test: /\.rwp.+\.(ts|js)x?$/,
+                    exclude: /node_modules/,
                 }
             ]
         },
@@ -46,8 +45,6 @@ async function initWebPack(config) {
                 template: path.join(process.cwd(),'src','pages','.rwp','document.ejs')
             }),
             new Webpack.DefinePlugin({
-                // 系统约定的路由信息
-                'RWP.routes': JSON.stringify(routers),
                 // 系统的标题信息
                 'RWP.title': JSON.stringify(config.title || '')
             })
@@ -85,10 +82,11 @@ function initDevWebpackServer(compiler, plugins, config) {
 
 // 初始化webpack相关的信息
 exports.default = function ({ config, plugins }) {
+    // 启动编译之前
+    HookCompiler.default()
     // 初始化webpack编译
     initWebPack(config).then(function(compiler){
         // 完成编译之前的任务
-        HookCompiler.default(compiler)
         // 初始化开发服务器
         initDevWebpackServer(compiler, plugins, config)
     })
