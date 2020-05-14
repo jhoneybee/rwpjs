@@ -1,3 +1,5 @@
 exports.default = () => {
-    return {}
+    return {
+        title: '测试标题'
+    }
 }
