@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test recursive files directory. 1`] = `
+Array [
+  Object {
+    "childrens": Array [
+      Object {
+        "path": "\\\\pages\\\\admin\\\\index",
+        "type": "file",
+      },
+    ],
+    "path": "\\\\pages\\\\admin",
+    "type": "directory",
+  },
+  Object {
+    "path": "\\\\pages\\\\file1",
+    "type": "file",
+  },
+]
+`;
