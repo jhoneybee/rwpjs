@@ -40,11 +40,7 @@ exports.getDirFiles = function (dir, map) {
     return routers
 }
 
-/**
- *  path
- *  component
- *  routes
- */
+
 exports.getRoutersText = function (routers) {
     let code = '['
     routers.forEach(function (router) {

@@ -15,7 +15,6 @@
     "src/"
   ],
   "dependencies": {
-    "fs-extra": "^9.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0"
@@ -31,6 +30,7 @@
     "@babel/preset-typescript": "^7.9.0",
     "babel-loader": "^8.1.0",
     "html-webpack-plugin": "^4.3.0",
+    "fs-extra": "^9.0.0",
     "webpack": "^4.43.0",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^4.2.2"

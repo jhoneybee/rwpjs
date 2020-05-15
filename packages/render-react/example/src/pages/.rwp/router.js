@@ -8,24 +8,37 @@ import {
 
 // @RWP-TEMPLATE ROUTES
 
-// RWP.routes
+
+/**
+ *  path       路由路径
+ *  routes     子路由信息
+ *  component  如果存在routes，那么component就作为布局信息
+ */
+const RouteComponent = (components) => (
+    components.map((element) => (
+        <Route
+            path={element.path}
+            key={element.path}
+            render={
+                (props) => element.routes && element.routes.length > 0 ? (
+                    (
+                        <element.component {...props} >
+                            <Switch>
+                                {RouteComponent(element.routes)}
+                            </Switch>
+                        </element.component>
+                    )
+                ):  <element.component {...props} />
+            }
+        />
+    ))
+)
+
 const RouteConfig = () => {
-    
     return (
         <Router>
             <Switch>
-                {RWP.routes.map((element)=>{
-                    const Component = element.component
-                    return (
-                      <Route 
-                        path={element.path}
-                        key={element.path}
-                        render={(props) => (
-                            <Component {...props}/>
-                        )}
-                      />
-                    )
-                })}
+                {RouteComponent(RWP.routes)}
             </Switch>
         </Router>
     )

@@ -6,8 +6,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const HookCompiler = require('./models/compiler')
 
 async function initWebPack(config) {
-
-
     // 预设webpack属性
     let webpackConfig = {
         mode: 'development',
@@ -15,9 +13,8 @@ async function initWebPack(config) {
         resolve: {
             extensions: ['.ts', '.tsx', '.js']
         },
-        entry: {
-            home: path.join(process.cwd(),'src','pages','.rwp','rwp.js'),
-        },
+        context: process.cwd(),
+        entry: path.join(process.cwd(),'src','pages','.rwp','rwp.js'),
         output: {
             filename: 'rwp.js',
             path: path.join(process.cwd(),'dist' ),
@@ -39,6 +36,7 @@ async function initWebPack(config) {
                 }
             ]
         },
+     
         plugins: [
             new HtmlWebpackPlugin({
                 hash: true,
@@ -57,10 +55,8 @@ async function initWebPack(config) {
 function initDevWebpackServer(compiler, plugins, config) {
     // 添加devWebpackServer预设
     let devWebpackServerConfig = {
-        hot: true,
-        host: config.devServer && config.devServer.host ? config.devServer.host : '127.0.0.1'
+        host: config.devServer && config.devServer.host ? config.devServer.host : '127.0.0.1',
     }
-
     // 加载插件信息, 初始化webpack信息
     Object.keys(plugins).forEach(function (plugin) {
         const pluginConfig = plugin.default({
@@ -86,7 +82,6 @@ exports.default = function ({ config, plugins }) {
     HookCompiler.default()
     // 初始化webpack编译
     initWebPack(config).then(function(compiler){
-        // 完成编译之前的任务
         // 初始化开发服务器
         initDevWebpackServer(compiler, plugins, config)
     })
