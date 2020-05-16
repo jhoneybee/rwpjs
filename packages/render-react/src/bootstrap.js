@@ -1,9 +1,14 @@
+const fs = require('fs-extra')
 const path = require('path') 
 const Webpack = require('webpack')
 const WebpackDevServer = require("webpack-dev-server");
 const HtmlWebpackPlugin = require("html-webpack-plugin")
-
 const HookCompiler = require('./models/compiler')
+
+
+function copy(souce, targe){
+    return fs.copySync(souce, targe)
+}
 
 async function initWebPack(config) {
     // 预设webpack属性
@@ -29,14 +34,9 @@ async function initWebPack(config) {
                         presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
                         plugins: ['@babel/proposal-class-properties', '@babel/proposal-object-rest-spread']
                     },
-                },{
-                    loader: path.join(__dirname,'models','loader.js'),
-                    test: /\.rwp.+\.(ts|js)x?$/,
-                    exclude: /node_modules/,
                 }
             ]
         },
-     
         plugins: [
             new HtmlWebpackPlugin({
                 hash: true,
@@ -78,10 +78,14 @@ function initDevWebpackServer(compiler, plugins, config) {
 
 // 初始化webpack相关的信息
 exports.default = function ({ config, plugins }) {
-    // 启动编译之前
-    HookCompiler.default()
+ 
     // 初始化webpack编译
     initWebPack(config).then(function(compiler){
+        const dirFile = path.join(process.cwd(),'src','pages','.rwp') 
+        copy(path.join(__dirname,'template'), dirFile)
+        // 启动编译之前
+       
+        HookCompiler.default(compiler)
         // 初始化开发服务器
         initDevWebpackServer(compiler, plugins, config)
     })
