@@ -5,7 +5,6 @@ const WebpackDevServer = require("webpack-dev-server");
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const HookCompiler = require('./models/compiler')
 
-
 function copy(souce, targe){
     return fs.copySync(souce, targe)
 }
@@ -84,10 +83,8 @@ exports.default = function ({ config, plugins }) {
         const dirFile = path.join(process.cwd(),'src','pages','.rwp') 
         copy(path.join(__dirname,'template'), dirFile)
         // 启动编译之前
-       
         HookCompiler.default(compiler)
         // 初始化开发服务器
         initDevWebpackServer(compiler, plugins, config)
     })
 }
-
