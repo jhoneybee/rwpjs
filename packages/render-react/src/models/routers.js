@@ -101,9 +101,13 @@ exports.getRealRouters = function (){
         if(isFilter(filePath.replace(path.join(process.cwd(),'src','pages'), '').replace(/\\/g,'/'), element.type)){
             return undefined
         }
-    
+        let url = filePath.replace(/\.[A-Za-z1-9]+$/g,'').replace(/\\/g,'/')
+        // 将pages/index.js 转换为首页
+        if(url === '/index'){
+            url = '/'
+        }
         return  {
-            path: filePath.replace(/\.[A-Za-z1-9]+$/g,'').replace(/\\/g,'/'),
+            path: url,
             component: `require(${JSON.stringify(element.type === 'directory' ? path.join(element.path,'index.js') : element.path )}).default`,
             routes: element.childrens || []
         }

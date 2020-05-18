@@ -39,3 +39,7 @@ exports.default = () => {
 
 - port 指定的端口号 (默认: 8000)
 - host 默认为 127.0.0.1
+
+### chainWebpack 
+
+- 通过 [webpack-chain](https://github.com/mozilla-neutrino/webpack-chain) 的 API 修改 webpack 配置。

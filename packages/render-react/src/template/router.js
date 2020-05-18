@@ -8,7 +8,6 @@ import {
 
 // @RWP-TEMPLATE ROUTES
 
-
 /**
  *  path       路由路径
  *  routes     子路由信息
@@ -34,7 +33,7 @@ const RouteComponent = (components) => (
     ))
 )
 
-const RouteConfig = () => {
+const Bootstrap = () => {
     return (
         <Router>
             <Switch>
@@ -44,4 +43,4 @@ const RouteConfig = () => {
     )
 }
 
-export default RouteConfig;
+export default Bootstrap;

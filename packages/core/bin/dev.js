@@ -1,3 +1,5 @@
+const fs= require("fs")
+
 /**
  * 处理 `rwp --dev` 命令的脚本
  */
@@ -13,7 +15,11 @@ const { getDependenciesRender, getDependenciesPlugin } = require('./utils/projec
  *   - devtool 用户配置 sourcemap 类型
  */
 function getConfig(){
-    return require(`${process.cwd()}/.rwp.js`).default()
+    const configFile = `${process.cwd()}/.rwp.js`
+    if(fs.existsSync(configFile)){
+        return require(configFile).default()
+    }
+    return {}
 }
 
 exports.default = function (){
