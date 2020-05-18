@@ -49,7 +49,10 @@ exports.default = function (config) {
                     plugins: [
                         '@babel/proposal-class-properties',
                         '@babel/proposal-object-rest-spread',
-                        ["import"]
+                        ["import", {
+                            "libraryName": "antd",
+                            "style": true,
+                        }]
                     ]
                 },
             },
