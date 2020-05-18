@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import RouteConfig from './router'
+import Bootstrap from './router'
 
 ReactDOM.render(
-  <RouteConfig />,
+  <Bootstrap />,
   document.getElementById('root')
 )

@@ -1,8 +1,9 @@
 import React from 'react'
+import { Button } from 'antd'
 
 const Index = () =>{
     
-    return <h1> Index </h1>
+    return <Button> Index </Button>
 }
 
 export default Index

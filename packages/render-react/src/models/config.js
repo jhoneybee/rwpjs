@@ -1,11 +1,11 @@
 const fs = require('fs');
-const path = require('path') 
+const path = require('path')
 const Webpack = require('webpack')
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 
 exports.default = function (config) {
     let ejsTemplate = path.join(process.cwd(), 'src', 'pages', 'document.ejs')
-    if(!fs.existsSync(ejsTemplate)){
+    if (!fs.existsSync(ejsTemplate)) {
         ejsTemplate = path.join(process.cwd(), 'src', 'pages', '.rwp', 'document.ejs')
     }
     // 预设webpack属性
@@ -25,16 +25,34 @@ exports.default = function (config) {
             path: path.join(process.cwd(), 'dist'),
         },
         module: {
-            rules: [
-                {
-                    loader: "babel-loader",
-                    test: /\.(ts|js)x?$/,
-                    exclude: /node_modules/,
+            rules: [{
+                test: /\.less$/,
+                use: [{
+                    loader: 'style-loader'
+                }, {
+                    loader: 'css-loader'
+                }, {
+                    loader: 'less-loader',
                     options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
-                        plugins: ['@babel/proposal-class-properties', '@babel/proposal-object-rest-spread']
-                    },
-                }
+                        lessOptions: {
+                            javascriptEnabled: true
+                        }
+                    }
+                }]
+            },
+            {
+                loader: "babel-loader",
+                test: /\.(ts|js)x?$/,
+                exclude: /node_modules/,
+                options: {
+                    presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+                    plugins: [
+                        '@babel/proposal-class-properties',
+                        '@babel/proposal-object-rest-spread',
+                        ["import"]
+                    ]
+                },
+            },
             ]
         },
         plugins: [

@@ -4,7 +4,7 @@
   "description": "",
   "main": "./bin/rwp.js",
   "author": "zhangj",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "dependencies": {
     "commander": "^5.1.0"
   },

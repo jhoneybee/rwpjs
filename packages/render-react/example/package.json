@@ -5,6 +5,8 @@
   },
   "dependencies": {
     "@rwp/core": "file:../../core/",
-    "@rwp/render-react": "file:.."
+    "@rwp/render-react": "file:..",
+    "antd": "^4.2.3",
+    "less-loader": "^6.1.0"
   }
 }
