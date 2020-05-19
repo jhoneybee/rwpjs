@@ -2,8 +2,14 @@ const fs = require('fs');
 const path = require('path')
 const Webpack = require('webpack')
 const HtmlWebpackPlugin = require("html-webpack-plugin")
+const TerserPlugin = require('terser-webpack-plugin');
 
-exports.default = function (config) {
+
+function isBuild(status){
+    return status === 'build'
+}
+
+exports.default = function (config, status) {
     let ejsTemplate = path.join(process.cwd(), 'src', 'pages', 'document.ejs')
     if (!fs.existsSync(ejsTemplate)) {
         ejsTemplate = path.join(process.cwd(), 'src', 'pages', '.rwp', 'document.ejs')
@@ -17,7 +23,7 @@ exports.default = function (config) {
 
     // 预设webpack属性
     const webpackConfig = {
-        mode: 'development',
+        mode: isBuild(status) ? 'production' : 'development',
         devtool: 'cheap-module-source-map',
         resolve: {
             extensions: ['.ts', '.tsx', '.js']
@@ -80,6 +86,14 @@ exports.default = function (config) {
                 'RWP.title': JSON.stringify(config.title || '')
             })
         ]
+    }
+
+    // 添加最小化压缩代码
+    if(isBuild(status)){
+        webpackConfi.optimization = {
+            minimize: true,
+            minimizer: [new TerserPlugin()],
+        }
     }
     return webpackConfig
 }

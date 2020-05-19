@@ -1,11 +1,12 @@
 {
   "private": true,
   "scripts": {
-    "start": "rwp --dev"
+    "start": "rwp --dev",
+    "build": "rwp --build"
   },
   "dependencies": {
     "@rwp/core": "^0.0.10-alpha.0",
-    "@rwp/render-react": "^0.0.10-alpha.0",
+    "@rwp/render-react": "^0.0.11-alpha.0",
     "antd": "^4.2.3",
     "kotomi-ui": "^1.12.38"
   }
