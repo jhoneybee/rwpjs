@@ -29,7 +29,7 @@ function initDevWebpackServer(compiler, config) {
 // 初始化webpack相关的信息
 exports.default = function ({ status, config, plugins }) {
     
-    if(status === 'dev'){
+    if(status === 'dev' || status === 'analyzer'){
         // 初始化webpack编译
         initWebPack(getWebpackConfig.default(config, status)).then(function(compiler){
             const dirFile = path.join(process.cwd(),'src','pages','.rwp') 

@@ -14,8 +14,8 @@ const devMain = require('./dev')
  *          - 启动本地开发服务器进行项目的开发调试
  * rwp --build 
  *          - 编译构建web产物
- * rwp --generate
- *          - 内置的生成器,用来做一些代码的创建
+ * rwp --analyzer
+ *           - 分析当前项目的依赖信息
  * rwp --plugin 
  *          - 当前使用的插件
  * rwp --help 
@@ -26,8 +26,8 @@ const devMain = require('./dev')
 program
     .option('-d, --dev', 'start local development server for project development and debugging')
     .option('-b, --build', 'compiling and building web products')
-    .option('-g, --generate', 'built in generator to create some code')
     .option('-p, --plugin', 'plug in currently in use')
+    .option('-a, --analyzer','analyze project dependency information')
     .version(packages.version)
     .parse(process.argv);
 
@@ -45,8 +45,8 @@ if (program.build) {
     return;
 }
 
-// 内置的生成器,用来做一些代码的创建
-if (program.generate) {
+if (program.analyzer){
+    devMain.default('analyzer')
     return;
 }
 
