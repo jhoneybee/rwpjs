@@ -35,12 +35,13 @@ program
  * 启动本地开发服务器进行项目的开发调试
  */
 if (program.dev) {
-    devMain.default()
+    devMain.default('dev')
     return;
 }
 
 // 编译构建web产物
 if (program.build) {
+    devMain.default('build')
     return;
 }
 

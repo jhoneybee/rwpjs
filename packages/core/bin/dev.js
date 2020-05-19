@@ -22,7 +22,7 @@ function getConfig(){
     return {}
 }
 
-exports.default = function (){
+exports.default = function (param){
     // 获取 render 的解析器
     const name = Object.keys(getDependenciesRender())[0]
     const render = require(`${process.cwd()}/node_modules/${name}`)
@@ -37,6 +37,7 @@ exports.default = function (){
     })
     // 执行render逻辑,初始化webpack或者其他的打包工具。根据package.json的渲染器来进行工作
     render.default({
+        status: param,
         config: getConfig(),
         plugins
     })

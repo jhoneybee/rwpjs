@@ -8,6 +8,13 @@ exports.default = function (config) {
     if (!fs.existsSync(ejsTemplate)) {
         ejsTemplate = path.join(process.cwd(), 'src', 'pages', '.rwp', 'document.ejs')
     }
+
+    // 如果存在则初始化 babel-plugin-import
+    let styleImport = []
+    if(config.extraStylePluginImport){
+        styleImport = ["import", ...(config.extraStylePluginImport || [])]
+    }
+
     // 预设webpack属性
     const webpackConfig = {
         mode: 'development',
@@ -57,7 +64,7 @@ exports.default = function (config) {
                     plugins: [
                         '@babel/proposal-class-properties',
                         '@babel/proposal-object-rest-spread',
-                        ["import", ...(config.extraStylePluginImport || [])]
+                        ...styleImport
                     ]
                 },
             },
