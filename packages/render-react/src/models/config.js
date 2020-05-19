@@ -92,7 +92,10 @@ exports.default = function (config, status) {
     if(isBuild(status)){
         webpackConfig.optimization = {
             minimize: true,
-            minimizer: [new TerserPlugin()],
+            minimizer: [new TerserPlugin({
+                sourceMap: false,
+                extractComments: false,
+            })],
         }
     }
     return webpackConfig

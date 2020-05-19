@@ -951,10 +951,10 @@
   dependencies:
     commander "^5.1.0"
 
-"@rwp/render-react@^0.0.12-alpha.0":
-  version "0.0.12-alpha.0"
-  resolved "https://registry.yarnpkg.com/@rwp/render-react/-/render-react-0.0.12-alpha.0.tgz#9343da6bc4e5c1c5114b806b2347f9d19ca0c69d"
-  integrity sha512-evujKcibJogfJz13+/N2yOjcPDsGzHk+IoL1fA+WFvfBtE5V1GCTHxpKg3ajpd6DQJWLo49jSGyDRqgokXFWcQ==
+"@rwp/render-react@^0.0.13-alpha.0":
+  version "0.0.13-alpha.0"
+  resolved "https://registry.yarnpkg.com/@rwp/render-react/-/render-react-0.0.13-alpha.0.tgz#ee9951b31df83adfaceb14463e58699af84ee837"
+  integrity sha512-LAqQorrszn2SciQZu2dfy3ODylM5cQ0Nmw4gLZEw6kBtrhjOeXVLo/2W1o+UX3SMbL8o9hmcNMD81ahFTaAwXw==
   dependencies:
     "@babel/core" "^7.9.6"
     "@babel/plugin-proposal-class-properties" "^7.8.3"
