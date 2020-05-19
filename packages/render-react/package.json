@@ -1,6 +1,6 @@
 {
   "name": "@rwp/render-react",
-  "version": "0.0.7-alpha.0",
+  "version": "0.0.8-alpha.0",
   "description": "",
   "main": "src/bootstrap.js",
   "scripts": {
@@ -24,14 +24,14 @@
     "@babel/preset-typescript": "^7.9.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.13.0",
+    "css-loader": "^3.5.3",
     "fs-extra": "^9.0.0",
+    "html-webpack-plugin": "^4.3.0",
     "less": "^3.11.1",
     "less-loader": "^6.1.0",
-    "css-loader": "^3.5.3",
     "style-loader": "^1.2.1",
     "webpack": "^4.42.1",
-    "webpack-dev-server": "^3.11.0",
-    "html-webpack-plugin": "^4.3.0"
+    "webpack-dev-server": "^3.11.0"
   },
   "peerDependencies": {
     "react": "^16.13.1",
