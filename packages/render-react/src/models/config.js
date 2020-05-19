@@ -90,7 +90,7 @@ exports.default = function (config, status) {
 
     // 添加最小化压缩代码
     if(isBuild(status)){
-        webpackConfi.optimization = {
+        webpackConfig.optimization = {
             minimize: true,
             minimizer: [new TerserPlugin()],
         }
