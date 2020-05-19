@@ -24,18 +24,22 @@
     "@babel/preset-typescript": "^7.9.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.13.0",
-    "css-loader": "^3.5.3",
     "fs-extra": "^9.0.0",
-    "html-webpack-plugin": "^4.3.0",
-    "jest": "^26.0.1",
     "less": "^3.11.1",
     "less-loader": "^6.1.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0",
+    "css-loader": "^3.5.3",
     "style-loader": "^1.2.1",
     "webpack": "^4.42.1",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "html-webpack-plugin": "^4.3.0"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "jest": "^26.0.1"
   },
   "bugs": {
     "url": "https://github.com/jhoneybee/rwpjs/issues"
