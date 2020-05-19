@@ -1,6 +1,6 @@
 {
   "name": "@rwp/render-react",
-  "version": "0.0.8-alpha.0",
+  "version": "0.0.9-alpha.0",
   "description": "",
   "main": "src/bootstrap.js",
   "scripts": {
@@ -29,12 +29,12 @@
     "html-webpack-plugin": "^4.3.0",
     "less": "^3.11.1",
     "less-loader": "^6.1.0",
-    "style-loader": "^1.2.1",
-    "webpack": "^4.42.1",
-    "webpack-dev-server": "^3.11.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.42.1",
+    "webpack-dev-server": "^3.11.0"
   },
   "devDependencies": {
     "jest": "^26.0.1"
