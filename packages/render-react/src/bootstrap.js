@@ -31,7 +31,7 @@ exports.default = function ({ status, config, plugins }) {
     
     if(status === 'dev'){
         // 初始化webpack编译
-        initWebPack(getWebpackConfig.default(config)).then(function(compiler){
+        initWebPack(getWebpackConfig.default(config, status)).then(function(compiler){
             const dirFile = path.join(process.cwd(),'src','pages','.rwp') 
             copy(path.join(__dirname,'template'), dirFile)
             // 启动编译之前
@@ -43,7 +43,7 @@ exports.default = function ({ status, config, plugins }) {
 
     if(status === 'build'){
         // 初始化webpack编译
-        initWebPack(getWebpackConfig.default(config)).then(function(compiler){
+        initWebPack(getWebpackConfig.default(config, status)).then(function(compiler){
             const dirFile = path.join(process.cwd(),'src','pages','.rwp') 
             copy(path.join(__dirname,'template'), dirFile)
             compiler.run()

@@ -64,7 +64,7 @@ exports.default = function (config) {
                     plugins: [
                         '@babel/proposal-class-properties',
                         '@babel/proposal-object-rest-spread',
-                        ...styleImport
+                        styleImport
                     ]
                 },
             },
