@@ -35,11 +35,43 @@ exports.default = () => {
 }
 ```
 
+### title 
+
+网页标题
+
+```
+{
+  title: '测试标题',
+}
+```
+
 ### devServer 
 
 - port 指定的端口号 (默认: 8000)
 - host 默认为 127.0.0.1
 
-### chainWebpack 
+### extraStylePluginImport
 
-- 通过 [webpack-chain](https://github.com/mozilla-neutrino/webpack-chain) 的 API 修改 webpack 配置。
+扩展的[按需加载](https://github.com/ant-design/babel-plugin-import)
+
+```
+{
+  // 按需加载antd
+  extraStylePluginImport: [{
+      "libraryName": "antd",
+      "style": true,
+  }]
+}
+```
+
+### extraBabelIncludes 
+
+让Babel编译的路径(默认情况下指编译当前项目的`src`目录)
+
+```
+{
+    extraBabelIncludes: [
+        "node_modules/kotomi-ui"
+    ]
+}
+```

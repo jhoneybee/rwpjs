@@ -6,6 +6,7 @@
   "dependencies": {
     "@rwp/core": "file:../../core/",
     "@rwp/render-react": "file:..",
-    "antd": "^4.2.3"
+    "antd": "^4.2.3",
+    "kotomi-ui": "^1.12.38"
   }
 }

@@ -26,6 +26,9 @@ exports.default = function (config) {
         },
         module: {
             rules: [{
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader']
+            }, {
                 test: /\.less$/,
                 use: [{
                     loader: 'style-loader'
@@ -43,16 +46,18 @@ exports.default = function (config) {
             {
                 loader: "babel-loader",
                 test: /\.(ts|js)x?$/,
-                exclude: /node_modules/,
+                include: [
+                    path.join(process.cwd(), 'src'),
+                    ...(config.extraBabelIncludes || []).map(function(element){
+                        return path.resolve(path.join(process.cwd(),element))
+                    })
+                ],
                 options: {
                     presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
                     plugins: [
                         '@babel/proposal-class-properties',
                         '@babel/proposal-object-rest-spread',
-                        ["import", {
-                            "libraryName": "antd",
-                            "style": true,
-                        }]
+                        ["import", ...(config.extraStylePluginImport || [])]
                     ]
                 },
             },
