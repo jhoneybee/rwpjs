@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "bootstrap": "lerna bootstrap"
+    "bootstrap": "lerna bootstrap",
+    "publish": "lerna publish"
   },
   "author": "zhangj",
   "license": "GPL-3.0",
