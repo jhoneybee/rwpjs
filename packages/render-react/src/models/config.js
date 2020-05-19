@@ -95,8 +95,6 @@ exports.default = function (config, status) {
                     sourceType: 'unambiguous',
                     presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
                     plugins: [
-                        '@babel/proposal-class-properties',
-                        '@babel/proposal-object-rest-spread',
                         '@babel/plugin-transform-runtime',
                         styleImport
                     ]
