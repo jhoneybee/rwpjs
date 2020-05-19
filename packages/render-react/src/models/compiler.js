@@ -31,7 +31,7 @@ exports.default = function (compiler) {
     });
     
     compiler.hooks.beforeCompile.tapAsync('@rwp/render-react', function (compilation, callback) {
-        const source = fs.readFileSync(path.join(__dirname, '..', 'template', 'router.js')).toString()
+        const source = fs.readFileSync(path.join(__dirname, '..', 'template', 'temp' ,'router.js')).toString()
         const code = source.replace(/\/\/\s*@RWP-TEMPLATE\s+ROUTES\s*/g,
             `const RWP = {}; RWP.routes = ${Routers.getRoutersText(Routers.getRealRouters())};`)
             

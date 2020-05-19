@@ -16,7 +16,7 @@ function isAnalyzer(status){
 exports.default = function (config, status) {
     let ejsTemplate = path.join(process.cwd(), 'src', 'pages', 'document.ejs')
     if (!fs.existsSync(ejsTemplate)) {
-        ejsTemplate = path.join(process.cwd(), 'src', 'pages', '.rwp', 'document.ejs')
+        ejsTemplate = path.join(__dirname, '..', 'template', 'document.ejs')
     }
 
     // 如果存在则初始化 babel-plugin-import
@@ -33,11 +33,6 @@ exports.default = function (config, status) {
         new Webpack.DefinePlugin({
             // 系统的标题信息
             'RWP.title': JSON.stringify(config.title || '')
-        }),
-        new Webpack.DllPlugin({
-            context: process.cwd(),
-            path: '[name]_library',
-            name: '[name]_[hash]'
         })
     ]
 
@@ -97,11 +92,12 @@ exports.default = function (config, status) {
                     })
                 ],
                 options: {
+                    sourceType: 'unambiguous',
                     presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
                     plugins: [
                         '@babel/proposal-class-properties',
                         '@babel/proposal-object-rest-spread',
-                        '@babel/plugin-transform-async-to-generator',
+                        '@babel/plugin-transform-runtime',
                         styleImport
                     ]
                 },

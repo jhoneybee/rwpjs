@@ -45,7 +45,7 @@ exports.default = function ({ status, config, plugins }) {
         // 初始化webpack编译
         initWebPack(getWebpackConfig.default(config, status)).then(function(compiler){
             const dirFile = path.join(process.cwd(),'src','pages','.rwp') 
-            copy(path.join(__dirname,'template'), dirFile)
+            copy(path.join(__dirname,'template','.rwp'), dirFile)
             compiler.run()
         })
     }
