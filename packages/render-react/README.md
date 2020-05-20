@@ -54,6 +54,8 @@ exports.default = () => {
 - port 指定的端口号 (默认: 8000)
 - host 默认为 127.0.0.1
 
+更多配置信息详见 https://webpack.js.org/configuration/dev-server/
+
 ### extraStylePluginImport
 
 扩展的[按需加载](https://github.com/ant-design/babel-plugin-import)
