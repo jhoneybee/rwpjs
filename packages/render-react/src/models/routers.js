@@ -108,8 +108,50 @@ exports.getRealRouters = function (){
         }
         return  {
             path: url,
-            component: `require(${JSON.stringify(element.type === 'directory' ? path.join(element.path,'index.js') : element.path )}).default`,
+            component: `React.lazy(() => import(${JSON.stringify(element.type === 'directory' ? path.join(element.path,'index.js') : element.path )}))`,
             routes: element.childrens || []
         }
     })
+}
+
+exports.getLayout = function(){
+    if(fs.existsSync(path.join(process.cwd(), 'src', 'layouts', 'index.js'))){
+        return path.join(process.cwd(), 'src', 'layouts', 'index.tsx')
+    }
+
+    if(fs.existsSync(path.join(process.cwd(), 'src', 'layouts', 'index.tsx'))){
+        return path.join(process.cwd(), 'src', 'layouts', 'index.tsx')
+    }
+    return ''
+}
+
+exports.getLayoutCode = function(){
+    const filePath = exports.getLayout()
+    if(filePath === ''){
+        return `
+    return (
+        <Router>
+            <Suspense fallback={<Loading/>}>
+                <Switch>
+                    {RouteComponent(routes)}
+                </Switch>
+            </Suspense>
+        </Router>
+    )
+`
+    }
+    return `
+    const Layout = React.lazy(() => import(${filePath}));
+    return (
+        <Router>
+            <Suspense fallback={<Loading/>}>
+                <Layout>
+                    <Switch>
+                        {RouteComponent(routes)}
+                    </Switch>
+                </Layout>
+            </Suspense>
+        </Router>
+    )
+`
 }

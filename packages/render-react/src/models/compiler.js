@@ -22,19 +22,21 @@ function timefix(compiler) {
     compiler.hooks.done.tapAsync('@rwp/render-react', onDone);
 }
 
+
+
 exports.default = function (compiler) {
     timefix(compiler)
     
-    compiler.plugin("after-compile", function (compilation, callback) {
+    compiler.hooks.afterCompile.tapAsync("@rwp/render-react", function (compilation, callback) {
         compilation.contextDependencies.add(path.join(process.cwd(), 'src'));
         callback();
     });
     
     compiler.hooks.beforeCompile.tapAsync('@rwp/render-react', function (compilation, callback) {
         const source = fs.readFileSync(path.join(__dirname, '..', 'template', 'temp' ,'router.js')).toString()
-        const code = source.replace(/\/\/\s*@RWP-TEMPLATE\s+ROUTES\s*/g,
-            `const RWP = {}; RWP.routes = ${Routers.getRoutersText(Routers.getRealRouters())};`)
-            
+        let code = source.replace(/\/\/\s*@RWP-TEMPLATE\s+ROUTES\s*/g,
+            `const routes = ${Routers.getRoutersText(Routers.getRealRouters())};`)
+        code = code.replace(/\/\/\s*@RWP-TEMPLATE\s+LAYOUT\s*/g,Routers.getLayoutCode())
         fs.writeFileSync(path.join(process.cwd(), 'src', 'pages', '.rwp', 'router.js'), code)
         fs.utimesSync(path.join(process.cwd(), 'src', 'pages', '.rwp', 'router.js'), ((Date.now() - 10 * 1000)) / 1000, (Date.now() - 10 * 1000) / 1000);
         callback()

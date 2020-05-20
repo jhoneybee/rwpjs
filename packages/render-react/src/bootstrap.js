@@ -33,7 +33,7 @@ exports.default = function ({ status, config, plugins }) {
         // 初始化webpack编译
         initWebPack(getWebpackConfig.default(config, status)).then(function(compiler){
             const dirFile = path.join(process.cwd(),'src','pages','.rwp') 
-            copy(path.join(__dirname,'template'), dirFile)
+            copy(path.join(__dirname,'template','temp'), dirFile)
             // 启动编译之前
             HookCompiler.default(compiler)
             // 初始化开发服务器
@@ -44,8 +44,6 @@ exports.default = function ({ status, config, plugins }) {
     if(status === 'build'){
         // 初始化webpack编译
         initWebPack(getWebpackConfig.default(config, status)).then(function(compiler){
-            const dirFile = path.join(process.cwd(),'src','pages','.rwp') 
-            copy(path.join(__dirname,'template','.rwp'), dirFile)
             compiler.run()
         })
     }

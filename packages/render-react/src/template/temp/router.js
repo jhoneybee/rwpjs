@@ -1,10 +1,12 @@
-import React from "react";
+import React, { Suspense, useEffect } from "react";
 import {
     HashRouter as Router,
     Switch,
     Route,
     Link
 } from "react-router-dom";
+import nprogress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 // @RWP-TEMPLATE ROUTES
 
@@ -33,14 +35,20 @@ const RouteComponent = (components) => (
     ))
 )
 
+
+const Loading = () => {
+    useEffect(()=>{
+        nprogress.start()
+        return () => {
+            nprogress.done()
+        }
+    }, [])
+    return <span />
+}
+
+
 const Bootstrap = () => {
-    return (
-        <Router>
-            <Switch>
-                {RouteComponent(RWP.routes)}
-            </Switch>
-        </Router>
-    )
+    // @RWP-TEMPLATE LAYOUT
 }
 
 export default Bootstrap;

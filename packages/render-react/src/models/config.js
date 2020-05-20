@@ -24,7 +24,7 @@ exports.default = function (config, status) {
     if(config.extraStylePluginImport){
         styleImport = ["import", ...(config.extraStylePluginImport || [])]
     }
-
+    
     const plugins = [
         new HtmlWebpackPlugin({
             hash: true,
@@ -32,7 +32,7 @@ exports.default = function (config, status) {
         }),
         new Webpack.DefinePlugin({
             // 系统的标题信息
-            'RWP.title': JSON.stringify(config.title || '')
+            'RWP_TITLE': JSON.stringify(config.title || '')
         })
     ]
 
@@ -49,8 +49,6 @@ exports.default = function (config, status) {
         },
         resolve:{
             alias: {
-                'react': path.resolve(process.cwd(), 'node_modules', 'react'),
-                'react-dom': path.resolve(process.cwd(), 'node_modules', 'react-dom'),
                 ...(config.alias || {})
             },
         },

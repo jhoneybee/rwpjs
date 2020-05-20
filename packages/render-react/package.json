@@ -40,7 +40,8 @@
   "peerDependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "nprogress": "^0.2.0"
   },
   "devDependencies": {
     "jest": "^26.0.1"
