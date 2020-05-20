@@ -1,4 +1,4 @@
-# Webpack的React预设
+# React的渲染组件
 
 - typescript支持
 
