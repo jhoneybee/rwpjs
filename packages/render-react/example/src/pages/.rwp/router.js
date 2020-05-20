@@ -1,12 +1,14 @@
-import React from "react";
+import React, { Suspense, useEffect } from "react";
 import {
     HashRouter as Router,
     Switch,
     Route,
     Link
 } from "react-router-dom";
+import nprogress from 'nprogress'
+import 'nprogress/nprogress.css'
 
-const RWP = {}; RWP.routes = [{path: "/demo",component: require("D:\\Code\\rwpjs\\packages\\render-react\\example\\src\\pages\\demo\\index.js").default,routes: [{path: "/demo/index",component: require("D:\\Code\\rwpjs\\packages\\render-react\\example\\src\\pages\\demo\\index.js").default,},{path: "/demo/name",component: require("D:\\Code\\rwpjs\\packages\\render-react\\example\\src\\pages\\demo\\name.js").default,},] },{path: "/hello",component: require("D:\\Code\\rwpjs\\packages\\render-react\\example\\src\\pages\\hello.js").default,},{path: "/",component: require("D:\\Code\\rwpjs\\packages\\render-react\\example\\src\\pages\\index.js").default,},];/**
+const routes = [{path: "/demo",component: React.lazy(() => import("D:\\Code\\rwpjs\\packages\\render-react\\example\\src\\pages\\demo\\index.js")),routes: [{path: "/demo/index",component: React.lazy(() => import("D:\\Code\\rwpjs\\packages\\render-react\\example\\src\\pages\\demo\\index.js")),},{path: "/demo/name",component: React.lazy(() => import("D:\\Code\\rwpjs\\packages\\render-react\\example\\src\\pages\\demo\\name.js")),},] },{path: "/hello",component: React.lazy(() => import("D:\\Code\\rwpjs\\packages\\render-react\\example\\src\\pages\\hello.js")),},{path: "/",component: React.lazy(() => import("D:\\Code\\rwpjs\\packages\\render-react\\example\\src\\pages\\index.js")),},];/**
  *  path       路由路径
  *  routes     子路由信息
  *  component  如果存在routes，那么component就作为布局信息
@@ -31,12 +33,27 @@ const RouteComponent = (components) => (
     ))
 )
 
+
+const Loading = () => {
+    useEffect(()=>{
+        nprogress.start()
+        return () => {
+            nprogress.done()
+        }
+    }, [])
+    return <span />
+}
+
+
 const Bootstrap = () => {
+    
     return (
         <Router>
-            <Switch>
-                {RouteComponent(RWP.routes)}
-            </Switch>
+            <Suspense fallback={<Loading/>}>
+                <Switch>
+                    {RouteComponent(routes)}
+                </Switch>
+            </Suspense>
         </Router>
     )
 }
