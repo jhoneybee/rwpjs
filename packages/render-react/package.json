@@ -1,6 +1,6 @@
 {
   "name": "@rwp/render-react",
-  "version": "0.0.17-alpha.0",
+  "version": "0.0.18-alpha.0",
   "description": "",
   "main": "src/bootstrap.js",
   "scripts": {
@@ -38,10 +38,10 @@
     "webpack-dev-server": "^3.11.0"
   },
   "peerDependencies": {
+    "nprogress": "^0.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0",
-    "nprogress": "^0.2.0"
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "jest": "^26.0.1"
