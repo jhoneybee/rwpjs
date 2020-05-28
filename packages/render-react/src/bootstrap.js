@@ -47,4 +47,14 @@ exports.default = function ({ status, config, plugins }) {
             compiler.run()
         })
     }
+
+    if(status === 'watch'){
+        initWebPack(getWebpackConfig.default(config, status)).then(function(compiler){
+            compiler.watch({
+                aggregateTimeout: 300,
+                poll: undefined
+            }, (err, stats) => {
+            });
+        })
+    }
 }

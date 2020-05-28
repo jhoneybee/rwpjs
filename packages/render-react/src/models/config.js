@@ -13,6 +13,10 @@ function isAnalyzer(status){
     return status === 'analyzer'
 }
 
+function isWatch(status) {
+    return status === 'watch'
+}
+
 exports.default = function (config, status) {
     let ejsTemplate = path.join(process.cwd(), 'src', 'pages', 'document.ejs')
     if (!fs.existsSync(ejsTemplate)) {
@@ -106,6 +110,10 @@ exports.default = function (config, status) {
             ]
         },
         plugins,
+    }
+
+    if(isWatch(status)){
+        webpackConfig.watch = true
     }
 
     // 添加最小化压缩代码

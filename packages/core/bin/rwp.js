@@ -28,6 +28,7 @@ program
     .option('-b, --build', 'compiling and building web products')
     .option('-p, --plugin', 'plug in currently in use')
     .option('-a, --analyzer','analyze project dependency information')
+    .option('-w, --watch','see webapck watch')
     .version(packages.version)
     .parse(process.argv);
 
@@ -47,6 +48,11 @@ if (program.build) {
 
 if (program.analyzer){
     devMain.default('analyzer')
+    return;
+}
+
+if (program.watch){
+    devMain.default('watch')
     return;
 }
 
