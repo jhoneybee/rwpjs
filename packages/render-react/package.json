@@ -35,9 +35,7 @@
     "terser-webpack-plugin": "^3.0.1",
     "webpack": "^4.42.1",
     "webpack-bundle-analyzer": "^3.7.0",
-    "webpack-dev-server": "^3.11.0"
-  },
-  "peerDependencies": {
+    "webpack-dev-server": "^3.11.0",
     "nprogress": "^0.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
