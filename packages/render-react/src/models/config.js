@@ -61,6 +61,9 @@ exports.default = function (config, status) {
             filename: 'rwp.js',
             path: path.join(process.cwd(), 'dist')
         },
+        node: {
+            fs: "empty"
+        },
         module: {
             rules: [{
                 test: /\.css$/i,
