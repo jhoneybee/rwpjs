@@ -11,7 +11,7 @@ function copy(souce, targe){
 
 /**
  * 初始化webpack的信息
- */
+ */ 
 async function initWebPack(config) {
     return Webpack(config)
 }
