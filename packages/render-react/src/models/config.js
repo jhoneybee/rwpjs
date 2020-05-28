@@ -65,9 +65,6 @@ exports.default = function (config, status) {
             filename: 'rwp.js',
             path: path.join(process.cwd(), 'dist')
         },
-        node: {
-            fs: "empty"
-        },
         module: {
             rules: [{
                 test: /\.css$/i,
@@ -114,6 +111,7 @@ exports.default = function (config, status) {
 
     if(isWatch(status)){
         webpackConfig.watch = true
+        webpackConfig.target = 'electron-renderer'
     }
 
     // 添加最小化压缩代码
