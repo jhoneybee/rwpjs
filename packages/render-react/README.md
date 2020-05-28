@@ -81,3 +81,7 @@ exports.default = () => {
     ]
 }
 ```
+
+### extraWebpack
+
+扩展的webpack方法，会传入一个预设的webpack配置

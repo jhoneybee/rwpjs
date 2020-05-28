@@ -28,7 +28,7 @@ exports.default = function (config, status) {
     if(config.extraStylePluginImport){
         styleImport = ["import", ...(config.extraStylePluginImport || [])]
     }
-    
+
     const plugins = [
         new HtmlWebpackPlugin({
             hash: true,
@@ -114,6 +114,8 @@ exports.default = function (config, status) {
         webpackConfig.target = 'electron-renderer'
     }
 
+
+
     // 添加最小化压缩代码
     if(isBuild(status)){
         webpackConfig.optimization = {
@@ -124,5 +126,7 @@ exports.default = function (config, status) {
             })],
         }
     }
-    return webpackConfig
+
+    const hookWebpackConfig = config.extraWebpack || function (tempWebpack){ return tempWebpack};
+    return hookWebpackConfig(webpackConfig)
 }
