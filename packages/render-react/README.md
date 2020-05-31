@@ -39,6 +39,10 @@ exports.default = () => {
 
 配置别名，对引用路径进行映射。
 
+### target 
+
+编译的目标
+
 ### title 
 
 网页标题
@@ -84,4 +88,4 @@ exports.default = () => {
 
 ### extraWebpack
 
-扩展的webpack方法，会传入一个预设的webpack配置
+扩展的webpack方法，会传入一个预设的webpack配置 

@@ -109,13 +109,14 @@ exports.default = function (config, status) {
         plugins,
     }
 
-    if(isWatch(status)){
-        webpackConfig.watch = true
-        webpackConfig.target = 'electron-renderer'
+    if(config.target){
+        webpackConfig.target = config.target
     }
 
-
-
+    if(isWatch(status)){
+        webpackConfig.watch = true
+    }
+ 
     // 添加最小化压缩代码
     if(isBuild(status)){
         webpackConfig.optimization = {
