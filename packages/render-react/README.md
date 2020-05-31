@@ -43,6 +43,8 @@ exports.default = () => {
 
 编译的目标
 
+> 默认为web在浏览器中使用 https://webpack.js.org/configuration/target/
+
 ### title 
 
 网页标题
