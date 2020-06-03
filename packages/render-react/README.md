@@ -2,6 +2,34 @@
 
 - typescript支持
 
+## 路由信息
+
+```
+src
+└─pages
+    ├─.rwp
+    └─demo
+    | └─index.js
+    └─index.js
+```
+
+- 所有在pages目录下的都为路由信息
+- pages/index.js 表示首页
+- pages/xxx/index.js  index.js 表示布局信息,其他文件按照约定路由信息执行
+
+
+
+满足以下任意规则的文件不会被注册为路由
+
+- 以 . 或 _ 开头的文件或目录
+- 以 d.ts 结尾的类型定义文件
+- 以 test.ts、spec.ts、e2e.ts 结尾的测试文件（适用于 .js、.jsx 和 .tsx 文件）
+- components 和 component 目录
+- utils 和 util 目录
+- 不是 .js、.jsx、.ts 或 .tsx 文件
+- 文件内容不包含 JSX 元素
+
+
 ## HTML 模板
 
 ### 修改默认模板
