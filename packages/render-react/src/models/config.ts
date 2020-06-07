@@ -1,9 +1,10 @@
-const fs = require('fs');
-const path = require('path')
-const Webpack = require('webpack')
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-const TerserPlugin = require('terser-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+import { existsSync } from 'fs'
+import { join, resolve } from 'path'
+import { DefinePlugin } from 'webpack'
+import * as HtmlWebpackPlugin from 'html-webpack-plugin'
+import TerserPlugin from 'terser-webpack-plugin'
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 function isBuild(status){
     return status === 'build'
@@ -17,10 +18,10 @@ function isWatch(status) {
     return status === 'watch'
 }
 
-exports.default = function (config, status) {
-    let ejsTemplate = path.join(process.cwd(), 'src', 'pages', 'document.ejs')
-    if (!fs.existsSync(ejsTemplate)) {
-        ejsTemplate = path.join(__dirname, '..', 'template', 'document.ejs')
+export default (config, status) => {
+    let ejsTemplate = join(process.cwd(), 'src', 'pages', 'document.ejs')
+    if (!existsSync(ejsTemplate)) {
+        ejsTemplate = join(__dirname, '..', 'template', 'document.ejs')
     }
 
     // 如果存在则初始化 babel-plugin-import
@@ -34,7 +35,7 @@ exports.default = function (config, status) {
             hash: true,
             template: ejsTemplate
         }),
-        new Webpack.DefinePlugin({
+        new DefinePlugin({
             // 系统的标题信息
             'RWP_TITLE': JSON.stringify(config.title || '')
         })
@@ -45,25 +46,24 @@ exports.default = function (config, status) {
     }
 
     // 预设webpack属性
-    const webpackConfig = {
+    const webpackConfig: any = {
         mode: isBuild(status) ? 'production' : 'development',
         devtool: 'cheap-module-source-map',
-        resolve: {
-            extensions: ['.ts', '.tsx', '.js']
-        },
         resolve:{
+            extensions: ['.ts', '.tsx', '.js'],
             alias: {
                 ...(config.alias || {})
             },
         },
         context: process.cwd(),
+        
         devServer: {
             ...(config.devServer || {})
         },
-        entry: path.join(process.cwd(), 'src', 'pages', '.rwp', 'rwp.js'),
+        entry: join(process.cwd(), 'src', 'pages', '.rwp', 'rwp.js'),
         output: {
             filename: 'rwp.js',
-            path: path.join(process.cwd(), 'dist')
+            path: join(process.cwd(), 'dist')
         },
         module: {
             rules: [{
@@ -88,9 +88,9 @@ exports.default = function (config, status) {
                 loader: "babel-loader",
                 test: /\.(ts|js)x?$/,
                 include: [
-                    path.join(process.cwd(), 'src'),
+                    join(process.cwd(), 'src'),
                     ...(config.extraBabelIncludes || []).map(function(element){
-                        return path.resolve(path.join(process.cwd(),element))
+                        return resolve(join(process.cwd(),element))
                     })
                 ],
                 options: {

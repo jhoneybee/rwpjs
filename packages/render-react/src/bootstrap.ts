@@ -1,9 +1,9 @@
-const fs = require('fs-extra')
-const path = require('path') 
-const Webpack = require('webpack')
-const WebpackDevServer = require("webpack-dev-server");
-const getWebpackConfig = require('./models/config')
-const HookCompiler = require('./models/compiler')
+import * as fs from 'fs-extra'
+import { join } from 'path'
+import * as Webpack from 'webpack'
+import * as WebpackDevServer from 'webpack-dev-server'
+import getWebpackConfig from './models/config'
+import HookCompiler from './models/compiler'
 
 function copy(souce, targe){
     return fs.copySync(souce, targe)
@@ -27,29 +27,29 @@ function initDevWebpackServer(compiler, config) {
 }
 
 // 初始化webpack相关的信息
-exports.default = function ({ status, config, plugins }) {
+export default ({ status, config, plugins }) => {
     
     if(status === 'dev' || status === 'analyzer'){
         // 初始化webpack编译
-        initWebPack(getWebpackConfig.default(config, status)).then(function(compiler){
-            const dirFile = path.join(process.cwd(),'src','pages','.rwp') 
-            copy(path.join(__dirname,'template','temp'), dirFile)
+        initWebPack(getWebpackConfig(config, status)).then(function(compiler){
+            const dirFile = join(process.cwd(),'src','pages','.rwp') 
+            copy(join(__dirname,'template','temp'), dirFile)
             // 启动编译之前
-            HookCompiler.default(compiler)
+            HookCompiler(compiler)
             // 初始化开发服务器
-            initDevWebpackServer(compiler, getWebpackConfig.default(config).devServer)
+            initDevWebpackServer(compiler, getWebpackConfig(config, plugins).devServer)
         })
     }
 
     if(status === 'build'){
         // 初始化webpack编译
-        initWebPack(getWebpackConfig.default(config, status)).then(function(compiler){
-            compiler.run()
+        initWebPack(getWebpackConfig(config, status)).then(function(compiler){
+            compiler.run((err,stat) => {})
         })
     }
 
     if(status === 'watch'){
-        initWebPack(getWebpackConfig.default(config, status)).then(function(compiler){
+        initWebPack(getWebpackConfig(config, status)).then(function(compiler){
             compiler.watch({
                 aggregateTimeout: 300,
                 poll: undefined

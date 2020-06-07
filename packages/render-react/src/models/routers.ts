@@ -1,8 +1,12 @@
-/**
- * 获取当前路径下约定的字符串
- */
-const fs = require('fs');
-const path = require('path')
+import { readdirSync, statSync, existsSync }  from 'fs'
+
+import { join } from 'path'
+
+interface Stat {
+    path: string 
+    type: string 
+    childrens?: Stat[]
+}
 
 /**
  * 
@@ -11,12 +15,12 @@ const path = require('path')
  * @param dir 要查找的文件路径
  * @param map 结果集进行转换
  */
-exports.getDirFiles = function (dir, map) {
+export const getDirFiles = (dir, map: (stat: Stat) => Object) => {
     const routers = []
-    const pages = fs.readdirSync(dir);
+    const pages = readdirSync(dir);
     for (let i = 0; i < pages.length; i++) {
-        const realPath = path.join(dir, pages[i])
-        const stat = fs.statSync(realPath)
+        const realPath = join(dir, pages[i])
+        const stat = statSync(realPath)
         const type = stat.isDirectory() ? 'directory' : 'file'
         if (stat.isDirectory()) {
             const route = map({
@@ -41,16 +45,22 @@ exports.getDirFiles = function (dir, map) {
 }
 
 
-exports.getRoutersText = function (routers) {
+/**
+ * 
+ * 根据路由信息,生成对应的代码
+ * 
+ * @param routers 
+ */
+export const getRoutersText = (routers) => {
     let code = '['
-    routers.forEach(function (router) {
+    routers.forEach((router) => {
         let obj = '{'
         Object.keys(router).forEach(function (key) {
             if (key === 'component') {
                 obj += `${key}: ${router[key]},`
             } else if (key === 'routes') {
                 if (router[key] && router[key].length > 0) {
-                    obj += `${key}: ${exports.getRoutersText(router[key])} `
+                    obj += `${key}: ${getRoutersText(router[key])} `
                 }
             } else if (key === 'path') {
                 obj += `${key}: ${JSON.stringify(router[key])},`
@@ -74,59 +84,87 @@ exports.getRoutersText = function (routers) {
  * - utils 和 util 目录
  * - 不是 .js、.jsx、.ts 或 .tsx 文件
  * - 文件内容不包含 JSX 元素
+ * 
+ * @param filePath 文件路径
+ * @param type 文件类型
+ * @return true 表示过滤, false表示不过滤
  */
-function isFilter(filePath, type){
-    if(type === 'file' && !/\.(ts|js)x?$/.test(filePath)){
+
+const isFilter = (path: string , type: string): boolean => {
+    if(type === 'file' && !/\.(ts|js)x?$/.test(path)){
         return true
     }
 
-    if(/(components|component|util|utils)/g.test(filePath)){
+    if(/(components|component|util|utils)/g.test(path)){
         return true
     }
 
-    if(/(\.test\.ts|\.spec\.ts|\.e2e\.ts|\.test\.js|\.spec\.js|\.e2e\.js|\.d\.ts)x?$/.test(filePath)){
+    if(/(\.test\.ts|\.spec\.ts|\.e2e\.ts|\.test\.js|\.spec\.js|\.e2e\.js|\.d\.ts)x?$/.test(path)){
         return true
     }
 
-    if(/\/(\.|_).*/g.test(filePath)){
+    if(/\/(\.|_).*/g.test(path)){
         return true
     }     
     return false
 }
 
-exports.getRealRouters = function (){
-    return exports.getDirFiles(path.join(process.cwd(),'src','pages'), function(element){
-        const filePath = element.path.replace(path.join(process.cwd(),'src','pages'), '')
+/**
+ * 预处理的路由信息
+ */
+interface PreRoute {
+    // 路径信息
+    path: string 
+    // 组件的代码表达方式
+    component: string 
+    // 路由信息
+    routes: PreRoute[]
+}
+
+/**
+ * 获取预处路由信息
+ */
+export const getRealRouters = (): PreRoute[]  => {
+    return getDirFiles(join(process.cwd(),'src','pages'), (element) => {
+        const filePath = element.path.replace(join(process.cwd(),'src','pages'), '')
     
-        if(isFilter(filePath.replace(path.join(process.cwd(),'src','pages'), '').replace(/\\/g,'/'), element.type)){
+        if(isFilter(filePath.replace(join(process.cwd(),'src','pages'), '').replace(/\\/g,'/'), element.type)){
             return undefined
         }
         let url = filePath.replace(/\.[A-Za-z1-9]+$/g,'').replace(/\\/g,'/')
+
         // 将pages/index.js 转换为首页
         if(url === '/index'){
             url = '/'
         }
+
         return  {
             path: url,
-            component: `React.lazy(() => import(${JSON.stringify(element.type === 'directory' ? path.join(element.path,'index.js') : element.path )}))`,
+            component: `React.lazy(() => import(${JSON.stringify(element.type === 'directory' ? join(element.path,'index.js') : element.path )}))`,
             routes: element.childrens || []
         }
     })
 }
 
-exports.getLayout = function(){
-    if(fs.existsSync(path.join(process.cwd(), 'src', 'layouts', 'index.js'))){
-        return path.join(process.cwd(), 'src', 'layouts', 'index.tsx')
+/**
+ * 获取布局信息
+ */
+export const getLayout = () => {
+    if(existsSync(join(process.cwd(), 'src', 'layouts', 'index.tsx'))){
+        return join(process.cwd(), 'src', 'layouts', 'index.tsx')
     }
 
-    if(fs.existsSync(path.join(process.cwd(), 'src', 'layouts', 'index.tsx'))){
-        return path.join(process.cwd(), 'src', 'layouts', 'index.tsx')
+    if(existsSync(join(process.cwd(), 'src', 'layouts', 'index.js'))){
+        return join(process.cwd(), 'src', 'layouts', 'index.tsx')
     }
     return ''
 }
 
-exports.getLayoutCode = function(){
-    const filePath = exports.getLayout()
+/**
+ * 获取预处理的代码
+ */
+export const getLayoutCode = () => {
+    const filePath = getLayout()
     if(filePath === ''){
         return `
     return (

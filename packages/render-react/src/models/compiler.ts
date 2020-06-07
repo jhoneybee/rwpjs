@@ -1,10 +1,11 @@
-const fs = require('fs');
-const path = require('path')
-const Routers = require('./routers')
+import { readFileSync, writeFileSync, utimesSync } from 'fs'
+import * as path from 'path'
+import { getRoutersText, getLayoutCode, getRealRouters } from './routers'
+
 
 function timefix(compiler) {
     const timefix = 100;
-    let watching = {};
+    let watching: { startTime?: number} = {};
     const onWatchRun = function (c, callback) {
         watching.startTime += timefix;
         callback && callback();
@@ -24,7 +25,7 @@ function timefix(compiler) {
 
 
 
-exports.default = function (compiler) {
+export default (compiler) => {
     timefix(compiler)
     
     compiler.hooks.afterCompile.tapAsync("@rwp/render-react", function (compilation, callback) {
@@ -33,12 +34,12 @@ exports.default = function (compiler) {
     });
     
     compiler.hooks.beforeCompile.tapAsync('@rwp/render-react', function (compilation, callback) {
-        const source = fs.readFileSync(path.join(__dirname, '..', 'template', 'temp' ,'router.js')).toString()
+        const source = readFileSync(path.join(__dirname, '..', 'template', 'temp' ,'router.js')).toString()
         let code = source.replace(/\/\/\s*@RWP-TEMPLATE\s+ROUTES\s*/g,
-            `const routes = ${Routers.getRoutersText(Routers.getRealRouters())};`)
-        code = code.replace(/\/\/\s*@RWP-TEMPLATE\s+LAYOUT\s*/g,Routers.getLayoutCode())
-        fs.writeFileSync(path.join(process.cwd(), 'src', 'pages', '.rwp', 'router.js'), code)
-        fs.utimesSync(path.join(process.cwd(), 'src', 'pages', '.rwp', 'router.js'), ((Date.now() - 10 * 1000)) / 1000, (Date.now() - 10 * 1000) / 1000);
+            `const routes = ${getRoutersText(getRealRouters())};`)
+        code = code.replace(/\/\/\s*@RWP-TEMPLATE\s+LAYOUT\s*/g, getLayoutCode())
+        writeFileSync(path.join(process.cwd(), 'src', 'pages', '.rwp', 'router.js'), code)
+        utimesSync(path.join(process.cwd(), 'src', 'pages', '.rwp', 'router.js'), ((Date.now() - 10 * 1000)) / 1000, (Date.now() - 10 * 1000) / 1000);
         callback()
     })
 }

@@ -2,8 +2,9 @@
   "name": "@rwp/render-react",
   "version": "0.0.25-alpha.0",
   "description": "",
-  "main": "src/bootstrap.js",
+  "main": "lib/bootstrap.js",
   "scripts": {
+    "build": "gulp build-ts && gulp copy-template",
     "test": "jest"
   },
   "author": "zhangj",
@@ -12,7 +13,7 @@
     "node": ">=10.13.0"
   },
   "files": [
-    "src/"
+    "lib/"
   ],
   "dependencies": {
     "@babel/core": "^7.9.6",
@@ -42,7 +43,11 @@
     "webpack-dev-server": "^3.11.0"
   },
   "devDependencies": {
-    "jest": "^26.0.1"
+    "@babel/register": "^7.10.1",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "jest": "^26.0.1",
+    "typescript": "^3.9.5"
   },
   "bugs": {
     "url": "https://github.com/jhoneybee/rwpjs/issues"
