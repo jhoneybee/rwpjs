@@ -1,10 +1,21 @@
 
 import { existsSync } from 'fs'
 import { join, resolve } from 'path'
-import { DefinePlugin } from 'webpack'
+import { DefinePlugin, Configuration } from 'webpack'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+
+
+interface Config extends Configuration{
+    devServer: {
+        host: string,
+        port: number,
+        hot: boolean,
+        inline: boolean,
+        proxy: any
+    }
+}
 
 function isBuild(status){
     return status === 'build'
@@ -46,7 +57,7 @@ export default (config, status) => {
     }
 
     // 预设webpack属性
-    const webpackConfig: any = {
+    const webpackConfig: Config = {
         mode: isBuild(status) ? 'production' : 'development',
         devtool: 'cheap-module-source-map',
         resolve:{
