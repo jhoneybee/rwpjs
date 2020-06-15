@@ -83,13 +83,13 @@ exports.default = () => {
 }
 ```
 
-### matter
+### materiel
 
-物质的配置中心
+物料的配置中心
 
 ```
 {
-  matter: 'https://127.0.0.1:8080/matter.json'
+  materiel: 'https://127.0.0.1:8080/matter.json'
 }
 ```
 
@@ -97,17 +97,17 @@ exports.default = () => {
 
 ```
 [{
-    // 物质名称
+    // 物料名称
     title: '',
-    // 物质资源地址
-    url: '',
-    // 物质注册的路由
+    // 物料的组件地址
+    component: '',
+    // 物料注册的路由
     route: ''
 }]
 ```
 
 
-> 用来加载物质的中心服务点
+> 用来加载物料的中心服务点
 
 ### devServer 
 
