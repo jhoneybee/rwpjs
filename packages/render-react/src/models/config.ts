@@ -3,7 +3,7 @@ import { existsSync } from 'fs'
 import { join, resolve } from 'path'
 import { DefinePlugin, Configuration } from 'webpack'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
-import TerserPlugin from 'terser-webpack-plugin'
+import * as TerserPlugin from 'terser-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 
