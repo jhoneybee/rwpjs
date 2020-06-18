@@ -5,7 +5,7 @@ nav:
 group:
   path: /components
   title: 组件
-title: Button 
+title: Button 按钮
 ---
 
 # Button 按钮

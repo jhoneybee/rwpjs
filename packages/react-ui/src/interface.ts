@@ -1,5 +1,4 @@
 import React from 'react'
-
 declare const ButtonTypes: ["default", "primary", "ghost", "dashed", "link", "text"];
 export declare type ButtonType = typeof ButtonTypes[number];
 declare const ButtonShapes: ["circle", "circle-outline", "round"];

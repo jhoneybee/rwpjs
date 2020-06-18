@@ -14,11 +14,9 @@ const Button = (props: ButtonProps) => {
                     setLoading(true)
                     const clickResult = props.onClick() 
                     if(isPromise(clickResult)){
-                        
                         (clickResult as Promise<void>).then(()=>{
                             setLoading(false)
                         })
-                        
                     }else{
                         setLoading(false)
                     }
