@@ -27,8 +27,10 @@
     ]
   },
   "dependencies": {
+    "@ant-design/icons": "^4.2.1",
     "antd": "^4.3.4",
-    "react": "^16.12.0"
+    "react": "^16.12.0",
+    "react-data-grid": "^7.0.0-canary.16"
   },
   "devDependencies": {
     "@umijs/preset-react": "1.x",
