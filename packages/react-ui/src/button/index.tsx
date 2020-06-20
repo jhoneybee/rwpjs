@@ -3,12 +3,13 @@ import { Button as AntButton } from 'antd'
 import { ButtonProps } from '../interface'
 import { isPromise } from '../utils'
 
-const Button = (props: ButtonProps) => {
+export const Button = (props: ButtonProps) => {
     const [loading, setLoading] = useState(false)
+    const { autoLoading , ...restProps } = props
     return (
         <AntButton
-            {...props}
-            loading={props.autoLoading? loading : props.loading}
+            {...restProps}
+            loading={autoLoading? loading : props.loading}
             onClick={()=>{
                 if(props.onClick){
                     setLoading(true)
@@ -29,5 +30,3 @@ const Button = (props: ButtonProps) => {
 Button.defaultProps = {
     autoLoading: true
 }
-
-export default Button

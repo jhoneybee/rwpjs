@@ -1,5 +1,7 @@
 import React from 'react'
-
+import { EditorProps } from 'react-data-grid'
+import { LiteralUnion } from 'antd/lib/_util/type';
+import { Input } from 'antd'
 
 declare const ButtonTypes: ["default", "primary", "ghost", "dashed", "link", "text"];
 export declare type ButtonType = typeof ButtonTypes[number];
@@ -40,6 +42,19 @@ export interface ButtonProps extends Omit<React.ButtonHTMLAttributes<any>, 'type
     loading?: boolean
 }
 
+export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix' | 'type'| 'on' | 'onChange'> {
+    prefixCls?: string;
+    size?: SizeType;
+    type?: LiteralUnion<'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden' | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel' | 'text' | 'time' | 'url' | 'week', string>;
+    onPressEnter?: React.KeyboardEventHandler<HTMLInputElement>;
+    addonBefore?: React.ReactNode;
+    addonAfter?: React.ReactNode;
+    prefix?: React.ReactNode;
+    suffix?: React.ReactNode;
+    allowClear?: boolean;
+    onChange?: (value: string) => void
+}
+
 export interface ColumnProps<T> {
     // 标题
     title: string 
@@ -59,12 +74,15 @@ export interface ColumnProps<T> {
     sortable?: boolean;
     // 将列排序顺序设置为降序，而不是在列第一次排序时升序
     sortDescendingFirst?: boolean;
+    // 冻结列
+    frozen?: boolean;
+    // 当前列的编辑器
+    editor?:React.ComponentType<EditorProps<T[keyof T], T, unknown>>;
 }
 
 export interface TableProps<T> {
     // 表格列的信息
     columns: ColumnProps<T>[]
-    
     /**
      * 装载数据
      * @param pageNo   当前页的序号
@@ -73,17 +91,16 @@ export interface TableProps<T> {
      * @returns 返回的总数,当前页的数据 
      */
     loadData: (pageNo: number , pageSize: number, params: Object) => PromiseLike<{ total: number, datas: T[]}> | { total: number, datas: T[]}
-
     // 初始化页面的分页大小, 默认加载50条数据
     pageSize?: number
-
     //装载数据的参数
     params?: Object
-    
     // 是否初始化的时候自动装载数据, 默认为 true
     autoLoadData?: boolean
     // 启动复制和粘贴
     enableCellCopyPaste?: boolean;
-    // 启动拖拽
+    // 启动下拉编辑
     enableCellDragAndDrop?: boolean;
+    // 是否自动聚焦
+    enableCellAutoFocus?: boolean;
 }

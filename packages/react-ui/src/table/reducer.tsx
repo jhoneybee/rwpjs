@@ -2,6 +2,7 @@
 export interface State<T> {
     rows: { total: number, datas: T[]}
     loading: boolean,
+    pageNo: number
 }
 
 export type Action<T> = {
@@ -9,12 +10,11 @@ export type Action<T> = {
     payload: any
 }
 
-export const initialState: State<any> = { rows: { total: 0, datas:[] }, loading: false }
+export const initialState: State<any> = { rows: { total: 0, datas:[] }, loading: false, pageNo: 1 }
 
 export function reducer<T>(state: State<T>, action: Action<T>) {
     switch (action.type) {
         case 'SET_ADD_ROWS':
-            console.log(action)
             const realPayload = action.payload as {
                 rows: { total: number, datas: T[]},
                 loading: boolean
@@ -23,7 +23,9 @@ export function reducer<T>(state: State<T>, action: Action<T>) {
                 datas: realPayload.rows.datas ? state.rows.datas.concat(realPayload.rows.datas) : state.rows.datas,
                 total: realPayload.rows.total
             }
-            return { ...state, rows, loading: realPayload.loading};
+
+            const pageNo = state.rows.datas.length > 0 ? state.pageNo + 1 : state.pageNo
+            return { ...state, rows, loading: realPayload.loading, pageNo};
         case 'SET_LOADING': 
             return { ...state, loading: action.payload};
         default:

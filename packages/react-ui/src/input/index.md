@@ -29,6 +29,7 @@ import React from 'react'
 import { Input } from '@rwp/react-ui'
 
 export default () => {
+    console.log(Input)
     return (
         <>
           <Input style={{width: 200}} /> 
@@ -129,12 +130,6 @@ Input 的其他属性和 React 自带的 [input](https://facebook.github.io/reac
 | compact | 是否用紧凑模式 | boolean | false |
 | size | `Input.Group` 中所有的 `Input` 的大小，可选 `large` `default` `small` | string | `default` |
 
-```js
-<Input.Group>
-  <input />
-  <input />
-</Input.Group>
-```
 
 #### Input.Password
 
