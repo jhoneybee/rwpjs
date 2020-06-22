@@ -5,20 +5,20 @@ import { isPromise } from '../utils'
 
 export const Button = (props: ButtonProps) => {
     const [loading, setLoading] = useState(false)
-    const { autoLoading , ...restProps } = props
+    const { autoLoading, ...restProps } = props
     return (
         <AntButton
             {...restProps}
-            loading={autoLoading? loading : props.loading}
-            onClick={()=>{
-                if(props.onClick){
+            loading={autoLoading ? loading : props.loading}
+            onClick={() => {
+                if (props.onClick) {
                     setLoading(true)
-                    const clickResult = props.onClick() 
-                    if(isPromise(clickResult)){
-                        (clickResult as Promise<void>).then(()=>{
+                    const clickResult = props.onClick()
+                    if (isPromise(clickResult)) {
+                        (clickResult as Promise<void>).then(() => {
                             setLoading(false)
                         })
-                    }else{
+                    } else {
                         setLoading(false)
                     }
                 }
@@ -28,5 +28,5 @@ export const Button = (props: ButtonProps) => {
 }
 
 Button.defaultProps = {
-    autoLoading: true
+    autoLoading: true,
 }

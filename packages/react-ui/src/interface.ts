@@ -1,13 +1,12 @@
 import React from 'react'
 import { EditorProps } from 'react-data-grid'
 import { LiteralUnion } from 'antd/lib/_util/type';
-import { Input } from 'antd'
 
-declare const ButtonTypes: ["default", "primary", "ghost", "dashed", "link", "text"];
+declare const ButtonTypes: ['default', 'primary', 'ghost', 'dashed', 'link', 'text'];
 export declare type ButtonType = typeof ButtonTypes[number];
-declare const ButtonShapes: ["circle", "circle-outline", "round"];
+declare const ButtonShapes: ['circle', 'circle-outline', 'round'];
 export declare type ButtonShape = typeof ButtonShapes[number];
-declare const ButtonHTMLTypes: ["submit", "button", "reset"];
+declare const ButtonHTMLTypes: ['submit', 'button', 'reset'];
 export declare type ButtonHTMLType = typeof ButtonHTMLTypes[number];
 export declare type LegacyButtonType = ButtonType | 'danger';
 
@@ -57,9 +56,9 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
 
 export interface ColumnProps<T> {
     // 标题
-    title: string 
+    title: string
     // 字段名称
-    name: string 
+    name: string
     // 列宽。如果未指定，则将根据网格宽度和其他列的指定宽度自动确定
     width?: number | string;
     // 最小列宽(px)
@@ -80,20 +79,30 @@ export interface ColumnProps<T> {
     editor?:React.ComponentType<EditorProps<T[keyof T], T, unknown>>;
 }
 
+export declare type OverlayFunc = () => React.ReactElement;
+
+export interface TableHandle {
+
+}
+
 export interface TableProps<T> {
     // 表格列的信息
     columns: ColumnProps<T>[]
+
     /**
      * 装载数据
      * @param pageNo   当前页的序号
      * @param pageSize 当前页的页面显示数据大小
      * @param params   请求数据额外携带的参数
-     * @returns 返回的总数,当前页的数据 
+     * @returns 返回的总数,当前页的数据
      */
-    loadData: (pageNo: number , pageSize: number, params: Object) => PromiseLike<{ total: number, datas: T[]}> | { total: number, datas: T[]}
+    loadData: (pageNo: number, pageSize: number, params: Object) => PromiseLike<{
+        total: number, datas: T[]
+    }> | { total: number, datas: T[]}
+
     // 初始化页面的分页大小, 默认加载50条数据
     pageSize?: number
-    //装载数据的参数
+    // 装载数据的参数
     params?: Object
     // 是否初始化的时候自动装载数据, 默认为 true
     autoLoadData?: boolean
@@ -101,6 +110,11 @@ export interface TableProps<T> {
     enableCellCopyPaste?: boolean;
     // 启动下拉编辑
     enableCellDragAndDrop?: boolean;
-    // 是否自动聚焦
-    enableCellAutoFocus?: boolean;
+
+    /**
+     * 右键菜单
+     * @param row 当前行的数据
+     * @param index 当前第几行，从零开始计数
+     */
+    contextMenu?: React.ReactElement
 }
