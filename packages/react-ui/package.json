@@ -11,22 +11,16 @@
     "lint:script": "eslint ./src/**/*.{js,jsx,ts,tsx}",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
+    "test:coverage": "umi-test --coverage",
+    "commit": "npm run lint:script && npm run test"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,jsx,less,md,json}": [
-      "prettier --write"
-    ],
-    "*.ts?(x)": [
-      "prettier --parser=typescript --write",
-      "npm run lint:script"
-    ]
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run commit"
+    }
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
@@ -42,10 +36,10 @@
     "dumi": "^1.0.8",
     "father-build": "^1.17.2",
     "gh-pages": "^3.0.0",
+    "husky": "^4.2.5",
     "jest": "^26.0.1",
     "lint-staged": "^10.0.7",
     "prettier": "^1.19.1",
-    "react-test-renderer": "^16.9.0",
-    "yorkie": "^2.0.0"
+    "react-test-renderer": "^16.9.0"
   }
 }
