@@ -25,7 +25,7 @@
     ],
     "*.ts?(x)": [
       "prettier --parser=typescript --write",
-      "npm run lint:script" 
+      "npm run lint:script"
     ]
   },
   "dependencies": {
