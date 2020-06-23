@@ -66,7 +66,6 @@ interface CustomEditorProps{
 
 const CustomEditor = React.forwardRef((props: CustomEditorProps, ref) => {
     const [value, setValue] = useState(props.extProps.value)
-
     const inputRef = useRef<HTMLElement>(null);
     useImperativeHandle(ref, () => ({
         getValue: () => ({
@@ -98,27 +97,28 @@ type DropdownRowProps<T> = {
 }
 
 // fix: forwardRef 一下，防止antd的Dropdown报错
-const TempRow = React.forwardRef((props: RowRendererProps<any, unknown>) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const TempRow = React.forwardRef((props: RowRendererProps<any, unknown>, ref) => {
     const { dispatch } = useContext(TableContext)
     return (
         <Row
             {...props}
             cellRenderer={cellProps => (
-                    <Cell
-                        {...cellProps}
-                        onContextMenu={e => {
-                            e.preventDefault()
-                            dispatch({
-                                type: 'SET_CONTEXTMENU',
-                                payload: {
-                                    row: props.row,
-                                    rowIdx: props.rowIdx,
-                                    column: cellProps.column,
-                                },
-                            })
-                        }}
-                    />
-                )}
+                <Cell
+                    {...cellProps}
+                    onContextMenu={e => {
+                        e.preventDefault()
+                        dispatch({
+                            type: 'SET_CONTEXTMENU',
+                            payload: {
+                                row: props.row,
+                                rowIdx: props.rowIdx,
+                                column: cellProps.column,
+                            },
+                        })
+                    }}
+                />
+            )}
         />
     )
 })
@@ -132,7 +132,6 @@ const DropdownRow = ({ rowProps, contextMenu }: DropdownRowProps<any>) => (
         <TempRow {...rowProps} />
     </Dropdown>
 )
-
 
 export function Table<T> (props: TableProps<T>) {
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -201,6 +200,8 @@ export function Table<T> (props: TableProps<T>) {
                             }
                         }}
                         enableCellAutoFocus
+                        width={props.width}
+                        height={props.height}
                         enableCellCopyPaste={props.enableCellCopyPaste}
                         enableCellDragAndDrop={props.enableCellDragAndDrop}
                         rowRenderer={(rowProps: RowRendererProps<T, unknown>) => {
@@ -213,9 +214,6 @@ export function Table<T> (props: TableProps<T>) {
                                 )
                             }
                             return <Row {...rowProps}/>
-                        }}
-                        onRowsUpdate={e => {
-                            console.log(e)
                         }}
                     />
                 </Spin>

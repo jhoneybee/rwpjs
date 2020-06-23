@@ -8,7 +8,7 @@
     "build": "father-build",
     "deploy": "npm run docs:build && npm run docs:deploy",
     "release": "npm run build && npm publish",
-    "lint": "lint-staged",
+    "lint:script": "eslint ./src/**/*.{js,jsx,ts,tsx}",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage"
@@ -34,13 +34,17 @@
     "react-data-grid": "^7.0.0-canary.16"
   },
   "devDependencies": {
-    "@umijs/preset-react": "1.x",
+    "@testing-library/react": "^10.3.0",
+    "@types/jest": "^26.0.0",
+    "@umijs/preset-react": "^1.x",
     "@umijs/test": "^3.0.5",
     "dumi": "^1.0.8",
     "father-build": "^1.17.2",
     "gh-pages": "^3.0.0",
+    "jest": "^26.0.1",
     "lint-staged": "^10.0.7",
     "prettier": "^1.19.1",
+    "react-test-renderer": "^16.9.0",
     "yorkie": "^2.0.0"
   }
 }

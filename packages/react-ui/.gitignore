@@ -10,6 +10,7 @@
 # production
 /dist
 /docs-dist
+/coverage
 
 # misc
 .DS_Store

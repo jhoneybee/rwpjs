@@ -82,7 +82,6 @@ export interface ColumnProps<T> {
 export declare type OverlayFunc = () => React.ReactElement;
 
 export interface TableHandle {
-
 }
 
 export interface TableProps<T> {
@@ -110,11 +109,12 @@ export interface TableProps<T> {
     enableCellCopyPaste?: boolean;
     // 启动下拉编辑
     enableCellDragAndDrop?: boolean;
-
+    width?: number;
+    height?: number;
     /**
      * 右键菜单
      * @param row 当前行的数据
      * @param index 当前第几行，从零开始计数
      */
-    contextMenu?: React.ReactElement
+    contextMenu?: React.ReactElement | OverlayFunc
 }
