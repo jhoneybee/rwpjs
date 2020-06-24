@@ -1,5 +1,5 @@
 import React from 'react'
-import { EditorProps } from 'react-data-grid'
+import { EditorProps, RowsUpdateEvent } from 'react-data-grid'
 import { LiteralUnion } from 'antd/lib/_util/type';
 
 declare const ButtonTypes: ['default', 'primary', 'ghost', 'dashed', 'link', 'text'];
@@ -36,7 +36,7 @@ export interface ButtonProps extends Omit<React.ButtonHTMLAttributes<any>, 'type
     // 是否在点击的时候自动加载loading的状态, 默认为 true
     autoLoading?: boolean
     // 按钮的点击事件
-    onClick?: () => Promise<void> | void
+    onClick?: () => Promise<void>
     // 装载状态
     loading?: boolean
 }
@@ -97,24 +97,33 @@ export interface TableProps<T> {
      */
     loadData: (pageNo: number, pageSize: number, params: Object) => PromiseLike<{
         total: number, datas: T[]
-    }> | { total: number, datas: T[]}
+    }>
 
     // 初始化页面的分页大小, 默认加载50条数据
     pageSize?: number
     // 装载数据的参数
     params?: Object
     // 是否初始化的时候自动装载数据, 默认为 true
-    autoLoadData?: boolean
+    enableInitLoadData?: boolean
     // 启动复制和粘贴
     enableCellCopyPaste?: boolean;
     // 启动下拉编辑
     enableCellDragAndDrop?: boolean;
-    width?: number;
-    height?: number;
+    width?: number
+    height?: number
+
+    // 用户唯一的rowKey
+    rowKey: string
+
     /**
      * 右键菜单
-     * @param row 当前行的数据
-     * @param index 当前第几行，从零开始计数
      */
     contextMenu?: React.ReactElement | OverlayFunc
+
+    /**
+     * 更新数据触发的事件
+     * @param updates 当前更新行的数据
+     * @returns 返回true表示更新,返回false表示取消
+     */
+    onRowsUpdate?: (update: RowsUpdateEvent) => PromiseLike<boolean>
 }

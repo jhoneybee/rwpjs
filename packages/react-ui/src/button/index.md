@@ -138,5 +138,9 @@ export default () => {
 |block      |将按钮宽度调整为其父宽度的选项 | `boolean` | `false`
 |disabled   |按钮失效状态   | `boolean` | `false`
 |onClick    |按钮点击事件   | `() => PromiseLike<void>` &#124; `void` | 
-|autoLoading|是否在点击的时候自动加载loading的状态| `boolean` | `true`
+|enableAutoLoading|是否在点击的时候自动加载loading的状态| `boolean` | `true`
 |loading    |装载状态        | `boolean` | `false`
+
+
+
+> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

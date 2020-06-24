@@ -3,7 +3,6 @@ import { render, fireEvent, act } from '@testing-library/react'
 import { Menu } from 'antd'
 import { Input } from '../index'
 import { Table } from './index';
-import { TableProps } from '../interface'
 
 const getColumns = () => {
     const columns = []
@@ -37,10 +36,11 @@ const getData = (pageNo: number, pageSize: number) => {
     return { datas, total: 0 }
 }
 
-const rootPromiseProps: TableProps<any> = {
+const rootPromiseProps: any = {
     columns: getColumns(),
     width: 500,
     height: 500,
+    rowKey: 'field0',
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     loadData: async (pageNo, pageSize, params) => getData(pageNo, pageSize),
@@ -48,8 +48,7 @@ const rootPromiseProps: TableProps<any> = {
 
 test('test table async load data.', async () => {
     const { findByText, container } = render(<Table<any> {...rootPromiseProps}/>)
-    const fields = await findByText('1-cell-field0-0')
-    fireEvent.dblClick(fields)
+    await findByText('1-cell-field0-0')
     expect(container).toMatchSnapshot()
 })
 
@@ -59,11 +58,33 @@ test('test table editor.', async () => {
         findByDisplayValue,
         container,
     } = render(<Table<any> {...rootPromiseProps}/>)
-    const fields = await findByText('1-cell-field0-0')
-    await fireEvent.dblClick(fields)
-    const editor = await findByDisplayValue('1-cell-field0-0')
-    fireEvent.change(editor, { target: { value: 'change-1-cell-field0-0' } })
-    fireEvent.blur(editor)
+    let editor;
+    await act(async () => {
+        const fields = await findByText('1-cell-field0-0')
+        await fireEvent.dblClick(fields)
+        editor = await findByDisplayValue('1-cell-field0-0')
+        fireEvent.change(editor, { target: { value: 'change-1-cell-field0-0' } })
+        fireEvent.blur(editor)
+    })
+    expect(editor).toBeInstanceOf(Element)
+    expect(container).toMatchSnapshot()
+})
+
+test('test table editor false.', async () => {
+    rootPromiseProps.onRowsUpdate = async () => false
+    const {
+        findByText,
+        findByDisplayValue,
+        container,
+    } = render(<Table<any> {...rootPromiseProps}/>)
+    let editor;
+    await act(async () => {
+        const fields = await findByText('1-cell-field0-0')
+        await fireEvent.dblClick(fields)
+        editor = await findByDisplayValue('1-cell-field0-0')
+        fireEvent.change(editor, { target: { value: 'change-1-cell-field0-0' } })
+        fireEvent.blur(editor)
+    })
     expect(editor).toBeInstanceOf(Element)
     expect(container).toMatchSnapshot()
 })
