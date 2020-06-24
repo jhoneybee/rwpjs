@@ -14,20 +14,6 @@ exports[`test button async click . 1`] = `
 </div>
 `;
 
-exports[`test button click . 1`] = `
-<div>
-  <button
-    ant-click-animating-without-extra-node="false"
-    class="ant-btn"
-    type="button"
-  >
-    <span>
-      click
-    </span>
-  </button>
-</div>
-`;
-
 exports[`test button no auto loading 1`] = `
 <div>
   <button
@@ -39,14 +25,5 @@ exports[`test button no auto loading 1`] = `
       click
     </span>
   </button>
-</div>
-`;
-
-exports[`test button no click 1`] = `
-<div>
-  <button
-    class="ant-btn"
-    type="button"
-  />
 </div>
 `;

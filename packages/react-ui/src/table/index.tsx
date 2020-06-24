@@ -3,7 +3,6 @@ import ReactDataGrid, { EditorProps, Cell, RowRendererProps, Row, DataGridHandle
 import { Spin, Dropdown } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 import { TableProps, OverlayFunc } from '../interface'
-import { isPromise } from '../utils'
 import { reducer, initialState, State, Action } from './reducer'
 import { Input } from '../index'
 
@@ -18,47 +17,6 @@ interface IContextProps{
 
 const TableContext = React.createContext({} as IContextProps);
 
-// 装载数据
-const loadDataFun = async (
-    pageSize: number,
-    param: Object,
-    loadData: (
-        pageNo: number,
-        pageSize: number,
-        params: Object,
-    ) => PromiseLike<{
-        total: number, datas: any[]
-    }> | { total: number, datas: any[]},
-    dispatch: Dispatch<Action<any>>,
-    state: State<any>,
-) => {
-    await dispatch({
-        type: 'SET_LOADING',
-        payload: {
-            loading: true,
-        },
-    })
-    const res = loadData(state.pageNo, pageSize, param)
-    if (isPromise(res)) {
-        const resp = await (res as PromiseLike<{ total: number, datas: any[]}>)
-        await dispatch({
-            type: 'SET_ADD_ROWS',
-            payload: {
-                rows: resp,
-                loading: false,
-            },
-        })
-    } else if (res) {
-        await dispatch({
-            type: 'SET_ADD_ROWS',
-            payload: {
-                rows: res as { total: number, datas: any[]},
-                loading: false,
-            },
-        })
-    }
-}
-
 interface CustomEditorProps{
     node: React.ReactNode
     extProps: EditorProps<any, any, unknown>
@@ -66,11 +24,9 @@ interface CustomEditorProps{
 
 const CustomEditor = React.forwardRef((props: CustomEditorProps, ref) => {
     const [value, setValue] = useState(props.extProps.value)
-    const inputRef = useRef<HTMLElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
     useImperativeHandle(ref, () => ({
-        getValue: () => ({
-            [props.extProps.column.key]: value,
-        }),
+        getValue: () => ({ [props.extProps.column.key]: value }),
         getInputNode: () => inputRef.current,
     }))
 
@@ -135,10 +91,31 @@ const DropdownRow = ({ rowProps, contextMenu }: DropdownRowProps<any>) => (
 
 export function Table<T> (props: TableProps<T>) {
     const [state, dispatch] = useReducer(reducer, initialState);
+
+    /**
+     * 装载表格数据
+     */
+    const loadDataFun = async () => {
+        await dispatch({
+            type: 'SET_LOADING',
+            payload: {
+                loading: true,
+            },
+        })
+        const res = props.loadData(state.pageNo, props.pageSize!, props.params!)
+        const resp = await (res as PromiseLike<{ total: number, datas: T[]}>)
+        await dispatch({
+            type: 'SET_ADD_ROWS',
+            payload: {
+                rows: resp,
+                loading: false,
+            },
+        })
+    }
     useEffect(() => {
         // 装载数据
-        if (props.autoLoadData) {
-            loadDataFun(props.pageSize!, props.params!, props.loadData, dispatch, state)
+        if (props.enableInitLoadData) {
+            loadDataFun()
         }
     }, [])
 
@@ -160,9 +137,7 @@ export function Table<T> (props: TableProps<T>) {
                     const domRef = useRef<any>(null);
                     // eslint-disable-next-line react-hooks/rules-of-hooks
                     useImperativeHandle(ref, () => ({
-                        getValue: () => ({
-                            [eProps.column.key]: domRef.current.getValue(),
-                        }),
+                        getValue: () => domRef.current.getValue(),
                         getInputNode: () => domRef.current.getInputNode(),
                     }))
                     return <CustomEditor ref={domRef} node={TempEditor} extProps={eProps}/>
@@ -179,22 +154,16 @@ export function Table<T> (props: TableProps<T>) {
                     <ReactDataGrid
                         ref={gridRef}
                         columns={columns}
-                        rows={state.rows.datas as T[]}
+                        rows={state.datas as T[]}
                         onScroll={e => {
                             const target = e.currentTarget
                             if (
                                 target.scrollTop + target.clientHeight + 2 > target.scrollHeight
                                 &&
-                                state.rows.datas.length > 0
+                                state.datas.length > 0
                             ) {
-                                const rowLength = state.rows.datas.length
-                                loadDataFun(
-                                    props.pageSize!,
-                                    props.params!,
-                                    props.loadData,
-                                    dispatch,
-                                    state,
-                                ).then(() => {
+                                const rowLength = state.datas.length
+                                loadDataFun().then(() => {
                                     gridRef.current!.scrollToRow(rowLength)
                                 })
                             }
@@ -215,6 +184,17 @@ export function Table<T> (props: TableProps<T>) {
                             }
                             return <Row {...rowProps}/>
                         }}
+                        onRowsUpdate={e => {
+                            props.onRowsUpdate!(e).then(result => {
+                                // 如果更新成功,则更新表格当前的数据
+                                if (result) {
+                                    dispatch({
+                                        type: 'SET_OP_DATA',
+                                        payload: e,
+                                    })
+                                }
+                            })
+                        }}
                     />
                 </Spin>
             </TableContext.Provider>
@@ -225,15 +205,16 @@ export function Table<T> (props: TableProps<T>) {
         props.enableCellCopyPaste,
         props.enableCellDragAndDrop,
         state.loading,
-        state.rows,
+        state.datas,
     ])
 }
 
 Table.defaultProps = {
     pageSize: 50,
     params: {},
-    autoLoadData: true,
+    enableInitLoadData: true,
     enableCellCopyPaste: true,
     enableCellAutoFocus: true,
     enableCellDragAndDrop: true,
+    onRowsUpdate: async () => true,
 }
