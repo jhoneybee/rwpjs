@@ -86,12 +86,21 @@ export default () => {
 
 ### Table 表格
 
+<<<<<<< HEAD
 | 参数      | 说明       | 类型     | 
 | ---      | ---        | ---     | --- |
 |loadData  | 装载数据   |`(pageNo: number, pageSize: number, params: Object) => PromiseLike<{total: number, datas: T[]}>`
 |pageSize  | 初始化页面的分页大小| `number` 
 |params    | 装载数据的参数      | `Object` 
 |enableInitLoadData| 是否初始化的时候自动装载数据 | `boolean` 
+=======
+| 参数      | 说明       | 类型     | 默认值 |
+| ---      | ---        | ---     | --- |
+|loadData  | 装载数据   |`(pageNo: number, pageSize: number, params: Object) => PromiseLike<{total: number, datas: T[]}>`| 无
+|pageSize  | 初始化页面的分页大小| `number` | `50`
+|params    | 装载数据的参数      | `Object` | `{}`
+|enableInitLoadData| 是否初始化的时候自动装载数据 | `boolean` | `true`
+>>>>>>> cc5db70a6d90096694f444336891c75b20fcaa3a
 |enableCellCopyPaste| 启动复制和粘贴 | `boolean` | `true`
 |enableCellDragAndDrop| 启动下拉编辑 | `boolean` | `true`
 |width | 表格的宽度 | `number` |

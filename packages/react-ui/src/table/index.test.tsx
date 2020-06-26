@@ -2,7 +2,7 @@ import React from 'react'
 import { render, fireEvent, act } from '@testing-library/react'
 import { Menu } from 'antd'
 import { Input } from '../index'
-import { Table } from './index';
+import { Table } from './index'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const NoFocusInput = React.forwardRef((props: any, ref) => <Input {...props}/>)

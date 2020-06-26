@@ -226,4 +226,5 @@ Table.defaultProps = {
     enableCellCopyPaste: true,
     enableCellAutoFocus: true,
     enableCellDragAndDrop: true,
+    onRowsUpdate: async () => true,
 }
