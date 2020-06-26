@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useReducer, Dispatch, useImperativeHandle, useState, useContext, useMemo } from 'react'
-import ReactDataGrid, { EditorProps, Cell, RowRendererProps, Row, DataGridHandle, Column } from 'react-data-grid'
+import ReactDataGrid, { EditorProps, Cell, RowRendererProps, Row, DataGridHandle, Column } from 'react-data-grid-temp'
 import { Spin, Dropdown } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 import { TableProps, OverlayFunc } from '../interface'
@@ -7,7 +7,7 @@ import { reducer, initialState, State, Action } from './reducer'
 import { Input } from '../index'
 
 
-import 'react-data-grid/dist/react-data-grid.css'
+import 'react-data-grid-temp/dist/react-data-grid.css'
 import './style/index.less'
 
 interface IContextProps{
@@ -187,6 +187,7 @@ export function Table<T> (props: TableProps<T>) {
                         width={props.width}
                         height={props.height}
                         enableCellCopyPaste={props.enableCellCopyPaste}
+                        sortDirection={props.sortDirection}
                         enableCellDragAndDrop={props.enableCellDragAndDrop}
                         rowRenderer={(rowProps: RowRendererProps<T, unknown>) => {
                             if (props.contextMenu) {
@@ -199,6 +200,7 @@ export function Table<T> (props: TableProps<T>) {
                             }
                             return <Row {...rowProps}/>
                         }}
+                        onSort={props.onSort}
                         onRowsUpdate={e => {
                             dispatch({
                                 type: 'SET_OP_DATA',
@@ -210,6 +212,7 @@ export function Table<T> (props: TableProps<T>) {
             </TableContext.Provider>
         )
     }, [
+        props.sortDirection,
         props.contextMenu,
         props.columns,
         props.enableCellCopyPaste,
@@ -222,9 +225,11 @@ export function Table<T> (props: TableProps<T>) {
 Table.defaultProps = {
     pageSize: 50,
     params: {},
+    sortDirection: [],
     enableInitLoadData: true,
     enableCellCopyPaste: true,
     enableCellAutoFocus: true,
     enableCellDragAndDrop: true,
     onRowsUpdate: async () => true,
+    onSort: () => {},
 }

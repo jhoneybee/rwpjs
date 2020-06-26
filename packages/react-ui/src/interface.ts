@@ -1,5 +1,5 @@
 import React from 'react'
-import { EditorProps, DataGridHandle, Column } from 'react-data-grid'
+import { EditorProps, DataGridHandle, Column, SortColumn, SortDirection } from 'react-data-grid-temp'
 import { LiteralUnion } from 'antd/lib/_util/type';
 
 declare const ButtonTypes: ['default', 'primary', 'ghost', 'dashed', 'link', 'text'];
@@ -116,7 +116,7 @@ export interface TableProps<T> {
     enableCellDragAndDrop?: boolean
     width?: number
     height?: number
-
+    sortDirection?: SortColumn[]
     // 用户唯一的rowKey
     rowKey: string
 
@@ -129,4 +129,9 @@ export interface TableProps<T> {
      * 表格组件
      */
     table?: React.MutableRefObject<TableHandle<T> | null>
+
+    /**
+     * 排序时触发的事件
+     */
+    onSort?: (columnKey: string, direction: SortDirection) => void;
 }

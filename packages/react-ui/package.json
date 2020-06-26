@@ -11,22 +11,21 @@
     "lint:script": "eslint ./src/**/*.{js,jsx,ts,tsx}",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "umi-test",
-    "test:coverage": "umi-test --coverage",
-    "commit": "npm run lint:script && npm run test"
+    "test:coverage": "umi-test --coverage"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",
   "husky": {
     "hooks": {
-      "pre-commit": "npm run commit"
+      "pre-commit": "npm run lint:script && npm run test"
     }
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
     "antd": "^4.3.4",
     "react": "^16.12.0",
-    "react-data-grid": "^7.0.0-canary.17"
+    "react-data-grid-temp": "^7.0.0-canary.17"
   },
   "devDependencies": {
     "@testing-library/react": "^10.3.0",

@@ -1,5 +1,5 @@
 
-import { Column, RowsUpdateEvent } from 'react-data-grid'
+import { Column, RowsUpdateEvent } from 'react-data-grid-temp'
 
 export interface State<T> {
     total: number,
