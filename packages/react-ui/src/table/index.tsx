@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useReducer, Dispatch, useImperativeHandle, useState, useContext, useMemo } from 'react'
-import ReactDataGrid, { EditorProps, Cell, RowRendererProps, Row, DataGridHandle } from 'react-data-grid'
+import ReactDataGrid, { EditorProps, Cell, RowRendererProps, Row, DataGridHandle, Column } from 'react-data-grid'
 import { Spin, Dropdown } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 import { TableProps, OverlayFunc } from '../interface'
@@ -40,7 +40,6 @@ const CustomEditor = React.forwardRef((props: CustomEditorProps, ref) => {
     return <props.node
         ref={inputRef}
         style={{ height: props.extProps.height + 2 }}
-        onBlur={() => props.extProps.onCommit()}
         value={value}
         onChange={(changeValue: string) => setValue(changeValue)}
     />
@@ -112,14 +111,30 @@ export function Table<T> (props: TableProps<T>) {
             },
         })
     }
+    const gridRef = useRef<DataGridHandle>(null)
+
+    const { table, enableInitLoadData } = props
     useEffect(() => {
         // 装载数据
-        if (props.enableInitLoadData) {
+        if (enableInitLoadData) {
             loadDataFun()
         }
     }, [])
 
-    const gridRef = useRef<DataGridHandle>(null)
+    useEffect(() => {
+        if (table && gridRef.current) {
+            table.current = {
+                scrollToColumn: gridRef.current.scrollToColumn,
+                scrollToRow: gridRef.current.scrollToRow,
+                selectCell: gridRef.current.selectCell,
+                rightContext: () => ({
+                    row: state.contextMenu!.row as T,
+                    rowIdx: state.contextMenu!.rowIdx as number,
+                    column: state.contextMenu!.column as Column<T>,
+                }),
+            }
+        }
+    }, [state.contextMenu])
 
     return useMemo(() => {
         const columns = props.columns.map((element => {
@@ -185,14 +200,9 @@ export function Table<T> (props: TableProps<T>) {
                             return <Row {...rowProps}/>
                         }}
                         onRowsUpdate={e => {
-                            props.onRowsUpdate!(e).then(result => {
-                                // 如果更新成功,则更新表格当前的数据
-                                if (result) {
-                                    dispatch({
-                                        type: 'SET_OP_DATA',
-                                        payload: e,
-                                    })
-                                }
+                            dispatch({
+                                type: 'SET_OP_DATA',
+                                payload: e,
                             })
                         }}
                     />
@@ -216,5 +226,4 @@ Table.defaultProps = {
     enableCellCopyPaste: true,
     enableCellAutoFocus: true,
     enableCellDragAndDrop: true,
-    onRowsUpdate: async () => true,
 }

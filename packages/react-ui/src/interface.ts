@@ -1,5 +1,5 @@
 import React from 'react'
-import { EditorProps, RowsUpdateEvent } from 'react-data-grid'
+import { EditorProps, DataGridHandle, Column } from 'react-data-grid'
 import { LiteralUnion } from 'antd/lib/_util/type';
 
 declare const ButtonTypes: ['default', 'primary', 'ghost', 'dashed', 'link', 'text'];
@@ -81,7 +81,12 @@ export interface ColumnProps<T> {
 
 export declare type OverlayFunc = () => React.ReactElement;
 
-export interface TableHandle {
+// 表格的 Handle 事件
+export interface TableHandle<T> extends DataGridHandle {
+    /**
+     * 获取当前右键的上下文
+     */
+    rightContext: () => { row: T, rowIdx: number, column: Column<T> }
 }
 
 export interface TableProps<T> {
@@ -106,9 +111,9 @@ export interface TableProps<T> {
     // 是否初始化的时候自动装载数据, 默认为 true
     enableInitLoadData?: boolean
     // 启动复制和粘贴
-    enableCellCopyPaste?: boolean;
+    enableCellCopyPaste?: boolean
     // 启动下拉编辑
-    enableCellDragAndDrop?: boolean;
+    enableCellDragAndDrop?: boolean
     width?: number
     height?: number
 
@@ -121,9 +126,7 @@ export interface TableProps<T> {
     contextMenu?: React.ReactElement | OverlayFunc
 
     /**
-     * 更新数据触发的事件
-     * @param updates 当前更新行的数据
-     * @returns 返回true表示更新,返回false表示取消
+     * 表格组件
      */
-    onRowsUpdate?: (update: RowsUpdateEvent) => PromiseLike<boolean>
+    table?: React.MutableRefObject<TableHandle<T> | null>
 }

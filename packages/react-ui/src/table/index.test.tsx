@@ -4,6 +4,9 @@ import { Menu } from 'antd'
 import { Input } from '../index'
 import { Table } from './index';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const NoFocusInput = React.forwardRef((props: any, ref) => <Input {...props}/>)
+
 const getColumns = () => {
     const columns = []
     for (let i = 0; i < 6; i += 1) {
@@ -17,6 +20,30 @@ const getColumns = () => {
     }
     return columns
 }
+
+const getColumnsNoFocus = () => {
+    const columns = []
+    for (let i = 0; i < 6; i += 1) {
+        if (i === 0) {
+            columns.push({
+                name: `field${i}`,
+                title: `字段-${i}`,
+                width: 120,
+                editable: true,
+            })
+        } else {
+            columns.push({
+                name: `field${i}`,
+                title: `字段-${i}`,
+                width: 120,
+                editable: true,
+                editor: NoFocusInput,
+            })
+        }
+    }
+    return columns
+}
+
 
 const getData = (pageNo: number, pageSize: number) => {
     const datas: any[] = []
@@ -61,7 +88,7 @@ test('test table editor.', async () => {
     let editor;
     await act(async () => {
         const fields = await findByText('1-cell-field0-0')
-        await fireEvent.dblClick(fields)
+        fireEvent.dblClick(fields)
         editor = await findByDisplayValue('1-cell-field0-0')
         fireEvent.change(editor, { target: { value: 'change-1-cell-field0-0' } })
         fireEvent.blur(editor)
@@ -70,8 +97,27 @@ test('test table editor.', async () => {
     expect(container).toMatchSnapshot()
 })
 
+test('test table no focus editor.', async () => {
+    rootPromiseProps.columns = getColumnsNoFocus()
+    const {
+        findByText,
+        findByDisplayValue,
+        container,
+    } = render(<Table<any> {...rootPromiseProps}/>)
+    let editor;
+    await act(async () => {
+        const fields = await findByText('1-cell-field0-0')
+        fireEvent.dblClick(fields)
+        editor = await findByDisplayValue('1-cell-field0-0')
+        fireEvent.change(editor, { target: { value: 'change-1-cell-field0-0' } })
+        fireEvent.blur(editor)
+    })
+    expect(editor).toBeInstanceOf(Element)
+    expect(container).toMatchSnapshot()
+})
+
+
 test('test table editor false.', async () => {
-    rootPromiseProps.onRowsUpdate = async () => false
     const {
         findByText,
         findByDisplayValue,
@@ -86,15 +132,6 @@ test('test table editor false.', async () => {
         fireEvent.blur(editor)
     })
     expect(editor).toBeInstanceOf(Element)
-    expect(container).toMatchSnapshot()
-})
-
-test('test table sync load data.', async () => {
-    // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    rootPromiseProps.loadData = (pageNo, pageSize, params) => getData(pageNo, pageSize)
-    const { findByText, container } = render(<Table<any> {...rootPromiseProps}/>)
-    await findByText('1-cell-field0-0')
     expect(container).toMatchSnapshot()
 })
 
@@ -125,4 +162,16 @@ test('test table infinite scrolling.', async () => {
         })
     })
     expect(container).toMatchSnapshot()
+})
+
+test('test table props table.', async () => {
+    rootPromiseProps.table = React.createRef()
+    const { findByText, container } = render(<Table<any> {...rootPromiseProps}/>)
+    await findByText('1-cell-field0-0')
+    expect(container).toMatchSnapshot()
+})
+
+test('test table no enable init load data.', async () => {
+    rootPromiseProps.enableInitLoadData = false
+    render(<Table<any> {...rootPromiseProps}/>)
 })

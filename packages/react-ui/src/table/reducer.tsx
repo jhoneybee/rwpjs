@@ -1,5 +1,5 @@
 
-import { CalculatedColumn, RowsUpdateEvent } from 'react-data-grid'
+import { Column, RowsUpdateEvent } from 'react-data-grid'
 
 export interface State<T> {
     total: number,
@@ -8,7 +8,7 @@ export interface State<T> {
     contextMenu?: {
         row: T,
         rowIdx: number,
-        column: CalculatedColumn<any, unknown>
+        column: Column<any, unknown>
     },
     // 是否在加载数据
     loading: boolean,
