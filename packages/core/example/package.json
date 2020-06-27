@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "rwp --dev",
+    "build": "rwp --build",
+    "analyzer": "rwp --analyzer",
+    "watch": "rwp --watch"
+  },
+  "dependencies": {
+    "@rwp/core": "file:../"
+  }
+}

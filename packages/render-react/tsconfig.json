@@ -3,7 +3,6 @@
         "./src",
     ],
     "exclude":[
-        "./src/template",
         "node_modules/**"
     ],
     "esModuleInterop": true,
