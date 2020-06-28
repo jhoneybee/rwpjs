@@ -1,14 +1,15 @@
 {
     "include": [
-        "./src",
+        "src/**/*"
     ],
-    "exclude":[
-        "node_modules/**"
+    "exclude": [
+        "./src/template",
+        "node_modules",
     ],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "compilerOptions": {
         "target": "es5",
-        "allowJs": true
-    }
+        "resolveJsonModule": true
+    },
 }

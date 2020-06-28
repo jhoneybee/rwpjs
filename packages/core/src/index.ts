@@ -34,12 +34,21 @@ const argv = yargs.options({
 
 const configPath = join(process.cwd(), '.rwp.js')
 
+const loadRender = (config: any, state: string) => {
+    const name = Object.keys(getDependenciesRender())[0]
+    const render = require(`${process.cwd()}/node_modules/${name}`)
+    if(typeof(render.default) !== 'function') {
+        throw new Error(`renderer format error, it should be a function. [${name}]`)
+    }
+    return render.default({ config , state})
+}
+
 if (argv.dev) {
     import(configPath).then((config) => {
-        const compiler = Webpack(getConfig({
+        const compiler = Webpack(loadRender(getConfig({
             config,
             state: 'dev'
-        }))
+        }), 'dev'))
         const server = new WebpackDevServer(compiler, config.devServer);
         server.listen(Number.parseInt(config.devServer.port))
     })
@@ -47,20 +56,20 @@ if (argv.dev) {
 
 if (argv.build) {
     import(configPath).then((config) => {
-        const compiler = Webpack(getConfig({
+        const compiler = Webpack(loadRender(getConfig({
             config,
             state: 'build'
-        }))
+        }), 'dev'))
         compiler.run((err, stat) => { })
     })
 }
 
 if (argv.analyzer) {
     import(configPath).then((config) => {
-        const compiler = Webpack(getConfig({
+        const compiler = Webpack(loadRender(getConfig({
             config,
             state: 'analyzer'
-        }))
+        }), 'dev'))
         const server = new WebpackDevServer(compiler, config.devServer);
         server.listen(Number.parseInt(config.devServer.port))
     })
@@ -68,10 +77,10 @@ if (argv.analyzer) {
 
 if (argv.watch) {
     import(configPath).then((config) => {
-        const compiler = Webpack(getConfig({
+        const compiler = Webpack(loadRender(getConfig({
             config,
             state: 'watch'
-        }))
+        }), 'watch'))
         compiler.watch({
             aggregateTimeout: 300,
             poll: undefined

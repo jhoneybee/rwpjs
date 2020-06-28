@@ -1,12 +1,11 @@
 {
   "name": "@rwp/core",
-  "version": "0.0.21-alpha.0",
+  "version": "0.0.22-alpha.0",
   "description": "",
   "main": "./lib/index.js",
   "author": "zhangj",
   "scripts": {
-    "build": "gulp build-ts",
-    "test": "jest"
+    "build": "gulp build-ts"
   },
   "license": "GPL-3.0",
   "bin": {
@@ -47,8 +46,7 @@
     "@types/yargs": "^15.0.5",
     "gulp": "~4.0.2",
     "gulp-typescript": "~6.0.0-alpha.1",
-    "typescript": "~3.9.5",
-    "jest": "~26.1.0"
+    "typescript": "~3.9.5"
   },
   "bugs": {
     "url": "https://github.com/jhoneybee/rwpjs/issues"
