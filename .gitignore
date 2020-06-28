@@ -1,4 +1,6 @@
 /**/node_modules
 /**/lib
 lerna-debug.log
-/**/**/package-lock.json
+packages/core/package-lock.json
+packages/react-ui/package-lock.json
+packages/render-react/package-lock.json
