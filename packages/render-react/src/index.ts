@@ -2,9 +2,6 @@ import { join } from 'path'
 import { copyFileSync, existsSync, mkdirSync } from 'fs'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 
-
-
-
 // 初始化webpack相关的信息
 export default ({ config }) => {
     const tempConfig = config

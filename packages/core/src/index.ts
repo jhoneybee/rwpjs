@@ -59,7 +59,7 @@ import(configPath).then((config) => {
 
         if (argv.dev || argv.analyzer) {
             const server = new WebpackDevServer(compiler, {
-                host: '0.0.0.0'
+                host: '127.0.0.1'
             });
             server.listen(8000)
         }

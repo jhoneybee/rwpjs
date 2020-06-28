@@ -52,13 +52,7 @@ const getTemplateConfig = (): Configuration => {
                 test: /\.ts(x?)$/,
                 exclude: /node_modules/,
                 use: [
-                    babelLoader,
-                    {
-                        loader: 'ts-loader',
-                        options: {
-                            configFile: join(getProjectDir(), 'tsconfig.json')
-                        }
-                    }
+                    babelLoader
                 ]
             },
             ]

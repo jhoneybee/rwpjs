@@ -8,9 +8,6 @@
   },
   "dependencies": {
     "@rwp/core": "file:../../core/",
-    "@rwp/render-react": "file:..",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "ts-loader": "^7.0.5"
+    "@rwp/render-react": "file:.."
   }
 }
