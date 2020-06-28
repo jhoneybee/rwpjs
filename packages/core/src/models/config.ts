@@ -17,7 +17,7 @@ const getTemplateConfig = (): Configuration => {
         entry: join(process.cwd(), 'src', 'pages', '.rwp', 'rwp.tsx'),
         context: getProjectDir(),
         output: {
-            filename: 'rwp.js',
+            filename: 'rwp.bundle.js',
             path: join(getProjectDir(), 'dist')
         },
         module: {
