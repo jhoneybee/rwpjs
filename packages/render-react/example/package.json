@@ -9,7 +9,8 @@
   "dependencies": {
     "@rwp/core": "file:../../core/",
     "@rwp/render-react": "file:..",
-    "antd": "^4.2.3",
-    "kotomi-ui": "^1.12.38"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "ts-loader": "^7.0.5"
   }
 }

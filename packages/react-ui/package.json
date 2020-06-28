@@ -40,5 +40,13 @@
     "lint-staged": "^10.0.7",
     "prettier": "^1.19.1",
     "react-test-renderer": "^16.9.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/jhoneybee/rwpjs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jhoneybee/rwpjs"
+  },
+  "gitHead": "f873461cc510db24c8d155036cf2760b16c49465"
 }

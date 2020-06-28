@@ -1,4 +1,3 @@
-import * as merge from 'webpack-merge'
 import { Config } from '../interface' 
 /**
  * 获取项目的根目录
@@ -9,7 +8,7 @@ export const getProjectDir = () => process.cwd()
  * 获取当前项目的开发Dependencies目录
  */
 export const getDependencies = (regular: RegExp ) => {
-    const dependencies = require(`${process.cwd()}/package.json`)
+    const dependencies = require(`${process.cwd()}/package.json`).dependencies
     const plugin = {}
     // 过滤依赖信息，获取当前符合条件的依赖
     Object.keys(dependencies).forEach((key) => {
@@ -34,10 +33,30 @@ export const getDependenciesRender = () => {
     return render
 }
 
-export const defaultConfig = (config: Config): Config => (merge({
-    target: 'web',
-    extraStylePluginImport: [],
-    devServer: {
-        port: 8000
+export const defaultConfig = (config: Config): Config => {
+    const defConfig = {
+        target: 'web',
+        extraStylePluginImport: [],
+        devServer: {
+            port: 8000
+        }
     }
-},config))
+
+    if(config.target === undefined){
+        config.target = defConfig.target
+    }
+
+    if(config.extraStylePluginImport === undefined){
+        config.extraStylePluginImport = defConfig.extraStylePluginImport
+    }
+    
+    if(config.devServer === undefined){
+        config.devServer = defConfig.devServer
+    }
+
+    if(config.devServer.port === undefined){
+        config.devServer.port = defConfig.devServer.port
+    }
+
+    return config
+}

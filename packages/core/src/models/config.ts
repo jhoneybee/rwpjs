@@ -10,11 +10,22 @@ import { getProjectDir } from './utils'
 
 
 const getTemplateConfig = (): Configuration => {
+    const babelLoader = {
+        loader: "babel-loader",
+        options: {
+            sourceType: 'unambiguous',
+            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+            plugins: [
+                '@babel/plugin-transform-runtime',
+                '@babel/plugin-proposal-class-properties',
+                '@babel/plugin-proposal-object-rest-spread',
+            ]
+        },
+    }
     return {
         resolve: {
-            extensions: ['.ts', '.tsx'],
+            extensions: ['.ts', '.tsx', '.js'],
         },
-        entry: join(process.cwd(), 'src', 'pages', '.rwp', 'rwp.tsx'),
         context: getProjectDir(),
         output: {
             filename: 'rwp.bundle.js',
@@ -38,21 +49,18 @@ const getTemplateConfig = (): Configuration => {
                         }
                     }
                 }]
-            },{
-                loader: "babel-loader",
-                test: /\.(ts)x?$/,
-                include: [
-                    join(getProjectDir(), 'src'),
-                ],
-                options: {
-                    sourceType: 'unambiguous',
-                    presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
-                    plugins: [
-                        '@babel/plugin-transform-runtime',
-                        '@babel/plugin-proposal-class-properties',
-                        '@babel/plugin-proposal-object-rest-spread',
-                    ]
-                },
+            }, {
+                test: /\.ts(x?)$/,
+                exclude: /node_modules/,
+                use: [
+                    babelLoader,
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            configFile: join(getProjectDir(), 'tsconfig.json')
+                        }
+                    }
+                ]
             },
             ]
         },
@@ -76,13 +84,13 @@ const getBuildConfig = (config: Config) => {
     }
 
     const babelLoader = template.module!.rules!.find(ele => ele.loader === 'babel-loader')
-    // @ts-ignore
-    const plugins = babelLoader!.options!.plugins
+    // // @ts-ignore
+    // const plugins = babelLoader!.options!.plugins
 
-    // see https://github.com/ant-design/babel-plugin-import
-    if (config.extraStylePluginImport && config.extraStylePluginImport.length > 0) {
-        plugins.push(['import', ...config.extraStylePluginImport])
-    }
+    // // see https://github.com/ant-design/babel-plugin-import
+    // if (config.extraStylePluginImport && config.extraStylePluginImport.length > 0) {
+    //     plugins.push(['import', ...config.extraStylePluginImport])
+    // }
 
     return template
 }
@@ -98,13 +106,13 @@ const getDevConfig = (config: Config) => {
     template.mode = 'development'
     template.plugins = [new WebpackBar()]
     const babelLoader = template.module!.rules!.find(ele => ele.loader === 'babel-loader')
-    // @ts-ignore
-    const plugins = babelLoader!.options!.plugins
+    // // @ts-ignore
+    // const plugins = babelLoader!.options!.plugins
 
-    // see https://github.com/ant-design/babel-plugin-import
-    if (config.extraStylePluginImport && config.extraStylePluginImport.length > 0) {
-        plugins.push(['import', ...config.extraStylePluginImport])
-    }
+    // // see https://github.com/ant-design/babel-plugin-import
+    // if (config.extraStylePluginImport && config.extraStylePluginImport.length > 0) {
+    //     plugins.push(['import', ...config.extraStylePluginImport])
+    // }
     return template
 }
 

@@ -2,9 +2,9 @@
   "name": "@rwp/render-react",
   "version": "0.0.38-alpha.0",
   "description": "",
-  "main": "lib/bootstrap.js",
+  "main": "lib/index.js",
   "scripts": {
-    "build": "gulp build-ts && gulp copy-template",
+    "build": "gulp build-ts",
     "test": "jest"
   },
   "author": "zhangj",

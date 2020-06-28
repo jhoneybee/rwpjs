@@ -42,59 +42,48 @@ const loadRender = (config: any, state: string) => {
     }
     return render.default({ config , state})
 }
+let state: 'dev' | 'build' | 'analyzer' | 'watch' = 'dev';
 
-if (argv.dev) {
-    import(configPath).then((config) => {
-        const compiler = Webpack(loadRender(getConfig({
-            config,
-            state: 'dev'
-        }), 'dev'))
-        const server = new WebpackDevServer(compiler, config.devServer);
-        server.listen(Number.parseInt(config.devServer.port))
-    })
-}
+if(argv.dev) state = 'dev'
+if(argv.build) state = 'build'
+if(argv.analyzer) state = 'analyzer'
+if(argv.watch) state = 'watch'
 
-if (argv.build) {
-    import(configPath).then((config) => {
-        const compiler = Webpack(loadRender(getConfig({
-            config,
-            state: 'build'
-        }), 'dev'))
+import(configPath).then((config) => {
+    const wConfig = loadRender(getConfig({
+        config,
+        state,
+    }),state)    
+    const compiler = Webpack(wConfig)
+    
+    if (argv.dev || argv.analyzer) {
+        const server = new WebpackDevServer(compiler, {
+            host: '0.0.0.0'
+        });
+        server.listen(8000)
+    }
+    
+    if (argv.build) {
+        const compiler = Webpack(wConfig)
         compiler.run((err, stat) => { })
-    })
-}
+    }
+    
 
-if (argv.analyzer) {
-    import(configPath).then((config) => {
-        const compiler = Webpack(loadRender(getConfig({
-            config,
-            state: 'analyzer'
-        }), 'dev'))
-        const server = new WebpackDevServer(compiler, config.devServer);
-        server.listen(Number.parseInt(config.devServer.port))
-    })
-}
-
-if (argv.watch) {
-    import(configPath).then((config) => {
-        const compiler = Webpack(loadRender(getConfig({
-            config,
-            state: 'watch'
-        }), 'watch'))
+    if (argv.watch) {
         compiler.watch({
             aggregateTimeout: 300,
             poll: undefined
         }, (err, stats) => {
         });
-    })
-}
-
-// 当前使用的插件
-if (argv.plugin) {
-    const render = getDependenciesRender()
-    console.log('+- render')
-    Object.keys(render).forEach(key => {
-        console.log(`+- ${key}@${render[key]}`)
-    });
-}
+    }
+    
+    // 当前使用的插件
+    if (argv.plugin) {
+        const render = getDependenciesRender()
+        console.log('+- render')
+        Object.keys(render).forEach(key => {
+            console.log(`+- ${key}@${render[key]}`)
+        });
+    }
+})    
 
