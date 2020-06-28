@@ -52,9 +52,10 @@
     "@types/node": "~12.12.6 ",
     "@types/yargs": "^15.0.5",
     "@umijs/fabric": "^2.1.1",
+    "eslint": "^7.3.1",
     "gulp": "~4.0.2",
-    "husky": "~4.2.5",
     "gulp-typescript": "~6.0.0-alpha.1",
+    "husky": "~4.2.5",
     "typescript": "~3.9.5"
   },
   "bugs": {
