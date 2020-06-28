@@ -1,6 +1,6 @@
 {
   "name": "@rwp/core",
-  "version": "0.0.36-alpha.0",
+  "version": "0.0.37-alpha.0",
   "description": "",
   "main": "./lib/index.js",
   "author": "zhangj",
