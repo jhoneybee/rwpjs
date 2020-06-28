@@ -1,14 +1,14 @@
-import React, { Suspense, useEffect } from "react";
+import React/* , { Suspense, useEffect } */ from "react";
 import ReactDOM from 'react-dom';
 
 import {
     HashRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
 } from "react-router-dom";
-import nprogress from 'nprogress'
-import 'nprogress/nprogress.css'
+
+// import nprogress from 'nprogress'
+// import 'nprogress/nprogress.css'
 
 
 const routes = []
@@ -39,16 +39,15 @@ const RouteComponent = (components) => (
 )
 
 
-const Loading = () => {
-    useEffect(()=>{
-        nprogress.start()
-        return () => {
-            nprogress.done()
-        }
-    }, [])
-    return <span />
-}
-
+// const Loading = () => {
+//     useEffect(()=>{
+//         nprogress.start()
+//         return () => {
+//             nprogress.done()
+//         }
+//     }, [])
+//     return <span />
+// }
 
 const Bootstrap = () => {
     return (
@@ -65,4 +64,7 @@ const Bootstrap = () => {
     )
 }
 
-export default Bootstrap;
+ReactDOM.render(
+    <Bootstrap />,
+    document.getElementById('root')
+  )

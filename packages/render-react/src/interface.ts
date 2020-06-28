@@ -1,5 +1,3 @@
-import { Configuration } from 'webpack'
-
 /**
  * 当前系统的配置信息
  */

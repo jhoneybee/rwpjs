@@ -7,8 +7,8 @@ import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 
 // 初始化webpack相关的信息
 export default ({ config }) => {
-    const { plugins } = config
-    plugins.push(
+    const tempConfig = config
+    tempConfig.plugins.push(
         new HtmlWebpackPlugin({
             hash: true,
             template: join(process.cwd(),'src','pages', 'document.ejs')
@@ -32,6 +32,6 @@ export default ({ config }) => {
             join(process.cwd(),'src','pages', 'document.ejs')
         )
     }
-    config.entry = join(process.cwd(),'src','pages','.rwp', 'rwp.tsx')
-    return config
+    tempConfig.entry = join(process.cwd(),'src','pages','.rwp', 'rwp.tsx')
+    return tempConfig
 }

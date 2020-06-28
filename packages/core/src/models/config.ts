@@ -4,9 +4,8 @@ import { Configuration } from 'webpack'
 import * as TerserPlugin from 'terser-webpack-plugin';
 import * as WebpackBar from 'webpackbar';
 
-import { defaultConfig } from './utils'
-import { Config } from '../interface'
 import { getProjectDir } from './utils'
+import { Config } from '../interface'
 
 
 const getTemplateConfig = (): Configuration => {
@@ -68,7 +67,14 @@ const getTemplateConfig = (): Configuration => {
     }
 }
 
-const getBuildConfig = (config: Config) => {
+const getDevConfig = () => {
+    const template: Configuration = getTemplateConfig()
+    template.mode = 'development'
+    template.plugins = [new WebpackBar()]
+    return template
+}
+
+const getBuildConfig = () => {
     const template: Configuration = getTemplateConfig()
     template.mode = 'production'
 
@@ -82,37 +88,12 @@ const getBuildConfig = (config: Config) => {
             })
         ],
     }
-
-    const babelLoader = template.module!.rules!.find(ele => ele.loader === 'babel-loader')
-    // // @ts-ignore
-    // const plugins = babelLoader!.options!.plugins
-
-    // // see https://github.com/ant-design/babel-plugin-import
-    // if (config.extraStylePluginImport && config.extraStylePluginImport.length > 0) {
-    //     plugins.push(['import', ...config.extraStylePluginImport])
-    // }
-
     return template
 }
 
-const getAnalyzerConfig = (config: Config) => {
-    const template = getDevConfig(config)
+const getAnalyzerConfig = () => {
+    const template = getDevConfig()
     template.plugins!.push(new BundleAnalyzerPlugin())
-    return template
-}
-
-const getDevConfig = (config: Config) => {
-    const template: Configuration = getTemplateConfig()
-    template.mode = 'development'
-    template.plugins = [new WebpackBar()]
-    const babelLoader = template.module!.rules!.find(ele => ele.loader === 'babel-loader')
-    // // @ts-ignore
-    // const plugins = babelLoader!.options!.plugins
-
-    // // see https://github.com/ant-design/babel-plugin-import
-    // if (config.extraStylePluginImport && config.extraStylePluginImport.length > 0) {
-    //     plugins.push(['import', ...config.extraStylePluginImport])
-    // }
     return template
 }
 
@@ -121,16 +102,14 @@ const getDevConfig = (config: Config) => {
  * 获取当前的config信息
  */
 export default ({
-    config,
     state
 }: {
     config: Config,
     state: 'build' | 'dev' | 'watch' | 'analyzer'
 }): Configuration => {
-    const tempConfig: Config = defaultConfig(config)
-    if (state === 'build') return getBuildConfig(tempConfig)
-    if (state === 'dev') return getDevConfig(tempConfig)
-    if (state === 'watch') return getDevConfig(tempConfig)
-    if (state === 'analyzer') return getAnalyzerConfig(tempConfig)
+    if (state === 'build') return getBuildConfig()
+    if (state === 'dev') return getDevConfig()
+    if (state === 'watch') return getDevConfig()
+    if (state === 'analyzer') return getAnalyzerConfig()
     throw new Error(`No corresponding state found. [${state}]`);
 }

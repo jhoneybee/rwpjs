@@ -4,6 +4,7 @@ import * as Webpack from 'webpack'
 import { join } from 'path'
 import * as WebpackDevServer from 'webpack-dev-server'
 import * as yargs from 'yargs'
+
 import { getDependenciesRender } from './models/utils'
 import getConfig from './models/config'
 
@@ -24,66 +25,68 @@ import getConfig from './models/config'
  * rwp --version
  *          - 当前的版本信息
  */
-const argv = yargs.options({
+const { argv } = yargs.options({
     dev: { type: 'boolean', default: false },
     build: { type: 'boolean', default: false },
     plugin: { type: 'boolean', default: false },
     analyzer: { type: 'boolean', default: false },
     watch: { type: 'boolean', default: false },
-}).argv
+})
 
 const configPath = join(process.cwd(), '.rwp.js')
 
-const loadRender = (config: any, state: string) => {
-    const name = Object.keys(getDependenciesRender())[0]
-    const render = require(`${process.cwd()}/node_modules/${name}`)
-    if(typeof(render.default) !== 'function') {
+const loadRender = async (config: any, state: string) => {
+    const name = Object.keys((await getDependenciesRender()))[0]
+    const render = await import(`${process.cwd()}/node_modules/${name}`)
+    if (typeof (render.default) !== 'function') {
         throw new Error(`renderer format error, it should be a function. [${name}]`)
     }
-    return render.default({ config , state})
+    return render.default({ config, state })
 }
 let state: 'dev' | 'build' | 'analyzer' | 'watch' = 'dev';
 
-if(argv.dev) state = 'dev'
-if(argv.build) state = 'build'
-if(argv.analyzer) state = 'analyzer'
-if(argv.watch) state = 'watch'
+if (argv.dev) state = 'dev'
+if (argv.build) state = 'build'
+if (argv.analyzer) state = 'analyzer'
+if (argv.watch) state = 'watch'
 
 import(configPath).then((config) => {
-    const wConfig = loadRender(getConfig({
+    loadRender(getConfig({
         config,
         state,
-    }),state)    
-    const compiler = Webpack(wConfig)
-    
-    if (argv.dev || argv.analyzer) {
-        const server = new WebpackDevServer(compiler, {
-            host: '0.0.0.0'
-        });
-        server.listen(8000)
-    }
-    
-    if (argv.build) {
+    }), state).then(wConfig => {
         const compiler = Webpack(wConfig)
-        compiler.run((err, stat) => { })
-    }
-    
 
-    if (argv.watch) {
-        compiler.watch({
-            aggregateTimeout: 300,
-            poll: undefined
-        }, (err, stats) => {
-        });
-    }
-    
-    // 当前使用的插件
-    if (argv.plugin) {
-        const render = getDependenciesRender()
-        console.log('+- render')
-        Object.keys(render).forEach(key => {
-            console.log(`+- ${key}@${render[key]}`)
-        });
-    }
-})    
+        if (argv.dev || argv.analyzer) {
+            const server = new WebpackDevServer(compiler, {
+                host: '0.0.0.0'
+            });
+            server.listen(8000)
+        }
+
+        if (argv.build) {
+            compiler.run(() => { })
+        }
+
+
+        if (argv.watch) {
+            compiler.watch({
+                aggregateTimeout: 300,
+                poll: undefined
+            }, () => {
+            });
+        }
+
+        // 当前使用的插件
+        if (argv.plugin) {
+            const render = getDependenciesRender()
+            // eslint-disable-next-line no-console
+            console.log('+- render')
+            Object.keys(render).forEach(key => {
+                // eslint-disable-next-line no-console
+                console.log(`+- ${key}@${render[key]}`)
+            });
+        }
+    })
+})
 
