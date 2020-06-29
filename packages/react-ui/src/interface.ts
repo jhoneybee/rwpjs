@@ -118,7 +118,7 @@ export interface TableProps<T> {
     height?: number
     sortDirection?: SortColumn[]
     // 用户唯一的rowKey
-    rowKey: string
+    rowKey?: string
 
     /**
      * 右键菜单

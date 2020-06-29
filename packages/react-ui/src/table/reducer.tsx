@@ -52,7 +52,7 @@ export function reducer<T>(state: State<T>, action: Action<T>) {
             total,
         }
 
-        const pageNo = state.datas.length > 0 ? state.pageNo + 1 : state.pageNo
+        const pageNo = datas.length > 0 ? state.pageNo + 1 : state.pageNo
         return { ...state, ...rows, loading: realPayload.loading, pageNo };
     }
     if (action.type === 'SET_LOADING') {

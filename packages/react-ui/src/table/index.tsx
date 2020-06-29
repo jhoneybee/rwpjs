@@ -1,5 +1,21 @@
-import React, { useEffect, useRef, useReducer, Dispatch, useImperativeHandle, useState, useContext, useMemo } from 'react'
-import ReactDataGrid, { EditorProps, Cell, RowRendererProps, Row, DataGridHandle, Column } from 'react-data-grid-temp'
+import React, {
+    useEffect,
+    useRef,
+    useReducer,
+    Dispatch,
+    useImperativeHandle,
+    useState,
+    useContext,
+    useMemo,
+} from 'react'
+import ReactDataGrid, {
+    EditorProps,
+    Cell,
+    RowRendererProps,
+    Row,
+    DataGridHandle,
+    Column,
+} from 'react-data-grid-temp'
 import { Spin, Dropdown } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 import { TableProps, OverlayFunc } from '../interface'
@@ -10,14 +26,14 @@ import { Input } from '../index'
 import 'react-data-grid-temp/dist/react-data-grid.css'
 import './style/index.less'
 
-interface IContextProps{
+interface IContextProps {
     state: State<any>;
     dispatch: Dispatch<Action<any>>;
 }
 
 const TableContext = React.createContext({} as IContextProps);
 
-interface CustomEditorProps{
+interface CustomEditorProps {
     node: React.ReactNode
     extProps: EditorProps<any, any, unknown>
 }
@@ -82,13 +98,13 @@ const DropdownRow = ({ rowProps, contextMenu }: DropdownRowProps<any>) => (
     <Dropdown
         overlay={contextMenu}
         trigger={['contextMenu']}
-        getPopupContainer={(triggerNode: HTMLElement) => triggerNode!.parentElement! }
+        getPopupContainer={(triggerNode: HTMLElement) => triggerNode!.parentElement!}
     >
         <TempRow {...rowProps} />
     </Dropdown>
 )
 
-export function Table<T> (props: TableProps<T>) {
+export function Table<T>(props: TableProps<T>) {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     /**
@@ -102,7 +118,7 @@ export function Table<T> (props: TableProps<T>) {
             },
         })
         const res = props.loadData(state.pageNo, props.pageSize!, props.params!)
-        const resp = await (res as PromiseLike<{ total: number, datas: T[]}>)
+        const resp = await (res as PromiseLike<{ total: number, datas: T[] }>)
         await dispatch({
             type: 'SET_ADD_ROWS',
             payload: {
@@ -136,6 +152,19 @@ export function Table<T> (props: TableProps<T>) {
         }
     }, [state.contextMenu])
 
+    const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+        const target = e.currentTarget
+        if (
+            target.scrollTop + target.clientHeight + 2 > target.scrollHeight
+            &&
+            state.datas.length > 0
+        ) {
+            const rowLength = state.datas.length
+            loadDataFun().then(() => {
+                gridRef.current!.scrollToRow(rowLength)
+            })
+        }
+    }
     return useMemo(() => {
         const columns = props.columns.map((element => {
             const { name, title, editor, editable, ...restProps } = element
@@ -155,7 +184,7 @@ export function Table<T> (props: TableProps<T>) {
                         getValue: () => domRef.current.getValue(),
                         getInputNode: () => domRef.current.getInputNode(),
                     }))
-                    return <CustomEditor ref={domRef} node={TempEditor} extProps={eProps}/>
+                    return <CustomEditor ref={domRef} node={TempEditor} extProps={eProps} />
                 }) as React.ComponentType<EditorProps<T[keyof T], T, unknown>> : undefined,
                 ...restProps,
             }
@@ -168,24 +197,12 @@ export function Table<T> (props: TableProps<T>) {
                 >
                     <ReactDataGrid
                         ref={gridRef}
-                        columns={columns}
-                        rows={state.datas as T[]}
-                        onScroll={e => {
-                            const target = e.currentTarget
-                            if (
-                                target.scrollTop + target.clientHeight + 2 > target.scrollHeight
-                                &&
-                                state.datas.length > 0
-                            ) {
-                                const rowLength = state.datas.length
-                                loadDataFun().then(() => {
-                                    gridRef.current!.scrollToRow(rowLength)
-                                })
-                            }
-                        }}
-                        enableCellAutoFocus
                         width={props.width}
                         height={props.height}
+                        columns={columns}
+                        rows={state.datas as T[]}
+                        onScroll={e => { onScroll(e) }}
+                        enableCellAutoFocus
                         enableCellCopyPaste={props.enableCellCopyPaste}
                         sortDirection={props.sortDirection}
                         enableCellDragAndDrop={props.enableCellDragAndDrop}
@@ -198,7 +215,7 @@ export function Table<T> (props: TableProps<T>) {
                                     />
                                 )
                             }
-                            return <Row {...rowProps}/>
+                            return <Row {...rowProps} />
                         }}
                         onSort={props.onSort}
                         onRowsUpdate={e => {
@@ -231,5 +248,5 @@ Table.defaultProps = {
     enableCellAutoFocus: true,
     enableCellDragAndDrop: true,
     onRowsUpdate: async () => true,
-    onSort: () => {},
+    onSort: () => { },
 }
