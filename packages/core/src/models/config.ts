@@ -21,6 +21,7 @@ const getTemplateConfig = (): Configuration => {
             ]
         },
     }
+    
     return {
         resolve: {
             extensions: ['.ts', '.tsx', '.js'],
@@ -33,9 +34,11 @@ const getTemplateConfig = (): Configuration => {
         module: {
             rules: [{
                 test: /\.css$/i,
+                exclude: /node_modules/,
                 use: ['style-loader', 'css-loader']
             }, {
                 test: /\.less$/,
+                exclude: /node_modules/,
                 use: [{
                     loader: 'style-loader'
                 }, {

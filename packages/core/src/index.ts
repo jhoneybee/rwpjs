@@ -5,7 +5,7 @@ import { join } from 'path'
 import * as WebpackDevServer from 'webpack-dev-server'
 import * as yargs from 'yargs'
 
-import { getDependenciesRender } from './models/utils'
+import { getDependenciesRender, defaultConfig } from './models/utils'
 import getConfig from './models/config'
 
 /**
@@ -51,23 +51,24 @@ if (argv.analyzer) state = 'analyzer'
 if (argv.watch) state = 'watch'
 
 import(configPath).then((config) => {
-    loadRender(getConfig({
+    loadRender(defaultConfig(getConfig({
         config,
         state,
-    }), state).then(wConfig => {
+    })), state).then(wConfig => {
+
+        const { devServer } = wConfig
         const compiler = Webpack(wConfig)
 
         if (argv.dev || argv.analyzer) {
             const server = new WebpackDevServer(compiler, {
-                host: '127.0.0.1'
+                host: devServer.host
             });
-            server.listen(8000)
+            server.listen(devServer.port)
         }
 
         if (argv.build) {
             compiler.run(() => { })
         }
-
 
         if (argv.watch) {
             compiler.watch({

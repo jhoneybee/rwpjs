@@ -36,20 +36,20 @@ export const getDependenciesRender = async () => {
 
 export const defaultConfig = (config: Config): Config => {
     const tempConfig = config
+    
+    /**
+     * 默认的配置
+     */
     const defConfig = {
         target: 'web',
-        extraStylePluginImport: [],
         devServer: {
-            port: 8000
+            port: 8000,
+            host: '127.0.0.1'
         }
     }
 
     if(config.target === undefined){
         tempConfig.target = defConfig.target
-    }
-
-    if(config.extraStylePluginImport === undefined){
-        tempConfig.extraStylePluginImport = defConfig.extraStylePluginImport
     }
     
     if(config.devServer === undefined){
@@ -59,6 +59,6 @@ export const defaultConfig = (config: Config): Config => {
     if(config.devServer.port === undefined){
         tempConfig.devServer.port = defConfig.devServer.port
     }
-
+    
     return tempConfig
 }
