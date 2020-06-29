@@ -8,7 +8,7 @@
     "lint:script": "eslint ./src/**/*.{js,jsx,ts,tsx}"
   },
   "author": "zhangj",
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "engines": {
     "node": ">=10.13.0"
   },

@@ -7,7 +7,7 @@
     "build": "gulp build-ts",
     "lint:script": "eslint ./src/**/*.{js,jsx,ts,tsx}"
   },
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "bin": {
     "rwp": "lib/index.js"
   },
