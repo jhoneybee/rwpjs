@@ -15,9 +15,14 @@ import ReactDataGrid, {
     Row,
     DataGridHandle,
     Column,
+    FormatterProps,
+    HeaderRendererProps,
+
 } from 'react-data-grid-temp'
+
 import { Spin, Dropdown } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
+import { cloneDeep } from 'lodash'
 import { TableProps, OverlayFunc } from '../interface'
 import { reducer, initialState, State, Action } from './reducer'
 import { Input } from '../index'
@@ -148,9 +153,22 @@ export function Table<T>(props: TableProps<T>) {
                     rowIdx: state.contextMenu!.rowIdx as number,
                     column: state.contextMenu!.column as Column<T>,
                 }),
+                getDataSource: () => cloneDeep(state.datas),
+                update: (record, filter) => {
+                    const newData = state.datas.map((ele: any) => {
+                        if (filter(ele)) {
+                            return { ...ele, ...record }
+                        }
+                        return ele
+                    })
+                    dispatch({
+                        type: 'SET_UPDATE_ROWS',
+                        payload: newData,
+                    })
+                },
             }
         }
-    }, [state.contextMenu])
+    }, [state.contextMenu, state.datas])
 
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         const target = e.currentTarget
@@ -167,12 +185,27 @@ export function Table<T>(props: TableProps<T>) {
     }
     return useMemo(() => {
         const columns = props.columns.map((element => {
-            const { name, title, editor, editable, ...restProps } = element
+            const { name, title, editor, editable, formatter, align = 'left', ...restProps } = element
             const TempEditor = editable ? editor || Input : undefined
+            let format = (cellProps: FormatterProps) => (
+                <div style={{ textAlign: align }}>{
+                    cellProps.row[cellProps.column.key]
+                }</div>
+            )
+            if (formatter) {
+                const Formatter = formatter
+                format = (cellProps: FormatterProps) => (
+                    <div style={{ textAlign: align }}><Formatter {...cellProps} /></div>
+                )
+            }
             return {
                 key: name,
                 name: title,
                 resizable: true,
+                formatter: format,
+                headerRenderer: ({ column }: HeaderRendererProps<T, unknown>) => (
+                    <div style={{ textAlign: align }}>{column.name}</div>
+                ),
                 editor: TempEditor ? React.forwardRef((
                     eProps: EditorProps<T[keyof T], T, unknown>,
                     ref,
@@ -184,7 +217,13 @@ export function Table<T>(props: TableProps<T>) {
                         getValue: () => domRef.current.getValue(),
                         getInputNode: () => domRef.current.getInputNode(),
                     }))
-                    return <CustomEditor ref={domRef} node={TempEditor} extProps={eProps} />
+                    return (
+                        <CustomEditor
+                            ref={domRef}
+                            node={TempEditor}
+                            extProps={eProps}
+                        />
+                    )
                 }) as React.ComponentType<EditorProps<T[keyof T], T, unknown>> : undefined,
                 ...restProps,
             }

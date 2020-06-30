@@ -17,7 +17,7 @@ export interface State<T> {
 }
 
 export type Action<T> = {
-    type: 'SET_ADD_ROWS' | 'SET_LOADING' | 'SET_CONTEXTMENU' | 'SET_OP_DATA',
+    type: 'SET_ADD_ROWS' | 'SET_LOADING' | 'SET_CONTEXTMENU' | 'SET_OP_DATA' | 'SET_UPDATE_ROWS',
     payload: any
 }
 
@@ -41,6 +41,8 @@ export function reducer<T>(state: State<T>, action: Action<T>) {
         })
         return newDatas
     }
+
+    // 修改数据结果集
     if (action.type === 'SET_ADD_ROWS') {
         const realPayload = action.payload as {
             rows: { total: number, datas: T[]},
@@ -48,7 +50,7 @@ export function reducer<T>(state: State<T>, action: Action<T>) {
         }
         const { rows: { datas, total } } = realPayload
         const rows = {
-            datas: state.datas.concat(datas),
+            datas: state.datas.concat(datas).map((ele, index) => ({ $index: index, ...ele })),
             total,
         }
 
@@ -60,6 +62,11 @@ export function reducer<T>(state: State<T>, action: Action<T>) {
     }
     if (action.type === 'SET_CONTEXTMENU') {
         return { ...state, contextMenu: action.payload }
+    }
+
+    // 修改数据结果集
+    if (action.type === 'SET_UPDATE_ROWS') {
+        return { ...state, datas: action.payload }
     }
 
     if (action.type === 'SET_OP_DATA') {

@@ -21,17 +21,21 @@ title: Table 表格
  * desc: 包含了一千列的数据
  */
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Table, Input } from '@rwp/react-ui'
-import { Menu } from 'antd'
+import { Menu, Button } from 'antd'
 
 const getColumns = () => {
-  const columns = []
+  const columns = [{
+    name: '$index',
+    title: '序号',
+  }]
   for(let i=0; i< 1000 ; i ++){
     columns.push({
       name: `field${i}`,
       title: `字段-${i}`,
       width: 120,
+      align: 'center',
       editable: true,
       sortable: true,
       editor: Input
@@ -42,8 +46,18 @@ const getColumns = () => {
 
 export default () => {
     const table = React.useRef()
+    const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
     return (
         <>
+          <Button
+            onClick={() => {
+              table.current.update({
+                'field1': '修改成功'
+              }, (ele) => {
+                return ele.field1 === '1-field0-0'
+              })
+            }}
+          > 点击修改数据 </Button>
           <Table
             columns={getColumns()}
             contextMenu={()=>{
@@ -60,6 +74,31 @@ export default () => {
               )
             }}
             table={table}
+            onSort={(columnKey, direction) => {
+              const newSortDirection = [];
+              let existence = false;
+              sortDirection.forEach(ele => {
+                if (ele.columnKey === columnKey) {
+                  existence = true;
+                  newSortDirection.push({
+                    sortDirection: direction,
+                    columnKey
+                  });
+                } else {
+                  newSortDirection.push({
+                    sortDirection: ele.sortDirection,
+                    columnKey: ele.columnKey
+                  });
+                }
+              });
+              if (!existence) {
+                newSortDirection.push({
+                  sortDirection: direction,
+                  columnKey
+                });
+              }
+              setSortDirection(newSortDirection);
+            }}
             loadData={(pageNo , pageSize, params) => {  
               return new Promise((resolve) =>{
                 const datas = []

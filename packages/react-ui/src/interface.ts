@@ -1,5 +1,5 @@
 import React from 'react'
-import { EditorProps, DataGridHandle, Column, SortColumn, SortDirection } from 'react-data-grid-temp'
+import { EditorProps, DataGridHandle, Column, SortColumn, SortDirection, FormatterProps } from 'react-data-grid-temp'
 import { LiteralUnion } from 'antd/lib/_util/type';
 
 declare const ButtonTypes: ['default', 'primary', 'ghost', 'dashed', 'link', 'text'];
@@ -59,6 +59,8 @@ export interface ColumnProps<T> {
     title: string
     // 字段名称
     name: string
+    // 列的对其方式,默认left
+    align?: 'left' | 'right' | 'center'
     // 列宽。如果未指定，则将根据网格宽度和其他列的指定宽度自动确定
     width?: number | string;
     // 最小列宽(px)
@@ -75,11 +77,14 @@ export interface ColumnProps<T> {
     sortDescendingFirst?: boolean;
     // 冻结列
     frozen?: boolean;
+    // 格式化当前列的数据。返回一个 React.ComponentType 对象
+    formatter?: React.ComponentType<FormatterProps<T, unknown>>;
     // 当前列的编辑器
     editor?:React.ComponentType<EditorProps<T[keyof T], T, unknown>>;
 }
 
 export declare type OverlayFunc = () => React.ReactElement;
+
 
 // 表格的 Handle 事件
 export interface TableHandle<T> extends DataGridHandle {
@@ -87,6 +92,18 @@ export interface TableHandle<T> extends DataGridHandle {
      * 获取当前右键的上下文
      */
     rightContext: () => { row: T, rowIdx: number, column: Column<T> }
+
+    /**
+     * 获取当前表格的数据源
+     */
+    getDataSource: () => T[]
+
+    /**
+     * 更新表格数据
+     * @param record 要修改的数据
+     * @param filter 指定条件查询对应的数据
+     */
+    update: (record: T, filter: (ele: T) => boolean) => void
 }
 
 export interface TableProps<T> {
