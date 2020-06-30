@@ -17,7 +17,7 @@ export interface State<T> {
 }
 
 export type Action<T> = {
-    type: 'SET_ADD_ROWS' | 'SET_LOADING' | 'SET_CONTEXTMENU' | 'SET_OP_DATA' | 'SET_UPDATE_ROWS',
+    type: 'SET_ADD_ROWS' | 'SET_LOADING' | 'SET_CONTEXTMENU' | 'SET_OP_DATA' | 'SET_UPDATE_ROWS' | 'SET_RELOAD_ROWS',
     payload: any
 }
 
@@ -27,6 +27,8 @@ export const initialState: State<any> = {
     loading: false,
     pageNo: 1,
 }
+
+const fillOrder = (datas: any[]) => datas.map((ele, index) => ({ $index: index, ...ele }))
 
 export function reducer<T>(state: State<T>, action: Action<T>) {
     const opData: RowsUpdateEvent = action.payload
@@ -45,17 +47,16 @@ export function reducer<T>(state: State<T>, action: Action<T>) {
     // 修改数据结果集
     if (action.type === 'SET_ADD_ROWS') {
         const realPayload = action.payload as {
-            rows: { total: number, datas: T[]},
-            loading: boolean
+            rows: { total: number, datas: T[]}
         }
         const { rows: { datas, total } } = realPayload
         const rows = {
-            datas: state.datas.concat(datas).map((ele, index) => ({ $index: index, ...ele })),
+            datas: fillOrder(state.datas.concat(datas)),
             total,
         }
 
         const pageNo = datas.length > 0 ? state.pageNo + 1 : state.pageNo
-        return { ...state, ...rows, loading: realPayload.loading, pageNo };
+        return { ...state, ...rows, loading: false, pageNo };
     }
     if (action.type === 'SET_LOADING') {
         return { ...state, loading: action.payload };
@@ -67,6 +68,12 @@ export function reducer<T>(state: State<T>, action: Action<T>) {
     // 修改数据结果集
     if (action.type === 'SET_UPDATE_ROWS') {
         return { ...state, datas: action.payload }
+    }
+
+    // 重新加载数据
+    if (action.type === 'SET_RELOAD_ROWS') {
+        const { datas, total } = action.payload
+        return { ...state, datas: fillOrder(datas), loading: false, pageNo: 1, total }
     }
 
     if (action.type === 'SET_OP_DATA') {

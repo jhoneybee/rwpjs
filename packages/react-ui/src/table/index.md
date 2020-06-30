@@ -58,6 +58,11 @@ export default () => {
               })
             }}
           > 点击修改数据 </Button>
+          <Button
+            onClick={() => {
+              table.current.reload({})
+            }}
+          > 重新装载数据 </Button>
           <Table
             columns={getColumns()}
             contextMenu={()=>{

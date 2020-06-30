@@ -135,13 +135,39 @@ export function Table<T>(props: TableProps<T>) {
     const gridRef = useRef<DataGridHandle>(null)
 
     const { table, enableInitLoadData } = props
+
+    // 防止timeout内存溢出
+    let scrollTimeOut: NodeJS.Timeout;
+    useEffect(() => () => {
+        if (scrollTimeOut) {
+            clearTimeout(scrollTimeOut)
+        }
+    })
+
     useEffect(() => {
         // 装载数据
-        if (enableInitLoadData) {
-            loadDataFun()
-        }
+        if (enableInitLoadData) loadDataFun()
     }, [])
 
+
+    const reloadFun = async (param: Object) => {
+        await dispatch({
+            type: 'SET_LOADING',
+            payload: {
+                loading: true,
+            },
+        })
+        const res = props.loadData(1, props.pageSize!, {
+            ...props.params,
+            ...param,
+        })
+        const resp = await (res as PromiseLike<{ total: number, datas: T[] }>)
+        await dispatch({
+            type: 'SET_RELOAD_ROWS',
+            payload: resp,
+        })
+        gridRef.current!.scrollToRow(0)
+    }
     useEffect(() => {
         if (table && gridRef.current) {
             table.current = {
@@ -166,6 +192,9 @@ export function Table<T>(props: TableProps<T>) {
                         payload: newData,
                     })
                 },
+                reload: (param: Object) => {
+                    reloadFun(param)
+                },
             }
         }
     }, [state.contextMenu, state.datas])
@@ -176,11 +205,15 @@ export function Table<T>(props: TableProps<T>) {
             target.scrollTop + target.clientHeight + 2 > target.scrollHeight
             &&
             state.datas.length > 0
+            &&
+            state.datas.length >= props.pageSize!
         ) {
             const rowLength = state.datas.length
-            loadDataFun().then(() => {
-                gridRef.current!.scrollToRow(rowLength)
-            })
+            scrollTimeOut = setTimeout(() => {
+                loadDataFun().then(() => {
+                    if (gridRef.current) gridRef.current.scrollToRow(rowLength)
+                })
+            }, 80);
         }
     }
     return useMemo(() => {
@@ -203,6 +236,7 @@ export function Table<T>(props: TableProps<T>) {
                 name: title,
                 resizable: true,
                 formatter: format,
+                editable,
                 headerRenderer: ({ column }: HeaderRendererProps<T, unknown>) => (
                     <div style={{ textAlign: align }}>{column.name}</div>
                 ),
@@ -240,7 +274,7 @@ export function Table<T>(props: TableProps<T>) {
                         height={props.height}
                         columns={columns}
                         rows={state.datas as T[]}
-                        onScroll={e => { onScroll(e) }}
+                        onScroll={onScroll}
                         enableCellAutoFocus
                         enableCellCopyPaste={props.enableCellCopyPaste}
                         sortDirection={props.sortDirection}

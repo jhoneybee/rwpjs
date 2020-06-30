@@ -65,8 +65,8 @@ const getData = (pageNo: number, pageSize: number) => {
 
 const rootPromiseProps: any = {
     columns: getColumns(),
-    width: 500,
-    height: 500,
+    width: 2000,
+    height: 800,
     rowKey: 'field0',
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -171,7 +171,7 @@ test('test table props table.', async () => {
     expect(container).toMatchSnapshot()
 })
 
-test('test table no enable init load data.', async () => {
+test('test table no enable init load data.', () => {
     rootPromiseProps.enableInitLoadData = false
     render(<Table<any> {...rootPromiseProps}/>)
 })

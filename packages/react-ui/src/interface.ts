@@ -104,6 +104,12 @@ export interface TableHandle<T> extends DataGridHandle {
      * @param filter 指定条件查询对应的数据
      */
     update: (record: T, filter: (ele: T) => boolean) => void
+
+    /**
+     * 重新装载表格数据
+     * @param 表格请求数据的参数
+     */
+    reload: (param: Object) => void
 }
 
 export interface TableProps<T> {

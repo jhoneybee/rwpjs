@@ -13,6 +13,7 @@
     "lint:fix": "eslint ./src/**/*.{js,jsx,ts,tsx} --fix",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "umi-test",
+    "test:watch":"umi-test --watch --coverage",
     "test:coverage": "umi-test --coverage"
   },
   "main": "dist/index.js",
