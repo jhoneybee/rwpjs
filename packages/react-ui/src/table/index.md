@@ -63,6 +63,11 @@ export default () => {
               table.current.reload({})
             }}
           > 重新装载数据 </Button>
+          <Button
+            onClick={() => {
+              console.log(table.current.getSelect())
+            }}
+          > 获取表格选中的数据 </Button>
           <Table
             columns={getColumns()}
             contextMenu={()=>{

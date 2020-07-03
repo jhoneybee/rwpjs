@@ -99,6 +99,11 @@ export interface TableHandle<T> extends DataGridHandle {
     getDataSource: () => T[]
 
     /**
+     * 获取当前选择的数据
+     */
+    getSelect:() => Set<T[keyof T]>
+
+    /**
      * 更新表格数据
      * @param record 要修改的数据
      * @param filter 指定条件查询对应的数据
@@ -143,8 +148,8 @@ export interface TableProps<T> {
     enableCellCopyPaste?: boolean
     // 启动下拉编辑
     enableCellDragAndDrop?: boolean
-    // 启动选择框 single 表示单选, multiple表示多选，默认为none表示无选择器
-    enableSelectBox?: 'single' | 'multiple' | 'none'
+    // 启动选择框 multiple表示多选，默认为none表示无选择器
+    enableSelectBox?: 'multiple' | 'none'
     width?: number
     height?: number
     sortDirection?: SortColumn[]

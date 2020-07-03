@@ -249,6 +249,7 @@ export function Table<T>(props: TableProps<T>) {
                     column: state.contextMenu!.column as Column<T>,
                 }),
                 getDataSource: () => cloneDeep(state.datas),
+                getSelect: () => selectedRows,
                 update: (record, filter) => {
                     const newData = state.datas.map((ele: any) => {
                         if (filter(ele)) {
@@ -278,7 +279,7 @@ export function Table<T>(props: TableProps<T>) {
                 },
             }
         }
-    }, [state.contextMenu, state.datas])
+    }, [state.contextMenu, state.datas, selectedRows])
 
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         const target = e.currentTarget
