@@ -1,5 +1,5 @@
 import React from 'react'
-import { EditorProps, DataGridHandle, Column, SortColumn, FormatterProps } from 'react-data-grid-temp'
+import { EditorProps, DataGridHandle, Column, SortColumn, FormatterProps, CalculatedColumn } from 'react-data-grid-temp'
 import { LiteralUnion } from 'antd/lib/_util/type';
 
 declare const ButtonTypes: ['default', 'primary', 'ghost', 'dashed', 'link', 'text'];
@@ -169,4 +169,9 @@ export interface TableProps<T> {
      * 排序时触发的事件
      */
     onSort?: (sortColumns: SortColumn[]) => void;
+
+    /**
+     * 行的点击事件
+     */
+    onRowClick?: (rowIdx: number, row: T, column: CalculatedColumn<T>) => void;
 }

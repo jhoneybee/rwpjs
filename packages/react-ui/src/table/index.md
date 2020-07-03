@@ -90,6 +90,9 @@ export default () => {
             onSort={ sortColumns => {
               console.log(sortColumns)
             }}
+            onRowClick={(rowIdx, row, column) => {
+              console.log(rowIdx, row, column)
+            }}
             loadData={(pageNo , pageSize, params) => {  
               return new Promise((resolve) =>{
                 const datas = []

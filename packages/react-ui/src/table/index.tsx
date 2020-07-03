@@ -231,6 +231,7 @@ export function Table<T>(props: TableProps<T>) {
             const select: Column<T, unknown> = {
                 key: '$select',
                 name: '',
+                frozen: true,
                 maxWidth: 35,
                 formatter: MultipleSelectColumn,
             }
@@ -347,6 +348,7 @@ export function Table<T>(props: TableProps<T>) {
                         enableCellDragAndDrop={props.enableCellDragAndDrop}
                         selectedRows={selectedRows}
                         onSelectedRowsChange={setSelectedRows}
+                        onRowClick={props.onRowClick}
                         rowRenderer={(rowProps: RowRendererProps<T, unknown>) => {
                             if (props.contextMenu) {
                                 return (
