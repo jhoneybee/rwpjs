@@ -21,7 +21,7 @@
   "typings": "dist/index.d.ts",
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint:script && npm run test"
+      "pre-commit": "npm run lint:script && npm run test && npm run build"
     }
   },
   "dependencies": {
