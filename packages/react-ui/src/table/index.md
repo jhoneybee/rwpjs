@@ -79,6 +79,8 @@ export default () => {
               )
             }}
             table={table}
+            enableSelectBox="multiple"
+            rowKey='field0'
             onSort={(columnKey, direction) => {
               const newSortDirection = [];
               let existence = false;

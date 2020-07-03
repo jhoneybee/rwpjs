@@ -25,7 +25,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { cloneDeep } from 'lodash'
 import { TableProps, OverlayFunc } from '../interface'
 import { reducer, initialState, State, Action } from './reducer'
-import { Input } from '../index'
+import { Input, Checkbox } from '../index'
 
 
 import 'react-data-grid-temp/dist/react-data-grid.css'
@@ -109,9 +109,19 @@ const DropdownRow = ({ rowProps, contextMenu }: DropdownRowProps<any>) => (
     </Dropdown>
 )
 
+const MultipleSelectColumn = (props : FormatterProps<any, unknown>) => (
+    <Checkbox
+        checked={props.isRowSelected}
+        onChange={e => {
+            const { checked } = e.target
+            props.onRowSelectionChange(checked, (e.nativeEvent as MouseEvent).shiftKey)
+        }}
+    />
+)
+
 export function Table<T>(props: TableProps<T>) {
     const [state, dispatch] = useReducer(reducer, initialState);
-
+    const [selectedRows, setSelectedRows] = useState(() => new Set<T[keyof T]>());
     /**
      * 装载表格数据
      */
@@ -168,56 +178,9 @@ export function Table<T>(props: TableProps<T>) {
         })
         gridRef.current!.scrollToRow(0)
     }
-    useEffect(() => {
-        if (table && gridRef.current) {
-            table.current = {
-                scrollToColumn: gridRef.current.scrollToColumn,
-                scrollToRow: gridRef.current.scrollToRow,
-                selectCell: gridRef.current.selectCell,
-                rightContext: () => ({
-                    row: state.contextMenu!.row as T,
-                    rowIdx: state.contextMenu!.rowIdx as number,
-                    column: state.contextMenu!.column as Column<T>,
-                }),
-                getDataSource: () => cloneDeep(state.datas),
-                update: (record, filter) => {
-                    const newData = state.datas.map((ele: any) => {
-                        if (filter(ele)) {
-                            return { ...ele, ...record }
-                        }
-                        return ele
-                    })
-                    dispatch({
-                        type: 'SET_UPDATE_ROWS',
-                        payload: newData,
-                    })
-                },
-                reload: (param: Object) => {
-                    reloadFun(param)
-                },
-            }
-        }
-    }, [state.contextMenu, state.datas])
 
-    const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
-        const target = e.currentTarget
-        if (
-            target.scrollTop + target.clientHeight + 2 > target.scrollHeight
-            &&
-            state.datas.length > 0
-            &&
-            state.datas.length >= props.pageSize!
-        ) {
-            const rowLength = state.datas.length
-            scrollTimeOut = setTimeout(() => {
-                loadDataFun().then(() => {
-                    if (gridRef.current) gridRef.current.scrollToRow(rowLength)
-                })
-            }, 80);
-        }
-    }
-    return useMemo(() => {
-        const columns = props.columns.map((element => {
+    const getColumns = () => {
+        const columns: Column<T, unknown>[] = props.columns.map((element => {
             const { name, title, editor, editable, formatter, align = 'left', ...restProps } = element
             const TempEditor = editable ? editor || Input : undefined
             let format = (cellProps: FormatterProps) => (
@@ -262,7 +225,78 @@ export function Table<T>(props: TableProps<T>) {
                 ...restProps,
             }
         }))
-        return (
+        if (props.enableSelectBox === 'multiple') {
+            const select: Column<T, unknown> = {
+                key: '$select',
+                name: '',
+                maxWidth: 35,
+                formatter: MultipleSelectColumn,
+            }
+            columns.splice(0, 0, select)
+        }
+
+        return columns
+    }
+    useEffect(() => {
+        if (table && gridRef.current) {
+            table.current = {
+                scrollToColumn: gridRef.current.scrollToColumn,
+                scrollToRow: gridRef.current.scrollToRow,
+                selectCell: gridRef.current.selectCell,
+                rightContext: () => ({
+                    row: state.contextMenu!.row as T,
+                    rowIdx: state.contextMenu!.rowIdx as number,
+                    column: state.contextMenu!.column as Column<T>,
+                }),
+                getDataSource: () => cloneDeep(state.datas),
+                update: (record, filter) => {
+                    const newData = state.datas.map((ele: any) => {
+                        if (filter(ele)) {
+                            return { ...ele, ...record }
+                        }
+                        return ele
+                    })
+                    dispatch({
+                        type: 'SET_UPDATE_ROWS',
+                        payload: newData,
+                    })
+                },
+                reload: (param: Object) => {
+                    reloadFun(param)
+                },
+                del: filter => {
+                    const newData: T[] = []
+                    state.datas.forEach((element: T) => {
+                        if (!filter(element)) {
+                            newData.push(element)
+                        }
+                    });
+                    dispatch({
+                        type: 'SET_UPDATE_ROWS',
+                        payload: newData,
+                    })
+                },
+            }
+        }
+    }, [state.contextMenu, state.datas])
+
+    const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+        const target = e.currentTarget
+        if (
+            target.scrollTop + target.clientHeight + 2 > target.scrollHeight
+            &&
+            state.datas.length > 0
+        ) {
+            const rowLength = state.datas.length
+            scrollTimeOut = setTimeout(() => {
+                loadDataFun().then(() => {
+                    if (gridRef.current) gridRef.current.scrollToRow(rowLength)
+                })
+            }, 80);
+        }
+    }
+
+    return useMemo(() => (
             <TableContext.Provider value={{ dispatch, state }}>
                 <Spin
                     spinning={state.loading}
@@ -272,13 +306,16 @@ export function Table<T>(props: TableProps<T>) {
                         ref={gridRef}
                         width={props.width}
                         height={props.height}
-                        columns={columns}
+                        columns={getColumns()}
                         rows={state.datas as T[]}
                         onScroll={onScroll}
                         enableCellAutoFocus
+                        rowKey={props.rowKey}
                         enableCellCopyPaste={props.enableCellCopyPaste}
                         sortDirection={props.sortDirection}
                         enableCellDragAndDrop={props.enableCellDragAndDrop}
+                        selectedRows={selectedRows}
+                        onSelectedRowsChange={setSelectedRows}
                         rowRenderer={(rowProps: RowRendererProps<T, unknown>) => {
                             if (props.contextMenu) {
                                 return (
@@ -300,8 +337,7 @@ export function Table<T>(props: TableProps<T>) {
                     />
                 </Spin>
             </TableContext.Provider>
-        )
-    }, [
+        ), [
         props.sortDirection,
         props.contextMenu,
         props.columns,
@@ -309,6 +345,7 @@ export function Table<T>(props: TableProps<T>) {
         props.enableCellDragAndDrop,
         state.loading,
         state.datas,
+        selectedRows,
     ])
 }
 
@@ -317,9 +354,10 @@ Table.defaultProps = {
     params: {},
     sortDirection: [],
     enableInitLoadData: true,
-    enableCellCopyPaste: true,
+    enableCellCopyPaste: false,
     enableCellAutoFocus: true,
     enableCellDragAndDrop: true,
     onRowsUpdate: async () => true,
+    enableSelectBox: 'none',
     onSort: () => { },
 }
