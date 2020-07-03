@@ -69,7 +69,6 @@ const CustomEditor = React.forwardRef((props: CustomEditorProps, ref) => {
     />
 })
 
-
 type DropdownRowProps<T> = {
     contextMenu: React.ReactElement | OverlayFunc
     rowProps: RowRendererProps<any, unknown>
