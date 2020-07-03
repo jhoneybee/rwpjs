@@ -59,6 +59,7 @@ const CustomEditor = React.forwardRef((props: CustomEditorProps, ref) => {
 
     // @ts-ignore
     return <props.node
+        {...props.extProps}
         ref={inputRef}
         style={{ height: props.extProps.height + 2 }}
         value={value}
