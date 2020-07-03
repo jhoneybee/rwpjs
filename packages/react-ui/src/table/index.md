@@ -37,9 +37,6 @@ const getColumns = () => {
       width: 120,
       align: 'center',
       editable: true,
-      formatter:() => {
-        return <div />
-      },
       sortable: true,
       editor: Input
     })
@@ -89,30 +86,9 @@ export default () => {
             table={table}
             enableSelectBox="multiple"
             rowKey='field0'
-            onSort={(columnKey, direction) => {
-              const newSortDirection = [];
-              let existence = false;
-              sortDirection.forEach(ele => {
-                if (ele.columnKey === columnKey) {
-                  existence = true;
-                  newSortDirection.push({
-                    sortDirection: direction,
-                    columnKey
-                  });
-                } else {
-                  newSortDirection.push({
-                    sortDirection: ele.sortDirection,
-                    columnKey: ele.columnKey
-                  });
-                }
-              });
-              if (!existence) {
-                newSortDirection.push({
-                  sortDirection: direction,
-                  columnKey
-                });
-              }
-              setSortDirection(newSortDirection);
+            sortDirection={sortDirection}
+            onSort={ sortColumns => {
+              console.log(sortColumns)
             }}
             loadData={(pageNo , pageSize, params) => {  
               return new Promise((resolve) =>{

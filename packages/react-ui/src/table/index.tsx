@@ -17,6 +17,7 @@ import ReactDataGrid, {
     Column,
     FormatterProps,
     HeaderRendererProps,
+    SortColumn,
 
 } from 'react-data-grid-temp'
 
@@ -297,7 +298,7 @@ export function Table<T>(props: TableProps<T>) {
             }, 80);
         }
     }
-
+    const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
     return useMemo(() => (
             <TableContext.Provider value={{ dispatch, state }}>
                 <Spin
@@ -314,7 +315,35 @@ export function Table<T>(props: TableProps<T>) {
                         enableCellAutoFocus
                         rowKey={props.rowKey}
                         enableCellCopyPaste={props.enableCellCopyPaste}
-                        sortDirection={props.sortDirection}
+                        sortDirection={sortDirection}
+                        onSort={(columnKey, direction) => {
+                            const newSortDirection = [];
+                            let existence = false;
+                            sortDirection.forEach(ele => {
+                              if (ele.columnKey === columnKey) {
+                                existence = true;
+                                newSortDirection.push({
+                                  sortDirection: direction,
+                                  columnKey,
+                                });
+                              } else {
+                                newSortDirection.push({
+                                  sortDirection: ele.sortDirection,
+                                  columnKey: ele.columnKey,
+                                });
+                              }
+                            });
+                            if (!existence) {
+                              newSortDirection.push({
+                                sortDirection: direction,
+                                columnKey,
+                              });
+                            }
+                            setSortDirection(newSortDirection);
+                            if (props.onSort) {
+                                props.onSort(newSortDirection)
+                            }
+                        }}
                         enableCellDragAndDrop={props.enableCellDragAndDrop}
                         selectedRows={selectedRows}
                         onSelectedRowsChange={setSelectedRows}
@@ -329,7 +358,6 @@ export function Table<T>(props: TableProps<T>) {
                             }
                             return <Row {...rowProps} />
                         }}
-                        onSort={props.onSort}
                         onRowsUpdate={e => {
                             dispatch({
                                 type: 'SET_OP_DATA',
@@ -340,7 +368,6 @@ export function Table<T>(props: TableProps<T>) {
                 </Spin>
             </TableContext.Provider>
         ), [
-        props.sortDirection,
         props.contextMenu,
         props.columns,
         props.enableCellCopyPaste,
@@ -348,6 +375,7 @@ export function Table<T>(props: TableProps<T>) {
         state.loading,
         state.datas,
         selectedRows,
+        sortDirection,
     ])
 }
 
