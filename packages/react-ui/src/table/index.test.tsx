@@ -4,8 +4,8 @@ import { Menu } from 'antd'
 import { Input } from '../index'
 import { Table } from './index'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const NoFocusInput = React.forwardRef((props: any, ref) => (
+
+const NoFocusInput = React.forwardRef((props: any, _ref) => (
     <Input value={props.value} onChange={props.onChange}/>
 ))
 

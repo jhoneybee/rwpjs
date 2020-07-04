@@ -137,7 +137,6 @@ export interface TableProps<T> {
     loadData: (pageNo: number, pageSize: number, params: Object) => PromiseLike<{
         total: number, datas: T[]
     }>
-
     // 初始化页面的分页大小, 默认加载50条数据
     pageSize?: number
     // 装载数据的参数
@@ -150,6 +149,8 @@ export interface TableProps<T> {
     enableCellDragAndDrop?: boolean
     // 启动选择框 multiple表示多选，默认为none表示无选择器
     enableSelectBox?: 'multiple' | 'none'
+    // 启动列的分组, 根据分组的列进行排序，参数为列的name字段
+    enableGroupColumn?: 'none' | string
     width?: number
     height?: number
     // 用户唯一的rowKey

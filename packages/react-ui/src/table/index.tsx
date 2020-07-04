@@ -5,12 +5,10 @@ import React, {
     Dispatch,
     useImperativeHandle,
     useState,
-    useContext,
     useMemo,
 } from 'react'
 import ReactDataGrid, {
     EditorProps,
-    Cell,
     RowRendererProps,
     Row,
     DataGridHandle,
@@ -21,13 +19,16 @@ import ReactDataGrid, {
 
 } from 'react-data-grid-temp'
 
-import { Spin, Dropdown } from 'antd'
+import { Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 import { cloneDeep } from 'lodash'
-import { TableProps, OverlayFunc } from '../interface'
+import { TableProps } from '../interface'
 import { reducer, initialState, State, Action } from './reducer'
-import { Input, Checkbox } from '../index'
-
+import { Input } from '../index'
+import { MultipleSelectColumn } from './column/MultipleSelectColumn'
+import { DefaultEditor } from './editor/DefaultEditor'
+import { DropdownRow } from './row/DropdownRow'
+import { GroupRow } from './row/GroupRow'
 
 import 'react-data-grid-temp/dist/react-data-grid.css'
 import './style/index.less'
@@ -37,89 +38,7 @@ interface IContextProps {
     dispatch: Dispatch<Action<any>>;
 }
 
-const TableContext = React.createContext({} as IContextProps);
-
-interface CustomEditorProps {
-    node: React.ReactNode
-    extProps: EditorProps<any, any, unknown>
-}
-
-const CustomEditor = React.forwardRef((props: CustomEditorProps, ref) => {
-    const [value, setValue] = useState(props.extProps.value)
-    const inputRef = useRef<HTMLInputElement>(null);
-    useImperativeHandle(ref, () => ({
-        getValue: () => ({ [props.extProps.column.key]: value }),
-        getInputNode: () => inputRef.current,
-    }))
-
-    useEffect(() => {
-        if (inputRef.current && inputRef.current.focus) {
-            inputRef.current.focus()
-        }
-    }, [])
-
-    // @ts-ignore
-    return <props.node
-        row={props.extProps.row}
-        column={props.extProps.column}
-        ref={inputRef}
-        style={{ height: props.extProps.height + 2 }}
-        value={value}
-        onChange={(changeValue: string) => setValue(changeValue)}
-    />
-})
-
-type DropdownRowProps<T> = {
-    contextMenu: React.ReactElement | OverlayFunc
-    rowProps: RowRendererProps<any, unknown>
-}
-
-// fix: forwardRef 一下，防止antd的Dropdown报错
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const TempRow = React.forwardRef((props: RowRendererProps<any, unknown>, ref) => {
-    const { dispatch } = useContext(TableContext)
-    return (
-        <Row
-            {...props}
-            cellRenderer={cellProps => (
-                <Cell
-                    {...cellProps}
-                    onContextMenu={e => {
-                        e.preventDefault()
-                        dispatch({
-                            type: 'SET_CONTEXTMENU',
-                            payload: {
-                                row: props.row,
-                                rowIdx: props.rowIdx,
-                                column: cellProps.column,
-                            },
-                        })
-                    }}
-                />
-            )}
-        />
-    )
-})
-
-const DropdownRow = ({ rowProps, contextMenu }: DropdownRowProps<any>) => (
-    <Dropdown
-        overlay={contextMenu}
-        trigger={['contextMenu']}
-        getPopupContainer={(triggerNode: HTMLElement) => triggerNode!.parentElement!}
-    >
-        <TempRow {...rowProps} />
-    </Dropdown>
-)
-
-const MultipleSelectColumn = (props : FormatterProps<any, unknown>) => (
-    <Checkbox
-        checked={props.isRowSelected}
-        onChange={e => {
-            const { checked } = e.target
-            props.onRowSelectionChange(checked, (e.nativeEvent as MouseEvent).shiftKey)
-        }}
-    />
-)
+export const TableContext = React.createContext({} as IContextProps);
 
 export function Table<T>(props: TableProps<T>) {
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -217,7 +136,7 @@ export function Table<T>(props: TableProps<T>) {
                         getInputNode: () => domRef.current.getInputNode(),
                     }))
                     return (
-                        <CustomEditor
+                        <DefaultEditor
                             ref={domRef}
                             node={TempEditor}
                             extProps={eProps}
@@ -251,10 +170,10 @@ export function Table<T>(props: TableProps<T>) {
                     rowIdx: state.contextMenu!.rowIdx as number,
                     column: state.contextMenu!.column as Column<T>,
                 }),
-                getDataSource: () => cloneDeep(state.datas),
+                getDataSource: () => cloneDeep(state.datas as T[]),
                 getSelect: () => selectedRows,
                 update: (record, filter) => {
-                    const newData = state.datas.map((ele: any) => {
+                    const newData = (state.datas as T[]).map((ele: T) => {
                         if (filter(ele)) {
                             return { ...ele, ...record }
                         }
@@ -291,15 +210,13 @@ export function Table<T>(props: TableProps<T>) {
             &&
             state.datas.length > 0
         ) {
-            const rowLength = state.datas.length
             scrollTimeOut = setTimeout(() => {
-                loadDataFun().then(() => {
-                    if (gridRef.current) gridRef.current.scrollToRow(rowLength)
-                })
+                loadDataFun()
             }, 80);
         }
     }
     const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
+
     return useMemo(() => (
             <TableContext.Provider value={{ dispatch, state }}>
                 <Spin
@@ -350,6 +267,15 @@ export function Table<T>(props: TableProps<T>) {
                         onSelectedRowsChange={setSelectedRows}
                         onRowClick={props.onRowClick}
                         rowRenderer={(rowProps: RowRendererProps<T, unknown>) => {
+                            if (props.enableGroupColumn) {
+                                return (
+                                    <GroupRow
+                                        rowProps={rowProps}
+                                        contextMenu={props.contextMenu}
+                                    />
+                                )
+                            }
+
                             if (props.contextMenu) {
                                 return (
                                     <DropdownRow
@@ -374,6 +300,7 @@ export function Table<T>(props: TableProps<T>) {
         props.columns,
         props.enableCellCopyPaste,
         props.enableCellDragAndDrop,
+        props.enableGroupColumn,
         state.loading,
         state.datas,
         selectedRows,
@@ -391,5 +318,6 @@ Table.defaultProps = {
     enableCellDragAndDrop: true,
     onRowsUpdate: async () => true,
     enableSelectBox: 'none',
+    enableGroupColumn: 'none',
     onSort: () => { },
 }

@@ -5,8 +5,8 @@ import { InputProps } from '../interface'
 export const Input: any = React.forwardRef<AntInput>((props: InputProps, ref) => {
     const { onChange, ...restProps } = props
     return <AntInput ref={ref} {...restProps} onChange={e => {
-        if (props.onChange) {
-            props.onChange(e.target.value)
+        if (onChange) {
+            onChange(e.target.value)
         }
     }}/>
 })

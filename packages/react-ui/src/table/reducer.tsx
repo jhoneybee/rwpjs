@@ -30,6 +30,10 @@ export const initialState: State<any> = {
 
 const fillOrder = (datas: any[]) => datas.map((ele, index) => ({ $index: index, ...ele }))
 
+// 空方法，拦截当前用户的修改操作
+const update = (oldData: any[]) => oldData
+
+
 export function reducer<T>(state: State<T>, action: Action<T>) {
     const opData: RowsUpdateEvent = action.payload
     const updateData = (rowIndex: number[], callback: (data: T) => T) => {
@@ -51,7 +55,7 @@ export function reducer<T>(state: State<T>, action: Action<T>) {
         }
         const { rows: { datas, total } } = realPayload
         const rows = {
-            datas: fillOrder(state.datas.concat(datas)),
+            datas: update(fillOrder(state.datas.concat(datas))),
             total,
         }
 
@@ -67,7 +71,7 @@ export function reducer<T>(state: State<T>, action: Action<T>) {
 
     // 修改数据结果集
     if (action.type === 'SET_UPDATE_ROWS') {
-        return { ...state, datas: action.payload }
+        return { ...state, datas: update(action.payload) }
     }
 
     // 重新加载数据
@@ -76,6 +80,7 @@ export function reducer<T>(state: State<T>, action: Action<T>) {
         return { ...state, datas: fillOrder(datas), loading: false, pageNo: 1, total }
     }
 
+    // 通过拖拽操作数据
     if (action.type === 'SET_OP_DATA') {
         let newDatas = state.datas
         if (opData.action === 'CELL_UPDATE' || opData.action === 'COPY_PASTE') {
@@ -91,7 +96,7 @@ export function reducer<T>(state: State<T>, action: Action<T>) {
         }
         const rows = {
             total: state.total,
-            datas: newDatas,
+            datas: update(newDatas),
         }
 
         return { ...state, ...rows }
