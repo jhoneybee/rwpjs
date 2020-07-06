@@ -1,10 +1,48 @@
 import { join } from 'path'
-import { copyFileSync, existsSync, mkdirSync } from 'fs'
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync, utimesSync } from 'fs'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
+
+import { webpackTimefix } from './models/utils'
+import { getRouteCode } from './models/router'
+
+const copyFileTo = (source: string , targe: string) => {
+    const txt = readFileSync(join(__dirname, 'template' , source)).toString()
+    writeFileSync(join(process.cwd(), 'src', 'pages', '.rwp', targe), txt)
+    utimesSync(
+        join(process.cwd(), 'src', 'pages', '.rwp', targe),
+        ((Date.now() - 10 * 1000)) / 1000, (Date.now() - 10 * 1000) / 1000);
+}
+
+
+const writeRouteFile = async () => {
+    const code = getRouteCode()
+    writeFileSync(join(process.cwd(), 'src', 'pages', '.rwp', 'routes.ts'),code)
+    utimesSync(
+        join(process.cwd(), 'src', 'pages', '.rwp', 'routes.ts'),
+        ((Date.now() - 10 * 1000)) / 1000, (Date.now() - 10 * 1000) / 1000);
+}
+
+/* eslint-disable no-shadow */
+const compiler = (compiler) => {
+    webpackTimefix(compiler)
+    
+    compiler.hooks.afterCompile.tapAsync("@rwp/render-react", (compilation, callback) => {
+        compilation.contextDependencies.add(join(process.cwd(), 'src'));
+        callback();
+    });
+    
+    compiler.hooks.beforeCompile.tapAsync('@rwp/render-react', (_compilation, callback) => {
+        copyFileTo('rwp.tsx', 'rwp.tsx')
+        writeRouteFile()
+        callback()
+    })
+    return compiler
+}
 
 // 初始化webpack相关的信息
 export default ({ config }) => {
     const tempConfig = config
+        
     tempConfig.plugins.push(
         new HtmlWebpackPlugin({
             hash: true,
@@ -23,6 +61,8 @@ export default ({ config }) => {
         join(process.cwd(),'src','pages','.rwp', 'rwp.tsx')
     )
 
+    writeRouteFile()
+
     if(!existsSync(join('src','pages','document.ejs'))){
         copyFileSync(
             join(process.cwd(), 'node_modules', '@rwp', 'render-react', 'lib','template', 'document.ejs'),
@@ -30,5 +70,8 @@ export default ({ config }) => {
         )
     }
     tempConfig.entry = join(process.cwd(),'src','pages','.rwp', 'rwp.tsx')
-    return tempConfig
+    return {
+        config: tempConfig,
+        compiler,
+    }
 }

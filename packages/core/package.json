@@ -19,7 +19,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint:script && npm run build && git add ."
+      "pre-commit": "npm run lint:script && npm run build"
     }
   },
   "dependencies": {

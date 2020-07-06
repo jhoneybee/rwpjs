@@ -54,13 +54,13 @@ import(configPath).then((config) => {
     loadRender(defaultConfig(getConfig({
         config,
         state,
-    })), state).then(wConfig => {
+    })), state).then(result => {
 
-        const { devServer } = wConfig
-        const compiler = Webpack(wConfig)
-
+        const { devServer } = result.config
+        const compiler = result.compiler(Webpack(result.config))
+        
         if (argv.dev || argv.analyzer) {
-            const server = new WebpackDevServer(compiler, {
+            const server = new WebpackDevServer(compiler,{
                 host: devServer.host
             });
             server.listen(devServer.port)

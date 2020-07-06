@@ -34,7 +34,6 @@ const getTemplateConfig = (): Configuration => {
         module: {
             rules: [{
                 test: /\.css$/i,
-                exclude: /node_modules/,
                 use: ['style-loader', 'css-loader']
             }, {
                 test: /\.less$/,
@@ -67,6 +66,7 @@ const getTemplateConfig = (): Configuration => {
 const getDevConfig = () => {
     const template: Configuration = getTemplateConfig()
     template.mode = 'development'
+    template.devtool = 'cheap-module-source-map'
     template.plugins = [new WebpackBar()]
     return template
 }
@@ -74,7 +74,7 @@ const getDevConfig = () => {
 const getBuildConfig = () => {
     const template: Configuration = getTemplateConfig()
     template.mode = 'production'
-
+    template.devtool = false
     // 添加压缩编译
     template.optimization = {
         minimize: true,

@@ -1,4 +1,4 @@
-import React/* , { Suspense, useEffect } */ from "react";
+import React, { Suspense, useEffect } from "react";
 import ReactDOM from 'react-dom';
 
 import {
@@ -6,12 +6,10 @@ import {
     Switch,
     Route
 } from "react-router-dom";
+import nprogress from 'nprogress'
+import 'nprogress/nprogress.css'
 
-// import nprogress from 'nprogress'
-// import 'nprogress/nprogress.css'
-
-
-const routes = []
+import routes from './routes'
 
 /**
  *  path       路由路径
@@ -32,39 +30,33 @@ const RouteComponent = (components) => (
                             </Switch>
                         </element.component>
                     )
-                ):  <element.component {...props} />
+                ) : <element.component {...props} />
             }
         />
     ))
 )
 
+const Loading = () => {
+    useEffect(() => {
+        nprogress.start()
+        return () => {
+            nprogress.done()
+        }
+    }, [])
+    return <span />
+}
 
-// const Loading = () => {
-//     useEffect(()=>{
-//         nprogress.start()
-//         return () => {
-//             nprogress.done()
-//         }
-//     }, [])
-//     return <span />
-// }
-
-const Bootstrap = () => {
-    return (
-        <Router>
-            {/* <Suspense fallback={<Loading/>}>
-                <Layout>
-                    
-                </Layout>
-            </Suspense> */}
+const Bootstrap = () => (
+    <Router>
+        <Suspense fallback={<Loading />}>
             <Switch>
                 {RouteComponent(routes)}
             </Switch>
-        </Router>
-    )
-}
+        </Suspense>
+    </Router>
+)
 
 ReactDOM.render(
     <Bootstrap />,
     document.getElementById('root')
-  )
+)
