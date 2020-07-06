@@ -150,7 +150,7 @@ export function Table<T>(props: TableProps<T>) {
     useEffect(() => {
         if (props.enableGroupColumn && props.enableGroupColumn.length > 0) {
             loadDataGroupFun(props.params!)
-        } else {
+        } else if (props.enableGroupColumn && props.enableGroupColumn.length === 0) {
             reloadFun(props.params!)
         }
     }, [props.enableGroupColumn])
