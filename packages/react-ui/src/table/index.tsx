@@ -93,7 +93,12 @@ export function Table<T>(props: TableProps<T>) {
         const respGrouMap = new Map<string, T[]>()
 
         resp.datas.forEach((ele: any) => {
-            const key = ele[props.enableGroupColumn!]
+            let key = ''
+            props.enableGroupColumn!.forEach(groupColumn => {
+                key += `${ele[groupColumn]},`
+            })
+            key = key.substr(0, key.length - 1)
+
             const value = respGrouMap.get(key)
             if (value) {
                 value.push(ele)
@@ -143,7 +148,7 @@ export function Table<T>(props: TableProps<T>) {
     }
 
     useEffect(() => {
-        if (props.enableGroupColumn) {
+        if (props.enableGroupColumn && props.enableGroupColumn.length > 0) {
             loadDataGroupFun(props.params!)
         } else {
             reloadFun(props.params!)
@@ -235,6 +240,8 @@ export function Table<T>(props: TableProps<T>) {
                     })
                 },
                 reload: (param: Object) => {
+                    // 如果是分组状态,禁止操作
+                    if (props.enableGroupColumn) return;
                     reloadFun(param)
                 },
                 del: filter => {
@@ -254,6 +261,7 @@ export function Table<T>(props: TableProps<T>) {
     }, [state.contextMenu, state.datas, selectedRows])
 
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+         // 如果是分组状态,禁止操作
         if (props.enableGroupColumn) return
         const target = e.currentTarget
         if (
@@ -286,6 +294,7 @@ export function Table<T>(props: TableProps<T>) {
                         enableCellCopyPaste={props.enableCellCopyPaste}
                         sortDirection={sortDirection}
                         onSort={(columnKey, direction) => {
+                            // 如果是分组状态,禁止操作
                             if (props.enableGroupColumn) return
                             const newSortDirection = [];
                             let existence = false;

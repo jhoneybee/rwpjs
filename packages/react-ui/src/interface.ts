@@ -150,7 +150,9 @@ export interface TableProps<T> {
     // 启动选择框 multiple表示多选，默认为none表示无选择器
     enableSelectBox?: 'multiple' | 'none'
     // 启动列的分组, 根据分组的列进行排序，参数为列的name字段
-    enableGroupColumn?: string
+    enableGroupColumn?: string[]
+    // 表格分组的渲染
+    groupRenderer?: React.ComponentType
     width?: number
     height?: number
     // 用户唯一的rowKey

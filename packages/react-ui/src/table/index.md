@@ -47,7 +47,7 @@ const getColumns = () => {
 export default () => {
     const table = React.useRef()
     const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
-    const [groupField, setGroupField] = useState()
+    const [groupField, setGroupField] = useState([])
     return (
         <>
           <Button
@@ -71,7 +71,7 @@ export default () => {
           > 获取表格选中的数据 </Button>
             <Button
             onClick={() => {
-              setGroupField('field1')
+              setGroupField(['field1','field2'])
             }}
           > 字段一分组 </Button>
           <Table
