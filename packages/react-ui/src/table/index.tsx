@@ -287,15 +287,13 @@ export function Table<T>(props: TableProps<T>) {
                             return <Row {...rowProps} />
                         }}
                         onRowsUpdate={e => {
-                            (async() => {
-                                const result = await props.onRowsUpdate!(e)
-                                if (result) {
-                                    dispatch({
-                                        type: 'SET_OP_DATA',
-                                        payload: e,
-                                    })
-                                }
-                            })()
+                            const onCommit = () => {
+                                dispatch({
+                                    type: 'SET_OP_DATA',
+                                    payload: e,
+                                })
+                            }
+                            props.onRowsUpdate!(e, onCommit)
                         }}
                     />
                 </Spin>

@@ -179,5 +179,5 @@ export interface TableProps<T> {
     /**
      * 用户更新表格Rows的事件
      */
-    onRowsUpdate?: <E extends RowsUpdateEvent>(event: E) => Promise<boolean>;
+    onRowsUpdate?: <E extends RowsUpdateEvent>(event: E, onCommit: () => void) => Promise<boolean>;
 }
