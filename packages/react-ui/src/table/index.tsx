@@ -287,10 +287,16 @@ export function Table<T>(props: TableProps<T>) {
                             return <Row {...rowProps} />
                         }}
                         onRowsUpdate={e => {
-                            dispatch({
-                                type: 'SET_OP_DATA',
-                                payload: e,
-                            })
+                            if (props.onRowsUpdate) {
+                                props.onRowsUpdate(e).then((result: boolean) => {
+                                    if (result) {
+                                        dispatch({
+                                            type: 'SET_OP_DATA',
+                                            payload: e,
+                                        })
+                                    }
+                                })
+                            }
                         }}
                     />
                 </Spin>
