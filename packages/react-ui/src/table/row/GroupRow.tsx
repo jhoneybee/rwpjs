@@ -3,7 +3,7 @@ import React from 'react'
 import {
     RowRendererProps,
 } from 'react-data-grid-temp'
-import { Typography, Tag } from 'antd'
+import { Typography } from 'antd'
 
 import { OverlayFunc } from '../../interface'
 import { DefaultRow } from './DefaultRow'
@@ -22,7 +22,7 @@ export const GroupRow = ({ contextMenu, rowProps }: GroupRowProps) => {
                 className="rdg-row rdg-row-default-group"
                 style={{ top: rowProps.top }}
             >
-                <Typography.Title level={4}>{title}</Typography.Title> <Tag color="#2db7f5">{count}</Tag>
+                <Typography.Title level={4}>{title}({count})</Typography.Title>
             </div>
         )
     }

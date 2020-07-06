@@ -47,6 +47,7 @@ const getColumns = () => {
 export default () => {
     const table = React.useRef()
     const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
+    const [groupField, setGroupField] = useState()
     return (
         <>
           <Button
@@ -68,6 +69,11 @@ export default () => {
               console.log(table.current.getSelect())
             }}
           > 获取表格选中的数据 </Button>
+            <Button
+            onClick={() => {
+              setGroupField('field1')
+            }}
+          > 字段一分组 </Button>
           <Table
             columns={getColumns()}
             contextMenu={()=>{
@@ -86,6 +92,7 @@ export default () => {
             table={table}
             enableSelectBox="multiple"
             rowKey='field0'
+            enableGroupColumn={groupField}
             sortDirection={sortDirection}
             onSort={ sortColumns => {
               console.log(sortColumns)

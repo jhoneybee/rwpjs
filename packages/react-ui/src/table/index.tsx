@@ -80,6 +80,48 @@ export function Table<T>(props: TableProps<T>) {
         if (enableInitLoadData) loadDataFun()
     }, [])
 
+    /**
+     * 装载分组数据
+     */
+    const loadDataGroupFun = async (param: Object) => {
+        const res = props.loadData(1, props.pageSize!, {
+            ...props.params,
+            ...param,
+        })
+        const resp = await (res as PromiseLike<{ total: number, datas: T[] }>)
+
+        const respGrouMap = new Map<string, T[]>()
+
+        resp.datas.forEach((ele: any) => {
+            const key = ele[props.enableGroupColumn!]
+            const value = respGrouMap.get(key)
+            if (value) {
+                value.push(ele)
+            } else {
+                respGrouMap.set(key, [ele])
+            }
+        })
+
+        let groupDatas: any[] = []
+        Array.from(respGrouMap.keys()).forEach(key => {
+            const data = respGrouMap.get(key)!
+            groupDatas.push({
+                $type: 'group',
+                title: key,
+                count: data.length,
+            })
+            groupDatas = groupDatas.concat(data)
+        })
+
+        await dispatch({
+            type: 'SET_RELOAD_ROWS',
+            payload: {
+                total: resp.total,
+                datas: groupDatas,
+            },
+        })
+        gridRef.current!.scrollToRow(0)
+    }
 
     const reloadFun = async (param: Object) => {
         await dispatch({
@@ -99,6 +141,14 @@ export function Table<T>(props: TableProps<T>) {
         })
         gridRef.current!.scrollToRow(0)
     }
+
+    useEffect(() => {
+        if (props.enableGroupColumn) {
+            loadDataGroupFun(props.params!)
+        } else {
+            reloadFun(props.params!)
+        }
+    }, [props.enableGroupColumn])
 
     const getColumns = () => {
         const columns: Column<T, unknown>[] = props.columns.map((element => {
@@ -204,6 +254,7 @@ export function Table<T>(props: TableProps<T>) {
     }, [state.contextMenu, state.datas, selectedRows])
 
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+        if (props.enableGroupColumn) return
         const target = e.currentTarget
         if (
             target.scrollTop + target.clientHeight + 2 > target.scrollHeight
@@ -235,6 +286,7 @@ export function Table<T>(props: TableProps<T>) {
                         enableCellCopyPaste={props.enableCellCopyPaste}
                         sortDirection={sortDirection}
                         onSort={(columnKey, direction) => {
+                            if (props.enableGroupColumn) return
                             const newSortDirection = [];
                             let existence = false;
                             sortDirection.forEach(ele => {
@@ -321,6 +373,5 @@ Table.defaultProps = {
     enableCellDragAndDrop: true,
     onRowsUpdate: async () => true,
     enableSelectBox: 'none',
-    enableGroupColumn: 'none',
     onSort: () => { },
 }
