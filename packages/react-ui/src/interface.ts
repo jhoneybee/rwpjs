@@ -84,7 +84,7 @@ export interface ColumnProps<T> {
 }
 
 export declare type OverlayFunc = () => React.ReactElement;
-
+export declare type TableFunc = (table: TableHandle<any>) => void;
 
 // 表格的 Handle 事件
 export interface TableHandle<T> extends DataGridHandle {

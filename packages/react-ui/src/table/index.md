@@ -209,6 +209,9 @@ export default () => {
               name: `field10`,
               title: `字段-10`,
             }]}
+            table={(table: any) => {
+              console.log(table)
+            }}
             loadData={(pageNo , pageSize, params) => {  
               return new Promise((resolve) =>{
                 const datas = []

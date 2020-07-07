@@ -21,8 +21,8 @@ import ReactDataGrid, {
 
 import { Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
-import { cloneDeep } from 'lodash'
-import { TableProps } from '../interface'
+import { cloneDeep, isFunction } from 'lodash'
+import { TableProps, TableHandle } from '../interface'
 import { reducer, initialState, State, Action } from './reducer'
 import { Input } from '../index'
 import { MultipleSelectColumn } from './column/MultipleSelectColumn'
@@ -155,6 +155,9 @@ export function Table<T>(props: TableProps<T>) {
         }
     }, [props.enableGroupColumn])
 
+
+    const isEnableGroupColumn = () => props.enableGroupColumn && props.enableGroupColumn.length > 0
+
     const getColumns = () => {
         const columns: Column<T, unknown>[] = props.columns.map((element => {
             const { name, title, editor, editable, formatter, align = 'left', ...restProps } = element
@@ -228,7 +231,7 @@ export function Table<T>(props: TableProps<T>) {
     }
     useEffect(() => {
         if (table && gridRef.current) {
-            table.current = {
+            const tempTable: TableHandle<any> = {
                 scrollToColumn: gridRef.current.scrollToColumn,
                 scrollToRow: gridRef.current.scrollToRow,
                 selectCell: gridRef.current.selectCell,
@@ -253,7 +256,7 @@ export function Table<T>(props: TableProps<T>) {
                 },
                 reload: (param: Object) => {
                     // 如果是分组状态,禁止操作
-                    if (props.enableGroupColumn) return;
+                    if (isEnableGroupColumn()) return;
                     reloadFun(param)
                 },
                 del: filter => {
@@ -269,12 +272,17 @@ export function Table<T>(props: TableProps<T>) {
                     })
                 },
             }
+            if (isFunction(table)) {
+                table(tempTable)
+            } else {
+                table.current = tempTable
+            }
         }
     }, [state.contextMenu, state.datas, selectedRows])
 
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
          // 如果是分组状态,禁止操作
-        if (props.enableGroupColumn) return
+        if (isEnableGroupColumn()) return
         const target = e.currentTarget
         if (
             target.scrollTop + target.clientHeight + 2 > target.scrollHeight
@@ -307,7 +315,7 @@ export function Table<T>(props: TableProps<T>) {
                         sortDirection={sortDirection}
                         onSort={(columnKey, direction) => {
                             // 如果是分组状态,禁止操作
-                            if (props.enableGroupColumn) return
+                            if (isEnableGroupColumn()) return
                             const newSortDirection = [];
                             let existence = false;
                             sortDirection.forEach(ele => {
@@ -340,7 +348,7 @@ export function Table<T>(props: TableProps<T>) {
                         onSelectedRowsChange={setSelectedRows}
                         onRowClick={props.onRowClick}
                         rowRenderer={(rowProps: RowRendererProps<T, unknown>) => {
-                            if (props.enableGroupColumn) {
+                            if (isEnableGroupColumn()) {
                                 return (
                                     <GroupRow
                                         rowProps={rowProps}

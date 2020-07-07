@@ -6,7 +6,9 @@ import { Table } from './index'
 
 
 const NoFocusInput = React.forwardRef((props: any, _ref) => (
-    <Input value={props.value} onChange={props.onChange}/>
+    <Input
+        value={props.value}
+        onChange={props.onChange}/>
 ))
 
 const getColumns = () => {
@@ -17,6 +19,7 @@ const getColumns = () => {
             title: `字段-${i}`,
             width: 120,
             editable: true,
+            sortable: true,
             editor: NoFocusInput,
         })
     }
@@ -55,7 +58,7 @@ const getData = (pageNo: number, pageSize: number) => {
             field1: `${pageNo}-cell-field1-${i}`,
             field2: `${pageNo}-cell-field2-${i}`,
             field3: `${pageNo}-cell-field3-${i}`,
-            field4: `${pageNo}-cell-field4-${i}`,
+            field4: `${pageNo}-cell-field4-${i % 2}`,
             field5: `${pageNo}-cell-field5-${i}`,
             field6: `${pageNo}-cell-field6-${i}`,
             field7: `${pageNo}-cell-field7-${i}`,
@@ -76,6 +79,7 @@ const rootPromiseProps: any = {
 }
 
 test('test table async load data.', async () => {
+    rootPromiseProps.enableSelectBox = 'multiple'
     const { findByText, container } = render(<Table<any> {...rootPromiseProps}/>)
     await findByText('1-cell-field0-0')
     expect(container).toMatchSnapshot()
@@ -176,4 +180,18 @@ test('test table props table.', async () => {
 test('test table no enable init load data.', () => {
     rootPromiseProps.enableInitLoadData = false
     render(<Table<any> {...rootPromiseProps}/>)
+})
+
+test('test table group data', async () => {
+    rootPromiseProps.enableGroupColumn = ['field4']
+    await act(async() => {
+        await render(<Table<any> {...rootPromiseProps}/>)
+    })
+})
+
+test('test table group data none', async () => {
+    rootPromiseProps.enableGroupColumn = []
+    await act(async() => {
+        await render(<Table<any> {...rootPromiseProps}/>)
+    })
 })
