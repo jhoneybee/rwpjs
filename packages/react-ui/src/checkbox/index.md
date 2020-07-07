@@ -1,10 +1,10 @@
 ---
 nav:
-  title: Components
+  title: 组件
   path: /components
 group:
   path: /components
-  title: 组件
+  title: 基础组件
 title: Checkbox 多选框
 ---
 
