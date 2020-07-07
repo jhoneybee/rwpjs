@@ -23,7 +23,7 @@ title: Table 表格
 
 import React, { useState } from 'react'
 import { Table, Input } from '@rwp/react-ui'
-import { Menu, Button } from 'antd'
+import { Menu, Button, Space } from 'antd'
 
 const getColumns = () => {
   const columns = [{
@@ -50,30 +50,38 @@ export default () => {
     const [groupField, setGroupField] = useState([])
     return (
         <>
-          <Button
-            onClick={() => {
-              table.current.update({
-                'field1': '修改成功'
-              }, (ele) => {
-                return ele.field1 === '1-field0-0'
-              })
-            }}
-          > 点击修改数据 </Button>
-          <Button
-            onClick={() => {
-              table.current.reload({})
-            }}
-          > 重新装载数据 </Button>
-          <Button
-            onClick={() => {
-              console.log(table.current.getSelect())
-            }}
-          > 获取表格选中的数据 </Button>
+        <div
+          style={{
+            marginBottom: 4
+          }}
+        >
+          <Space>
             <Button
-            onClick={() => {
-              setGroupField(['field1','field2'])
-            }}
-          > 字段一分组 </Button>
+              onClick={() => {
+                table.current.update({
+                  'field1': '修改成功'
+                }, (ele) => {
+                  return ele.field1 === '1-field0-0'
+                })
+              }}
+            > 点击修改数据 </Button>
+            <Button
+              onClick={() => {
+                table.current.reload({})
+              }}
+            > 重新装载数据 </Button>
+            <Button
+              onClick={() => {
+                console.log(table.current.getSelect())
+              }}
+            > 获取表格选中的数据 </Button>
+              <Button
+              onClick={() => {
+                setGroupField(['field1','field2'])
+              }}
+            > 字段一分组 </Button>
+          </Space>
+        </div>
           <Table
             columns={getColumns()}
             contextMenu={()=>{
