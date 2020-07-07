@@ -244,10 +244,16 @@ export default () => {
 |enableInitLoadData| 是否初始化的时候自动装载数据 | `boolean` 
 |enableCellCopyPaste| 启动复制和粘贴 | `boolean` | `true`
 |enableCellDragAndDrop| 启动下拉编辑 | `boolean` | `true`
+|enableSelectBox      | 启动选择框   | `'multiple'` &#124; `'none'` | `'none'`
+|enableGroupColumn    | 启动分组,根据列的name来进行分组     | `string[]` | `[]`
+|groupRenderer        | 渲染分组行的的render, 可拦截重新填充值 | `React.ComponentType`| -
 |width | 表格的宽度 | `number` |
 |height| 表格的高度 | `number` |
 |rowKey| 用户唯一的rowKey| `string`|
 |contextMenu| 右键菜单   | `React.ReactElement`&#124;`OverlayFunc`|
+|onSort      | 排序触发的事件| `(sortColumns: SortColumn[]) => void;`| -
+|onRowClick  | 表格的row的点击事件| `(rowIdx: number, row: T, column: CalculatedColumn<T>) => void;`
+|onRowsUpdate| 用户更新表格触发的事件| ` <E extends RowsUpdateEvent>(event: E, onCommit: () => void) => Promise<boolean>;`
 |table       | 用来获取当前的表格进行数据操作 | `TableHandle`
 
 
@@ -259,6 +265,11 @@ export default () => {
 | scrollToRow      | 滚动到指定的行  | `(rowIdx: number) => void`
 | selectCell       | 选择指定的单元格| `(position: Position, openEditor?: boolean) => void`     
 | rightContext     | 获取右键的上下文信息| `() => { row, rowIdx, column }` 
+| update           | 更新表格的数据  | `(record: T, filter: (ele: T) => boolean) => void`
+| getDataSource    | 获取当前表格的所有数据| `() => T[]`
+| getSelect        | 获取当前选中的数据    | `() => Set<T[keyof T]>`
+| reload           | 重新装载表格         | `(param: Object) => void`
+| del              | 删除返回为true的数据 | `(filter: (ele: T) => boolean) => void`
 ```ts
 const Demo = () => {
     const table = React.useRef<TableHandle<T> | null>(null)
@@ -280,6 +291,7 @@ const Demo = () => {
 | ---      | ---        | ---     |
 |title     | 标题       | `string`| 
 |name      | 字段名称   | `string`|
+|align     | 列的对其方式| `'left'` &#124; `'right'` &#124; `'center'` | `'left'`
 |width     |  列宽。如果未指定，则将根据网格宽度和其他列的指定宽度自动确定 | `number`&#124;`string`
 |minWidth   | 最小列宽(px) | `number`|
 |maxWidth   | 最大列宽(px)。| `number`|
@@ -292,3 +304,28 @@ const Demo = () => {
 
 
 > 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts
+
+## FAQ 
+
+#### 如何在表格中定义一个可编辑的组件？ 
+
+传一个`React.ComponentType<EditorProps<T[keyof T], T, unknown>>`, 会传给`props` 一个`value`, 和一个 `onChange`,还有一个`style`
+
+例子: 
+
+```ts
+const EditorDatePicker = (props) => {
+  return (
+    <DatePicker
+      showTime
+      style={props.style}
+      placeholder="选择日期"
+      value={moment(props.value || 0)}
+      onChange={(e) => {
+        props.onChange(e.valueOf())
+      }}
+    />
+  )
+}
+
+```
