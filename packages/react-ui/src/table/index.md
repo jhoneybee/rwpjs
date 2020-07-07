@@ -35,8 +35,8 @@ const getColumns = () => {
       name: `field${i}`,
       title: `字段-${i}`,
       width: 120,
-      align: 'center',
       editable: true,
+      align: 'center|left',
       sortable: true,
       editor: Input
     })

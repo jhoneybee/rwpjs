@@ -59,8 +59,8 @@ export interface ColumnProps<T> {
     title: string
     // 字段名称
     name: string
-    // 列的对其方式,默认left
-    align?: 'left' | 'right' | 'center'
+    // 列的对其方式,默认left, 如果字符串格式为 xxx|xxx 第一个表示header第二个表示表格body的对其方式
+    align?: 'left' | 'right' | 'center' | string
     // 列宽。如果未指定，则将根据网格宽度和其他列的指定宽度自动确定
     width?: number | string;
     // 最小列宽(px)

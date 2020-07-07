@@ -159,15 +159,27 @@ export function Table<T>(props: TableProps<T>) {
         const columns: Column<T, unknown>[] = props.columns.map((element => {
             const { name, title, editor, editable, formatter, align = 'left', ...restProps } = element
             const TempEditor = editable ? editor || Input : undefined
+
+            let bodyTextAlign: 'left' | 'right' | 'center' = 'left'
+            let headerTextAlign: 'left' | 'right' | 'center' = 'left'
+            const aligns = align.split('|');
+            if (aligns.length >= 2) {
+                headerTextAlign = aligns[0] as 'left' | 'right' | 'center'
+                bodyTextAlign = aligns[1] as 'left' | 'right' | 'center'
+            } else if (['left', 'right', 'center'].includes(align)) {
+                bodyTextAlign = align as 'left' | 'right' | 'center'
+                headerTextAlign = align as 'left' | 'right' | 'center'
+            }
+
             let format = (cellProps: FormatterProps) => (
-                <div style={{ textAlign: align }}>{
+                <div style={{ textAlign: bodyTextAlign }}>{
                     cellProps.row[cellProps.column.key]
                 }</div>
             )
             if (formatter) {
                 const Formatter = formatter
                 format = (cellProps: FormatterProps) => (
-                    <div style={{ textAlign: align }}><Formatter {...cellProps} /></div>
+                    <div style={{ textAlign: bodyTextAlign }}><Formatter {...cellProps} /></div>
                 )
             }
             return {
@@ -177,7 +189,7 @@ export function Table<T>(props: TableProps<T>) {
                 formatter: format,
                 editable,
                 headerRenderer: ({ column }: HeaderRendererProps<T, unknown>) => (
-                    <div style={{ textAlign: align }}>{column.name}</div>
+                    <div style={{ textAlign: headerTextAlign }}>{column.name}</div>
                 ),
                 editor: TempEditor ? React.forwardRef((
                     eProps: EditorProps<T[keyof T], T, unknown>,
