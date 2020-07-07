@@ -8,7 +8,7 @@ export default defineConfig({
   mode: 'site',
   publicPath: '/rwpjs/',
   base: '/rwpjs',
-  history: 'hash',
+  history: { type: 'hash' },
   extraBabelPlugins: [
     [
       'import',
