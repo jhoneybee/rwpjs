@@ -10,11 +10,10 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - run: cd package/react-ui && npm install
-      - run: cd package/react-ui && npm run docs:build
-      - run: echo kotomi.site > ./dist/CNAME
-      - name: Docs Deploy 
+      - run: cd ./packages/react-ui && npm install
+      - run: cd ./packages/react-ui && npm run docs:build
+      - name: Docs 
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: package/react-ui/dist
+          publish_dir: ./packages/react-ui/dist
