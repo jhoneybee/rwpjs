@@ -1,6 +1,7 @@
 import React from 'react'
 import { EditorProps, DataGridHandle, Column, SortColumn, FormatterProps, CalculatedColumn, RowsUpdateEvent } from 'react-data-grid-temp'
 import { LiteralUnion } from 'antd/lib/_util/type';
+import { FormItemProps as AntFormItemProps, FormProps as AntFormProps } from 'antd/lib/form';
 
 declare const ButtonTypes: ['default', 'primary', 'ghost', 'dashed', 'link', 'text'];
 export declare type ButtonType = typeof ButtonTypes[number];
@@ -81,6 +82,19 @@ export interface ColumnProps<T> {
     formatter?: React.ComponentType<FormatterProps<T, unknown>>;
     // 当前列的编辑器
     editor?:React.ComponentType<EditorProps<T[keyof T], T, unknown>>;
+}
+
+
+export interface FormProps extends AntFormProps{
+    // 当前列的总数
+    cols?: number
+}
+
+export interface FormItemProps extends AntFormItemProps{
+    // 是否换行
+    br?: boolean
+    // 跨列
+    colSpan?: number
 }
 
 export declare type OverlayFunc = () => React.ReactElement;
