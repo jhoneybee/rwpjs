@@ -3,7 +3,7 @@ import { Form as AntForm } from 'antd';
 import { FormProps, FormItemProps } from '../interface'
 
 export const Form = (props: FormProps) => {
-    const { cols, style, ...restProps } = props
+    const { cols = 5, style, ...restProps } = props
     const newStyle = style || {}
     return (
         <AntForm
