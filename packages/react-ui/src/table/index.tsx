@@ -242,6 +242,9 @@ export function Table<T>(props: TableProps<T>) {
                 }),
                 getDataSource: () => cloneDeep(state.datas as T[]),
                 getSelect: () => selectedRows,
+                setSelect: (selects: Set<T[keyof T]>) => {
+                    setSelectedRows(selects)
+                },
                 update: (record, filter) => {
                     const newData = (state.datas as T[]).map((ele: T) => {
                         if (filter(ele)) {

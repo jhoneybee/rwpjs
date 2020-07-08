@@ -118,6 +118,11 @@ export interface TableHandle<T> extends DataGridHandle {
     getSelect:() => Set<T[keyof T]>
 
     /**
+     * 设置当前选中的数据
+     */
+    setSelect:(selects: Set<T[keyof T]>) => void
+
+    /**
      * 更新表格数据
      * @param record 要修改的数据
      * @param filter 指定条件查询对应的数据

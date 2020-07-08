@@ -32,7 +32,7 @@ const compiler = (compiler) => {
     });
     
     compiler.hooks.beforeCompile.tapAsync('@rwp/render-react', (_compilation, callback) => {
-        copyFileTo('rwp.tsx', 'rwp.tsx')
+        copyFileTo(join('pages','rwp.tsx'), 'rwp.tsx')
         writeRouteFile()
         callback()
     })
@@ -57,16 +57,44 @@ export default ({ config }) => {
     }
 
     copyFileSync(
-        join(process.cwd(), 'node_modules', '@rwp', 'render-react', 'lib','template', 'rwp.tsx'),
+        join(process.cwd(), 'node_modules', '@rwp', 'render-react', 'lib','template', 'pages', 'rwp.tsx'),
         join(process.cwd(),'src','pages','.rwp', 'rwp.tsx')
     )
-
+    
     writeRouteFile()
 
     if(!existsSync(join('src','pages','document.ejs'))){
+        if (!existsSync(join('src','pages'))) mkdirSync(join('src','pages'))
         copyFileSync(
-            join(process.cwd(), 'node_modules', '@rwp', 'render-react', 'lib','template', 'document.ejs'),
+            join(
+                process.cwd(),
+                'node_modules',
+                '@rwp',
+                'render-react',
+                'lib',
+                'template',
+                'pages',
+                'document.ejs'
+            ),
             join(process.cwd(),'src','pages', 'document.ejs')
+        )
+    }
+    if (!existsSync(join('src','layouts','index.tsx'))) {
+
+        if (!existsSync(join('src','layouts'))) mkdirSync(join('src','layouts'))
+
+        copyFileSync(
+            join(
+                process.cwd(),
+                'node_modules',
+                '@rwp',
+                'render-react',
+                'lib',
+                'template',
+                'layouts',
+                'index.tsx'
+            ),
+            join(process.cwd(),'src','layouts', 'index.tsx')
         )
     }
     tempConfig.entry = join(process.cwd(),'src','pages','.rwp', 'rwp.tsx')
