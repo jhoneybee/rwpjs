@@ -38,6 +38,9 @@ const getColumns = () => {
       editable: true,
       align: 'center|left',
       sortable: true,
+      formatter: ({ row , column}) => {
+        return <div> {row['testfield0'] || row[column.key]} </div>
+      },
       editor: Input
     })
   }
@@ -58,13 +61,24 @@ export default () => {
           <Space>
             <Button
               onClick={() => {
-                table.current.update({
-                  'field1': '修改成功'
-                }, (ele) => {
-                  return ele.field1 === '1-field0-0'
+                table.current.update((ele) => {
+                  if(ele.field1 === '1-field0-0'){
+                    return { ...ele,  'field1': '修改成功'}
+                  }
+                  return ele
                 })
               }}
             > 点击修改数据 </Button>
+            <Button
+              onClick={() => {
+                table.current.update((ele) => {
+                  if (ele.$index === 0){
+                    return { ...ele, 'testfield0': '修改成功'}
+                  }
+                  return ele
+                })
+              }}
+            > 点击修改不在列里面的数据 </Button>
             <Button
               onClick={() => {
                 table.current.reload({})
@@ -279,6 +293,7 @@ export default () => {
 | update           | 更新表格的数据  | `(record: T, filter: (ele: T) => boolean) => void`
 | getDataSource    | 获取当前表格的所有数据| `() => T[]`
 | getSelect        | 获取当前选中的数据    | `() => Set<T[keyof T]>`
+| setSelect        | 设置选中的数据        | `(selects: Set<T[keyof T]>) => void`
 | reload           | 重新装载表格         | `(param: Object) => void`
 | del              | 删除返回为true的数据 | `(filter: (ele: T) => boolean) => void`
 ```ts

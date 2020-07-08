@@ -245,13 +245,8 @@ export function Table<T>(props: TableProps<T>) {
                 setSelect: (selects: Set<T[keyof T]>) => {
                     setSelectedRows(selects)
                 },
-                update: (record, filter) => {
-                    const newData = (state.datas as T[]).map((ele: T) => {
-                        if (filter(ele)) {
-                            return { ...ele, ...record }
-                        }
-                        return ele
-                    })
+                update: change => {
+                    const newData = (state.datas as T[]).map((ele: T) => change(ele))
                     dispatch({
                         type: 'SET_UPDATE_ROWS',
                         payload: newData,

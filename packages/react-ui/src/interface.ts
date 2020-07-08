@@ -124,10 +124,8 @@ export interface TableHandle<T> extends DataGridHandle {
 
     /**
      * 更新表格数据
-     * @param record 要修改的数据
-     * @param filter 指定条件查询对应的数据
      */
-    update: (record: T, filter: (ele: T) => boolean) => void
+    update: (change: (oldData: T) => T) => void
 
     /**
      * 重新装载表格数据
