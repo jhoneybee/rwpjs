@@ -246,7 +246,7 @@ export function Table<T>(props: TableProps<T>) {
                     setSelectedRows(selects)
                 },
                 update: change => {
-                    const newData = (state.datas as T[]).map((ele: T) => change(ele))
+                    const newData = (state.datas as T[]).map((ele: T) => change(ele) || ele)
                     dispatch({
                         type: 'SET_UPDATE_ROWS',
                         payload: newData,
