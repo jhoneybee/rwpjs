@@ -69,15 +69,15 @@ export function Table<T>(props: TableProps<T>) {
 
     // 防止timeout内存溢出
     let scrollTimeOut: NodeJS.Timeout;
+    useEffect(() => () => {
+        if (scrollTimeOut) {
+            clearTimeout(scrollTimeOut)
+        }
+    })
 
     useEffect(() => {
         // 装载数据
         if (enableInitLoadData) loadDataFun()
-        return () => {
-            if (scrollTimeOut) {
-                clearTimeout(scrollTimeOut)
-            }
-        }
     }, [])
 
     /**
@@ -125,7 +125,9 @@ export function Table<T>(props: TableProps<T>) {
                 datas: groupDatas,
             },
         })
-        gridRef.current!.scrollToRow(0)
+        if (gridRef.current) {
+            gridRef.current.scrollToRow(0)
+        }
     }
 
     const reloadFun = async (param: Object) => {
@@ -144,9 +146,7 @@ export function Table<T>(props: TableProps<T>) {
             type: 'SET_RELOAD_ROWS',
             payload: resp,
         })
-        if (gridRef.current) {
-            gridRef.current.scrollToRow(0)
-        }
+        gridRef.current!.scrollToRow(0)
     }
 
     useEffect(() => {
@@ -280,7 +280,7 @@ export function Table<T>(props: TableProps<T>) {
     }, [state.contextMenu, state.datas, selectedRows])
 
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
-        // 如果是分组状态,禁止操作
+         // 如果是分组状态,禁止操作
         if (isEnableGroupColumn()) return
         const target = e.currentTarget
         if (
@@ -296,89 +296,89 @@ export function Table<T>(props: TableProps<T>) {
     const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
 
     return useMemo(() => (
-        <TableContext.Provider value={{ dispatch, state }}>
-            <Spin
-                spinning={state.loading}
-                indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
-            >
-                <ReactDataGrid
-                    ref={gridRef}
-                    width={props.width}
-                    height={props.height}
-                    columns={getColumns()}
-                    rows={state.datas as T[]}
-                    onScroll={onScroll}
-                    enableCellAutoFocus
-                    rowKey={props.rowKey}
-                    enableCellCopyPaste={props.enableCellCopyPaste}
-                    sortDirection={sortDirection}
-                    onSort={(columnKey, direction) => {
-                        // 如果是分组状态,禁止操作
-                        if (isEnableGroupColumn()) return
-                        const newSortDirection = [];
-                        let existence = false;
-                        sortDirection.forEach(ele => {
-                            if (ele.columnKey === columnKey) {
+            <TableContext.Provider value={{ dispatch, state }}>
+                <Spin
+                    spinning={state.loading}
+                    indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+                >
+                    <ReactDataGrid
+                        ref={gridRef}
+                        width={props.width}
+                        height={props.height}
+                        columns={getColumns()}
+                        rows={state.datas as T[]}
+                        onScroll={onScroll}
+                        enableCellAutoFocus
+                        rowKey={props.rowKey}
+                        enableCellCopyPaste={props.enableCellCopyPaste}
+                        sortDirection={sortDirection}
+                        onSort={(columnKey, direction) => {
+                            // 如果是分组状态,禁止操作
+                            if (isEnableGroupColumn()) return
+                            const newSortDirection = [];
+                            let existence = false;
+                            sortDirection.forEach(ele => {
+                              if (ele.columnKey === columnKey) {
                                 existence = true;
                                 newSortDirection.push({
-                                    sortDirection: direction,
-                                    columnKey,
+                                  sortDirection: direction,
+                                  columnKey,
                                 });
-                            } else {
+                              } else {
                                 newSortDirection.push({
-                                    sortDirection: ele.sortDirection,
-                                    columnKey: ele.columnKey,
+                                  sortDirection: ele.sortDirection,
+                                  columnKey: ele.columnKey,
                                 });
-                            }
-                        });
-                        if (!existence) {
-                            newSortDirection.push({
+                              }
+                            });
+                            if (!existence) {
+                              newSortDirection.push({
                                 sortDirection: direction,
                                 columnKey,
-                            });
-                        }
-                        setSortDirection(newSortDirection);
-                        if (props.onSort) {
-                            props.onSort(newSortDirection)
-                        }
-                    }}
-                    enableCellDragAndDrop={props.enableCellDragAndDrop}
-                    selectedRows={selectedRows}
-                    onSelectedRowsChange={setSelectedRows}
-                    onRowClick={props.onRowClick}
-                    rowRenderer={(rowProps: RowRendererProps<T, unknown>) => {
-                        if (isEnableGroupColumn()) {
-                            return (
-                                <GroupRow
-                                    rowProps={rowProps}
-                                    contextMenu={props.contextMenu}
-                                />
-                            )
-                        }
+                              });
+                            }
+                            setSortDirection(newSortDirection);
+                            if (props.onSort) {
+                                props.onSort(newSortDirection)
+                            }
+                        }}
+                        enableCellDragAndDrop={props.enableCellDragAndDrop}
+                        selectedRows={selectedRows}
+                        onSelectedRowsChange={setSelectedRows}
+                        onRowClick={props.onRowClick}
+                        rowRenderer={(rowProps: RowRendererProps<T, unknown>) => {
+                            if (isEnableGroupColumn()) {
+                                return (
+                                    <GroupRow
+                                        rowProps={rowProps}
+                                        contextMenu={props.contextMenu}
+                                    />
+                                )
+                            }
 
-                        if (props.contextMenu) {
-                            return (
-                                <DropdownRow
-                                    rowProps={rowProps}
-                                    contextMenu={props.contextMenu}
-                                />
-                            )
-                        }
-                        return <Row {...rowProps} />
-                    }}
-                    onRowsUpdate={e => {
-                        const onCommit = () => {
-                            dispatch({
-                                type: 'SET_OP_DATA',
-                                payload: e,
-                            })
-                        }
-                        props.onRowsUpdate!(e, onCommit)
-                    }}
-                />
-            </Spin>
-        </TableContext.Provider>
-    ), [
+                            if (props.contextMenu) {
+                                return (
+                                    <DropdownRow
+                                        rowProps={rowProps}
+                                        contextMenu={props.contextMenu}
+                                    />
+                                )
+                            }
+                            return <Row {...rowProps} />
+                        }}
+                        onRowsUpdate={e => {
+                            const onCommit = () => {
+                                dispatch({
+                                    type: 'SET_OP_DATA',
+                                    payload: e,
+                                })
+                            }
+                            props.onRowsUpdate!(e, onCommit)
+                        }}
+                    />
+                </Spin>
+            </TableContext.Provider>
+        ), [
         props.contextMenu,
         props.columns,
         props.enableCellCopyPaste,
