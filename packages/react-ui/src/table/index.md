@@ -282,7 +282,7 @@ export default () => {
 
 
 ### TableHandle 的方法
-
+ 
 | 方法名称          | 说明          | 类型     
 | ---              | ---            | ---   
 | scrollToColumn   | 滚动到指定的列  | `(colIdx: number) => void`

@@ -53,5 +53,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/jhoneybee/rwpjs"
-  }
+  },
+  "gitHead": "1525a08c02246ed1d70150f799e4252ea4bed07f"
 }
