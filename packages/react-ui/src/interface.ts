@@ -88,9 +88,11 @@ export interface ColumnProps<T> {
 export interface FormProps extends AntFormProps{
     // 当前列的总数
     cols?: number
+    // Form标签的宽度
+    labelWidth?: number
 }
 
-export interface FormItemProps extends AntFormItemProps{
+export interface FormItemProps extends AntFormItemProps {
     // 是否换行
     br?: boolean
     // 跨列

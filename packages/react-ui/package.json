@@ -28,25 +28,24 @@
     }
   },
   "dependencies": {
-    "@ant-design/icons": "^4.2.1",
-    "antd": "^4.3.5",
-    "lodash": "^4.17.15",
-    "react": "^16.13.1",
-    "react-data-grid-temp": "^7.0.0-canary.17.2"
+    "@ant-design/icons": "~4.2.1",
+    "antd": "~4.4.1",
+    "lodash": "~4.17.15",
+    "react": "~16.13.1",
+    "react-data-grid-temp": "~7.0.0-canary.17.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^10.3.0",
-    "@types/jest": "^26.0.0",
-    "@umijs/preset-react": "^1.x",
-    "@umijs/test": "^3.0.5",
-    "dumi": "^1.0.31",
-    "father-build": "^1.17.2",
-    "gh-pages": "^3.0.0",
-    "husky": "^4.2.5",
-    "jest": "^26.0.1",
-    "lint-staged": "^10.0.7",
-    "prettier": "^1.19.1",
-    "react-test-renderer": "^16.9.0"
+    "@testing-library/react": "~10.3.0",
+    "@types/jest": "~26.0.0",
+    "@umijs/preset-react": "~1.x",
+    "@umijs/test": "~3.0.5",
+    "dumi": "~1.0.31",
+    "father-build": "~1.17.2",
+    "husky": "~4.2.5",
+    "jest": "~26.0.1",
+    "lint-staged": "~10.0.7",
+    "prettier": "~1.19.1",
+    "react-test-renderer": "~16.9.0"
   },
   "bugs": {
     "url": "https://github.com/jhoneybee/rwpjs/issues"

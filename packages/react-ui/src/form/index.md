@@ -24,35 +24,105 @@ import { Form, Input } from '@rwp/react-ui'
 
 
 export default () => {
+
     return (
         <Form
             cols={5}
+            onValuesChange={(changedValues, allValues) => {
+              console.log(changedValues)
+              console.log(allValues)
+            }}
         >
-          <Form.Item key="Field 0" label="字段 0">
+          <Form.Item key="Field 0" name="Field 0" label="字段 0">
             <Input />
           </Form.Item>
-          <Form.Item key="Field 1" label="字段 1" colSpan={2}>
+          <Form.Item key="Field 1" name="Field 1" label="字段 1" colSpan={2}>
             <Input />
           </Form.Item>
-          <Form.Item key="Field 2" label="字段 2">
+          <Form.Item key="Field 2" name="Field 2" label="字段 2">
             <Input />
           </Form.Item>
-          <Form.Item key="Field 3" label="字段 3">
+          <Form.Item key="Field 3" name="Field 3" label="字段 3">
             <Input />
           </Form.Item>
-          <Form.Item key="Field 4" label="字段 4">
+          <Form.Item key="Field 4" name="Field 4" label="字段 4">
             <Input />
           </Form.Item>
-          <Form.Item key="Field 5" label="字段 5">
+          <Form.Item key="Field 5" name="Field 5" label="字段 5">
             <Input />
           </Form.Item>
-          <Form.Item key="Field 6" label="字段 6">
+          <Form.Item key="Field 6" name="Field 6" label="字段 6">
             <Input />
           </Form.Item>
-          <Form.Item key="Field 7" label="字段 7">
+          <Form.Item key="Field 7" name="Field 7" label="字段 7">
             <Input />
           </Form.Item>
-          <Form.Item key="Field 8" label="字段 8" br colSpan={5}>
+          <Form.Item key="Field 8" name="Field 8" label="字段 8">
+            <Input />
+          </Form.Item>
+          <Form.Item key="Field 9" name="Field 9" label="字段 9" br colSpan={5}>
+            <Input />
+          </Form.Item>
+        </Form>
+    )
+}
+```
+
+```tsx
+/**
+ * title: 表单联动
+ * desc: 通过一个字段改变另外一个字段的组件,基于`shouldUpdate`
+ */
+
+import React from 'react'
+import { Form, Input, Checkbox } from '@rwp/react-ui'
+
+
+export default () => {
+    return (
+        <Form
+            cols={5}
+            onValuesChange={(changedValues, allValues) => {
+              console.log(changedValues)
+              console.log(allValues)
+            }}
+        >
+          <Form.Item key="Field 0"  name="Field0" label="字段 0">
+            <Input placeholder="请输入任何字符" />
+          </Form.Item>
+          <Form.Item
+            key="Field 1"
+            shouldUpdate={(prevValues, curValues) => prevValues.Field0 !== curValues.Field0}
+          >
+            {({ getFieldValue  }) => {
+                  const Field0 = getFieldValue('Field0') || '';
+                  if(Field0 !== ''){
+                      return  (
+                        <Form.Item name="checkbox" label="输入框二">
+                            <Input />
+                        </Form.Item>
+                      )
+                  }
+                  return  (
+                        <Form.Item name="input" label="输入框一">
+                            <Input />
+                        </Form.Item>
+                    )
+            }}
+          </Form.Item>
+           <Form.Item key="Field 4" name="Field 4" label={<span>你好</span>}>
+            <Input />
+          </Form.Item>
+          <Form.Item key="Field 5" name="Field 5" label="字段 5">
+            <Input />
+          </Form.Item>
+          <Form.Item key="Field 6" name="Field 6" label="字段 6">
+            <Input />
+          </Form.Item>
+          <Form.Item key="Field 7" name="Field 7" label="字段 7">
+            <Input />
+          </Form.Item>
+          <Form.Item key="Field 8" name="Field 8" label="字段 8">
             <Input />
           </Form.Item>
         </Form>
