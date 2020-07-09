@@ -144,7 +144,7 @@ export function Table<T>(props: TableProps<T>) {
             type: 'SET_RELOAD_ROWS',
             payload: resp,
         })
-        if (gridRef.current){
+        if (gridRef.current) {
             gridRef.current.scrollToRow(0)
         }
     }

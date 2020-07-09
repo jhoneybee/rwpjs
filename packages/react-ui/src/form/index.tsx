@@ -1,4 +1,4 @@
-import React, { Dispatch, useReducer, useContext } from 'react';
+import React, { Dispatch, useReducer, useContext, useEffect } from 'react';
 import { Form as AntForm } from 'antd';
 import { isString } from 'lodash'
 import { FormProps, FormItemProps } from '../interface'
@@ -16,6 +16,12 @@ export const Form = (props: FormProps) => {
     const [state, dispatch] = useReducer(reducer, {
         labelWidth: labelWidth || 60,
     });
+    useEffect(() => {
+        dispatch({
+            type: 'SET_LABEL_WIDTH',
+            payload: labelWidth || 60,
+        })
+    }, [props.labelWidth])
     return (
         <FormContext.Provider value={{ dispatch, state }}>
             <AntForm
