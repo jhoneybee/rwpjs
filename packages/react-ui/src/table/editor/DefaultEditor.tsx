@@ -1,14 +1,22 @@
-import React, { useState, useRef, useImperativeHandle, useEffect } from 'react'
-import { EditorProps } from 'react-data-grid-temp';
+import React, { useState, useRef, useImperativeHandle, useEffect, RefObject } from 'react'
+import { EditorProps, Column } from 'react-data-grid-temp';
 
+interface CellEditorProps {
+    ref?: RefObject<HTMLElement>,
+    row: any,
+    column: Column<any>
+    style: React.CSSProperties
+    value: any,
+    onChange: (value: any) => void
+}
 interface DefaultEditorProps {
-    node: React.ReactNode
+    node: React.FunctionComponent<CellEditorProps> | React.ComponentClass<CellEditorProps, any>
     extProps: EditorProps<any, any, unknown>
 }
 
 export const DefaultEditor = React.forwardRef((props: DefaultEditorProps, ref) => {
     const [value, setValue] = useState(props.extProps.value)
-    const inputRef = useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLElement>(null);
     useImperativeHandle(ref, () => ({
         getValue: () => ({ [props.extProps.column.key]: value }),
         getInputNode: () => inputRef.current,
@@ -19,8 +27,6 @@ export const DefaultEditor = React.forwardRef((props: DefaultEditorProps, ref) =
             inputRef.current.focus()
         }
     }, [])
-
-    // @ts-ignore
     return <props.node
         row={props.extProps.row}
         column={props.extProps.column}

@@ -309,11 +309,15 @@ export function Table<T>(props: TableProps<T>) {
     const divRef = useRef<HTMLDivElement>(null)
     const [width, setWidth] = useState<number>(props.width || 0)
     useEffect(() => {
-        if (divRef.current && !props.width) {
-            setWidth(divRef.current.offsetWidth)
+        const interval = setInterval(() => {
+            if (divRef.current && !props.width) {
+                setWidth(divRef.current.offsetWidth)
+            }
+        }, 400)
+        return () => {
+            clearInterval(interval)
         }
     }, [])
-
     return useMemo(() => {
         const rdg = (
             <>
