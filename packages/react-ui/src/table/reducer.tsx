@@ -24,7 +24,7 @@ export type Action<T> = {
 export const initialState: State<any> = {
     datas: [],
     total: 0,
-    loading: false,
+    loading: true,
     pageNo: 1,
 }
 

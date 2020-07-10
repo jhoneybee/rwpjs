@@ -133,7 +133,8 @@ export default () => {
                 }
                 setTimeout(() => {
                     resolve({
-                        datas
+                        datas,
+                        total: 2000,
                     })
                 }, 1000);
               })
@@ -239,13 +240,14 @@ export default () => {
                 for(let i=0; i< 50 ; i++){
                   const data = {}
                   for(let z=0; z< 1000 ; z ++){
-                    data[`field${z}`] = `${pageNo}-field${i}-${i}`;
+                    data[`field${z}`] = `${pageNo}-field${i}-${i}-这是一个超级超级超级长的内容来进行测试`;
                   }
                   datas.push(data)
                 }
                 setTimeout(() => {
                     resolve({
-                        datas
+                        datas,
+                        total: 2000,
                     })
                 }, 1000);
               })
