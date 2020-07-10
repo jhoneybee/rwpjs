@@ -119,7 +119,7 @@ export default () => {
               )
             }}
             onRowsUpdate={(e, onCommit) => {
-              onCommit()
+              onCommit
             }}
             table={table}
             enableSelectBox="multiple"
@@ -140,6 +140,7 @@ export default () => {
                   for(let z=0; z< 1000 ; z ++){
                     data[`field${z}`] = `${pageNo}-field${i%5}-${i%5}`;
                   }
+                  data.field0= `${pageNo}-field${i}-${i}`;
                   datas.push(data)
                 }
                 setTimeout(() => {
