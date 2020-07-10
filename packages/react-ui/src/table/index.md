@@ -51,6 +51,7 @@ export default () => {
     const table = React.useRef()
     const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
     const [groupField, setGroupField] = useState([])
+    const [disable, setDisable] = useState(false)
     return (
         <>
         <div
@@ -79,6 +80,7 @@ export default () => {
               }}
             > 点击修改不在列里面的数据 </Button>
             <Button
+              disabled={disable}
               onClick={() => {
                 table.current.reload({})
               }}
@@ -90,9 +92,15 @@ export default () => {
             > 获取表格选中的数据 </Button>
               <Button
               onClick={() => {
-                setGroupField(['field1','field2'])
+                if(disable){
+                  setDisable(false)
+                  setGroupField([])
+                }else{
+                  setGroupField(['field1','field2'])
+                  setDisable(true)
+                }
               }}
-            > 字段一分组 </Button>
+            > {disable ? '取消字段分组': '字段一分组'} </Button>
           </Space>
         </div>
           <Table
@@ -109,6 +117,9 @@ export default () => {
                     </Menu.Item>
                 </Menu>
               )
+            }}
+            onRowsUpdate={(e, onCommit) => {
+              onCommit()
             }}
             table={table}
             enableSelectBox="multiple"
@@ -127,7 +138,7 @@ export default () => {
                 for(let i=0; i< 50 ; i++){
                   const data = {}
                   for(let z=0; z< 1000 ; z ++){
-                    data[`field${z}`] = `${pageNo}-field${i}-${i}`;
+                    data[`field${z}`] = `${pageNo}-field${i%5}-${i%5}`;
                   }
                   datas.push(data)
                 }
