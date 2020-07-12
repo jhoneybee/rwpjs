@@ -1,4 +1,4 @@
-import { join } from 'path'
+import { join, sep } from 'path'
 import { existsSync, statSync, readdirSync } from 'fs'
 
 interface Router {
@@ -8,8 +8,8 @@ interface Router {
 }
 
 const isIgnore = (name: string, isFile: boolean) => {
-    // 只有文件名为 `/^[A-Za-z]+Route\.tsx$/` 结尾的文件才会被注册为路由信息
-    if (isFile && /^[A-Za-z]+Route\.tsx$/.test(name)) return false
+    // 只有文件名为 `/^[A-Za-z]+\.route\.tsx$/` 结尾的文件才会被注册为路由信息
+    if (isFile && /^[A-Za-z]+\.route\.tsx$/.test(name)) return false
     // 默认全部为忽略
     return true
 }
@@ -28,7 +28,7 @@ export const getRouter = (path: string) => {
         const relativePath = realPath.replace(process.cwd(), '')
         const status = statSync(realPath)
         // 忽略掉 `.rwp` 目录
-        if (relativePath === join('src', 'pages', '.rwp')) return
+        if (relativePath === join(sep,'src', 'pages', '.rwp')) return
         // 如果有路由文件,则为路由文件
         let layout;
         if (existsSync(join(path, 'layout.tsx'))) {
@@ -36,7 +36,10 @@ export const getRouter = (path: string) => {
         }
         // 如果是目录
         if (status.isDirectory()) {
-            getRouter(realPath)
+            reslut.push(
+                ...getRouter(realPath)
+            )
+        
         } else {
             if (isIgnore(name, status.isFile())) return;
             // 否则就是文件
@@ -55,6 +58,11 @@ const discardSuffix = (path: string) => {
    return path
 }
 
+const discardSuffixRoute = (path: string) => {
+    if(path) return path.replace(/(\.route\.(j|t)sx)$/, '')
+    return path
+}
+
 export const getRouterTxt = (routers) => {
     let code = '['
     routers.forEach((router) => {
@@ -63,7 +71,7 @@ export const getRouterTxt = (routers) => {
         let obj = '{'
         obj += `component: React.lazy(() => import(${JSON.stringify(discardSuffix(router.path))})),`
         obj += `routes: ${getRouterTxt(router.routes)},`
-        obj += `path: ${JSON.stringify(discardSuffix(path))},`
+        obj += `path: ${JSON.stringify(discardSuffixRoute(path))},`
         if(router.layout){
             obj += `layout: React.lazy(() => import(${JSON.stringify(discardSuffix(router.layout))}))`
         }
