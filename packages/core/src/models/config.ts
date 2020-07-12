@@ -29,6 +29,7 @@ const getTemplateConfig = (): Configuration => {
         context: getProjectDir(),
         output: {
             filename: 'rwp.bundle.js',
+            publicPath: '/',
             path: join(getProjectDir(), 'dist')
         },
         module: {
