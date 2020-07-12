@@ -61,7 +61,7 @@ import(configPath).then((config) => {
         
         if (argv.dev || argv.analyzer) {
             const server = new WebpackDevServer(compiler,{
-                host: devServer.host
+                ...devServer,
             });
             server.listen(devServer.port)
         }

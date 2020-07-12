@@ -1,65 +1,11 @@
-import React, { Suspense, useEffect } from "react";
+import React from "react";
 import ReactDOM from 'react-dom';
-
-import {
-    HashRouter as Router,
-    Switch,
-    Route
-} from "react-router-dom";
-import nprogress from 'nprogress'
-import 'nprogress/nprogress.css'
+import { Router } from '@rwp/react-ui'
 
 import routes from './routes'
 import Layout from '../../layouts'
 
-/**
- *  path       路由路径
- *  routes     子路由信息
- *  component  如果存在routes，那么component就作为布局信息
- */
-const RouteComponent = (components) => (
-    components.map((element) => (
-        <Route
-            path={element.path}
-            key={element.path}
-            render={
-                (props) => element.routes && element.routes.length > 0 ? (
-                    (
-                        <element.component {...props} >
-                            <Switch>
-                                {RouteComponent(element.routes)}
-                            </Switch>
-                        </element.component>
-                    )
-                ) : <element.component {...props} />
-            }
-        />
-    ))
-)
-
-const Loading = () => {
-    useEffect(() => {
-        nprogress.start()
-        return () => {
-            nprogress.done()
-        }
-    }, [])
-    return <span />
-}
-
-const Bootstrap = () => (
-    <Router>
-        <Suspense fallback={<Loading />}>
-            <Switch>
-                <Layout>
-                    {RouteComponent(routes)}
-                </Layout>
-            </Switch>
-        </Suspense>
-    </Router>
-)
-
 ReactDOM.render(
-    <Bootstrap />,
+    <Router routes={routes} layout={Layout} />,
     document.getElementById('root')
 )

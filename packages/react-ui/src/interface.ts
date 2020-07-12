@@ -14,6 +14,9 @@ export declare type LegacyButtonType = ButtonType | 'danger';
 export declare type SizeType = 'small' | 'middle' | 'large' | undefined;
 declare const SizeContext: React.Context<SizeType>;
 
+// 导出Router的Props
+export { RouteComponentProps } from 'react-router-dom'
+
 /**
  * 按钮的属性
  */
