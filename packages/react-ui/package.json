@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "~4.2.1",
-    "antd": "~4.4.1",
+    "antd": "~4.4.2",
     "lodash": "~4.17.15",
     "react": "~16.13.1",
     "react-data-grid-temp": "~7.0.0-canary.17.5"
