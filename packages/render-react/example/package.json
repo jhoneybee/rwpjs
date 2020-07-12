@@ -9,8 +9,7 @@
   "dependencies": {
     "@rwp/core": "file:../../core/",
     "@rwp/render-react": "file:..",
-    "nprogress": "^0.2.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react": "latest",
+    "react-dom": "latest"
   }
 }

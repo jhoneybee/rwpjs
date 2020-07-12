@@ -43,7 +43,7 @@ export const defaultConfig = (config: Config): Config => {
     const defConfig = {
         target: 'web',
         devServer: {
-            port: 20000,
+            port: 8000,
             host: '127.0.0.1'
         }
     }
