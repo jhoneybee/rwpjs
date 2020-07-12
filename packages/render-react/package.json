@@ -1,6 +1,6 @@
 {
   "name": "@rwp/render-react",
-  "version": "0.4.4-alpha.0",
+  "version": "0.4.5-alpha.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -22,8 +22,8 @@
     }
   },
   "dependencies": {
-    "html-webpack-plugin": "~4.3.0",
     "@rwp/react-ui": "latest",
+    "html-webpack-plugin": "~4.3.0",
     "react": "~16.13.1",
     "react-dom": "~16.13.1"
   },
