@@ -21,7 +21,7 @@ const getTemplateConfig = (): Configuration => {
             ]
         },
     }
-    
+
     return {
         resolve: {
             extensions: ['.ts', '.tsx', '.js'],
@@ -62,16 +62,27 @@ const getTemplateConfig = (): Configuration => {
         },
         plugins: [new WebpackBar({
             clear: false,
-			showCursor: true,
+            showCursor: true,
         })]
     }
 }
 
+let lastProgress;
 const getDevConfig = () => {
     const template: Configuration = getTemplateConfig()
     template.mode = 'development'
     template.devtool = 'cheap-module-source-map'
-    template.plugins = [new WebpackBar()]
+    template.plugins = [new WebpackBar({
+        reporters: ['fancy'],
+        reporter: {
+            progress({ state }) {
+            if (lastProgress !== state.progress && state.progress % 5 === 0) {
+                process.stderr.write(state.progress + '%\n');
+                lastProgress = state.progress;
+            }
+            },
+        },
+    })]
     return template
 }
 

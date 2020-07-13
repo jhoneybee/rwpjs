@@ -5,3 +5,6 @@ export { Divider } from './divider';
 export { Checkbox } from './checkbox';
 export { Form } from './form';
 export { Router } from './router'
+export { Tabs } from './tabs'
+export { DatePicker } from './datepicker'
+export { ConfigProvider } from 'antd'

@@ -22,7 +22,7 @@
     }
   },
   "dependencies": {
-    "@rwp/react-ui": "^0.4.10-alpha.0",
+    "@rwp/react-ui": "latest",
     "html-webpack-plugin": "~4.3.0",
     "react": "~16.13.1",
     "react-dom": "~16.13.1"
