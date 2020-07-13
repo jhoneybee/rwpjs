@@ -60,7 +60,7 @@ const Loading = () => {
             nprogress.done()
         }
     }, [])
-    return <></>
+    return <span />
 }
 
 interface RouterProps {

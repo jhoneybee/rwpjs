@@ -1,6 +1,7 @@
 import React from 'react'
 
-const HelloWord = () => {
+const Index = () => {
+    debugger
     return <div> Index Hello Word </div>
 }
-export default HelloWord
+export default Index
