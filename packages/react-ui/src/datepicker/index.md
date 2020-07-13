@@ -3,7 +3,7 @@ nav:
   title: 组件
   path: /components
 group:
-  path: /components
+  path: /components/base
   title: 基础组件
 title: DatePicker 日期选择框
 ---
@@ -12,8 +12,8 @@ title: DatePicker 日期选择框
 
 ```tsx
 /**
- * title: 一个简单的DatePicker
- * desc: 这里演示了一个简单的Tabs
+ * title: 日期选择框
+ * desc: 最简单的用法，在浮层中可以选择或者输入日期。
  */
 
 import React from 'react'
@@ -23,11 +23,35 @@ import zhCN from 'antd/es/locale/zh_CN';
 export default () => {
     return (
          <ConfigProvider locale={zhCN}>
-            <DatePicker style={{ marginRight: 8}}  />
-            <DatePicker style={{ marginRight: 8}} picker="week" />
-            <DatePicker style={{ marginRight: 8}} picker="month" />
-            <DatePicker style={{ marginRight: 8}} picker="quarter" />
-            <DatePicker style={{ marginRight: 8}} picker="year" />
+            <DatePicker style={{ margin: 8}}  />
+            <DatePicker style={{ margin: 8}} picker="week" />
+            <DatePicker style={{ margin: 8}} picker="month" />
+            <DatePicker style={{ margin: 8}} picker="quarter" />
+            <DatePicker style={{ margin: 8}} picker="year" />
+        </ConfigProvider>
+    )
+}
+```
+
+```tsx
+/**
+ * title: 范围选择器
+ * desc: 通过设置 `picker` 属性，指定范围选择器类型。
+ */
+
+import React from 'react'
+import { DatePicker, ConfigProvider } from '@rwp/react-ui'
+import zhCN from 'antd/es/locale/zh_CN';
+const { RangePicker } = DatePicker;
+
+export default () => {
+    return (
+         <ConfigProvider locale={zhCN}>
+            <RangePicker style={{ margin: 8}}  />
+            <RangePicker style={{ margin: 8}} picker="week" />
+            <RangePicker style={{ margin: 8}} picker="month" />
+            <RangePicker style={{ margin: 8}} picker="quarter" />
+            <RangePicker style={{ margin: 8}} picker="year" />
         </ConfigProvider>
     )
 }

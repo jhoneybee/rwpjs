@@ -7,4 +7,5 @@ export { Form } from './form';
 export { Router } from './router'
 export { Tabs } from './tabs'
 export { DatePicker } from './datepicker'
+export { Space } from './space'
 export { ConfigProvider } from 'antd'

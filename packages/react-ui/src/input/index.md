@@ -3,7 +3,7 @@ nav:
   title: 组件
   path: /components
 group:
-  path: /components
+  path: /components/base
   title: 基础组件
 title: Input 输入框
 ---
