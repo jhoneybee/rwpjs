@@ -60,10 +60,7 @@ const getTemplateConfig = (): Configuration => {
             },
             ]
         },
-        plugins: [new WebpackBar({
-            name: 'RWP',
-            profile: true
-        })]
+        plugins: [new WebpackBar()]
     }
 }
 

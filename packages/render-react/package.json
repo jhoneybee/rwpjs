@@ -6,7 +6,7 @@
   "scripts": {
     "build": "gulp build-ts",
     "lint:script": "eslint ./src/**/*.{js,jsx,ts,tsx}",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "yarn build"
   },
   "author": "zhangj",
   "license": "AGPL-3.0",
@@ -18,11 +18,11 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint:script && npm run build "
+      "pre-commit": "yarn lint:script && yarn build "
     }
   },
   "dependencies": {
-    "@rwp/react-ui": "latest",
+    "@rwp/react-ui": "~0.4.9-alpha.0",
     "html-webpack-plugin": "~4.3.0",
     "react": "~16.13.1",
     "react-dom": "~16.13.1"

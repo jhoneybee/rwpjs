@@ -6,7 +6,7 @@
   "scripts": {
     "build": "gulp build-ts",
     "lint:script": "eslint ./src/**/*.{js,jsx,ts,tsx}",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "yarn build"
   },
   "license": "AGPL-3.0",
   "bin": {
