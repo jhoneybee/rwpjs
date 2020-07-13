@@ -29,6 +29,8 @@ export const getRouter = (path: string) => {
         const status = statSync(realPath)
         // 忽略掉 `.rwp` 目录
         if (relativePath === join(sep,'src', 'pages', '.rwp')) return
+        // 忽略掉 pages目录下的 layout.tsx 文件
+        if (relativePath === join(sep,'src', 'pages', 'layout.tsx')) return
         // 如果有路由文件,则为路由文件
         let layout;
         if (existsSync(join(path, 'layout.tsx'))) {

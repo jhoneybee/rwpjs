@@ -60,7 +60,10 @@ const getTemplateConfig = (): Configuration => {
             },
             ]
         },
-        plugins: [new WebpackBar()]
+        plugins: [new WebpackBar({
+            clear: false,
+			showCursor: true,
+        })]
     }
 }
 
