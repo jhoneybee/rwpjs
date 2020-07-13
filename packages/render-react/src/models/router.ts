@@ -67,11 +67,11 @@ export const getRouterTxt = (routers) => {
     let code = '['
     routers.forEach((router) => {
         const path = router.path.replace(join(process.cwd(), 'src', 'pages'), '').split('\\').join('/')
-
+        const routePath = discardSuffixRoute(path)
         let obj = '{'
         obj += `component: React.lazy(() => import(${JSON.stringify(discardSuffix(router.path))})),`
         obj += `routes: ${getRouterTxt(router.routes)},`
-        obj += `path: ${JSON.stringify(discardSuffixRoute(path))},`
+        obj += `path: ${JSON.stringify(routePath === '/index' ? '/' : routePath)},`
         if(router.layout){
             obj += `layout: React.lazy(() => import(${JSON.stringify(discardSuffix(router.layout))}))`
         }
