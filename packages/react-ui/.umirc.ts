@@ -6,8 +6,6 @@ export default defineConfig({
   logo: 'https://user-images.githubusercontent.com/24241052/87370901-bdf6a880-c5b6-11ea-9237-56625c403237.png',
   outputPath: 'docs-dist',
   mode: 'site',
-  publicPath: '/rwpjs/',
-  base: '/rwpjs',
   extraBabelPlugins: [
     [
       'import',
