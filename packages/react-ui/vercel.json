@@ -1,5 +1,5 @@
 {
-    "version": 1,
+    "version": 2,
     "builds": [
         {
             "src": "docs-dist/**/*",
@@ -13,6 +13,10 @@
                 "Cache-Control": "max-age=63072000"
             },
             "continue": true
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/docs-dist/$1"
         },
         {
             "handle": "filesystem"
