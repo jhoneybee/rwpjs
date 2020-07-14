@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "builds": [
+        {
+            "src": "docs-dist/**/*",
+            "use": "@now/static"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*[.js|.css])",
+            "headers": {
+                "Cache-Control": "max-age=63072000"
+            },
+            "continue": true
+        },
+        {
+            "handle": "filesystem"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/docs-dist/index.html"
+        }
+    ]
+}
