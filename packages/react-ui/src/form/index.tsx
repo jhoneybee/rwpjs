@@ -22,15 +22,19 @@ export const Form = (props: FormProps) => {
             payload: labelWidth || 60,
         })
     }, [props.labelWidth])
+
+    const gridStyle = {
+        display: 'grid',
+        gridTemplateColumns: `repeat(${cols}, auto)`,
+        gridColumnGap: 8,
+    }
     return (
         <FormContext.Provider value={{ dispatch, state }}>
             <AntForm
                 {...restProps}
                 style={{
                     ...newStyle,
-                    display: 'grid',
-                    gridTemplateColumns: `repeat(${cols}, auto)`,
-                    gridColumnGap: 8,
+                    ...gridStyle,
                 }}
             >
                 {children}
@@ -55,7 +59,7 @@ const Item = (props: FormItemProps) => {
     return (
         <AntForm.Item
             {...restProps}
-            style={{ ...newStyle, gridColumn, ...cleanMarginBottom }}
+            style={{ ...newStyle, gridColumn, msGridColumns: gridColumn, ...cleanMarginBottom }}
             label={isString(label) ? fixedWidthLabel : label}
         />
     )

@@ -1,61 +1,61 @@
 {
-  "name": "@rwp/react-ui",
-  "version": "0.5.0-alpha.0",
-  "license": "AGPL-3.0",
-  "scripts": {
-    "start": "dumi dev",
-    "docs:build": "dumi build",
-    "docs:deploy": "gh-pages -d docs-dist",
-    "build": "father-build",
-    "deploy": "yarn docs:build && yarn run docs:deploy",
-    "release": "yarn build && yarn publish",
-    "lint:script": "eslint ./src/**/*.{js,jsx,ts,tsx}",
-    "lint:fix": "eslint ./src/**/*.{js,jsx,ts,tsx} --fix",
-    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
-    "test": "umi-test",
-    "test:watch": "umi-test --watch --coverage",
-    "test:coverage": "umi-test --coverage"
-  },
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist/"
-  ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint:script && npm run test && npm run build"
-    }
-  },
-  "dependencies": {
-    "@ant-design/icons": "~4.2.1",
-    "antd": "~4.4.2",
-    "lodash": "~4.17.15",
-    "nprogress": "~0.2.0",
-    "react": "~16.13.1",
-    "react-data-grid-temp": "~7.0.0-canary.17.5",
-    "react-router-dom": "~5.2.0"
-  },
-  "devDependencies": {
-    "@testing-library/react": "~10.3.0",
-    "@types/jest": "~26.0.0",
-    "@types/nprogress": "^0.2.0",
-    "@umijs/preset-react": "~1.x",
-    "@umijs/test": "~3.0.5",
-    "dumi": "~1.0.33",
-    "father-build": "~1.17.2",
-    "husky": "~4.2.5",
-    "jest": "~26.0.1",
-    "lint-staged": "~10.0.7",
-    "prettier": "~1.19.1",
-    "react-test-renderer": "~16.9.0"
-  },
-  "bugs": {
-    "url": "https://github.com/jhoneybee/rwpjs/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jhoneybee/rwpjs"
-  },
-  "gitHead": "d8f629156e515227fde74c5d92dd11960b2f327f"
+    "name": "@rwp/react-ui",
+    "version": "0.5.0-alpha.0",
+    "license": "AGPL-3.0",
+    "scripts": {
+        "start": "dumi dev",
+        "docs:build": "dumi build",
+        "docs:deploy": "gh-pages -d docs-dist",
+        "build": "father-build",
+        "deploy": "yarn docs:build && yarn run docs:deploy",
+        "release": "yarn build && yarn publish",
+        "lint:script": "eslint ./src/**/*.{js,jsx,ts,tsx}",
+        "lint:fix": "eslint ./src/**/*.{js,jsx,ts,tsx} --fix",
+        "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+        "test": "umi-test",
+        "test:watch": "umi-test --watch --coverage",
+        "test:coverage": "umi-test --coverage"
+    },
+    "main": "dist/index.js",
+    "module": "dist/index.esm.js",
+    "typings": "dist/index.d.ts",
+    "files": [
+        "dist/"
+    ],
+    "husky": {
+        "hooks": {
+            "pre-commit": "npm run lint:script && npm run test && npm run build"
+        }
+    },
+    "dependencies": {
+        "@ant-design/icons": "~4.2.1",
+        "antd": "~4.4.2",
+        "lodash": "~4.17.15",
+        "nprogress": "~0.2.0",
+        "react": "~16.13.1",
+        "react-data-grid-temp": "~7.0.0-canary.17.5",
+        "react-router-dom": "~5.2.0"
+    },
+    "devDependencies": {
+        "@testing-library/react": "~10.3.0",
+        "@types/jest": "~26.0.0",
+        "@types/nprogress": "^0.2.0",
+        "@umijs/preset-react": "~1.x",
+        "@umijs/test": "~3.0.5",
+        "dumi": "~1.0.33",
+        "father-build": "~1.17.2",
+        "husky": "~4.2.5",
+        "jest": "~26.0.1",
+        "lint-staged": "~10.0.7",
+        "prettier": "~1.19.1",
+        "react-test-renderer": "~16.9.0"
+    },
+    "bugs": {
+        "url": "https://github.com/jhoneybee/rwpjs/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jhoneybee/rwpjs"
+    },
+    "gitHead": "d8f629156e515227fde74c5d92dd11960b2f327f"
 }

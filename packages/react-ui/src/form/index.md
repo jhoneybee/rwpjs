@@ -10,6 +10,8 @@ title: Form 表单组件
 
 # Form 表单组件
 
+> 采用 `display:grid` 布局, 不支持IE浏览器
+
 ## 代码演示
 
 

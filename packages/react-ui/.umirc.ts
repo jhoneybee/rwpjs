@@ -6,6 +6,12 @@ export default defineConfig({
   logo: 'https://user-images.githubusercontent.com/24241052/87370901-bdf6a880-c5b6-11ea-9237-56625c403237.png',
   outputPath: 'docs-dist',
   mode: 'site',
+  targets: {
+    ie: 11,
+  },
+  headScripts:[
+    'https://raw.githubusercontent.com/FremyCompany/css-grid-polyfill-binaries/master/css-polyfills.min.js'
+  ],
   navs: [
     null,
     { title: 'GitHub', path: 'https://github.com/jhoneybee/rwpjs' },
