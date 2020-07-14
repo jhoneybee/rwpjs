@@ -1,29 +1,12 @@
 {
-    "version": 2,
-    "builds": [
-        {
-            "src": "docs-dist/**/*",
-            "use": "@now/static"
-        }
-    ],
     "routes": [
-        {
-            "src": "/(.*[.js|.css])",
-            "headers": {
-                "Cache-Control": "max-age=63072000"
-            },
-            "continue": true
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/docs-dist/$1"
-        },
         {
             "handle": "filesystem"
         },
         {
             "src": "/(.*)",
-            "dest": "/docs-dist/index.html"
+            "status": 404,
+            "dest": "/index.html"
         }
     ]
 }
