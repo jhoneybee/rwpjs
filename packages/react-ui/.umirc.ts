@@ -9,9 +9,6 @@ export default defineConfig({
   targets: {
     ie: 11,
   },
-  headScripts:[
-    'https://raw.githubusercontent.com/FremyCompany/css-grid-polyfill-binaries/master/css-polyfills.min.js'
-  ],
   navs: [
     null,
     { title: 'GitHub', path: 'https://github.com/jhoneybee/rwpjs' },
