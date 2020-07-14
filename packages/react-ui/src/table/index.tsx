@@ -19,12 +19,10 @@ import ReactDataGrid, {
 
 } from 'react-data-grid-temp'
 
-import { Spin } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
 import { cloneDeep, isFunction } from 'lodash'
 import { TableProps, TableHandle } from '../interface'
 import { reducer, initialState, State, Action } from './reducer'
-import { Input } from '../index'
+import { Input, Spin } from '../index'
 import { MultipleSelectColumn } from './column/MultipleSelectColumn'
 import { DefaultEditor } from './editor/DefaultEditor'
 import { DropdownRow } from './row/DropdownRow'
@@ -401,7 +399,6 @@ export function Table<T>(props: TableProps<T>) {
             <TableContext.Provider value={{ dispatch, state }}>
                 <Spin
                     spinning={state.loading}
-                    indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
                 >
                     <div
                         ref={divRef}
