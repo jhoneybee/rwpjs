@@ -54,7 +54,7 @@ export default () => {
 ```tsx
 /**
  * title: 可选择标签
- * desc: 可通过 CheckableTag 实现类似 Checkbox 的效果，点击切换选中效果
+ * desc: 可通过 CheckableTag 实现类似 Checkbox 的效果，点击切换选中效果。
  */
 
 import React, { useState } from 'react'
