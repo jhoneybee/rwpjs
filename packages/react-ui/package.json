@@ -29,6 +29,7 @@
     },
     "dependencies": {
         "@ant-design/icons": "~4.2.1",
+        "@ant-design/pro-layout": "^6.2.4",
         "antd": "~4.4.2",
         "lodash": "~4.17.15",
         "nprogress": "~0.2.0",
