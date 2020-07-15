@@ -35,6 +35,7 @@
         "lodash": "~4.17.15",
         "nprogress": "~0.2.0",
         "react": "~16.13.1",
+        "react-color": "^2.18.1",
         "react-data-grid-temp": "~7.0.0-canary.17.5",
         "react-router-dom": "~5.2.0"
     },
@@ -43,6 +44,7 @@
         "@types/classnames": "^2.2.10",
         "@types/jest": "~26.0.0",
         "@types/nprogress": "^0.2.0",
+        "@types/react-color": "^3.0.4",
         "@umijs/preset-react": "~1.x",
         "@umijs/test": "~3.0.5",
         "dumi": "~1.0.33",
