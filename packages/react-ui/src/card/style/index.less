@@ -1,0 +1,61 @@
+@import '../../style/core/global.less';
+
+@card-prefix-cls: ~'@{rwp-prefix}-card';
+
+.@{card-prefix-cls}-primary {
+    >.@{ant-prefix}-card-head{
+        >.@{ant-prefix}-card-head-wrapper{
+            >.@{ant-prefix}-card-head-title{
+                display: flex;
+                align-items: center;
+                &::before{
+                    content: '';
+                    display: inline-block;
+                    background-color: @primary-color;
+                    width: 6px;
+                    height: 1rem;
+                    margin-right: 1rem;
+                }
+            }
+        }
+        
+    }
+}
+.@{card-prefix-cls}-default {
+    >.@{ant-prefix}-card-head{
+        >.@{ant-prefix}-card-head-wrapper{
+            >.@{ant-prefix}-card-head-title{
+                display: flex;
+                align-items: center;
+                &::before{
+                    content: '';
+                    display: inline-block;
+                    background-color: @default-color;
+                    width: 6px;
+                    height: 1rem;
+                    margin-right: 1rem;
+                }
+            }
+        }
+        
+    }
+}
+.@{card-prefix-cls}-danger {
+    >.@{ant-prefix}-card-head{
+        >.@{ant-prefix}-card-head-wrapper{
+            >.@{ant-prefix}-card-head-title{
+                display: flex;
+                align-items: center;
+                &::before{
+                    content: '';
+                    display: inline-block;
+                    background-color: @danger-color;
+                    width: 6px;
+                    height: 1rem;
+                    margin-right: 1rem;
+                }
+            }
+        }
+        
+    }
+}

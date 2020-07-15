@@ -31,6 +31,7 @@
         "@ant-design/icons": "~4.2.1",
         "@ant-design/pro-layout": "^6.2.4",
         "antd": "~4.4.2",
+        "classnames": "^2.2.6",
         "lodash": "~4.17.15",
         "nprogress": "~0.2.0",
         "react": "~16.13.1",
@@ -39,6 +40,7 @@
     },
     "devDependencies": {
         "@testing-library/react": "~10.3.0",
+        "@types/classnames": "^2.2.10",
         "@types/jest": "~26.0.0",
         "@types/nprogress": "^0.2.0",
         "@umijs/preset-react": "~1.x",
