@@ -218,6 +218,7 @@ export function Table<T>(props: TableProps<T>) {
                     return (
                         <DefaultEditor
                             ref={domRef}
+                            // @ts-ignore
                             node={TempEditor}
                             extProps={eProps}
                         />
