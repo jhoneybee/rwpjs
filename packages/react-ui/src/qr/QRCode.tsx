@@ -11,5 +11,6 @@ interface QRCodeProps{
 
 export const QRCode = (props: QRCodeProps) => {
     const { style = { width: 120, height: 120 }, value = '' } = props
+    // M L H Q 0 1 2 3
     return <QRLine value={value} posType="roundRect" direction="h-v" styles={{ svg: style }} level="Q"/>
 }
