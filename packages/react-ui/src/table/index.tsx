@@ -87,10 +87,10 @@ export function Table<T>(props: TableProps<T>) {
      * 装载分组数据
      */
     const groupDataFun = async () => {
-        if (gridRef.current) {
-            gridRef.current.scrollToRow(0)
-        }
         if (oldGroupData.current === null) {
+            if (gridRef.current) {
+                gridRef.current.scrollToRow(0)
+            }
             const respGrouMap = new Map<string, T[]>()
             state.datas.forEach((ele: any) => {
                 let key = ''
