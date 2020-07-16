@@ -8,7 +8,8 @@ import { getProjectDir } from './utils'
 import { Config } from '../interface'
 
 
-const getTemplateConfig = (): Configuration => {
+const getTemplateConfig = (config: Config): Configuration => {
+    const { extraBabelStylePluginImport = []} = config
     const babelLoader = {
         loader: "babel-loader",
         options: {
@@ -18,6 +19,7 @@ const getTemplateConfig = (): Configuration => {
                 '@babel/plugin-transform-runtime',
                 '@babel/plugin-proposal-class-properties',
                 '@babel/plugin-proposal-object-rest-spread',
+                ...extraBabelStylePluginImport
             ]
         },
     }
@@ -67,27 +69,16 @@ const getTemplateConfig = (): Configuration => {
     }
 }
 
-let lastProgress;
-const getDevConfig = () => {
-    const template: Configuration = getTemplateConfig()
+const getDevConfig = (config: Config) => {
+    const template: Configuration = getTemplateConfig(config)
     template.mode = 'development'
     template.devtool = 'cheap-module-source-map'
-    template.plugins = [new WebpackBar({
-        reporters: ['fancy'],
-        reporter: {
-            progress({ state }) {
-            if (lastProgress !== state.progress && state.progress % 5 === 0) {
-                process.stderr.write(state.progress + '%\n');
-                lastProgress = state.progress;
-            }
-            },
-        },
-    })]
+    template.plugins = [new WebpackBar()]
     return template
 }
 
-const getBuildConfig = () => {
-    const template: Configuration = getTemplateConfig()
+const getBuildConfig = (config: Config) => {
+    const template: Configuration = getTemplateConfig(config)
     template.mode = 'production'
     template.devtool = false
     // 添加压缩编译
@@ -103,8 +94,8 @@ const getBuildConfig = () => {
     return template
 }
 
-const getAnalyzerConfig = () => {
-    const template = getDevConfig()
+const getAnalyzerConfig = (config: Config) => {
+    const template = getDevConfig(config)
     template.plugins!.push(new BundleAnalyzerPlugin())
     return template
 }
@@ -114,14 +105,15 @@ const getAnalyzerConfig = () => {
  * 获取当前的config信息
  */
 export default ({
-    state
+    state,
+    config
 }: {
     config: Config,
     state: 'build' | 'dev' | 'watch' | 'analyzer'
 }): Configuration => {
-    if (state === 'build') return getBuildConfig()
-    if (state === 'dev') return getDevConfig()
-    if (state === 'watch') return getDevConfig()
-    if (state === 'analyzer') return getAnalyzerConfig()
+    if (state === 'build') return getBuildConfig(config)
+    if (state === 'dev') return getDevConfig(config)
+    if (state === 'watch') return getDevConfig(config)
+    if (state === 'analyzer') return getAnalyzerConfig(config)
     throw new Error(`No corresponding state found. [${state}]`);
 }
