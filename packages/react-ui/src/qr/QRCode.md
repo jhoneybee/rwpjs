@@ -16,7 +16,7 @@ title: QRCode 二维码
 ```tsx
 /**
  * title: 常规
- * desc: 一个显示二维码的组件,可用手机扫描二维码 默认为120px 可通过style来进行设置宽高
+ * desc: 一个显示二维码的组件,可用手机扫描二维码 默认为120px 可通过style来进行设置宽高 
  */
 
 import React, { useState } from 'react'
