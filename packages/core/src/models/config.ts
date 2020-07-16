@@ -50,6 +50,7 @@ const getTemplateConfig = (config: Config): Configuration => {
                 include: [
                     join(process.cwd(),'src'),
                     /node_modules\/@rwp\/react-ui/,
+                    /node_modules\/antd/,
                 ],
                 use: [{
                     loader: 'style-loader'
