@@ -33,7 +33,7 @@ const getTemplateConfig = (config: Config): Configuration => {
 
     return {
         resolve: {
-            extensions: ['.ts', '.tsx', 'js'],
+            extensions: [".wasm", ".ts", ".tsx", ".mjs", ".cjs", ".js", ".json"],
         },
         context: getProjectDir(),
         output: {
