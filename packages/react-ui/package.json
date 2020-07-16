@@ -1,6 +1,6 @@
 {
     "name": "@rwp/react-ui",
-    "version": "0.10.0-alpha.0",
+    "version": "0.14.0-alpha.0",
     "license": "AGPL-3.0",
     "scripts": {
         "start": "dumi dev",
@@ -50,12 +50,12 @@
         "@umijs/test": "~3.0.5",
         "dumi": "~1.0.33",
         "father-build": "~1.17.2",
-        "typescript": "3.5.3",
         "husky": "~4.2.5",
         "jest": "~26.0.1",
         "lint-staged": "~10.0.7",
         "prettier": "~1.19.1",
-        "react-test-renderer": "~16.9.0"
+        "react-test-renderer": "~16.9.0",
+        "typescript": "3.5.3"
     },
     "bugs": {
         "url": "https://github.com/jhoneybee/rwpjs/issues"
