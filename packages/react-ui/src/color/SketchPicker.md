@@ -15,8 +15,8 @@ title: SketchPicker 颜色选择器
 
 ```tsx
 /**
- * title: 主要的卡片
- * desc: 一个主要颜色的卡片
+ * title: 主要
+ * desc: 一个简单的颜色选择器
  */
 
 import React from 'react'
