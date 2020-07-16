@@ -63,7 +63,7 @@ const getTemplateConfig = (config: Config): Configuration => {
             }, {
                 test: /\.ts(x?)$/,
                 include: [
-                    /src/,
+                    join(process.cwd(),'src'),
                     /node_modules\/antd/,
                     ...extraBabelIncludes
                 ],
