@@ -55,8 +55,10 @@ const getTemplateConfig = (config: Config): Configuration => {
                 }]
             }, {
                 test: /\.ts(x?)$/,
-                exclude: /node_modules/,
-                include: extraBabelIncludes,
+                include: [
+                    /src/,
+                    ...extraBabelIncludes
+                ],
                 use: [
                     babelLoader
                 ]
