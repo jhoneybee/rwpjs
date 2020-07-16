@@ -23,7 +23,7 @@ import React, { useState } from 'react'
 import { QRCode, Input } from '@rwp/react-ui'
 
 export default () => {
-    const [value, setValue] = useState('无法飞翔的翅膀也是有意义的，因为它是曾经翱翔于天空的珍贵的回忆。')
+    const [value, setValue] = useState('')
     return (
         <>
             <Input
@@ -32,7 +32,7 @@ export default () => {
                 }}
             />
             <QRCode
-                value={value}
+                value={value || '无法飞翔的翅膀也是有意义的，因为它是曾经翱翔于天空的珍贵的回忆。'}
             />
         </>
     )
