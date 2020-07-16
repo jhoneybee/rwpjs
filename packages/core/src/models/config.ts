@@ -47,7 +47,10 @@ const getTemplateConfig = (config: Config): Configuration => {
                 use: ['style-loader', 'css-loader']
             }, {
                 test: /\.less$/,
-                exclude: /node_modules/,
+                include: [
+                    join(process.cwd(),'src'),
+                    /node_modules\/@rwp\/react-ui/,
+                ],
                 use: [{
                     loader: 'style-loader'
                 }, {
