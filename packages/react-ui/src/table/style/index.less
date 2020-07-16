@@ -1,3 +1,8 @@
+@import '../../style/core/global.less';
+
+@table-prefix-cls: ~'@{rwp-prefix}-table';
+
+
 .rdg-selected {
     border: 1.2px solid #1890ff;
     >.drag-handle{
@@ -9,4 +14,14 @@
 }
 .rdg-row-default-group {
     border-bottom: 2px solid #fb8b0d; 
+    display: flex;
+    align-items: center;
+    height: 35px;
+    >button{
+        margin-right: 1rem;
+        margin-left: 1rem;
+    }
+    >:not(button){
+        height: 100%;
+    }
 }

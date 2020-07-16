@@ -78,54 +78,63 @@ export function Table<T>(props: TableProps<T>) {
         if (enableInitLoadData) loadDataFun()
     }, [])
 
+    // 旧的分组数据
+    const oldGroupData = useRef<{
+        datas: T[],
+        groupMap: Map<string, T[]>
+    } | null>(null)
     /**
      * 装载分组数据
      */
-    const loadDataGroupFun = async (param: Object) => {
-        const res = props.loadData(1, props.pageSize!, {
-            ...props.params,
-            ...param,
-        })
-        const resp = await (res as PromiseLike<{ total: number, datas: T[] }>)
+    const groupDataFun = async () => {
+        if (gridRef.current) {
+            gridRef.current.scrollToRow(0)
+        }
+        if (oldGroupData.current === null) {
+            const respGrouMap = new Map<string, T[]>()
+            state.datas.forEach((ele: any) => {
+                let key = ''
+                props.enableGroupColumn!.forEach(groupColumn => {
+                    key += `${ele[groupColumn]},`
+                })
+                key = key.substr(0, key.length - 1)
 
-        const respGrouMap = new Map<string, T[]>()
-
-        resp.datas.forEach((ele: any) => {
-            let key = ''
-            props.enableGroupColumn!.forEach(groupColumn => {
-                key += `${ele[groupColumn]},`
+                const value = respGrouMap.get(key)
+                if (value) {
+                    value.push(ele)
+                } else {
+                    respGrouMap.set(key, [ele])
+                }
             })
-            key = key.substr(0, key.length - 1)
-
-            const value = respGrouMap.get(key)
-            if (value) {
-                value.push(ele)
-            } else {
-                respGrouMap.set(key, [ele])
+            oldGroupData.current = {
+                datas: cloneDeep(state.datas) as T[],
+                groupMap: respGrouMap,
             }
-        })
-
+        }
+        const { groupMap } = oldGroupData.current
         let groupDatas: any[] = []
-        Array.from(respGrouMap.keys()).forEach(key => {
-            const data = respGrouMap.get(key)!
+        Array.from(groupMap.keys()).forEach(key => {
+            const data = groupMap.get(key)!
             groupDatas.push({
                 $type: 'group',
                 title: key,
                 count: data.length,
             })
-            groupDatas = groupDatas.concat(data)
+            if ((state.groupExpanded as string[]).includes(key)) {
+                groupDatas = groupDatas.concat(data)
+            }
         })
 
         await dispatch({
             type: 'SET_RELOAD_ROWS',
             payload: {
-                total: resp.total,
+                total: state.total,
                 datas: groupDatas,
             },
         })
-        if (gridRef.current) {
-            gridRef.current.scrollToRow(0)
-        }
+        // if (gridRef.current) {
+        //     gridRef.current.scrollToRow(0)
+        // }
     }
 
     const reloadFun = async (param: Object) => {
@@ -151,11 +160,25 @@ export function Table<T>(props: TableProps<T>) {
 
     useEffect(() => {
         if (props.enableGroupColumn && props.enableGroupColumn.length > 0) {
-            loadDataGroupFun(props.params!)
+            groupDataFun()
         } else if (props.enableGroupColumn && props.enableGroupColumn.length === 0) {
-            reloadFun(props.params!)
+            if (oldGroupData.current) {
+                const { datas } = oldGroupData.current
+                dispatch({
+                    type: 'SET_RELOAD_ROWS',
+                    payload: {
+                        total: state.total,
+                        datas,
+                    },
+                })
+                dispatch({
+                    type: 'SET_GROUP_EXPANDED_CLEAN',
+                })
+                // 清除缓存数据 对应的groupDataFun方法使用缓存
+                oldGroupData.current = null
+            }
         }
-    }, [props.enableGroupColumn])
+    }, [props.enableGroupColumn, state.groupExpanded])
 
     const isEnableGroupColumn = () => props.enableGroupColumn && props.enableGroupColumn.length > 0
 
@@ -422,6 +445,7 @@ export function Table<T>(props: TableProps<T>) {
         state.datas,
         selectedRows,
         sortDirection,
+        state.groupExpanded,
         width,
     ])
 }
@@ -435,5 +459,6 @@ Table.defaultProps = {
     enableCellDragAndDrop: true,
     onRowsUpdate: async () => true,
     enableSelectBox: 'none',
+    height: 300,
     onSort: () => { },
 }

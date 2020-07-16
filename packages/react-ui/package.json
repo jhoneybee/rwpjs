@@ -24,7 +24,7 @@
     ],
     "husky": {
         "hooks": {
-            "pre-commit": "npm run lint:script && npm run test && npm run build"
+            "pre-commit": "yarn lint:script && yarn test && yarn build"
         }
     },
     "dependencies": {
@@ -36,7 +36,7 @@
         "nprogress": "~0.2.0",
         "react": "~16.13.1",
         "react-color": "^2.18.1",
-        "react-data-grid-temp": "~7.0.0-canary.17.5",
+        "react-data-grid-temp": "7.0.0-canary.17.5",
         "react-qrbtf-temp": "~1.1.9",
         "react-router-dom": "~5.2.0"
     },
@@ -55,7 +55,7 @@
         "lint-staged": "~10.0.7",
         "prettier": "~1.19.1",
         "react-test-renderer": "~16.9.0",
-        "typescript": "3.5.3"
+        "typescript": "~3.5.3"
     },
     "bugs": {
         "url": "https://github.com/jhoneybee/rwpjs/issues"

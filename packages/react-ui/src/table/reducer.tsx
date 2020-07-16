@@ -10,20 +10,32 @@ export interface State<T> {
         rowIdx: number,
         column: Column<any, unknown>
     },
+    groupExpanded: string[],
     // 是否在加载数据
     loading: boolean,
     // 当前数据页
     pageNo: number
 }
 
+export declare type ActionType =
+'SET_ADD_ROWS' |
+'SET_LOADING' |
+'SET_CONTEXTMENU' |
+'SET_OP_DATA' |
+'SET_UPDATE_ROWS' |
+'SET_RELOAD_ROWS' |
+'SET_GROUP_EXPANDED'|
+'SET_GROUP_EXPANDED_CLEAN';
+
 export type Action<T> = {
-    type: 'SET_ADD_ROWS' | 'SET_LOADING' | 'SET_CONTEXTMENU' | 'SET_OP_DATA' | 'SET_UPDATE_ROWS' | 'SET_RELOAD_ROWS',
-    payload: any
+    type: ActionType,
+    payload?: any
 }
 
 export const initialState: State<any> = {
     datas: [],
     total: 0,
+    groupExpanded: [],
     loading: true,
     pageNo: 1,
 }
@@ -77,7 +89,13 @@ export function reducer<T>(state: State<T>, action: Action<T>) {
     // 重新加载数据
     if (action.type === 'SET_RELOAD_ROWS') {
         const { datas, total } = action.payload
-        return { ...state, datas: fillOrder(datas), loading: false, pageNo: 1, total }
+        return {
+            ...state,
+            datas: fillOrder(datas),
+            loading: false,
+            pageNo: 1,
+            total,
+        }
     }
 
     // 通过拖拽操作数据
@@ -102,5 +120,22 @@ export function reducer<T>(state: State<T>, action: Action<T>) {
         return { ...state, ...rows }
     }
 
+    // 展开分组
+    if (action.type === 'SET_GROUP_EXPANDED') {
+        const expanded: string = action.payload
+        const groupExpanded: string[] = [...state.groupExpanded]
+        const index = groupExpanded.indexOf(expanded)
+        if (index !== -1) {
+            groupExpanded.splice(index, 1)
+        } else {
+            groupExpanded.push(expanded)
+        }
+
+        return { ...state, groupExpanded }
+    }
+
+    if (action.type === 'SET_GROUP_EXPANDED_CLEAN') {
+        return { ...state, groupExpanded: [] }
+    }
     throw new Error(`No corresponding action found - type [${action.type}]`);
 }
