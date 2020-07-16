@@ -303,7 +303,7 @@ export default () => {
 | scrollToRow      | 滚动到指定的行  | `(rowIdx: number) => void`
 | selectCell       | 选择指定的单元格| `(position: Position, openEditor?: boolean) => void`     
 | rightContext     | 获取右键的上下文信息| `() => { row, rowIdx, column }` 
-| update           | 更新表格的数据  | `(record: T, filter: (ele: T) => boolean) => void`
+| update           | 更新表格的数据  | `(change: (oldData: T) => T) => void`
 | getDataSource    | 获取当前表格的所有数据| `() => T[]`
 | getSelect        | 获取当前选中的数据    | `() => Set<T[keyof T]>`
 | setSelect        | 设置选中的数据        | `(selects: Set<T[keyof T]>) => void`
