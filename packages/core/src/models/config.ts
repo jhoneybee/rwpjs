@@ -19,11 +19,14 @@ const getTemplateConfig = (config: Config): Configuration => {
                 '@babel/plugin-transform-runtime',
                 '@babel/plugin-proposal-class-properties',
                 '@babel/plugin-proposal-object-rest-spread',
-                {
-                    "libraryName": "antd",
-                    "style": true,
-                },
-                ...extraBabelPluginImport
+                [
+                    "import",
+                    {
+                      "libraryName": "antd",
+                      "style": true
+                    },
+                    ...extraBabelPluginImport
+                ]
             ]
         },
     }
