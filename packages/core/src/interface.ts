@@ -9,6 +9,8 @@ export interface Config {
     target: 'web' | 'webworker' | 'async-node' | 'node' | 'electron-main' | 'electron-renderer' | 'node-webkit' | string;
     // 扩展的按需加载 see https://github.com/ant-design/babel-plugin-import
     extraBabelStylePluginImport: ImportStyle[]
+    // 扩展额外的
+    extraBabelIncludes: RegExp[]
     // 开发服务器配置 see https://webpack.js.org/configuration/dev-server/
     devServer: {
         // 指定要使用的主机

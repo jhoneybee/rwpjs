@@ -9,7 +9,7 @@ import { Config } from '../interface'
 
 
 const getTemplateConfig = (config: Config): Configuration => {
-    const { extraBabelStylePluginImport = []} = config
+    const { extraBabelStylePluginImport = [], extraBabelIncludes = []} = config
     const babelLoader = {
         loader: "babel-loader",
         options: {
@@ -56,6 +56,7 @@ const getTemplateConfig = (config: Config): Configuration => {
             }, {
                 test: /\.ts(x?)$/,
                 exclude: /node_modules/,
+                include: extraBabelIncludes,
                 use: [
                     babelLoader
                 ]
