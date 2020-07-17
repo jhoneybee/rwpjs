@@ -9,7 +9,7 @@ import {
 
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
-import { Result } from '@/result';
+import { Result } from '../index';
 
 interface Component {
     // 当前的路由路径
