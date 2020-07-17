@@ -73,11 +73,11 @@ export const Router = ({ routes, layout: Layout }: RouterProps) => (
                 <Switch>
                     {RouteComponent(routes)}
                     <Route path="*">
-                    <Result
-                        status="404"
-                        title="404"
-                        subTitle="未找相关页面,可能已经失效..."
-                    />
+                        <Result
+                            status="404"
+                            title="404"
+                            subTitle="未找相关页面,可能已经失效..."
+                        />
                     </Route>
                 </Switch>
             </Suspense>

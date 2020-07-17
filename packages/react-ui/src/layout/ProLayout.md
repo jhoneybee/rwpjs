@@ -31,7 +31,7 @@ export default () => {
             }}
         >
             <ProLayout
-                logo={<img src="" />}
+                logo="https://user-images.githubusercontent.com/24241052/87794040-a6e6dd80-c878-11ea-88c0-431516e0bbfe.png"
                 title="RWP.JS"
             />
         </div>
