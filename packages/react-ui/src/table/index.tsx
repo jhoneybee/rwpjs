@@ -80,9 +80,12 @@ export function Table<T>(props: TableProps<T>) {
 
     // 旧的分组数据
     const oldGroupData = useRef<{
-        datas: T[],
-        groupMap: Map<string, T[]>
+        datas: T[]
     } | null>(null)
+
+    const clearGroup = () => {
+        oldGroupData.current = null
+    }
     /**
      * 装载分组数据
      */
@@ -91,27 +94,26 @@ export function Table<T>(props: TableProps<T>) {
             if (gridRef.current) {
                 gridRef.current.scrollToRow(0)
             }
-            const respGrouMap = new Map<string, T[]>()
-            state.datas.forEach((ele: any) => {
-                let key = ''
-                props.enableGroupColumn!.forEach(groupColumn => {
-                    key += `${ele[groupColumn]},`
-                })
-                key = key.substr(0, key.length - 1)
-
-                const value = respGrouMap.get(key)
-                if (value) {
-                    value.push(ele)
-                } else {
-                    respGrouMap.set(key, [ele])
-                }
-            })
             oldGroupData.current = {
                 datas: cloneDeep(state.datas) as T[],
-                groupMap: respGrouMap,
             }
         }
-        const { groupMap } = oldGroupData.current
+
+        const groupMap = new Map<string, T[]>()
+        oldGroupData.current.datas.forEach((ele: any) => {
+            let key = ''
+            props.enableGroupColumn!.forEach(groupColumn => {
+                key += `${ele[groupColumn]},`
+            })
+            key = key.substr(0, key.length - 1)
+
+            const value = groupMap.get(key)
+            if (value) {
+                value.push(ele)
+            } else {
+                groupMap.set(key, [ele])
+            }
+        })
         let groupDatas: any[] = []
         Array.from(groupMap.keys()).forEach(key => {
             const data = groupMap.get(key)!
@@ -175,7 +177,7 @@ export function Table<T>(props: TableProps<T>) {
                     type: 'SET_GROUP_EXPANDED_CLEAN',
                 })
                 // 清除缓存数据 对应的groupDataFun方法使用缓存
-                oldGroupData.current = null
+                clearGroup()
             }
         }
     }, [props.enableGroupColumn, state.groupExpanded])
@@ -393,6 +395,7 @@ export function Table<T>(props: TableProps<T>) {
                                 <GroupRow
                                     rowProps={rowProps}
                                     contextMenu={props.contextMenu}
+                                    groupRenderer={props.groupRenderer}
                                 />
                             )
                         }

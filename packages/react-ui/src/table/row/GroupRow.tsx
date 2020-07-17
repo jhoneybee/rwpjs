@@ -12,7 +12,7 @@ import 'antd/es/table/style/index.less'
 import { TableContext } from '../index'
 
 
-interface GroupRendererProps {
+export interface GroupRendererProps {
     row: any
 }
 

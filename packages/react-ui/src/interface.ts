@@ -2,6 +2,7 @@ import React from 'react'
 import { EditorProps, DataGridHandle, Column, SortColumn, FormatterProps, CalculatedColumn, RowsUpdateEvent } from 'react-data-grid-temp'
 import { LiteralUnion } from 'antd/lib/_util/type';
 import { FormItemProps as AntFormItemProps, FormProps as AntFormProps } from 'antd/lib/form';
+import { GroupRendererProps } from './table/row/GroupRow';
 
 declare const ButtonTypes: ['default', 'primary', 'ghost', 'dashed', 'link', 'text'];
 export declare type ButtonType = typeof ButtonTypes[number];
@@ -174,7 +175,7 @@ export interface TableProps<T> {
     // 启动列的分组, 根据分组的列进行排序，参数为列的name字段
     enableGroupColumn?: string[]
     // 表格分组的渲染
-    groupRenderer?: React.ComponentType
+    groupRenderer?: React.ComponentType<GroupRendererProps>
     width?: number
     height?: number
     // 用户唯一的rowKey

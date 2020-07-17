@@ -61,6 +61,11 @@ const getTemplateConfig = (config: Config): Configuration => {
                 }]
             }, {
                 test: /\.ts(x?)$/,
+                include: [
+                    /src/,
+                    /node_modules\/antd/,
+                    ...extraBabelIncludes
+                ],
                 use: [
                     babelLoader
                 ]
