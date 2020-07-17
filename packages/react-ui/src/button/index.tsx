@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button as AntButton } from 'antd'
 import { ButtonProps } from '../interface'
 
-export const Button = (props: ButtonProps & React.RefAttributes<HTMLButtonElement>) => {
+export const Button = (props: ButtonProps) => {
     const [loading, setLoading] = useState(false)
     const { enableAutoLoading, ...restProps } = props
     return (
