@@ -80,6 +80,10 @@ export const Router = ({ routes, layout: Layout }: RouterProps) => (
                         <Result
                             status="404"
                             title="404"
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                            }}
                             subTitle="未找相关页面,可能已经失效..."
                         />
                     </Route>
