@@ -38,7 +38,7 @@ export const defaultConfig = (config: Config): Config => {
     const tempConfig = config
     
     /**
-     * 默认的配置
+     * 默认的配置 
      */
     const defConfig = {
         target: 'web',

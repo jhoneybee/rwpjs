@@ -26,7 +26,7 @@ export interface ButtonProps extends Omit<React.ButtonHTMLAttributes<any>, 'type
     type?: ButtonType
     // 设置按钮的图标组件
     icon?: React.ReactNode
-    // 设置按钮形状，可选值为 circle、 round 或者不设
+    // 设置按钮形状，可选值为 circle, round 或者不设
     shape?: ButtonShape
     // 设置按钮大小
     size?: SizeType
