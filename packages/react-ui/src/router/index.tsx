@@ -79,7 +79,6 @@ export const Router = ({ routes, layout: Layout }: RouterProps) => (
                     >
                         <Result
                             status="404"
-                            title="404"
                             style={{
                                 width: '100%',
                                 height: '100%',
