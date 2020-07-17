@@ -9,6 +9,7 @@ import {
 
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
+import { classPrefix } from '../utils'
 import { Result } from '../index';
 
 interface Component {
@@ -78,12 +79,12 @@ export const Router = ({ routes, layout: Layout }: RouterProps) => (
                         exact
                     >
                         <Result
+                            className={`${classPrefix}-route-error`}
                             status="404"
                             style={{
                                 width: '100%',
                                 height: '100%',
                             }}
-                            subTitle="未找相关页面,可能已经失效..."
                         />
                     </Route>
                 </Switch>
