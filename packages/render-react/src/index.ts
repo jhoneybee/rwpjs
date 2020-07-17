@@ -98,7 +98,7 @@ export default ({ config }) => {
         )
     }
     tempConfig.entry = join(process.cwd(),'src','pages','.rwp', 'rwp.tsx')
-    // 设置对react-router-dom 的 BrowserRouter 的支持 
+    // 设置对react-router-dom 的 BrowserRouter 的支持
     tempConfig.devServer.historyApiFallback = true
     return {
         config: tempConfig,
