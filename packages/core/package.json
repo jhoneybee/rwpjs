@@ -34,7 +34,6 @@
     "@babel/preset-typescript": "~7.10.1",
     "@babel/runtime": "~7.10.3",
     "babel-loader": "~8.1.0",
-    "babel-plugin-import": "~1.13.0",
     "css-loader": "~3.6.0",
     "less": "~3.11.3",
     "less-loader": "~6.1.2",

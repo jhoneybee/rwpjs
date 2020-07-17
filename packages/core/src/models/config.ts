@@ -9,7 +9,7 @@ import { Config } from '../interface'
 
 
 const getTemplateConfig = (config: Config): Configuration => {
-    const { extraBabelPluginImport = [], extraBabelIncludes = []} = config
+    const { extraBabelIncludes = []} = config
     const babelLoader = {
         loader: "babel-loader",
         options: {
@@ -19,14 +19,6 @@ const getTemplateConfig = (config: Config): Configuration => {
                 '@babel/plugin-transform-runtime',
                 '@babel/plugin-proposal-class-properties',
                 '@babel/plugin-proposal-object-rest-spread',
-                [
-                    "import",
-                    {
-                      "libraryName": "antd",
-                      "style": true
-                    },
-                    ...extraBabelPluginImport
-                ]
             ]
         },
     }
@@ -63,7 +55,6 @@ const getTemplateConfig = (config: Config): Configuration => {
                 test: /\.ts(x?)$/,
                 include: [
                     /src/,
-                    /node_modules\/antd/,
                     ...extraBabelIncludes
                 ],
                 use: [
