@@ -81,7 +81,7 @@ import(configPath).then((config) => {
         // 当前使用的插件 
         if (argv.plugin) {
             const render = getDependenciesRender()
-            // eslint-disable-next-line no-console
+            // eslint-disable-next-line no-console  
             console.log('+- render')
             Object.keys(render).forEach(key => {
                 // eslint-disable-next-line no-console
