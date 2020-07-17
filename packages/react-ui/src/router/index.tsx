@@ -11,6 +11,7 @@ import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { classPrefix } from '../utils'
 import { Result } from '../index';
+import './style/index.less';
 
 interface Component {
     // 当前的路由路径
@@ -81,10 +82,6 @@ export const Router = ({ routes, layout: Layout }: RouterProps) => (
                         <Result
                             className={`${classPrefix}-route-error`}
                             status="404"
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                            }}
                         />
                     </Route>
                 </Switch>
