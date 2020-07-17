@@ -21,11 +21,13 @@
       "pre-commit": "yarn lint:script && yarn build "
     }
   },
-  "peerDependencies": {
-    "@rwp/react-ui": "latest",
+  "dependencies": {
     "html-webpack-plugin": "~4.3.0",
     "react": "~16.13.1",
     "react-dom": "~16.13.1"
+  },
+  "peerDependencies": {
+    "@rwp/react-ui": "latest"
   },
   "devDependencies": {
     "@babel/register": "~7.10.1",
