@@ -58,7 +58,7 @@ import(configPath).then((config) => {
 
         const { devServer } = result.config
         const compiler = result.compiler(Webpack(result.config))
-        
+         
         if (argv.dev || argv.analyzer) {
             const server = new WebpackDevServer(compiler,{
                 ...devServer,
