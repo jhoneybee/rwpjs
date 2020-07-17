@@ -61,21 +61,13 @@ const getTemplateConfig = (config: Config): Configuration => {
                 }]
             }, {
                 test: /\.ts(x?)$/,
-                include: [
-                    join(process.cwd(),'src'),
-                    /node_modules\/antd/,
-                    ...extraBabelIncludes
-                ],
                 use: [
                     babelLoader
                 ]
             },
             ]
         },
-        plugins: [new WebpackBar({
-            clear: false,
-            showCursor: true,
-        })]
+        plugins: [new WebpackBar()]
     }
 }
 
