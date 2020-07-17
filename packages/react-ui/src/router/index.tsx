@@ -9,6 +9,7 @@ import {
 
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
+import { Result } from '@/result';
 
 interface Component {
     // 当前的路由路径
@@ -26,7 +27,6 @@ interface Component {
  */
 const RouteComponent = (
     components: Component[],
-    Layout: React.FunctionComponent<RouteComponentProps>,
 ) => (
     components.map(element => (
         <Route
@@ -35,18 +35,14 @@ const RouteComponent = (
             render={
                 props => (element.routes && element.routes.length > 0 ? (
                     (
-                        <Layout {...props}>
-                            <element.component {...props} >
-                                <Switch>
-                                    {RouteComponent(element.routes, Layout)}
-                                </Switch>
-                            </element.component>
-                        </Layout>
+                        <element.component {...props} >
+                            <Switch>
+                                {RouteComponent(element.routes)}
+                            </Switch>
+                        </element.component>
                     )
                 ) : (
-                    <Layout {...props}>
-                        <element.component {...props} />
-                    </Layout>
+                    <element.component {...props} />
                 ))
             }
         />
@@ -65,17 +61,26 @@ const Loading = () => {
 
 interface RouterProps {
     // 当前路由的布局信息
-    layout: React.FunctionComponent<RouteComponentProps>
+    layout: React.FunctionComponent
     // 当前的路由信息
     routes: Component[]
 }
 
-export const Router = (props: RouterProps) => (
+export const Router = ({ routes, layout: Layout }: RouterProps) => (
     <BrowserRouter>
-        <Suspense fallback={<Loading />}>
-            <Switch>
-                {RouteComponent(props.routes, props.layout)}
-            </Switch>
-        </Suspense>
+        <Layout>
+            <Suspense fallback={<Loading />}>
+                <Switch>
+                    {RouteComponent(routes)}
+                    <Route path="*">
+                    <Result
+                        status="404"
+                        title="404"
+                        subTitle="未找相关页面,可能已经失效..."
+                    />
+                    </Route>
+                </Switch>
+            </Suspense>
+        </Layout>
     </BrowserRouter>
 )
