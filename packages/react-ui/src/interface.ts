@@ -2,8 +2,8 @@ import React from 'react'
 import { EditorProps, DataGridHandle, Column, SortColumn, FormatterProps, CalculatedColumn, RowsUpdateEvent } from 'react-data-grid-temp'
 import { LiteralUnion } from 'antd/lib/_util/type';
 import { FormItemProps as AntFormItemProps, FormProps as AntFormProps } from 'antd/lib/form';
-import { GroupRendererProps } from './table/row/GroupRow';
 import { ButtonProps as AntButtonProps } from 'antd/lib/button';
+import { GroupRendererProps } from './table/row/GroupRow';
 
 declare const ButtonTypes: ['default', 'primary', 'ghost', 'dashed', 'link', 'text'];
 export declare type ButtonType = typeof ButtonTypes[number];
@@ -22,7 +22,7 @@ export { RouteComponentProps } from 'react-router-dom'
 /**
  * 按钮的属性
  */
-export interface ButtonProps extends Omit<React.HTMLAttributes<any> & AntButtonProps, 'type' | 'onClick'> {
+export interface ButtonProps extends Omit<AntButtonProps, 'onClick'> {
     // 是否在点击的时候自动加载loading的状态, 默认为 true
     enableAutoLoading?: boolean
     // 按钮的点击事件
