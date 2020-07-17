@@ -3,10 +3,10 @@ import { Input as AntInput } from 'antd'
 import { InputProps } from '../interface'
 
 interface InputType extends React.FC<InputProps>{
-    Password: React.ReactNode
-    TextArea: React.ReactNode
-    Search: React.ReactNode
-    Group: React.ReactNode
+    Password: React.FunctionComponent
+    TextArea: typeof AntInput.TextArea
+    Search: React.FunctionComponent
+    Group: React.FunctionComponent
 }
 
 export const Input = React.forwardRef<AntInput>((props: InputProps, ref) => {
