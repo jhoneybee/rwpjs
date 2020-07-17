@@ -32,6 +32,7 @@ const RouteComponent = (
         <Route
             path={element.path}
             key={element.path}
+            exact
             render={
                 props => (element.routes && element.routes.length > 0 ? (
                     (
@@ -72,7 +73,10 @@ export const Router = ({ routes, layout: Layout }: RouterProps) => (
             <Suspense fallback={<Loading />}>
                 <Switch>
                     {RouteComponent(routes)}
-                    <Route path="*">
+                    <Route
+                        path="*"
+                        exact
+                    >
                         <Result
                             status="404"
                             title="404"
