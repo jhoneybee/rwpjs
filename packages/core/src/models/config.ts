@@ -27,6 +27,7 @@ const getTemplateConfig = (config: Config): Configuration => {
         resolve: {
             extensions: [".wasm", ".ts", ".tsx", ".mjs", ".cjs", ".js", ".json"],
         },
+        devServer: config.devServer,
         context: getProjectDir(),
         output: {
             filename: 'rwp.bundle.js',
