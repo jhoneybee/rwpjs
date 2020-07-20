@@ -147,12 +147,9 @@ const getColumns = () => {
       name: `field${i}`,
       title: `字段-${i}`,
       width: 120,
-      editable: true,
       align: 'center|left',
       sortable: true,
-      formatter: ({ row , column}) => {
-        return <div> {row['testfield0'] || row[column.key]} </div>
-      },
+      editable: true,
       editor: Input
     })
   }
@@ -231,7 +228,7 @@ export default () => {
               )
             }}
             onRowsUpdate={(e, onCommit) => {
-              onCommit
+              onCommit()
             }}
             table={table}
             enableSelectBox="multiple"
