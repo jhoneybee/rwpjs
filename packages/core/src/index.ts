@@ -50,7 +50,8 @@ if (argv.build) state = 'build'
 if (argv.analyzer) state = 'analyzer'
 if (argv.watch) state = 'watch'
 
-import(configPath).then((config) => {
+import(configPath).then((conf) => {
+    const config = conf.default()
     loadRender(defaultConfig(getConfig({
         config,
         state,
