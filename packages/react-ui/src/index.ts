@@ -1,5 +1,6 @@
 import 'antd/dist/antd.less';
 
+export { notification } from 'antd';
 export { Button } from './button';
 export { Input } from './input';
 export { Table } from './table';
@@ -26,4 +27,4 @@ export { message } from './message'
 export { Radio } from './radio'
 export { QRCode } from './qr/QRCode'
 export { classPrefix } from './utils'
-export { notification } from 'antd'
+export { Dropdown } from './dropdown'
