@@ -4,6 +4,7 @@ import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 
 import { webpackTimefix } from './models/utils'
 import { getRouteCode } from './models/router'
+import { getStoreCode } from './models/store'
 
 const copyFileTo = (source: string , targe: string) => {
     const txt = readFileSync(join(__dirname, 'template' , source)).toString()
@@ -13,13 +14,21 @@ const copyFileTo = (source: string , targe: string) => {
         ((Date.now() - 10 * 1000)) / 1000, (Date.now() - 10 * 1000) / 1000);
 }
 
-
-const writeRouteFile = async () => {
-    const code = getRouteCode()
-    writeFileSync(join(process.cwd(), 'src', 'pages', '.rwp', 'routes.ts'),code)
+const writeFile = (path: string, txt: string) => {
+    writeFileSync(path, txt)
     utimesSync(
-        join(process.cwd(), 'src', 'pages', '.rwp', 'routes.ts'),
+        path,
         ((Date.now() - 10 * 1000)) / 1000, (Date.now() - 10 * 1000) / 1000);
+}
+
+const writeRouteFile = () => {
+    const code = getRouteCode()
+    writeFile(join(process.cwd(), 'src', 'pages', '.rwp', 'routes.ts'), code)
+}
+
+const writeStoreFile = () => {
+    const storeCode = getStoreCode()
+    writeFile(join(process.cwd(), 'src', 'pages', '.rwp', 'store.ts'), storeCode)
 }
 
 /* eslint-disable no-shadow */
@@ -34,6 +43,7 @@ const compiler = (compiler) => {
     compiler.hooks.beforeCompile.tapAsync('@rwp/render-react', (_compilation, callback) => {
         copyFileTo(join('pages','rwp.tsx'), 'rwp.tsx')
         writeRouteFile()
+        writeStoreFile()
         callback()
     })
     return compiler
@@ -62,7 +72,7 @@ export default ({ config }) => {
     )
     
     writeRouteFile()
-
+    writeStoreFile()
     if(!existsSync(join('src','pages','document.ejs'))){
         if (!existsSync(join('src','pages'))) mkdirSync(join('src','pages'))
         copyFileSync(

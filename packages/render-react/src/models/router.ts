@@ -1,5 +1,7 @@
 import { join, sep } from 'path'
 import { existsSync, statSync, readdirSync } from 'fs'
+import { discardSuffix, discardSuffixRoute } from './utils'
+
 
 interface Router {
     path: string,
@@ -55,15 +57,6 @@ export const getRouter = (path: string) => {
     return reslut
 }
 
-const discardSuffix = (path: string) => {
-   if(path) return path.replace(/(\.(j|t)sx)$/, '')
-   return path
-}
-
-const discardSuffixRoute = (path: string) => {
-    if(path) return path.replace(/(\.route\.(j|t)sx)$/, '')
-    return path
-}
 
 export const getRouterTxt = (routers) => {
     let code = '['
