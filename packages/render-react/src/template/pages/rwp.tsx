@@ -4,7 +4,7 @@ import { Router } from '@rwp/react-ui'
 
 import routes from './routes'
 import Layout from '../../layouts'
-import { Context, stores } from './store.ts'
+import { Context, stores } from './store'
 
 ReactDOM.render(
     <Context.Provider
