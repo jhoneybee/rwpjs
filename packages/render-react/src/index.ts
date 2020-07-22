@@ -4,7 +4,6 @@ import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 
 import { webpackTimefix } from './models/utils'
 import { getRouteCode } from './models/router'
-import { getStoreCode } from './models/store'
 
 const copyFileTo = (source: string , targe: string) => {
     const txt = readFileSync(join(__dirname, 'template' , source)).toString()
@@ -26,11 +25,6 @@ const writeRouteFile = () => {
     writeFile(join(process.cwd(), 'src', 'pages', '.rwp', 'routes.ts'), code)
 }
 
-const writeStoreFile = () => {
-    const storeCode = getStoreCode()
-    writeFile(join(process.cwd(), 'src', 'pages', '.rwp', 'store.ts'), storeCode)
-}
-
 /* eslint-disable no-shadow */
 const compiler = (compiler) => {
     webpackTimefix(compiler)
@@ -43,7 +37,6 @@ const compiler = (compiler) => {
     compiler.hooks.beforeCompile.tapAsync('@rwp/render-react', (_compilation, callback) => {
         copyFileTo(join('pages','rwp.tsx'), 'rwp.tsx')
         writeRouteFile()
-        writeStoreFile()
         callback()
     })
     return compiler
@@ -72,7 +65,6 @@ export default ({ config }) => {
     )
     
     writeRouteFile()
-    writeStoreFile()
     if(!existsSync(join('src','pages','document.ejs'))){
         if (!existsSync(join('src','pages'))) mkdirSync(join('src','pages'))
         copyFileSync(

@@ -4,14 +4,9 @@ import { Router } from '@rwp/react-ui'
 
 import routes from './routes'
 import Layout from '../../layouts'
-import { Context, stores } from './store'
 
 ReactDOM.render(
-    <Context.Provider
-        value={stores}
-    >
-        <Router routes={routes} layout={Layout} />
-    </Context.Provider>
+    <Router routes={routes} layout={Layout} />
     ,
     document.getElementById('root')
 )
