@@ -17,8 +17,9 @@ export interface Config {
         http2?: boolean,
         // 端口号
         port?: number,
+        // 代理信息
         proxy?:{
-            [key: string]: string
+            [key: string]: any
         }
     } 
 }

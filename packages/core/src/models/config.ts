@@ -7,18 +7,19 @@ import * as WebpackBar from 'webpackbar';
 import { getProjectDir } from './utils'
 import { Config } from '../interface'
 
-
 const getTemplateConfig = (config: Config): Configuration => {
+    const packages = require(join(process.cwd(),'package.json'))
     const { extraBabelIncludes = []} = config
     const babelLoader = {
         loader: "babel-loader",
         options: {
             sourceType: 'unambiguous',
-            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
-            plugins: [
-                '@babel/plugin-transform-runtime',
-                '@babel/plugin-proposal-class-properties',
-                '@babel/plugin-proposal-object-rest-spread',
+            presets: [
+                ['@babel/preset-env',{
+                    targets: packages.browserslist
+                }],
+                '@babel/preset-react',
+                '@babel/preset-typescript',
             ]
         },
     }
