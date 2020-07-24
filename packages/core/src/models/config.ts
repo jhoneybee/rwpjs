@@ -16,7 +16,7 @@ const getTemplateConfig = (config: Config): Configuration => {
             sourceType: 'unambiguous',
             presets: [
                 ['@babel/preset-env',{
-                    targets: packages.browserslist
+                    targets: packages.browserslist || 'defaults'
                 }],
                 '@babel/preset-react',
                 '@babel/preset-typescript',
