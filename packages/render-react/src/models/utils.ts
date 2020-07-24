@@ -1,6 +1,6 @@
 /* eslint-disable */
 export function webpackTimefix(compiler) {
-    const timefix = 100;
+    const timefix = 500;
     let watching: any = {};
     const onWatchRun = function (c, callback) {
         watching.startTime += timefix;
