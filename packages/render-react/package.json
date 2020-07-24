@@ -1,6 +1,6 @@
 {
   "name": "@rwp/render-react",
-  "version": "0.41.0-alpha.0",
+  "version": "0.44.0-alpha.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
