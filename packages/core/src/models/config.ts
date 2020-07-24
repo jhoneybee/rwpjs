@@ -8,7 +8,6 @@ import { getProjectDir } from './utils'
 import { Config } from '../interface'
 
 const getTemplateConfig = (config: Config): Configuration => {
-    const packages = require(join(process.cwd(),'package.json'))
     const { extraBabelIncludes = []} = config
     const babelLoader = {
         loader: "babel-loader",
@@ -16,7 +15,7 @@ const getTemplateConfig = (config: Config): Configuration => {
             sourceType: 'unambiguous',
             presets: [
                 ['@babel/preset-env',{
-                    targets: packages.browserslist || 'defaults'
+                    targets: 'defaults and not ie 11 and last 2 versions'
                 }],
                 '@babel/preset-react',
                 '@babel/preset-typescript',
