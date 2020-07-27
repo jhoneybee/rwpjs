@@ -39,10 +39,10 @@
     insert-css "^2.0.0"
     rc-util "^5.0.1"
 
-"@ant-design/pro-layout@^6.2.4":
-  version "6.2.4"
-  resolved "https://registry.yarnpkg.com/@ant-design/pro-layout/-/pro-layout-6.2.4.tgz#f3cef51b15c32fab2a177ad181f895db012f73cd"
-  integrity sha512-S5JKyOmiDBG3G6GNPr9Jqq5dEmgkKk0f0RMRRKzr3yU1/Vi9yuvo2NteD3d0qrOoF3gVbGWfI3vrixB3EshiHg==
+"@ant-design/pro-layout@^6.2.5":
+  version "6.2.5"
+  resolved "https://registry.yarnpkg.com/@ant-design/pro-layout/-/pro-layout-6.2.5.tgz#8b89f6b195a748d67e87ee8284e079c11255db4c"
+  integrity sha512-CT3uqtXLeTyrIwbqPeboLLIDWfJ76Znr7MIzwM4HoJlGffEh8OP4t9oKRbD7Krp8fJKaMWNHTdF/pfazuummQg==
   dependencies:
     "@ant-design/icons" "^4.0.0"
     "@umijs/route-utils" "^1.0.5"
