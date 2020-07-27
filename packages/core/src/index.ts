@@ -58,6 +58,7 @@ import(configPath).then((conf) => {
     })), state).then(result => {
 
         const { devServer } = result.config
+
         const compiler = result.compiler(Webpack(result.config))
          
         if (argv.dev || argv.analyzer) {
