@@ -16,8 +16,6 @@ order: 0
 git clone https://github.com/jhoneybee/pro-template.git
 ```
 
-## service 后端
-
-## ui 前端
+> 也可以直接打开 https://github.com/jhoneybee/pro-template 网页,然后点击 `Use this template`
 
 
