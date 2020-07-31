@@ -216,7 +216,12 @@ export function Table<T>(props: TableProps<T>) {
                         style={{
                             textAlign: bodyTextAlign,
                         }}>
-                        <Formatter {...cellProps} />
+                            {
+                            cellProps.row.$type ? (
+                                cellProps.row[cellProps.column.key]
+                            ) : (
+                                <Formatter {...cellProps} />
+                            )}
                     </div>
                 )
             }
