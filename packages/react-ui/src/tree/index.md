@@ -24,6 +24,7 @@ import { Tree } from '@rwp/react-ui'
 
 export default () => {
     const rowKey = useRef<number>(0)
+    const tree = useRef()
     return (
         <Tree
             loadData={(node) => {
@@ -46,9 +47,20 @@ export default () => {
                     children: []
                 }]
             }}
-            overlay={() => ([{
-                title: '修改节点',
-                key: '1'
+            tree={tree}
+            overlay={(treeNode) => ([{
+                title: '删除节点',
+                key: '1',
+                onClick: () => {
+                    tree.current.del((ele) => ele.key === treeNode.key)
+                }
+            },{
+                title: '刷新表格',
+                key: '2',
+                onClick: () => {
+                    rowKey.current = 0
+                    tree.current.reload()
+                }
             }])}
         />
     )
@@ -62,7 +74,7 @@ export default () => {
 |属性        |说明	       |类型	  |默认属性
 |-----      |------       |-----     |-----    
 |loadData   |装载数据的接口|`(treeNode: EventDataNode &#124; null) => Promise<EventDataNode[]>` | -
-|tree       |当前tree | `React.MutableRefObject<TreeHandle | null>` | -
+|tree       |当前tree | `React.MutableRefObject<TreeHandle &#124; null>` | -
 |height|设置Tree的高度| `number`| -         
 |autoExpandParent|是否自动展开父节点| `boolean` | `true`
 |blockNode|是否节点占据一行 | `boolean` | `false`

@@ -76,76 +76,78 @@ export const Tree = (props: Props) => {
     const [expandedKeys, setExpandedKeys] = useState<(string | number)[]>([])
 
     const treeRef = useRef<RcTree>(null)
-    useEffect(() => {
-        if (props.tree) {
-            const { tree } = props
-            tree.current = {
-                reload: async () => {
-                    setLoadedKeys([])
-                    const tempTreeNode = await props.loadData(null)
-                    setTreeNodes(tempTreeNode)
-                },
-                scrollTo: (key: string) => {
-                    if (treeRef.current) {
-                        treeRef.current.scrollTo({
-                            key,
-                        })
-                    }
-                },
-                update: callback => {
-                    filterTree(treeNodes, treeNode => {
-                        callback(treeNode as EventDataNode);
-                        return false
-                    })
-                    setTreeNodes([...treeNodes])
-                },
-                del: (callback: (dataNode: EventDataNode) => boolean) => {
-                    const loopsDel = (loopNodes: EventDataNode[]): EventDataNode[] => {
-                        const resultNodes: EventDataNode[] = []
-                        loopNodes.forEach(ele => {
-                            if (callback(ele)) return
-                            if (ele.children && ele.children.length > 0) {
-                                const children: EventDataNode[] = ele.children as EventDataNode[]
-                                resultNodes.push({
-                                    ...ele,
-                                    children: loopsDel(children),
-                                })
-                            } else {
-                                resultNodes.push(ele)
-                            }
-                        })
-                        return resultNodes
-                    }
-                    const tempTreeNode = loopsDel(treeNodes)
-                    setTreeNodes(tempTreeNode)
-                },
-            }
-        }
 
-        // 初始化加载数据
-        (async () => {
-            const tempTreeNode = await props.loadData(null)
-            setTreeNodes(tempTreeNode.map(chil => {
-                let menuItem: ReactNode[] = []
-                if (props.overlay) {
-                    menuItem = props.overlay(chil).map(menu => {
-                        const { title, ...restProps } = menu
-                        return <Menu.Item {...restProps} >{title}</Menu.Item>
+    const reload = async () => {
+        const tempTreeNode = await props.loadData(null)
+        setTreeNodes(tempTreeNode.map(chil => {
+            let menuItem: ReactNode[] = []
+            if (props.overlay) {
+                menuItem = props.overlay(chil).map(menu => {
+                    const { title, ...restProps } = menu
+                    return <Menu.Item {...restProps} >{title}</Menu.Item>
+                })
+            }
+            return {
+                ...chil,
+                title: (
+                    <Dropdown
+                        overlay={<Menu>{menuItem}</Menu>}
+                        trigger={['contextMenu']}
+                    >
+                        <span>{chil.title}</span>
+                    </Dropdown>
+                ),
+            }
+        }))
+    }
+
+    if (props.tree) {
+        const { tree } = props
+        tree.current = {
+            reload: async () => {
+                setLoadedKeys([])
+                reload()
+            },
+            scrollTo: (key: string) => {
+                if (treeRef.current) {
+                    treeRef.current.scrollTo({
+                        key,
                     })
                 }
-                return {
-                    ...chil,
-                    title: (
-                        <Dropdown
-                            overlay={<Menu>{menuItem}</Menu>}
-                            trigger={['contextMenu']}
-                        >
-                            <span>{chil.title}</span>
-                        </Dropdown>
-                    ),
+            },
+            update: callback => {
+                filterTree(treeNodes, treeNode => {
+                    callback(treeNode as EventDataNode);
+                    return false
+                })
+                setTreeNodes([...treeNodes])
+            },
+            del: (callback: (dataNode: EventDataNode) => boolean) => {
+                const loopsDel = (loopNodes: EventDataNode[]): EventDataNode[] => {
+                    const resultNodes: EventDataNode[] = []
+                    loopNodes.forEach(ele => {
+                        if (callback(ele)) return
+                        if (ele.children && ele.children.length > 0) {
+                            const children: EventDataNode[] = ele.children as EventDataNode[]
+                            resultNodes.push({
+                                ...ele,
+                                children: loopsDel(children),
+                            })
+                        } else {
+                            resultNodes.push(ele)
+                        }
+                    })
+                    return resultNodes
                 }
-            }))
-        })()
+                const tempTreeNode = loopsDel(treeNodes)
+                setTreeNodes(tempTreeNode)
+            },
+        }
+    }
+
+    useEffect(() => {
+        // 初始化加载数据
+        reload()
     }, [])
 
     return (

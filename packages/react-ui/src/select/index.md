@@ -15,14 +15,13 @@ title: Select 选择器
 ```tsx
 /** 
  * title: 基本  
- * desc: 一个简单的时间轴
+ * desc: 一个简单的选择器
  */
 
 import React from 'react'
 import { Select } from '@rwp/react-ui'
 
 export default () => {
-
     return (
       <>
         <Select defaultValue="man" style={{ width: 120 }} allowClear>
