@@ -28,40 +28,55 @@ export default () => {
     return (
         <Tree
             loadData={(node) => {
-                rowKey.current += 1
-                return [{
-                    title: `标题 - ${rowKey.current += 1}`,
-                    key: rowKey.current += 1,
+                
+                const result =  [{
+                    title: `标题 - ${rowKey.current + 1}`,
+                    key: rowKey.current + 1,
                     children: []
                 },{
-                    title: `标题 - ${rowKey.current += 1}`,
-                    key: rowKey.current += 1,
+                    title: `标题 - ${rowKey.current + 2}`,
+                    key: rowKey.current + 2,
                     children: []
                 },{
-                    title: `标题 - ${rowKey.current += 1}`,
-                    key: rowKey.current += 1,
+                    title: `标题 - ${rowKey.current + 3}`,
+                    key: rowKey.current + 3,
                     children: []
                 },{
-                    title: `标题 - ${rowKey.current += 1}`,
-                    key: rowKey.current += 1,
+                    title: `标题 - ${rowKey.current + 4}`,
+                    key: rowKey.current + 4,
                     children: []
                 }]
+                rowKey.current += 10
+                return result
             }}
+            draggable
             tree={tree}
-            overlay={(treeNode) => ([{
-                title: '删除节点',
-                key: '1',
-                onClick: () => {
-                    tree.current.del((ele) => ele.key === treeNode.key)
-                }
-            },{
-                title: '刷新表格',
-                key: '2',
-                onClick: () => {
-                    rowKey.current = 0
-                    tree.current.reload()
-                }
-            }])}
+            overlay={(treeNode) => {
+                return [{
+                    title: '删除节点',
+                    key: '1',
+                    onClick: () => {
+                        tree.current.del((ele) => ele.key === treeNode.key)
+                    }
+                },{
+                    title: '刷新节点',
+                    key: '2',
+                    onClick: () => {
+                        rowKey.current = 0
+                        tree.current.reload()
+                    }
+                },{
+                    title: '更新节点',
+                    key: '3',
+                    onClick: () => {
+                        tree.current.update(node => {
+                            if(treeNode.key === node.key){
+                                node.title = '这是更新后的标题'
+                            }
+                        })
+                    }
+                }]
+            }}
         />
     )
 }
@@ -90,6 +105,13 @@ export default () => {
 |onCheck|点击复选框触发 | `function(checkedKeys, e:{checked: bool, checkedNodes, node, event, halfCheckedKeys})` |-
 |onExpand|展开/收起节点时触发 | `function(expandedKeys, {expanded: bool, node})` | -
 |icon|自定义树节点图标。 | `ReactNode` \| `(props) => ReactNode`
+|onDragStart| 开始拖拽，可让对应的节点不可拖拽，通过`preventDefault`来取消默认行为 | `onDragStart?: (info: { event: React.MouseEvent; node: EventDataNode; }) => void;` | -
+|onDragEnd | 用户完成拖动元素时发生 | `function({event, node})` | -
+|onDragEnter | 当拖动的元素进入放置目标时发生 | `function({event, node, expandedKeys})`| -
+|onDragLeave | 当拖动的元素离开放置目标时发生 | `function({event, node})`| -
+|onDragOver  | 当拖动的元素超过放置目标时发生 | `function({event, node})`| -
+|onDragStart | 当用户开始拖动元素时发生 | `function({event, node})` | -
+|onDrop      | 在将拖动的元素放到放置目标上时发生 | `function({event, node, dragNode, dragNodesKeys})`| -
 
 ## TreeNode 
 
@@ -103,5 +125,14 @@ export default () => {
 |key| 被树的 (default)ExpandedKeys / (default)CheckedKeys /(default)SelectedKeys 属性所用。注意：整个树范围内的所有节点的 key 值不能重复！| `string` | (内部计算出的节点位置)
 |selectable| 设置节点是否可被选中 | `boolean` | `true`
 |title|标题 | `string` \| `ReactNode` | `---`
+
+## TreeHandle
+
+|方法                                    |说明	     
+|-----                                  |------     
+|`reload: () => Promise<void>`          | 重新加载表格信息
+|`scrollTo: (key: string) => void`      | 滚动到指定的位置
+|`update: (callback: (dataNode: EventDataNode) => void) => void` | 更新节点数据
+|`del: (callback: (dataNode: EventDataNode) => boolean) => void` | 删除指定的节点,callback返回为true则删除此节点
 
 > 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

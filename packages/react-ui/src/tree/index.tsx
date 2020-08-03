@@ -15,7 +15,7 @@ interface TreeHandle {
     scrollTo: (key: string) => void
 
     // 更新节点数据
-    update: (callback: (dataNode: EventDataNode) => EventDataNode) => void
+    update: (callback: (dataNode: EventDataNode) => void) => void
 
     // 删除指定的节点,callback返回为true则删除此节点
     del: (callback: (dataNode: EventDataNode) => boolean) => void
@@ -34,12 +34,6 @@ interface Props extends Omit<TreeProps,
     'expandedKeys' |
     'loadedKeys' |
     'selectedKeys' |
-    'onDragEnd' |
-    'onDragEnter' |
-    'onDragLeave' |
-    'onDragOver' |
-    'onDragStart' |
-    'onDrop' |
     'onLoad' |
     'onRightClick' |
     'defaultCheckedKeys' |
@@ -55,12 +49,12 @@ interface Props extends Omit<TreeProps,
 }
 
 // 筛选树节点信息
-const filterTree = (treeNodes: DataNode[], callback: (treeNode: DataNode) => boolean) => {
+const findTreeNode = (treeNodes: DataNode[], callback: (treeNode: DataNode) => boolean) => {
     treeNodes.some(ele => {
         const result = callback(ele)
         if (result) return true
         if (ele.children && ele.children.length > 0) {
-            filterTree(ele.children, callback)
+            findTreeNode(ele.children, callback)
         }
         return false
     })
@@ -101,6 +95,26 @@ export const Tree = (props: Props) => {
         }))
     }
 
+    const filter = (callback: (dataNode: EventDataNode) => boolean) => {
+        const loopsDel = (loopNodes: EventDataNode[]): EventDataNode[] => {
+            const resultNodes: EventDataNode[] = []
+            loopNodes.forEach(ele => {
+                if (callback(ele)) return
+                if (ele.children && ele.children.length > 0) {
+                    const children: EventDataNode[] = ele.children as EventDataNode[]
+                    resultNodes.push({
+                        ...ele,
+                        children: loopsDel(children),
+                    })
+                } else {
+                    resultNodes.push(ele)
+                }
+            })
+            return resultNodes
+        }
+        return loopsDel(treeNodes)
+    }
+
     if (props.tree) {
         const { tree } = props
         tree.current = {
@@ -116,31 +130,30 @@ export const Tree = (props: Props) => {
                 }
             },
             update: callback => {
-                filterTree(treeNodes, treeNode => {
+                findTreeNode(treeNodes, treeNode => {
+                    let menuItem: ReactNode[] = []
+                    if (props.overlay) {
+                        menuItem = props.overlay(treeNode).map(menu => {
+                            const { title, ...restProps } = menu
+                            return <Menu.Item {...restProps} >{title}</Menu.Item>
+                        })
+                    }
                     callback(treeNode as EventDataNode);
+                    // eslint-disable-next-line no-param-reassign
+                    treeNode.title = (
+                        <Dropdown
+                            overlay={<Menu>{menuItem}</Menu>}
+                            trigger={['contextMenu']}
+                        >
+                            <span>{treeNode.title}</span>
+                        </Dropdown>
+                    )
                     return false
                 })
                 setTreeNodes([...treeNodes])
             },
             del: (callback: (dataNode: EventDataNode) => boolean) => {
-                const loopsDel = (loopNodes: EventDataNode[]): EventDataNode[] => {
-                    const resultNodes: EventDataNode[] = []
-                    loopNodes.forEach(ele => {
-                        if (callback(ele)) return
-                        if (ele.children && ele.children.length > 0) {
-                            const children: EventDataNode[] = ele.children as EventDataNode[]
-                            resultNodes.push({
-                                ...ele,
-                                children: loopsDel(children),
-                            })
-                        } else {
-                            resultNodes.push(ele)
-                        }
-                    })
-                    return resultNodes
-                }
-                const tempTreeNode = loopsDel(treeNodes)
-                setTreeNodes(tempTreeNode)
+                setTreeNodes(filter(callback))
             },
         }
     }
@@ -156,28 +169,30 @@ export const Tree = (props: Props) => {
             loadData={async treeNode => {
                 loadedKeys.push(treeNode.key)
                 const children = await props.loadData(treeNode)
-                filterTree(treeNodes, ele => {
+                findTreeNode(treeNodes, ele => {
                     if (ele.key === treeNode.key) {
-                        let menuItem: ReactNode[] = []
-                        if (props.overlay) {
-                            menuItem = props.overlay(ele).map(menu => {
-                                const { title, ...restProps } = menu
-                                return <Menu.Item {...restProps} >{title}</Menu.Item>
-                            })
-                        }
                         // eslint-disable-next-line no-param-reassign
-                        ele.children = children.map(chil => ({
-                            ...chil,
-                            title: (
-                                <Dropdown
-                                    overlay={<Menu>{menuItem}</Menu>}
-                                    trigger={['contextMenu']}
-                                >
-                                    <span>{chil.title}</span>
-                                </Dropdown>
-                            ),
+                        ele.children = children.map(chil => {
+                            let menuItem: ReactNode[] = []
+                            if (props.overlay) {
+                                menuItem = props.overlay(chil).map(menu => {
+                                    const { title, ...restProps } = menu
+                                    return <Menu.Item {...restProps} >{title}</Menu.Item>
+                                })
+                            }
+                            return {
+                                ...chil,
+                                title: (
+                                    <Dropdown
+                                        overlay={<Menu>{menuItem}</Menu>}
+                                        trigger={['contextMenu']}
+                                    >
+                                        <span>{chil.title}</span>
+                                    </Dropdown>
+                                ),
 
-                        }))
+                            }
+                        })
                         return true
                     }
                     return false
@@ -206,6 +221,81 @@ export const Tree = (props: Props) => {
                 if (props.onExpand) {
                     props.onExpand(keys, info)
                 }
+            }}
+
+            // 开始拖拽的时候触发
+            onDragStart={props.onDragStart}
+
+            // 将元素拖到放置目标上时执行
+            onDragOver={props.onDragOver}
+
+            // 元素放入目标位置
+            onDragEnter={props.onDragEnd}
+
+            // 元素离开目标位置
+            onDragLeave={props.onDragEnd}
+
+            // 用户完成拖动元素时发生
+            onDragEnd={props.onDragEnd}
+
+            // 在将拖动的元素放到放置目标上时发生
+            onDrop={info => {
+                const {
+                   // 目标节点
+                   node,
+                   // 拖拽节点
+                   dragNode,
+
+                   dropPosition,
+                   dropToGap,
+                } = info
+
+                const filterTreeNodes = filter(ele => ele.key === dragNode.key)
+                const loops = (loopsTreeNodes: DataNode[]): DataNode[] => {
+                    const result: DataNode[] = []
+                    loopsTreeNodes.forEach(ele => {
+                        const treeNode = { ...ele }
+                        if (ele.children) {
+                            treeNode.children = loops(ele.children)
+                        }
+                        // eslint-disable-next-line no-empty
+                        if (treeNode.key === node.key) {
+                            if (dropToGap) {
+                                const index = loopsTreeNodes.findIndex(
+                                    element => element.key === node.key,
+                                )
+                                if (dropPosition < index) {
+                                    result.push(dragNode)
+                                    result.push(treeNode)
+                                }
+                                if (dropPosition > index) {
+                                    result.push(treeNode)
+                                    result.push(dragNode)
+                                }
+                            } else if (treeNode.children) {
+                                treeNode.children.push(dragNode)
+                                result.push(treeNode)
+                            } else {
+                                // eslint-disable-next-line no-param-reassign
+                                treeNode.children = [dragNode]
+                                result.push(treeNode)
+                            }
+                        } else {
+                            result.push(treeNode)
+                        }
+                    })
+                    return result
+                }
+                let preventDefault = false
+                if (props.onDrop) {
+                    // eslint-disable-next-line no-param-reassign
+                    info.event.preventDefault = () => {
+                        preventDefault = true
+                    }
+                }
+                if (preventDefault) return
+
+                setTreeNodes(loops(filterTreeNodes) as EventDataNode[])
             }}
             icon={props.icon}
         />
