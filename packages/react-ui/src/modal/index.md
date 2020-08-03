@@ -20,28 +20,51 @@ title: Modal 对话框
  */
 
 import React, { useRef } from 'react'
-import { Button, Modal } from '@rwp/react-ui'
+import { Button, Modal, Space } from '@rwp/react-ui'
 
 export default () => {
     const modal = useRef(null)
+    const modal2 = useRef(null)
     return (
-        <>
+        <Space>
             <Button
               onClick={async () => {
                 modal.current.show()
               }}
             >
-                点击显示对话框
+                显示不带maskd的对话框
+            </Button>
+            <Button
+              onClick={async () => {
+                modal2.current.show()
+              }}
+            >
+                显示带maskd的对话框
             </Button>
             <Modal
               modal={modal}
+              mask={false}
+              maskClosable={false}
+              onOk={async () => {
+                modal2.current.show()
+                return false
+              }}
               title="这是一个简单的对话框"
             >
                <p>这是一个内容一</p>
                <p>这是一个内容二</p>
                <p>这是一个内容三</p>
             </Modal>
-        </>
+
+             <Modal
+              modal={modal2}
+              title="这是第二个简单的对话框"
+            >
+               <p>这是一个内容一</p>
+               <p>这是一个内容二</p>
+               <p>这是一个内容三</p>
+            </Modal>
+        </Space>
     )
 }
 ```
