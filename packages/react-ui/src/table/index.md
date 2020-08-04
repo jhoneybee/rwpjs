@@ -293,8 +293,8 @@ export default () => {
 |enableInitLoadData| 是否初始化的时候自动装载数据 | `boolean` 
 |enableCellCopyPaste| 启动复制和粘贴 | `boolean` | `true`
 |enableCellDragAndDrop| 启动下拉编辑 | `boolean` | `true`
-|enableSelectBox      | 启动选择框   | `'multiple'` &#124; `'none'` | `'none'`
-|enableGroupColumn    | 启动分组,根据列的name来进行分组     | `string[]` | `[]`
+|selectBox      | 启动选择框   | `'multiple'` &#124; `'none'` | `'none'`
+|groupColumn    | 启动分组,根据列的name来进行分组     | `string[]` | `[]`
 |groupRenderer        | 渲染分组行的的render, 可拦截重新填充值 | `React.ComponentType`| -
 |width | 表格的宽度 | `number` |
 |height| 表格的高度 | `number` |
