@@ -101,6 +101,9 @@ export default () => {
             table={(table: any) => {
               console.log(table)
             }}
+            onRowsUpdate={(e, onCommit) => {
+              onCommit()
+            }}
             loadData={(pageNo , pageSize, params) => {  
               return new Promise((resolve) =>{
                 const datas = []
@@ -133,9 +136,10 @@ export default () => {
  * desc: 包含了一千列的数据
  */
 
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Table, Input } from '@rwp/react-ui'
 import { Menu, Button, Space } from 'antd'
+
 
 const getColumns = () => {
   const columns = [{
@@ -161,6 +165,7 @@ export default () => {
     const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
     const [groupField, setGroupField] = useState([])
     const [disable, setDisable] = useState(false)
+    const num = useRef<number>(0)
     return (
         <>
         <div
@@ -230,10 +235,11 @@ export default () => {
             onRowsUpdate={(e, onCommit) => {
               onCommit()
             }}
+            pageSize={500}
             table={table}
             enableSelectBox="multiple"
             rowKey='field0'
-            enableGroupColumn={groupField}
+            groupColumn={groupField}
             sortDirection={sortDirection}
             onSort={ sortColumns => {
               console.log(sortColumns)
@@ -244,14 +250,21 @@ export default () => {
             loadData={(pageNo , pageSize, params) => {  
               return new Promise((resolve) =>{
                 const datas = []
-                for(let i=0; i< 50 ; i++){
-                  const data = {}
-                  for(let z=0; z< 1000 ; z ++){
-                    data[`field${z}`] = `${pageNo}-field${i%5}-${i%5}`;
+                if(num.current === 0){
+                  for(let i=0; i< 50 ; i++){
+                    const data = {}
+                    for(let z=0; z< 1000 ; z ++){
+                      if(z === 1){
+                        data[`field${z}`] = `${pageNo}-field${i%2}-${i%2}`;
+                      }else{
+                        data[`field${z}`] = `${pageNo}-field${i%5}-${i%5}`;
+                      }
+                    }
+                    data.field0= `${pageNo}-field${i}-${i}`;
+                    datas.push(data)
                   }
-                  data.field0= `${pageNo}-field${i}-${i}`;
-                  datas.push(data)
                 }
+                num.current += 1
                 setTimeout(() => {
                     resolve({
                         datas,

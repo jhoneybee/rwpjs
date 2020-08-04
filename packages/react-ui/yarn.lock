@@ -7571,7 +7571,7 @@ dotenv@8.2.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
   integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
 
-dumi@~1.0.33:
+dumi@~1.0.34:
   version "1.0.34"
   resolved "https://registry.yarnpkg.com/dumi/-/dumi-1.0.34.tgz#6e071006dcdb6f09ba8963cc08aa776cb9e7f4f4"
   integrity sha512-nvd2VedZazLioOK7NYufrAJM8+G7sdOD/XGxQNQOwKhrEDhiHLY/YLv0xznD14bQsJJYz/kJ1EZhM9Oj8BQeLg==

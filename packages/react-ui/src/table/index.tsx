@@ -19,7 +19,7 @@ import ReactDataGrid, {
 
 } from 'react-data-grid-temp'
 
-import { cloneDeep, isFunction } from 'lodash'
+import { cloneDeep, isFunction, orderBy } from 'lodash'
 import { TableProps, TableHandle } from '../interface'
 import { reducer, initialState, State, Action } from './reducer'
 import { Input, Spin } from '../index'
@@ -98,12 +98,17 @@ export function Table<T>(props: TableProps<T>) {
                 datas: cloneDeep(state.datas) as T[],
             }
         }
-
+        const { groupColumn = [] } = props
+        const groupDataOld = orderBy(
+            oldGroupData.current.datas,
+            groupColumn,
+            groupColumn.map(() => 'asc'),
+        )
         const groupMap = new Map<string, T[]>()
-        oldGroupData.current.datas.forEach((ele: any) => {
+        groupDataOld.forEach((ele: any) => {
             let key = ''
-            props.enableGroupColumn!.forEach(groupColumn => {
-                key += `${ele[groupColumn]},`
+            props.groupColumn!.forEach(group => {
+                key += `${ele[group]},`
             })
             key = key.substr(0, key.length - 1)
 
@@ -126,7 +131,6 @@ export function Table<T>(props: TableProps<T>) {
                 groupDatas = groupDatas.concat(data)
             }
         })
-
         await dispatch({
             type: 'SET_RELOAD_ROWS',
             payload: {
@@ -161,9 +165,9 @@ export function Table<T>(props: TableProps<T>) {
     }
 
     useEffect(() => {
-        if (props.enableGroupColumn && props.enableGroupColumn.length > 0) {
+        if (props.groupColumn && props.groupColumn.length > 0) {
             groupDataFun()
-        } else if (props.enableGroupColumn && props.enableGroupColumn.length === 0) {
+        } else if (props.groupColumn && props.groupColumn.length === 0) {
             if (oldGroupData.current) {
                 const { datas } = oldGroupData.current
                 dispatch({
@@ -180,9 +184,9 @@ export function Table<T>(props: TableProps<T>) {
                 clearGroup()
             }
         }
-    }, [props.enableGroupColumn, state.groupExpanded])
+    }, [props.groupColumn, state.groupExpanded])
 
-    const isEnableGroupColumn = () => props.enableGroupColumn && props.enableGroupColumn.length > 0
+    const isEnableGroupColumn = () => props.groupColumn && props.groupColumn.length > 0
 
     const getColumns = () => {
         const columns: Column<T, unknown>[] = props.columns.map((element => {
@@ -319,6 +323,7 @@ export function Table<T>(props: TableProps<T>) {
         }
     }, [state.contextMenu, state.datas, selectedRows])
 
+    const scroll = useRef<number>(0)
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
          // 如果是分组状态,禁止操作
         if (isEnableGroupColumn()) return
@@ -326,12 +331,14 @@ export function Table<T>(props: TableProps<T>) {
         if (
             target.scrollTop + target.clientHeight + 2 > target.scrollHeight
             &&
-            state.datas.length > 0
+            state.datas.length > 0 &&
+            scroll.current < target.scrollTop
         ) {
             scrollTimeOut = setTimeout(() => {
                 loadDataFun()
             }, 80);
         }
+        scroll.current = target.scrollTop
     }
     const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
 
@@ -448,7 +455,7 @@ export function Table<T>(props: TableProps<T>) {
         props.columns,
         props.enableCellCopyPaste,
         props.enableCellDragAndDrop,
-        props.enableGroupColumn,
+        props.groupColumn,
         state.loading,
         state.datas,
         selectedRows,
