@@ -165,7 +165,6 @@ export default () => {
     const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
     const [groupField, setGroupField] = useState([])
     const [disable, setDisable] = useState(false)
-    const num = useRef<number>(0)
     return (
         <>
         <div
@@ -250,21 +249,18 @@ export default () => {
             loadData={(pageNo , pageSize, params) => {  
               return new Promise((resolve) =>{
                 const datas = []
-                if(num.current === 0){
-                  for(let i=0; i< 50 ; i++){
-                    const data = {}
-                    for(let z=0; z< 1000 ; z ++){
-                      if(z === 1){
-                        data[`field${z}`] = `${pageNo}-field${i%2}-${i%2}`;
-                      }else{
-                        data[`field${z}`] = `${pageNo}-field${i%5}-${i%5}`;
-                      }
+                for(let i=0; i< 50 ; i++){
+                  const data = {}
+                  for(let z=0; z< 1000 ; z ++){
+                    if(z === 1){
+                      data[`field${z}`] = `${pageNo}-field${i%2}-${i%2}`;
+                    }else{
+                      data[`field${z}`] = `${pageNo}-field${i%5}-${i%5}`;
                     }
-                    data.field0= `${pageNo}-field${i}-${i}`;
-                    datas.push(data)
                   }
+                  data.field0= `${pageNo}-field${i}-${i}`;
+                  datas.push(data)
                 }
-                num.current += 1
                 setTimeout(() => {
                     resolve({
                         datas,

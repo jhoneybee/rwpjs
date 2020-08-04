@@ -93,7 +93,7 @@ export function reducer<T>(state: State<T>, action: Action<T>) {
             ...state,
             datas: fillOrder(datas),
             loading: false,
-            pageNo: 1,
+            pageNo: 2,
             total,
         }
     }
