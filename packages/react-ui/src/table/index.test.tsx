@@ -79,7 +79,7 @@ const rootPromiseProps: any = {
 }
 
 test('test table async load data.', async () => {
-    rootPromiseProps.enableSelectBox = 'multiple'
+    rootPromiseProps.selectBox = 'multiple'
     const { findByText, container } = render(<Table<any> {...rootPromiseProps}/>)
     await findByText('1-cell-field0-0')
     expect(container).toMatchSnapshot()
