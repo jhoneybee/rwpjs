@@ -237,7 +237,7 @@ export default () => {
             }}
             pageSize={500}
             table={table}
-            enableSelectBox="multiple"
+            selectBox="multiple"
             rowKey='field0'
             groupColumn={groupField}
             sortDirection={sortDirection}

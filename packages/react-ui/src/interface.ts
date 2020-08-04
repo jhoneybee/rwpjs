@@ -154,7 +154,7 @@ export interface TableProps<T> {
     // 启动下拉编辑
     enableCellDragAndDrop?: boolean
     // 启动选择框 multiple表示多选，默认为none表示无选择器
-    enableSelectBox?: 'multiple' | 'none'
+    selectBox?: 'multiple' | 'none'
     // 根据分组的列进行分组，参数为列的name字段
     groupColumn?: string[]
     // 表格分组的渲染

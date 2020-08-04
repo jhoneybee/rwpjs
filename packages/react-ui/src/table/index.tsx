@@ -261,7 +261,7 @@ export function Table<T>(props: TableProps<T>) {
                 ...restProps,
             }
         }))
-        if (props.enableSelectBox === 'multiple') {
+        if (props.selectBox === 'multiple') {
             const select: Column<T, unknown> = {
                 key: '$select',
                 name: '',
@@ -473,7 +473,7 @@ Table.defaultProps = {
     enableCellCopyPaste: false,
     enableCellDragAndDrop: true,
     onRowsUpdate: async () => true,
-    enableSelectBox: 'none',
+    selectBox: 'none',
     height: 300,
     onSort: () => { },
 }
