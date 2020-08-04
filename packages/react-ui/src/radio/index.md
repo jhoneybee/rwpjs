@@ -3,8 +3,8 @@ nav:
   title: 组件
   path: /components
 group:
-  path: /components/base
-  title: 基础组件
+  path: /components/input
+  title: 数据录入
 title: Radio 单选框
 ---
 

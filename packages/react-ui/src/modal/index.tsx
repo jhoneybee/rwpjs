@@ -3,8 +3,10 @@ import { Modal as AntModal } from 'antd'
 import classNames from 'classnames'
 import { ModalProps } from 'antd/lib/modal'
 import { classPrefix } from '../utils'
-import './style/index.less'
 import { State, Action, reducer } from './reducer'
+
+import 'react-resizable/css/styles.css'
+import './style/index.less'
 
 interface ModalHandle {
     show: () => void
@@ -12,13 +14,13 @@ interface ModalHandle {
 }
 
 interface Props extends Omit<ModalProps,
-    'visible'|
+    'visible' |
     'onOk' |
-    'onCancel'|
-    'confirmLoading'|
+    'onCancel' |
+    'confirmLoading' |
     'width' |
     'getContainer'
->{
+    > {
     onOk?: (e: React.MouseEvent<HTMLElement>) => Promise<boolean>
     onCancel?: (e: React.MouseEvent<HTMLElement>) => Promise<void>
     modal?: React.MutableRefObject<ModalHandle | null>
@@ -35,6 +37,7 @@ interface IContextProps {
 const ModalContext = React.createContext({} as IContextProps);
 
 export const Modal = (props: Props) => {
+    const [width, setWidth] = useState<number>(props.width || 520)
     const [visible, setVisible] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
 
@@ -45,6 +48,9 @@ export const Modal = (props: Props) => {
 
     const mouseState = useRef<'UP' | 'DOWN'>('UP')
 
+    useEffect(() => {
+        setWidth(props.width || 520)
+    }, [props.width])
     useEffect(() => {
         if (props.modal) {
             // eslint-disable-next-line no-param-reassign
@@ -163,7 +169,7 @@ export const Modal = (props: Props) => {
                         {props.title}
                     </div>
                 )}
-                width={props.width}
+                width={width}
                 wrapClassName={classNames({
                     [`${classPrefix}-modal-mask-hide`]: props.mask === false,
                     [props.wrapClassName || '']: true,
