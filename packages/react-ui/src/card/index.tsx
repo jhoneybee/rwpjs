@@ -8,7 +8,7 @@ import './style/index.less'
 export declare type CardType = 'primary' | 'danger' | 'default';
 
 export interface CardProps extends Omit<AntCardProps, 'type'>{
-    type: CardType
+    type?: CardType
 }
 
 export const Card = (props: CardProps) => {
