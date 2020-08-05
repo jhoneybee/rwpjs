@@ -6,6 +6,7 @@ import React, {
     useImperativeHandle,
     useState,
     useMemo,
+    useCallback,
 } from 'react'
 import ReactDataGrid, {
     EditorProps,
@@ -38,9 +39,16 @@ interface IContextProps {
 
 export const TableContext = React.createContext({} as IContextProps);
 
+
 export function Table<T>(props: TableProps<T>) {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [selectedRows, setSelectedRows] = useState(() => new Set<T[keyof T]>());
+    const [gridRef, setGridRef] = useState<DataGridHandle | null>(null)
+    const setRef = useCallback(node => {
+        if (node !== null) {
+            setGridRef(node);
+        }
+    }, []);
     /**
      * 装载表格数据
      */
@@ -61,7 +69,6 @@ export function Table<T>(props: TableProps<T>) {
             },
         })
     }
-    const gridRef = useRef<DataGridHandle>(null)
 
     const { table, enableInitLoadData } = props
 
@@ -91,8 +98,8 @@ export function Table<T>(props: TableProps<T>) {
      */
     const groupDataFun = async () => {
         if (oldGroupData.current === null) {
-            if (gridRef.current) {
-                gridRef.current.scrollToRow(0)
+            if (gridRef) {
+                gridRef.scrollToRow(0)
             }
             oldGroupData.current = {
                 datas: cloneDeep(state.datas) as T[],
@@ -156,8 +163,8 @@ export function Table<T>(props: TableProps<T>) {
             type: 'SET_RELOAD_ROWS',
             payload: resp,
         })
-        if (gridRef.current) {
-            gridRef.current.scrollToRow(0)
+        if (gridRef) {
+            gridRef.scrollToRow(0)
         }
     }
 
@@ -273,11 +280,11 @@ export function Table<T>(props: TableProps<T>) {
     }
 
     useEffect(() => {
-        if (table && gridRef.current) {
+        if (table && gridRef) {
             const tempTable: TableHandle<any> = {
-                scrollToColumn: gridRef.current.scrollToColumn,
-                scrollToRow: gridRef.current!.scrollToRow,
-                selectCell: gridRef.current!.selectCell,
+                scrollToColumn: gridRef.scrollToColumn,
+                scrollToRow: gridRef.scrollToRow,
+                selectCell: gridRef.selectCell,
                 rightContext: () => ({
                     row: state.contextMenu!.row as T,
                     rowIdx: state.contextMenu!.rowIdx as number,
@@ -315,7 +322,7 @@ export function Table<T>(props: TableProps<T>) {
             }
             table.current = tempTable
         }
-    }, [state.contextMenu, state.datas, selectedRows, gridRef.current])
+    }, [state.contextMenu, state.datas, selectedRows, gridRef])
 
     const scroll = useRef<number>(0)
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
@@ -352,7 +359,7 @@ export function Table<T>(props: TableProps<T>) {
         const rdg = (
             <>
                 <ReactDataGrid
-                    ref={gridRef}
+                    ref={setRef}
                     width={width}
                     height={props.height}
                     columns={getColumns()}
