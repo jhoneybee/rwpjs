@@ -19,7 +19,7 @@ import ReactDataGrid, {
 
 } from 'react-data-grid-temp'
 
-import { cloneDeep, isFunction, orderBy } from 'lodash'
+import { cloneDeep, orderBy } from 'lodash'
 import { TableProps, TableHandle } from '../interface'
 import { reducer, initialState, State, Action } from './reducer'
 import { Input, Spin } from '../index'
@@ -272,12 +272,12 @@ export function Table<T>(props: TableProps<T>) {
         return columns
     }
 
-    const initializeTableHandle = () => {
+    useEffect(() => {
         if (table && gridRef.current) {
             const tempTable: TableHandle<any> = {
                 scrollToColumn: gridRef.current.scrollToColumn,
-                scrollToRow: gridRef.current.scrollToRow,
-                selectCell: gridRef.current.selectCell,
+                scrollToRow: gridRef.current!.scrollToRow,
+                selectCell: gridRef.current!.selectCell,
                 rightContext: () => ({
                     row: state.contextMenu!.row as T,
                     rowIdx: state.contextMenu!.rowIdx as number,
@@ -313,15 +313,9 @@ export function Table<T>(props: TableProps<T>) {
                     })
                 },
             }
-            if (isFunction(table)) {
-                table(tempTable)
-            } else {
-                table.current = tempTable
-            }
+            table.current = tempTable
         }
-    }
-
-    initializeTableHandle()
+    }, [state.contextMenu, state.datas, selectedRows, gridRef.current])
 
     const scroll = useRef<number>(0)
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
