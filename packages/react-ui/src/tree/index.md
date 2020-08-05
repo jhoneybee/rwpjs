@@ -121,9 +121,7 @@ export default () => {
 }
 ```
 
-
 ## API
-
 
 |属性        |说明	       |类型	  |默认属性
 |-----      |------       |-----     |-----    
@@ -174,5 +172,6 @@ export default () => {
 |`scrollTo: (key: string) => void`      | 滚动到指定的位置
 |`update: (callback: (dataNode: EventDataNode) => void) => void` | 更新节点数据
 |`del: (callback: (dataNode: EventDataNode) => boolean) => void` | 删除指定的节点,callback返回为true则删除此节点
+|`filter: (callback: () => Promise<EventDataNode[]>) => void` | 筛选节点信息
 
 > 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

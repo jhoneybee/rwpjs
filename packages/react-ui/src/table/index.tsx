@@ -138,9 +138,6 @@ export function Table<T>(props: TableProps<T>) {
                 datas: groupDatas,
             },
         })
-        // if (gridRef.current) {
-        //     gridRef.current.scrollToRow(0)
-        // }
     }
 
     const reloadFun = async (param: Object) => {
