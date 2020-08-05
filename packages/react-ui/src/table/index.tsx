@@ -271,7 +271,8 @@ export function Table<T>(props: TableProps<T>) {
 
         return columns
     }
-    useEffect(() => {
+
+    const initializeTableHandle = () => {
         if (table && gridRef.current) {
             const tempTable: TableHandle<any> = {
                 scrollToColumn: gridRef.current.scrollToColumn,
@@ -318,7 +319,9 @@ export function Table<T>(props: TableProps<T>) {
                 table.current = tempTable
             }
         }
-    }, [state.contextMenu, state.datas, selectedRows])
+    }
+
+    initializeTableHandle()
 
     const scroll = useRef<number>(0)
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
