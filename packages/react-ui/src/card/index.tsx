@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { Card as AntCard } from 'antd'
 import { CardProps as AntCardProps } from 'antd/lib/card'
 import classNames from 'classnames'
@@ -9,6 +9,7 @@ export declare type CardType = 'primary' | 'danger' | 'default';
 
 export interface CardProps extends Omit<AntCardProps, 'type'>{
     type?: CardType
+    children?: ReactNode
 }
 
 export const Card = (props: CardProps) => {
