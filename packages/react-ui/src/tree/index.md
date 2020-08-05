@@ -3,8 +3,8 @@ nav:
   title: 组件
   path: /components
 group:
-  path: /components/base
-  title: 基础组件
+  path: /components/display
+  title: 数据展现
 title: Tree 树形控件
 ---
 
@@ -16,68 +16,107 @@ title: Tree 树形控件
 ```tsx
 /**
  * title: 基础
- * desc: 简单的树结构
+ * desc: 简单的树结构, 可通过`tree.current.filter`来进行远程服务器数据筛选
  */
 
 import React, { useRef } from 'react'
-import { Tree } from '@rwp/react-ui'
+import { Tree, Input } from '@rwp/react-ui'
 
 export default () => {
     const rowKey = useRef<number>(0)
     const tree = useRef()
+    const search = useRef<string>('')
     return (
-        <Tree
-            loadData={(node) => {
-                
-                const result =  [{
-                    title: `标题 - ${rowKey.current + 1}`,
-                    key: rowKey.current + 1,
-                    children: []
-                },{
-                    title: `标题 - ${rowKey.current + 2}`,
-                    key: rowKey.current + 2,
-                    children: []
-                },{
-                    title: `标题 - ${rowKey.current + 3}`,
-                    key: rowKey.current + 3,
-                    children: []
-                },{
-                    title: `标题 - ${rowKey.current + 4}`,
-                    key: rowKey.current + 4,
-                    children: []
-                }]
-                rowKey.current += 10
-                return result
-            }}
-            draggable
-            tree={tree}
-            overlay={(treeNode) => {
-                return [{
-                    title: '删除节点',
-                    key: '1',
-                    onClick: () => {
-                        tree.current.del((ele) => ele.key === treeNode.key)
+        <>
+            <Input.Search
+                onSearch={(value) => {
+                    search.current = value
+                    rowKey.current = 0
+                    tree.current.filter(() => {
+                        return [{
+                            title: `筛选 - 1`,
+                            key:  1001,
+                            children: []
+                        },{
+                            title: `筛选 - 2`,
+                            key: 1002,
+                            children: []
+                        }]
+                    })
+                }}
+            />
+            <Tree
+                loadData={(node) => {
+                    if(node === null){
+                        return [{
+                            title: `标题 - 1`,
+                            key:  1,
+                            children: []
+                        },{
+                            title: `标题 - 2`,
+                            key: 2,
+                            children: []
+                        },{
+                            title: `标题 - 3`,
+                            key: 3,
+                            children: []
+                        },{
+                            title: `标题 - 4`,
+                            key: 4,
+                            children: []
+                        }]
                     }
-                },{
-                    title: '刷新节点',
-                    key: '2',
-                    onClick: () => {
-                        rowKey.current = 0
-                        tree.current.reload()
+                    if(node.key === 1){
+                        return [{
+                            title: `标题 - 11`,
+                            key:  11,
+                            children: []
+                        },{
+                            title: `标题 - 12`,
+                            key: 12,
+                            children: []
+                        },{
+                            title: `标题 - 13`,
+                            key: 13,
+                            children: []
+                        },{
+                            title: `标题 - 14`,
+                            key: 14,
+                            children: []
+                        }]
                     }
-                },{
-                    title: '更新节点',
-                    key: '3',
-                    onClick: () => {
-                        tree.current.update(node => {
-                            if(treeNode.key === node.key){
-                                node.title = '这是更新后的标题'
-                            }
-                        })
-                    }
-                }]
-            }}
-        />
+                    return []
+                }}
+                draggable
+                tree={tree}
+                overlay={(treeNode) => {
+                    return [{
+                        title: '删除节点',
+                        key: '1',
+                        onClick: () => {
+                            tree.current.del((ele) => ele.key === treeNode.key)
+                        }
+                    },{
+                        title: '刷新节点',
+                        key: '2',
+                        onClick: () => {
+                            rowKey.current = 0
+                            tree.current.reload()
+                        }
+                    },{
+                        title: '更新节点',
+                        key: '3',
+                        onClick: () => {
+                            tree.current.update(node => {
+                                if(treeNode.key === node.key){
+                                    node.title = '这是更新后的标题'
+                                }
+                            })
+                        }
+                    }]
+                }}
+            />
+        </>
     )
 }
 ```
@@ -104,6 +143,7 @@ export default () => {
 |showLine|是否展示连接线 | `boolean` \| `{showLeafIcon: boolean}` | `false`
 |onCheck|点击复选框触发 | `function(checkedKeys, e:{checked: bool, checkedNodes, node, event, halfCheckedKeys})` |-
 |onExpand|展开/收起节点时触发 | `function(expandedKeys, {expanded: bool, node})` | -
+|onSelect| 点击树节点触发 | `function(selectedKeys, e:{selected: bool, selectedNodes, node, event})` |-
 |icon|自定义树节点图标。 | `ReactNode` \| `(props) => ReactNode`
 |onDragStart| 开始拖拽，可让对应的节点不可拖拽，通过`preventDefault`来取消默认行为 | `onDragStart?: (info: { event: React.MouseEvent; node: EventDataNode; }) => void;` | -
 |onDragEnd | 用户完成拖动元素时发生 | `function({event, node})` | -

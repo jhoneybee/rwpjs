@@ -3,8 +3,8 @@ nav:
   title: 组件
   path: /components
 group:
-  path: /components/base
-  title: 基础组件
+  path: /components/display
+  title: 数据展现
 title: Rate 评分
 ---
 

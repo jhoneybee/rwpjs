@@ -20,6 +20,8 @@ interface TreeHandle {
     // 删除指定的节点,callback返回为true则删除此节点
     del: (callback: (dataNode: EventDataNode) => boolean) => void
 
+    // 筛选节点,
+    filter: (callback: () => Promise<EventDataNode[]>) => void
 }
 
 interface OverlayMenu extends Omit<MenuItemProps, 'children'> {
@@ -34,18 +36,20 @@ interface Props extends Omit<TreeProps,
     'expandedKeys' |
     'loadedKeys' |
     'selectedKeys' |
-    'onLoad' |
     'onRightClick' |
     'defaultCheckedKeys' |
     'defaultExpandAll' |
     'defaultExpandedKeys' |
     'defaultExpandParent' |
-    'defaultSelectedKeys'
+    'defaultSelectedKeys' |
+    'filterAntTreeNode'
     > {
     // 装载数据的信息
     loadData: (treeNode: EventDataNode | null) => Promise<EventDataNode[]>;
     overlay?: (treeNode: DataNode) => OverlayMenu[]
     tree?: React.MutableRefObject<TreeHandle | null>
+    // 全部展开节点
+    expandAll?: boolean
 }
 
 // 筛选树节点信息
@@ -73,6 +77,9 @@ export const Tree = (props: Props) => {
 
     const reload = async () => {
         const tempTreeNode = await props.loadData(null)
+        if (props.expandAll) {
+            setExpandedKeys(expandedKeys.concat(tempTreeNode.map(ele => ele.key)))
+        }
         setTreeNodes(tempTreeNode.map(chil => {
             let menuItem: ReactNode[] = []
             if (props.overlay) {
@@ -129,6 +136,16 @@ export const Tree = (props: Props) => {
                     })
                 }
             },
+            filter: async callback => {
+                const nodes = await callback()
+                const loadKeys: (string | number)[] = []
+                findTreeNode(nodes, ele => {
+                    loadKeys.push(ele.key)
+                    return false;
+                })
+                setTreeNodes(nodes)
+                setLoadedKeys(loadKeys)
+            },
             update: callback => {
                 findTreeNode(treeNodes, treeNode => {
                     let menuItem: ReactNode[] = []
@@ -169,6 +186,9 @@ export const Tree = (props: Props) => {
             loadData={async treeNode => {
                 loadedKeys.push(treeNode.key)
                 const children = await props.loadData(treeNode)
+                if (props.expandAll) {
+                    setExpandedKeys(expandedKeys.concat(children.map(ele => ele.key)))
+                }
                 findTreeNode(treeNodes, ele => {
                     if (ele.key === treeNode.key) {
                         // eslint-disable-next-line no-param-reassign
@@ -209,12 +229,12 @@ export const Tree = (props: Props) => {
             checkable={props.checkable}
             disabled={props.disabled}
             draggable={props.draggable}
-            filterTreeNode={props.filterTreeNode}
             multiple={props.multiple}
             selectable={props.selectable}
             showIcon={props.showIcon}
             switcherIcon={props.switcherIcon}
             showLine={props.showLine}
+            onSelect={props.onSelect}
             onCheck={props.onCheck}
             onExpand={(keys, info) => {
                 setExpandedKeys(keys)
@@ -222,22 +242,25 @@ export const Tree = (props: Props) => {
                     props.onExpand(keys, info)
                 }
             }}
-
+            onActiveChange = {props.onActiveChange}
+            onBlur = {props.onBlur}
+            onLoad={props.onLoad}
+            onClick={props.onClick}
+            onDoubleClick={props.onDoubleClick}
+            onFocus={props.onFocus}
+            onKeyDown={props.onKeyDown}
+            onMouseEnter={props.onMouseEnter}
+            onMouseLeave={props.onMouseLeave}
             // 开始拖拽的时候触发
             onDragStart={props.onDragStart}
-
             // 将元素拖到放置目标上时执行
             onDragOver={props.onDragOver}
-
             // 元素放入目标位置
             onDragEnter={props.onDragEnd}
-
             // 元素离开目标位置
             onDragLeave={props.onDragEnd}
-
             // 用户完成拖动元素时发生
             onDragEnd={props.onDragEnd}
-
             // 在将拖动的元素放到放置目标上时发生
             onDrop={info => {
                 const {
@@ -245,7 +268,6 @@ export const Tree = (props: Props) => {
                    node,
                    // 拖拽节点
                    dragNode,
-
                    dropPosition,
                    dropToGap,
                 } = info
