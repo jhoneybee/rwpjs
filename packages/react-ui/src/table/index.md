@@ -346,12 +346,18 @@ const Demo = () => {
 |sortable   | 启用列排序     | `boolean`|
 |sortDescendingFirst | 将列排序顺序设置为降序 | `boolean`
 |frozen | 冻结列 |`boolean`
+|formatter|格式化当前列的数据 | `React.ComponentType<FormatterProps<T, unknown>>`
 |editor | 单元格使用的编辑器| `React.ComponentType<EditorProps<T[keyof T], T, unknown>>`
+
 
 
 > 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts
 
 ## FAQ 
+
+#### 如何控制表格标题和内容采用不同的方式对其?
+
+列的 align 属性可以使用  `{align: 'left|center'}`  控制标题和内容的居中方式。
 
 #### 如何在表格中定义一个可编辑的组件？ 
 
