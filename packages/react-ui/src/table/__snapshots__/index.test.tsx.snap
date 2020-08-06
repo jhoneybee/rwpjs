@@ -3001,6 +3001,38 @@ exports[`test table async load data. 1`] = `
       </div>
     </div>
   </div>
+  <div
+    class="rwp-table-footer"
+  >
+    <span>
+      总数 
+      0
+       条 / 已加载 
+    </span>
+    <div
+      class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-show-info ant-progress-default"
+      style="width: 100px; margin-right: 10px;"
+    >
+      <div
+        class="ant-progress-outer"
+      >
+        <div
+          class="ant-progress-inner"
+        >
+          <div
+            class="ant-progress-bg"
+            style="width: 100%; height: 8px;"
+          />
+        </div>
+      </div>
+      <span
+        class="ant-progress-text"
+        title="100%"
+      >
+        100%
+      </span>
+    </div>
+  </div>
 </div>
 `;
 
@@ -5998,6 +6030,38 @@ exports[`test table context menu. 1`] = `
       </div>
     </div>
   </div>
+  <div
+    class="rwp-table-footer"
+  >
+    <span>
+      总数 
+      0
+       条 / 已加载 
+    </span>
+    <div
+      class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-show-info ant-progress-default"
+      style="width: 100px; margin-right: 10px;"
+    >
+      <div
+        class="ant-progress-outer"
+      >
+        <div
+          class="ant-progress-inner"
+        >
+          <div
+            class="ant-progress-bg"
+            style="width: 100%; height: 8px;"
+          />
+        </div>
+      </div>
+      <span
+        class="ant-progress-text"
+        title="100%"
+      >
+        100%
+      </span>
+    </div>
+  </div>
 </div>
 `;
 
@@ -8946,6 +9010,38 @@ exports[`test table editor false. 1`] = `
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div
+    class="rwp-table-footer"
+  >
+    <span>
+      总数 
+      0
+       条 / 已加载 
+    </span>
+    <div
+      class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-show-info ant-progress-default"
+      style="width: 100px; margin-right: 10px;"
+    >
+      <div
+        class="ant-progress-outer"
+      >
+        <div
+          class="ant-progress-inner"
+        >
+          <div
+            class="ant-progress-bg"
+            style="width: 100%; height: 8px;"
+          />
+        </div>
+      </div>
+      <span
+        class="ant-progress-text"
+        title="100%"
+      >
+        100%
+      </span>
     </div>
   </div>
 </div>
@@ -11952,6 +12048,38 @@ exports[`test table editor. 1`] = `
       </div>
     </div>
   </div>
+  <div
+    class="rwp-table-footer"
+  >
+    <span>
+      总数 
+      0
+       条 / 已加载 
+    </span>
+    <div
+      class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-show-info ant-progress-default"
+      style="width: 100px; margin-right: 10px;"
+    >
+      <div
+        class="ant-progress-outer"
+      >
+        <div
+          class="ant-progress-inner"
+        >
+          <div
+            class="ant-progress-bg"
+            style="width: 100%; height: 8px;"
+          />
+        </div>
+      </div>
+      <span
+        class="ant-progress-text"
+        title="100%"
+      >
+        100%
+      </span>
+    </div>
+  </div>
 </div>
 `;
 
@@ -14900,6 +15028,38 @@ exports[`test table infinite scrolling. 1`] = `
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div
+    class="rwp-table-footer"
+  >
+    <span>
+      总数 
+      0
+       条 / 已加载 
+    </span>
+    <div
+      class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-show-info ant-progress-default"
+      style="width: 100px; margin-right: 10px;"
+    >
+      <div
+        class="ant-progress-outer"
+      >
+        <div
+          class="ant-progress-inner"
+        >
+          <div
+            class="ant-progress-bg"
+            style="width: 100%; height: 8px;"
+          />
+        </div>
+      </div>
+      <span
+        class="ant-progress-text"
+        title="100%"
+      >
+        100%
+      </span>
     </div>
   </div>
 </div>
@@ -17852,6 +18012,38 @@ exports[`test table no focus editor. 1`] = `
       </div>
     </div>
   </div>
+  <div
+    class="rwp-table-footer"
+  >
+    <span>
+      总数 
+      0
+       条 / 已加载 
+    </span>
+    <div
+      class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-show-info ant-progress-default"
+      style="width: 100px; margin-right: 10px;"
+    >
+      <div
+        class="ant-progress-outer"
+      >
+        <div
+          class="ant-progress-inner"
+        >
+          <div
+            class="ant-progress-bg"
+            style="width: 100%; height: 8px;"
+          />
+        </div>
+      </div>
+      <span
+        class="ant-progress-text"
+        title="100%"
+      >
+        100%
+      </span>
+    </div>
+  </div>
 </div>
 `;
 
@@ -20800,6 +20992,38 @@ exports[`test table props table. 1`] = `
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div
+    class="rwp-table-footer"
+  >
+    <span>
+      总数 
+      0
+       条 / 已加载 
+    </span>
+    <div
+      class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-show-info ant-progress-default"
+      style="width: 100px; margin-right: 10px;"
+    >
+      <div
+        class="ant-progress-outer"
+      >
+        <div
+          class="ant-progress-inner"
+        >
+          <div
+            class="ant-progress-bg"
+            style="width: 100%; height: 8px;"
+          />
+        </div>
+      </div>
+      <span
+        class="ant-progress-text"
+        title="100%"
+      >
+        100%
+      </span>
     </div>
   </div>
 </div>
