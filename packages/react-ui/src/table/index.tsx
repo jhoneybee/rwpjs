@@ -20,7 +20,8 @@ import ReactDataGrid, {
 
 } from 'react-data-grid-temp'
 
-import { cloneDeep, orderBy } from 'lodash'
+import { cloneDeep, orderBy, ceil } from 'lodash'
+import { Progress } from 'antd'
 import { TableProps, TableHandle } from '../interface'
 import { reducer, initialState, State, Action } from './reducer'
 import { Input, Spin } from '../index'
@@ -28,6 +29,7 @@ import { MultipleSelectColumn } from './column/MultipleSelectColumn'
 import { DefaultEditor } from './editor/DefaultEditor'
 import { DropdownRow } from './row/DropdownRow'
 import { GroupRow } from './row/GroupRow'
+import { classPrefix } from '../utils'
 
 import 'react-data-grid-temp/dist/react-data-grid.css'
 import './style/index.less'
@@ -36,6 +38,8 @@ interface IContextProps {
     state: State<any>;
     dispatch: Dispatch<Action<any>>;
 }
+
+const tableClassPrefix = `${classPrefix}-table`
 
 export const TableContext = React.createContext({} as IContextProps);
 
@@ -49,6 +53,7 @@ export function Table<T>(props: TableProps<T>) {
             setGridRef(node);
         }
     }, []);
+
     /**
      * 装载表格数据
      */
@@ -324,22 +329,21 @@ export function Table<T>(props: TableProps<T>) {
         }
     }, [state.contextMenu, state.datas, selectedRows, gridRef])
 
-    const scroll = useRef<number>(0)
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+        const target = e.currentTarget
          // 如果是分组状态,禁止操作
         if (isEnableGroupColumn()) return
-        const target = e.currentTarget
         if (
-            target.scrollTop + target.clientHeight + 2 > target.scrollHeight
+            // 判断是否滚动到底部
+            target.scrollHeight - target.scrollTop <= target.clientHeight
             &&
-            state.datas.length > 0 &&
-            scroll.current < target.scrollTop
+            // 判断数据大于0
+            state.datas.length > 0
         ) {
             scrollTimeOut = setTimeout(() => {
                 loadDataFun()
-            }, 80);
+            }, 200);
         }
-        scroll.current = target.scrollTop
     }
     const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
 
@@ -449,6 +453,18 @@ export function Table<T>(props: TableProps<T>) {
                         {width > 0 ? rdg : undefined}
                     </div>
                 </Spin>
+                <div
+                   className={`${tableClassPrefix}-footer`}
+                >
+                    <span>总数 {state.total} 条 / 已加载 </span>
+                    <Progress
+                        style={{
+                            width: 100,
+                            marginRight: 10,
+                        }}
+                        percent ={(ceil(state.datas.length / state.total, 2)) * 100}
+                    />
+                </div>
             </TableContext.Provider>
         )
     }, [
