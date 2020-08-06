@@ -167,7 +167,7 @@ export interface TableProps<T> {
     /**
      * 右键菜单
      */
-    contextMenu?: React.ReactElement | OverlayFunc
+    overlay?: React.ReactElement | OverlayFunc
 
     /**
      * 表格组件

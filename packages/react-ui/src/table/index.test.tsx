@@ -142,7 +142,7 @@ test('test table editor false.', async () => {
 })
 
 test('test table context menu.', async () => {
-    rootPromiseProps.contextMenu = () => (
+    rootPromiseProps.overlay = () => (
         <Menu>
             <Menu.Item key="1">row</Menu.Item>
             <Menu.Item key="2">row index</Menu.Item>

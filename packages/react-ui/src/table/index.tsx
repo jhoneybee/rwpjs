@@ -407,17 +407,17 @@ export function Table<T>(props: TableProps<T>) {
                             return (
                                 <GroupRow
                                     rowProps={rowProps}
-                                    contextMenu={props.contextMenu}
+                                    contextMenu={props.overlay}
                                     groupRenderer={props.groupRenderer}
                                 />
                             )
                         }
 
-                        if (props.contextMenu) {
+                        if (props.overlay) {
                             return (
                                 <DropdownRow
                                     rowProps={rowProps}
-                                    contextMenu={props.contextMenu}
+                                    contextMenu={props.overlay}
                                 />
                             )
                         }
@@ -452,7 +452,7 @@ export function Table<T>(props: TableProps<T>) {
             </TableContext.Provider>
         )
     }, [
-        props.contextMenu,
+        props.overlay,
         props.columns,
         props.enableCellCopyPaste,
         props.enableCellDragAndDrop,
