@@ -329,20 +329,24 @@ export function Table<T>(props: TableProps<T>) {
         }
     }, [state.contextMenu, state.datas, selectedRows, gridRef])
 
+    const beforeScrollHeight = useRef<number>(0)
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         const target = e.currentTarget
          // 如果是分组状态,禁止操作
         if (isEnableGroupColumn()) return
         if (
             // 判断是否滚动到底部
-            target.scrollHeight - target.scrollTop <= target.clientHeight
+            target.scrollHeight - target.scrollTop <= target.clientHeight + 2
             &&
             // 判断数据大于0
             state.datas.length > 0
+            &&
+            beforeScrollHeight.current !== target.scrollHeight
         ) {
             scrollTimeOut = setTimeout(() => {
                 loadDataFun()
             }, 200);
+            beforeScrollHeight.current = target.scrollHeight
         }
     }
     const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
@@ -439,6 +443,10 @@ export function Table<T>(props: TableProps<T>) {
                 />
             </>
         )
+
+        const percent = Number.parseInt(
+            (ceil(state.datas.length / state.total, 2) * 100).toFixed(),
+        10)
         return (
             <TableContext.Provider value={{ dispatch, state }}>
                 <Spin
@@ -462,7 +470,7 @@ export function Table<T>(props: TableProps<T>) {
                             width: 100,
                             marginRight: 10,
                         }}
-                        percent ={(ceil(state.datas.length / state.total, 2)) * 100}
+                        percent ={percent}
                     />
                 </div>
             </TableContext.Provider>

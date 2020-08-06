@@ -12,122 +12,6 @@ title: Table 表格
 
 展示和编辑行列数据。
 
-```tsx
-/**
- * title: 可编辑的表格
- * desc: 编辑组件要接受一个 `onChange` 和一个 `value` 属性
- */
-
-import React, { useState } from 'react'
-import { Table, Input } from '@rwp/react-ui'
-import { Menu, Button, DatePicker } from 'antd'
-import moment from 'moment'
-
-const getColumns = () => {
-  const columns = [{
-    name: '$index',
-    title: '序号',
-  }]
-  for(let i=0; i< 100 ; i ++){
-    columns.push({
-      name: `field${i}`,
-      title: `字段-${i}`,
-      width: 120,
-      align: 'center',
-      editable: true,
-      sortable: true,
-      editor: Input
-    })
-  }
-  return columns
-}
-
-const EditorDatePicker = (props) => {
-  return (
-    <DatePicker
-      showTime
-      style={props.style}
-      placeholder="选择日期"
-      value={moment(props.value || 0)}
-      onChange={(e) => {
-        props.onChange(e.valueOf())
-      }}
-    />
-  )
-}
-
-export default () => {
-    return (
-        <>
-          <Table
-            columns={[{
-              name: `field0`,
-              title: `文本编辑器`,
-              editable: true,
-              editor: Input
-            },{
-              name: `date`,
-              title: `日期编辑器`,
-              editable: true,
-              editor: EditorDatePicker
-            },{
-              name: `field2`,
-              title: `字段-2`,
-            },{
-              name: `field3`,
-              title: `字段-3`,
-            },{
-              name: `field4`,
-              title: `字段-4`,
-            },{
-              name: `field5`,
-              title: `字段-5`,
-            },{
-              name: `field6`,
-              title: `字段-6`,
-            },{
-              name: `field7`,
-              title: `字段-7`,
-            },{
-              name: `field8`,
-              title: `字段-8`,
-            },{
-              name: `field9`,
-              title: `字段-9`,
-            },{
-              name: `field10`,
-              title: `字段-10`,
-            }]}
-            table={(table: any) => {
-              console.log(table)
-            }}
-            onRowsUpdate={(e, onCommit) => {
-              onCommit()
-            }}
-            loadData={(pageNo , pageSize, params) => {  
-              return new Promise((resolve) =>{
-                const datas = []
-                for(let i=0; i< 50 ; i++){
-                  const data = {}
-                  for(let z=0; z< 1000 ; z ++){
-                    data[`field${z}`] = `${pageNo}-field${i}-${i}-这是一个超级超级超级长的内容来进行测试`;
-                  }
-                  datas.push(data)
-                }
-                setTimeout(() => {
-                    resolve({
-                        datas,
-                        total: 2000,
-                    })
-                }, 1000);
-              })
-            }}
-          /> 
-        </>
-    )
-}
-```
-
 ## 代码演示
 
 ```tsx
@@ -274,6 +158,123 @@ export default () => {
     )
 }
 ```
+
+```tsx
+/**
+ * title: 可编辑的表格
+ * desc: 编辑组件要接受一个 `onChange` 和一个 `value` 属性
+ */
+
+import React, { useState } from 'react'
+import { Table, Input } from '@rwp/react-ui'
+import { Menu, Button, DatePicker } from 'antd'
+import moment from 'moment'
+
+const getColumns = () => {
+  const columns = [{
+    name: '$index',
+    title: '序号',
+  }]
+  for(let i=0; i< 100 ; i ++){
+    columns.push({
+      name: `field${i}`,
+      title: `字段-${i}`,
+      width: 120,
+      align: 'center',
+      editable: true,
+      sortable: true,
+      editor: Input
+    })
+  }
+  return columns
+}
+
+const EditorDatePicker = (props) => {
+  return (
+    <DatePicker
+      showTime
+      style={props.style}
+      placeholder="选择日期"
+      value={moment(props.value || 0)}
+      onChange={(e) => {
+        props.onChange(e.valueOf())
+      }}
+    />
+  )
+}
+
+export default () => {
+    return (
+        <>
+          <Table
+            columns={[{
+              name: `field0`,
+              title: `文本编辑器`,
+              editable: true,
+              editor: Input
+            },{
+              name: `date`,
+              title: `日期编辑器`,
+              editable: true,
+              editor: EditorDatePicker
+            },{
+              name: `field2`,
+              title: `字段-2`,
+            },{
+              name: `field3`,
+              title: `字段-3`,
+            },{
+              name: `field4`,
+              title: `字段-4`,
+            },{
+              name: `field5`,
+              title: `字段-5`,
+            },{
+              name: `field6`,
+              title: `字段-6`,
+            },{
+              name: `field7`,
+              title: `字段-7`,
+            },{
+              name: `field8`,
+              title: `字段-8`,
+            },{
+              name: `field9`,
+              title: `字段-9`,
+            },{
+              name: `field10`,
+              title: `字段-10`,
+            }]}
+            table={(table: any) => {
+              console.log(table)
+            }}
+            onRowsUpdate={(e, onCommit) => {
+              onCommit()
+            }}
+            loadData={(pageNo , pageSize, params) => {  
+              return new Promise((resolve) =>{
+                const datas = []
+                for(let i=0; i< 50 ; i++){
+                  const data = {}
+                  for(let z=0; z< 1000 ; z ++){
+                    data[`field${z}`] = `${pageNo}-field${i}-${i}-这是一个超级超级超级长的内容来进行测试`;
+                  }
+                  datas.push(data)
+                }
+                setTimeout(() => {
+                    resolve({
+                        datas,
+                        total: 2000,
+                    })
+                }, 1000);
+              })
+            }}
+          /> 
+        </>
+    )
+}
+```
+
 
 ## API
 

@@ -3021,15 +3021,15 @@ exports[`test table async load data. 1`] = `
         >
           <div
             class="ant-progress-bg"
-            style="width: 100%; height: 8px;"
+            style="width: 0%; height: 8px;"
           />
         </div>
       </div>
       <span
         class="ant-progress-text"
-        title="100%"
+        title="0%"
       >
-        100%
+        0%
       </span>
     </div>
   </div>
@@ -6050,15 +6050,15 @@ exports[`test table context menu. 1`] = `
         >
           <div
             class="ant-progress-bg"
-            style="width: 100%; height: 8px;"
+            style="width: 0%; height: 8px;"
           />
         </div>
       </div>
       <span
         class="ant-progress-text"
-        title="100%"
+        title="0%"
       >
-        100%
+        0%
       </span>
     </div>
   </div>
@@ -9032,15 +9032,15 @@ exports[`test table editor false. 1`] = `
         >
           <div
             class="ant-progress-bg"
-            style="width: 100%; height: 8px;"
+            style="width: 0%; height: 8px;"
           />
         </div>
       </div>
       <span
         class="ant-progress-text"
-        title="100%"
+        title="0%"
       >
-        100%
+        0%
       </span>
     </div>
   </div>
@@ -12068,15 +12068,15 @@ exports[`test table editor. 1`] = `
         >
           <div
             class="ant-progress-bg"
-            style="width: 100%; height: 8px;"
+            style="width: 0%; height: 8px;"
           />
         </div>
       </div>
       <span
         class="ant-progress-text"
-        title="100%"
+        title="0%"
       >
-        100%
+        0%
       </span>
     </div>
   </div>
@@ -15050,15 +15050,15 @@ exports[`test table infinite scrolling. 1`] = `
         >
           <div
             class="ant-progress-bg"
-            style="width: 100%; height: 8px;"
+            style="width: 0%; height: 8px;"
           />
         </div>
       </div>
       <span
         class="ant-progress-text"
-        title="100%"
+        title="0%"
       >
-        100%
+        0%
       </span>
     </div>
   </div>
@@ -18032,15 +18032,15 @@ exports[`test table no focus editor. 1`] = `
         >
           <div
             class="ant-progress-bg"
-            style="width: 100%; height: 8px;"
+            style="width: 0%; height: 8px;"
           />
         </div>
       </div>
       <span
         class="ant-progress-text"
-        title="100%"
+        title="0%"
       >
-        100%
+        0%
       </span>
     </div>
   </div>
@@ -21014,15 +21014,15 @@ exports[`test table props table. 1`] = `
         >
           <div
             class="ant-progress-bg"
-            style="width: 100%; height: 8px;"
+            style="width: 0%; height: 8px;"
           />
         </div>
       </div>
       <span
         class="ant-progress-text"
-        title="100%"
+        title="0%"
       >
-        100%
+        0%
       </span>
     </div>
   </div>
