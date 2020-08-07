@@ -6317,7 +6317,7 @@ cloneable-readable@^1.0.0:
     process-nextick-args "^2.0.0"
     readable-stream "^2.3.5"
 
-clsx@^1.1.0:
+clsx@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
   integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
@@ -16339,7 +16339,7 @@ react-clipboard.js@^2.0.16:
     clipboard "^2.0.0"
     prop-types "^15.5.0"
 
-react-color@^2.18.1:
+react-color@~2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/react-color/-/react-color-2.18.1.tgz#2cda8cc8e06a9e2c52ad391a30ddad31972472f4"
   integrity sha512-X5XpyJS6ncplZs74ak0JJoqPi+33Nzpv5RYWWxn17bslih+X7OlgmfpmGC1fNvdkK7/SGWYf1JJdn7D2n5gSuQ==
@@ -16369,12 +16369,12 @@ react-css@0.0.2:
     lodash "^2.4.1"
     to-camel-case "^0.2.1"
 
-react-data-grid-temp@7.0.0-canary.17.5:
-  version "7.0.0-canary.17.5"
-  resolved "https://registry.yarnpkg.com/react-data-grid-temp/-/react-data-grid-temp-7.0.0-canary.17.5.tgz#dcdc525dae30c638d414bf35dbe259c5290e7b3d"
-  integrity sha512-zZslEoppgzCQ4/rfElgKOIoLHAI7+rzmrvlsiomMcE1+Li8/myyH+9Bn30cKSfwcgLLv9rAyxXZ2IS/N/sZo0g==
+react-data-grid-temp@7.0.0-canary.18.2:
+  version "7.0.0-canary.18.2"
+  resolved "https://registry.yarnpkg.com/react-data-grid-temp/-/react-data-grid-temp-7.0.0-canary.18.2.tgz#96180d6220c194a238547ab56c4c611a04408669"
+  integrity sha512-eV9Rs8GqN0eIYEUhoHIK5kYxFpAQ1zg++mTf886vk+iTo+Jg1kHyla7z/M+2TJnc6PFdZdj+JfTWJ5EJqapx6g==
   dependencies:
-    clsx "^1.1.0"
+    clsx "^1.1.1"
 
 react-dev-utils@^10.2.1:
   version "10.2.1"

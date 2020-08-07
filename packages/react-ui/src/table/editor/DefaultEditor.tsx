@@ -31,7 +31,7 @@ export const DefaultEditor = React.forwardRef((props: DefaultEditorProps, ref) =
         row={props.extProps.row}
         column={props.extProps.column}
         ref={inputRef}
-        style={{ height: props.extProps.height + 2 }}
+        style={{ height: props.extProps.height }}
         value={value}
         onChange={(changeValue: string) => setValue(changeValue)}
     />

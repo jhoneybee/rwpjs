@@ -496,7 +496,7 @@ Table.defaultProps = {
     sortDirection: [],
     enableInitLoadData: true,
     enableCellCopyPaste: false,
-    enableCellDragAndDrop: true,
+    enableCellDragAndDrop: false,
     onRowsUpdate: async () => true,
     selectBox: 'none',
     height: 300,
