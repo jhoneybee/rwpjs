@@ -22,6 +22,7 @@ import ReactDataGrid, {
 
 import { cloneDeep, orderBy, ceil } from 'lodash'
 import { Progress } from 'antd'
+import { compileExpression } from 'filtrex-x'
 import { TableProps, TableHandle } from '../interface'
 import { reducer, initialState, State, Action } from './reducer'
 import { Input, Spin } from '../index'
@@ -30,6 +31,7 @@ import { DefaultEditor } from './editor/DefaultEditor'
 import { DropdownRow } from './row/DropdownRow'
 import { GroupRow } from './row/GroupRow'
 import { classPrefix } from '../utils'
+import Search from './plugin/Search'
 
 import 'react-data-grid-temp/dist/react-data-grid.css'
 import './style/index.less'
@@ -54,6 +56,8 @@ export function Table<T>(props: TableProps<T>) {
         }
     }, []);
 
+    // 查询的数据
+    const beforeDatas = useRef<T[]>([])
     /**
      * 装载表格数据
      */
@@ -196,6 +200,12 @@ export function Table<T>(props: TableProps<T>) {
     }, [props.groupColumn, state.groupExpanded])
 
     const isEnableGroupColumn = () => props.groupColumn && props.groupColumn.length > 0
+    // 是否禁用加载数据
+    const isDisableLoadData = () => {
+        if (isEnableGroupColumn()) return true
+        if (beforeDatas.current.length > 0) return true
+        return false
+    }
 
     const getColumns = () => {
         const columns: Column<T, unknown>[] = props.columns.map((element => {
@@ -309,7 +319,7 @@ export function Table<T>(props: TableProps<T>) {
                 },
                 reload: (param: Object) => {
                     // 如果是分组状态,禁止操作
-                    if (isEnableGroupColumn()) return;
+                    if (isDisableLoadData()) return;
                     reloadFun(param)
                 },
                 del: filter => {
@@ -333,7 +343,7 @@ export function Table<T>(props: TableProps<T>) {
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         const target = e.currentTarget
          // 如果是分组状态,禁止操作
-        if (isEnableGroupColumn()) return
+        if (isDisableLoadData()) return
         if (
             // 判断是否滚动到底部
             target.scrollHeight - target.scrollTop <= target.clientHeight + 2
@@ -378,7 +388,7 @@ export function Table<T>(props: TableProps<T>) {
                     sortDirection={sortDirection}
                     onSort={(columnKey, direction) => {
                         // 如果是分组状态,禁止操作
-                        if (isEnableGroupColumn()) return
+                        if (isDisableLoadData()) return
                         const newSortDirection = [];
                         let existence = false;
                         sortDirection.forEach(ele => {
@@ -464,6 +474,61 @@ export function Table<T>(props: TableProps<T>) {
                 <div
                    className={`${tableClassPrefix}-footer`}
                 >
+                    <Search
+                        columns={props.columns}
+                        onChange={async value => {
+                            if (beforeDatas.current.length === 0) {
+                                beforeDatas.current = cloneDeep(state.datas) as T[]
+                            }
+                            if (value === '' && beforeDatas.current.length !== 0) {
+                                await dispatch({
+                                    type: 'SET_RELOAD_ROWS',
+                                    payload: {
+                                        total: state.total,
+                                        datas: beforeDatas.current,
+                                    },
+                                })
+                                beforeDatas.current = []
+                            }
+                        }}
+                        onPressEnter={async value => {
+                            if (value === '' && beforeDatas.current.length !== 0) {
+                                await dispatch({
+                                    type: 'SET_RELOAD_ROWS',
+                                    payload: {
+                                        total: state.total,
+                                        datas: beforeDatas.current,
+                                    },
+                                })
+                                beforeDatas.current = []
+                            } else {
+                                try {
+                                    let realValue = value
+                                    props.columns.forEach(col => {
+                                        realValue = realValue.replaceAll(col.title, col.name)
+                                    })
+                                    const filter = compileExpression(realValue)
+                                    if (filter) {
+                                        let filterData = state.datas
+                                        if (beforeDatas.current.length > 0) {
+                                            filterData = beforeDatas.current
+                                        }
+                                        await dispatch({
+                                            type: 'SET_RELOAD_ROWS',
+                                            payload: {
+                                                total: state.total,
+                                                datas: filterData.filter(ele => (
+                                                    filter(ele) === 1
+                                                )),
+                                            },
+                                        })
+                                    }
+                                // eslint-disable-next-line no-empty
+                                } catch (error) {
+                                }
+                            }
+                        }}
+                    />
                     <span>总数 {state.total} 条 / 已加载 </span>
                     <Progress
                         style={{

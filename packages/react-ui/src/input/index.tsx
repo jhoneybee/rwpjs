@@ -1,13 +1,17 @@
 import React from 'react'
 import { Input as AntInput } from 'antd'
 import { PasswordProps, SearchProps, GroupProps } from 'antd/lib/input'
-import { InputProps } from '../interface'
+import { InputProps as AntInputProps } from '../interface'
 
 interface InputType extends React.FC<InputProps>{
     Password: React.FunctionComponent<PasswordProps>
     TextArea: typeof AntInput.TextArea
     Search: React.FunctionComponent<SearchProps>
     Group: React.FunctionComponent<GroupProps>
+}
+
+interface InputProps extends AntInputProps {
+    bordered?: boolean
 }
 
 export const Input = React.forwardRef<AntInput>((props: InputProps, ref) => {
