@@ -342,9 +342,9 @@ const Demo = () => {
 |width     |  列宽。如果未指定，则将根据网格宽度和其他列的指定宽度自动确定 | `number`&#124;`string`
 |minWidth   | 最小列宽(px) | `number`|
 |maxWidth   | 最大列宽(px)。| `number`|
-|editable   | 启用单元格编辑。| `editable?: boolean `&#124;` ((row: T) => boolean);`
-|resizable  | 启用列大小调整 | `boolean`|
-|sortable   | 启用列排序     | `boolean`|
+|editable   | 单元格编辑。| `editable?: boolean `&#124;` ((row: T) => boolean);`
+|resizable  | 列的宽度调整 | `boolean`|
+|sortable   | 列排序     | `boolean`|
 |sortDescendingFirst | 将列排序顺序设置为降序 | `boolean`
 |frozen | 冻结列 |`boolean`
 |formatter|格式化当前列的数据 | `React.ComponentType<FormatterProps<T, unknown>>`
