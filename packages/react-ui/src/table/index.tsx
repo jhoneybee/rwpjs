@@ -493,7 +493,7 @@ export function Table<T>(props: TableProps<T>) {
                             try {
                                 let realValue = value
                                 props.columns.forEach(col => {
-                                    realValue = realValue.replaceAll(col.title, col.name)
+                                    realValue = realValue.replace(new RegExp(col.title, 'g'), col.name)
                                 })
                                 const filter = compileExpression(realValue)
                                 if (filter) {
