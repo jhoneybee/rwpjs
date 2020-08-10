@@ -228,7 +228,7 @@ export function Table<T>(props: TableProps<T>) {
                     style={{
                         textAlign: bodyTextAlign,
                     }}>
-                    { cellProps.row[cellProps.column.key] }
+                    {cellProps.row[cellProps.column.key]}
                 </div>
             )
             if (formatter) {
@@ -239,12 +239,12 @@ export function Table<T>(props: TableProps<T>) {
                         style={{
                             textAlign: bodyTextAlign,
                         }}>
-                            {
+                        {
                             cellProps.row.$type ? (
                                 cellProps.row[cellProps.column.key]
                             ) : (
-                                <Formatter {...cellProps} />
-                            )}
+                                    <Formatter {...cellProps} />
+                                )}
                     </div>
                 )
             }
@@ -342,7 +342,7 @@ export function Table<T>(props: TableProps<T>) {
     const beforeScrollHeight = useRef<number>(0)
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         const target = e.currentTarget
-         // 如果是分组状态,禁止操作
+        // 如果是分组状态,禁止操作
         if (isDisableLoadData()) return
         if (
             // 判断是否滚动到底部
@@ -374,9 +374,6 @@ export function Table<T>(props: TableProps<T>) {
         }
     }, [])
     return useMemo(() => {
-        const percent = Number.parseInt(
-            (ceil(state.datas.length / state.total, 2) * 100).toFixed(),
-        10)
         const rdg = (
             <>
                 <ReactDataGrid
@@ -395,24 +392,24 @@ export function Table<T>(props: TableProps<T>) {
                         const newSortDirection = [];
                         let existence = false;
                         sortDirection.forEach(ele => {
-                        if (ele.columnKey === columnKey) {
-                            existence = true;
-                            newSortDirection.push({
-                            sortDirection: direction,
-                            columnKey,
-                            });
-                        } else {
-                            newSortDirection.push({
-                            sortDirection: ele.sortDirection,
-                            columnKey: ele.columnKey,
-                            });
-                        }
+                            if (ele.columnKey === columnKey) {
+                                existence = true;
+                                newSortDirection.push({
+                                    sortDirection: direction,
+                                    columnKey,
+                                });
+                            } else {
+                                newSortDirection.push({
+                                    sortDirection: ele.sortDirection,
+                                    columnKey: ele.columnKey,
+                                });
+                            }
                         });
                         if (!existence) {
-                        newSortDirection.push({
-                            sortDirection: direction,
-                            columnKey,
-                        });
+                            newSortDirection.push({
+                                sortDirection: direction,
+                                columnKey,
+                            });
                         }
                         setSortDirection(newSortDirection);
                         if (props.onSort) {
@@ -454,76 +451,82 @@ export function Table<T>(props: TableProps<T>) {
                         props.onRowsUpdate!(e, onCommit)
                     }}
                 />
-                 <div
-                   className={`${tableClassPrefix}-footer`}
-                >
-                    <Search
-                        columns={props.columns}
-                        onChange={async value => {
-                            if (beforeDatas.current.length === 0) {
-                                beforeDatas.current = cloneDeep(state.datas) as T[]
-                            }
-                            if (value === '' && beforeDatas.current.length !== 0) {
-                                await dispatch({
-                                    type: 'SET_RELOAD_ROWS',
-                                    payload: {
-                                        total: state.total,
-                                        datas: beforeDatas.current,
-                                    },
-                                })
-                                beforeDatas.current = []
-                            }
-                        }}
-                        onPressEnter={async value => {
-                            if (value === '' && beforeDatas.current.length !== 0) {
-                                await dispatch({
-                                    type: 'SET_RELOAD_ROWS',
-                                    payload: {
-                                        total: state.total,
-                                        datas: beforeDatas.current,
-                                    },
-                                })
-                                beforeDatas.current = []
-                            } else {
-                                try {
-                                    let realValue = value
-                                    props.columns.forEach(col => {
-                                        realValue = realValue.replaceAll(col.title, col.name)
-                                    })
-                                    const filter = compileExpression(realValue)
-                                    if (filter) {
-                                        let filterData = state.datas
-                                        if (beforeDatas.current.length > 0) {
-                                            filterData = beforeDatas.current
-                                        }
-                                        await dispatch({
-                                            type: 'SET_RELOAD_ROWS',
-                                            payload: {
-                                                total: state.total,
-                                                datas: filterData.filter(ele => (
-                                                    filter(ele) === 1
-                                                )),
-                                            },
-                                        })
-                                    }
-                                // eslint-disable-next-line no-empty
-                                } catch (error) {
-                                }
-                            }
-                        }}
-                    />
-                    <span>总数 {state.total} 条 / 已加载 </span>
-                    <Progress
-                        style={{
-                            width: 100,
-                            marginRight: 10,
-                        }}
-                        percent ={percent}
-                    />
-                </div>
             </>
         )
 
+        const percent = Number.parseInt(
+            (ceil(state.datas.length / state.total, 2) * 100).toFixed(),
+            10)
+
+        const search = (
+            <div
+                className={`${tableClassPrefix}-footer`}
+            >
+                <Search
+                    columns={props.columns}
+                    onChange={async value => {
+                        if (beforeDatas.current.length === 0) {
+                            beforeDatas.current = cloneDeep(state.datas) as T[]
+                        }
+                        if (value === '' && beforeDatas.current.length !== 0) {
+                            await dispatch({
+                                type: 'SET_RELOAD_ROWS',
+                                payload: {
+                                    total: state.total,
+                                    datas: beforeDatas.current,
+                                },
+                            })
+                            beforeDatas.current = []
+                        }
+                    }}
+                    onPressEnter={async value => {
+                        if (value === '' && beforeDatas.current.length !== 0) {
+                            await dispatch({
+                                type: 'SET_RELOAD_ROWS',
+                                payload: {
+                                    total: state.total,
+                                    datas: beforeDatas.current,
+                                },
+                            })
+                            beforeDatas.current = []
+                        } else {
+                            try {
+                                let realValue = value
+                                props.columns.forEach(col => {
+                                    realValue = realValue.replaceAll(col.title, col.name)
+                                })
+                                const filter = compileExpression(realValue)
+                                if (filter) {
+                                    let filterData = state.datas
+                                    if (beforeDatas.current.length > 0) {
+                                        filterData = beforeDatas.current
+                                    }
+                                    await dispatch({
+                                        type: 'SET_RELOAD_ROWS',
+                                        payload: {
+                                            total: state.total,
+                                            datas: filterData.filter(ele => (
+                                                filter(ele) === 1
+                                            )),
+                                        },
+                                    })
+                                }
+                                // eslint-disable-next-line no-empty
+                            } catch (error) {
+                            }
+                        }
+                    }}
+                />
+                <span>总数 {state.total} 条 / 已加载 </span>
+                <Progress
+                    style={{
+                        width: 100,
+                        marginRight: 10,
+                    }}
+                    percent={percent}
+                />
+            </div>
+        )
         return (
             <TableContext.Provider value={{ dispatch, state }}>
                 <Spin
@@ -538,7 +541,7 @@ export function Table<T>(props: TableProps<T>) {
                         {width > 0 ? rdg : undefined}
                     </div>
                 </Spin>
-
+                {width > 0 ? search : undefined}
             </TableContext.Provider>
         )
     }, [
