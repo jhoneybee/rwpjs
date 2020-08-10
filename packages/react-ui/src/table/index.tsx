@@ -374,6 +374,9 @@ export function Table<T>(props: TableProps<T>) {
         }
     }, [])
     return useMemo(() => {
+        const percent = Number.parseInt(
+            (ceil(state.datas.length / state.total, 2) * 100).toFixed(),
+        10)
         const rdg = (
             <>
                 <ReactDataGrid
@@ -451,27 +454,7 @@ export function Table<T>(props: TableProps<T>) {
                         props.onRowsUpdate!(e, onCommit)
                     }}
                 />
-            </>
-        )
-
-        const percent = Number.parseInt(
-            (ceil(state.datas.length / state.total, 2) * 100).toFixed(),
-        10)
-        return (
-            <TableContext.Provider value={{ dispatch, state }}>
-                <Spin
-                    spinning={state.loading}
-                >
-                    <div
-                        ref={divRef}
-                        style={{
-                            width: '100%',
-                        }}
-                    >
-                        {width > 0 ? rdg : undefined}
-                    </div>
-                </Spin>
-                <div
+                 <div
                    className={`${tableClassPrefix}-footer`}
                 >
                     <Search
@@ -538,6 +521,24 @@ export function Table<T>(props: TableProps<T>) {
                         percent ={percent}
                     />
                 </div>
+            </>
+        )
+
+        return (
+            <TableContext.Provider value={{ dispatch, state }}>
+                <Spin
+                    spinning={state.loading}
+                >
+                    <div
+                        ref={divRef}
+                        style={{
+                            width: '100%',
+                        }}
+                    >
+                        {width > 0 ? rdg : undefined}
+                    </div>
+                </Spin>
+
             </TableContext.Provider>
         )
     }, [
