@@ -1,67 +1,69 @@
-import React, { Dispatch, useReducer, useContext, useEffect } from 'react';
+import React from 'react';
 import { Form as AntForm } from 'antd';
-import { isString } from 'lodash'
+import { isArray, cloneDeep } from 'lodash'
 import { FormProps, FormItemProps } from '../interface'
-import { reducer, State, Action } from './reducer'
-
-interface IContextProps {
-    state: State<any>;
-    dispatch: Dispatch<Action<any>>;
-}
-export const FormContext = React.createContext({} as IContextProps);
 
 export const Form = (props: FormProps) => {
-    const { cols = 5, style, labelWidth, children, ...restProps } = props
-    const newStyle = style || {}
-    const [state, dispatch] = useReducer(reducer, {
-        labelWidth: labelWidth || 60,
-    });
-    useEffect(() => {
-        dispatch({
-            type: 'SET_LABEL_WIDTH',
-            payload: labelWidth || 60,
+    const { cols = 5, children, ...restProps } = props
+    const items: JSX.Element[] = []
+    if (isArray(children)) {
+        const cells: JSX.Element[] = []
+        let count: number = 0
+        children.forEach(item => {
+            const { br, colSpan = 1 } = item.props
+            cells.push(item)
+            count += colSpan
+            if (count === cols || br) {
+                items.push(<tr>{cloneDeep(cells)}</tr>)
+                cells.splice(0)
+                count = 0
+            }
         })
-    }, [props.labelWidth])
+    }
 
-    const gridStyle = {
-        display: 'grid',
-        gridTemplateColumns: `repeat(${cols}, auto)`,
-        gridColumnGap: 8,
+    const colsNode: JSX.Element[] = []
+    for (let i = 0; i < cols; i += 1) {
+        colsNode.push(<th style={{ width: `${Math.round(1 / cols * 10000) / 100.00}%` }} />)
     }
     return (
-        <FormContext.Provider value={{ dispatch, state }}>
-            <AntForm
-                {...restProps}
+        <AntForm
+            {...restProps}
+        >
+            <table
                 style={{
-                    ...newStyle,
-                    ...gridStyle,
+                    borderCollapse: 'separate',
+                    borderSpacing: '8px 0px',
                 }}
             >
-                {children}
-            </AntForm>
-        </FormContext.Provider>
+                <tr>
+                    {colsNode}
+                </tr>
+                {items}
+            </table>
+        </AntForm>
     )
 }
 
 const Item = (props: FormItemProps) => {
-    const { colSpan, style, label, br, ...restProps } = props
-    let gridColumn;
-    if (colSpan) gridColumn = `auto/ span ${colSpan}`
-    if (br) gridColumn = '1/ auto'
-    if (colSpan && br) gridColumn = `1/ span ${colSpan}`
-    const newStyle = style || {}
-    const { state } = useContext(FormContext)
-    const fixedWidthLabel = <span style={{ width: state.labelWidth }}>{label}</span>
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { colSpan, rowSpan, style, br, ...restProps } = props
     const cleanMarginBottom: React.CSSProperties = {}
     if (!props.name && !props.label) {
         cleanMarginBottom.marginBottom = 0
     }
     return (
-        <AntForm.Item
-            {...restProps}
-            style={{ ...newStyle, gridColumn, msGridColumns: gridColumn, ...cleanMarginBottom }}
-            label={isString(label) ? fixedWidthLabel : label}
-        />
+        <td
+            colSpan={colSpan}
+            rowSpan={rowSpan}
+        >
+            <AntForm.Item
+                style={{
+                    ...cleanMarginBottom,
+                    ...style,
+                }}
+                {...restProps}
+            />
+        </td>
     )
 }
 Form.Item = Item

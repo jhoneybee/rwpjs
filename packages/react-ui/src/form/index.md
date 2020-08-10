@@ -10,8 +10,6 @@ title: Form 表单组件
 
 # Form 表单组件
 
-> 采用 `display:grid` 布局, 不支持IE浏览器
-
 ## 代码演示
 
 
@@ -59,10 +57,10 @@ export default () => {
           <Form.Item key="Field 7" name="Field 7" label="字段 7">
             <Input />
           </Form.Item>
-          <Form.Item key="Field 8" name="Field 8" label="字段 8">
-            <Input />
+          <Form.Item key="Field 8" name="Field 8" rowSpan={3}>
+            <div style={{ height: 100, width: 160, marginLeft: 20,backgroundColor: '#999999'}} />
           </Form.Item>
-          <Form.Item key="Field 9" name="Field 9" label="字段 9" br colSpan={5}>
+          <Form.Item key="Field 9" name="Field 9" label="字段 9" br colSpan={4}>
             <Input />
           </Form.Item>
         </Form>

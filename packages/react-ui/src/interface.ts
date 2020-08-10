@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { EditorProps, DataGridHandle, Column, SortColumn, FormatterProps, CalculatedColumn, RowsUpdateEvent } from 'react-data-grid-temp'
 import { LiteralUnion } from 'antd/lib/_util/type';
 import { FormItemProps as AntFormItemProps, FormProps as AntFormProps } from 'antd/lib/form';
@@ -75,8 +75,7 @@ export interface ColumnProps<T> {
 export interface FormProps extends AntFormProps{
     // 当前列的总数
     cols?: number
-    // Form标签的宽度
-    labelWidth?: number
+    children: JSX.Element[]
 }
 
 export interface FormItemProps extends AntFormItemProps {
@@ -84,6 +83,8 @@ export interface FormItemProps extends AntFormItemProps {
     br?: boolean
     // 跨列
     colSpan?: number
+    // 跨行
+    rowSpan?: number
 }
 
 export declare type OverlayFunc = () => React.ReactElement;

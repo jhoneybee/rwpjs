@@ -22,4 +22,4 @@ footer: Open-source AGPL-3.0 Licensed | Copyright © 2020<br />Powered by [jhone
 | --------- | --------- | --------- | --------- | --------- | --------- | --------- |
 | Edge| last 2 versions| last 2 versions| last 2 versions| last 2 version| last 2 versions| last 2 versions
 
->  因为 Microsoft 放弃了 IE 浏览器不在提供支持于维护,所以不会提供对IE的支持。如果需要对IE的支持则需要寻找对应的polyfill。
+>  因为 Microsoft 放弃了 IE 浏览器不在提供支持于维护,所以不会提供对IE的支持。如果需要对IE的支持则需要寻找对应的polyfill。或者联系我, 提供额外的版本进行支持。 Wechat/手机号码 Base64: MTg4MjcwMDU2OTQ=
