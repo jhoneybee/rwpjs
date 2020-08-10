@@ -23,6 +23,7 @@ import ReactDataGrid, {
 import { cloneDeep, orderBy, ceil } from 'lodash'
 import { Progress } from 'antd'
 import { compileExpression } from 'filtrex-x'
+import { ReloadOutlined } from '@ant-design/icons'
 import { TableProps, TableHandle } from '../interface'
 import { reducer, initialState, State, Action } from './reducer'
 import { Input, Spin } from '../index'
@@ -524,6 +525,16 @@ export function Table<T>(props: TableProps<T>) {
                         marginRight: 10,
                     }}
                     percent={percent}
+                />
+                <ReloadOutlined
+                    style={{
+                        marginLeft: 0,
+                        top: 2,
+                        position: 'relative',
+                    }}
+                    onClick={() => {
+                        reloadFun(props.params || {})
+                    }}
                 />
             </div>
         )
