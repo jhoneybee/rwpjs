@@ -30,7 +30,6 @@ title: 授权说明
 |支持脚手架构建  | ✔️      | ✔️
 |专业的培训     | ✔️       | ❌ (有限的社区支持)
 |快速的问题修复  | ✔️       | ❌ (有限的社区支持)
-|支持IE 11 浏览器| ✔️(会提供额外的IE的版本支持) | ❌ (不提供IE的支持)
 |提供后端模板    | ✔️      | ✔️ 需要遵循[AGPL](https://www.gnu.org/licenses/agpl-3.0.en.html)的协议
 |提供nodejs后端程序| ✔️     | ✔️ 需要遵循[AGPL](https://www.gnu.org/licenses/agpl-3.0.en.html)的协议
 |提供权限表结构设计 | ✔️    | ✔️ 需要遵循[AGPL](https://www.gnu.org/licenses/agpl-3.0.en.html)的协议
