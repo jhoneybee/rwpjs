@@ -13,6 +13,8 @@ export interface State<T> {
     groupExpanded: string[],
     // 是否在加载数据
     loading: boolean,
+    // 是否全选
+    selectAll: boolean,
     // 当前数据页
     pageNo: number
 }
@@ -25,7 +27,8 @@ export declare type ActionType =
 'SET_UPDATE_ROWS' |
 'SET_RELOAD_ROWS' |
 'SET_GROUP_EXPANDED'|
-'SET_GROUP_EXPANDED_CLEAN';
+'SET_GROUP_EXPANDED_CLEAN'|
+'SET_SELECT_ALL';
 
 export type Action<T> = {
     type: ActionType,
@@ -35,6 +38,7 @@ export type Action<T> = {
 export const initialState: State<any> = {
     datas: [],
     total: 0,
+    selectAll: false,
     groupExpanded: [],
     loading: true,
     pageNo: 1,
@@ -136,6 +140,9 @@ export function reducer<T>(state: State<T>, action: Action<T>) {
 
     if (action.type === 'SET_GROUP_EXPANDED_CLEAN') {
         return { ...state, groupExpanded: [] }
+    }
+    if (action.type === 'SET_SELECT_ALL') {
+        return { ...state, selectAll: action.payload }
     }
     throw new Error(`No corresponding action found - type [${action.type}]`);
 }

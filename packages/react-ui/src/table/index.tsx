@@ -26,7 +26,7 @@ import { compileExpression } from 'filtrex-x'
 import { ReloadOutlined } from '@ant-design/icons'
 import { TableProps, TableHandle } from '../interface'
 import { reducer, initialState, State, Action } from './reducer'
-import { Input, Spin } from '../index'
+import { Input, Spin, Checkbox } from '../index'
 import { MultipleSelectColumn } from './column/MultipleSelectColumn'
 import { DefaultEditor } from './editor/DefaultEditor'
 import { DropdownRow } from './row/DropdownRow'
@@ -288,6 +288,25 @@ export function Table<T>(props: TableProps<T>) {
                 frozen: true,
                 maxWidth: 35,
                 formatter: MultipleSelectColumn,
+                headerRenderer: () => (
+                    <Checkbox
+                        checked={state.selectAll}
+                        onChange={e => {
+                            const selectKeys = new Set<T[keyof T]>()
+                            if (e.target.checked) {
+                                state.datas.forEach((ele: any) => {
+                                    const value = ele[props.rowKey] as T[keyof T]
+                                    selectKeys.add(value)
+                                })
+                            }
+                            setSelectedRows(selectKeys)
+                            dispatch({
+                                type: 'SET_SELECT_ALL',
+                                payload: e.target.checked,
+                            })
+                        }}
+                    />
+                ),
             }
             columns.splice(0, 0, select)
         }
@@ -419,7 +438,13 @@ export function Table<T>(props: TableProps<T>) {
                     }}
                     enableCellDragAndDrop={props.enableCellDragAndDrop}
                     selectedRows={selectedRows}
-                    onSelectedRowsChange={setSelectedRows}
+                    onSelectedRowsChange={select => {
+                        dispatch({
+                            type: 'SET_SELECT_ALL',
+                            payload: select.size === state.datas.length,
+                        })
+                        setSelectedRows(select)
+                    }}
                     onRowClick={props.onRowClick}
                     rowRenderer={(rowProps: RowRendererProps<T, unknown>) => {
                         if (isEnableGroupColumn()) {
@@ -564,6 +589,7 @@ export function Table<T>(props: TableProps<T>) {
         state.loading,
         state.datas,
         selectedRows,
+        props.height,
         sortDirection,
         state.groupExpanded,
         width,
