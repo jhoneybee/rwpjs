@@ -44,11 +44,10 @@ export const initialState: State<any> = {
     pageNo: 1,
 }
 
-const fillOrder = (datas: any[]) => datas.map((ele, index) => ({ $index: index, ...ele }))
+const fillOrder = (datas: any[]) => datas.map((ele, index) => ({ $index: index + 1, ...ele }))
 
 // 空方法，拦截当前用户的修改操作
 const update = (oldData: any[]) => oldData
-
 
 export function reducer<T>(state: State<T>, action: Action<T>) {
     const opData: RowsUpdateEvent = action.payload

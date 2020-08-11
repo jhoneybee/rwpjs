@@ -22,6 +22,8 @@ title: Tree 树形控件
 import React, { useRef } from 'react'
 import { Tree, Input } from '@rwp/react-ui'
 
+
+let countReload = 0
 export default () => {
     const rowKey = useRef<number>(0)
     const tree = useRef()
@@ -34,11 +36,11 @@ export default () => {
                     rowKey.current = 0
                     tree.current.filter(() => {
                         return [{
-                            title: `筛选 - 1`,
+                            title: `筛选 - 1 - ${countReload}`,
                             key:  1001,
                             children: []
                         },{
-                            title: `筛选 - 2`,
+                            title: `筛选 - 2 - ${countReload}`,
                             key: 1002,
                             children: []
                         }]
@@ -47,45 +49,92 @@ export default () => {
             />
             <Tree
                 loadData={(node) => {
-                    if(node === null){
-                        return [{
-                            title: `标题 - 1`,
-                            key:  1,
-                            children: []
-                        },{
-                            title: `标题 - 2`,
-                            key: 2,
-                            children: []
-                        },{
-                            title: `标题 - 3`,
-                            key: 3,
-                            children: []
-                        },{
-                            title: `标题 - 4`,
-                            key: 4,
-                            children: []
-                        }]
-                    }
-                    if(node.key === 1){
-                        return [{
-                            title: `标题 - 11`,
-                            key:  11,
-                            children: []
-                        },{
-                            title: `标题 - 12`,
-                            key: 12,
-                            children: []
-                        },{
-                            title: `标题 - 13`,
-                            key: 13,
-                            children: []
-                        },{
-                            title: `标题 - 14`,
-                            key: 14,
-                            children: []
-                        }]
-                    }
-                    return []
+                    return new Promise((re) => {
+                        setTimeout(() => {
+                            if(node === null){
+                                re([{
+                                    title: `标题 - 1 - ${countReload}`,
+                                    key:  1,
+                                    children: []
+                                },{
+                                    title: `标题 - 2 - ${countReload}`,
+                                    key: 2,
+                                    children: []
+                                },{
+                                    title: `标题 - 3 - ${countReload}`,
+                                    key: 3,
+                                    children: []
+                                },{
+                                    title: `标题 - 4 - ${countReload}`,
+                                    key: 4,
+                                    children: []
+                                }])
+                                return;
+                            }
+                            if(node.key === 1){
+                                re([{
+                                    title: `标题 - 11 - ${countReload}`,
+                                    key:  11,
+                                    children: []
+                                },{
+                                    title: `标题 - 12 - ${countReload}`,
+                                    key: 12,
+                                    children: []
+                                },{
+                                    title: `标题 - 13 - ${countReload}`,
+                                    key: 13,
+                                    children: []
+                                },{
+                                    title: `标题 - 14 - ${countReload}`,
+                                    key: 14,
+                                    children: []
+                                }])
+                                return;
+                            }
+                            if(node.key === 11 && countReload === 0){
+                                re([{
+                                    title: `标题 - 24 - ${countReload}`,
+                                    key:  24,
+                                    children: []
+                                },{
+                                    title: `标题 - 23 - ${countReload}`,
+                                    key: 23,
+                                    children: []
+                                },{
+                                    title: `标题 - 22 - ${countReload}`,
+                                    key: 22,
+                                    children: []
+                                },{
+                                    title: `标题 - 21 - ${countReload}`,
+                                    key: 21,
+                                    children: []
+                                }])
+                                return;
+                            }
+                            if(node.key  === 11){
+                                re([{
+                                    title: `标题 - 21 - ${countReload}`,
+                                    key:  21,
+                                    children: []
+                                },{
+                                    title: `标题 - 22 - ${countReload}`,
+                                    key: 22,
+                                    children: []
+                                },{
+                                    title: `标题 - 23 - ${countReload}`,
+                                    key: 23,
+                                    children: []
+                                },{
+                                    title: `标题 - 24 - ${countReload}`,
+                                    key: 24,
+                                    children: []
+                                }])
+                                return;
+                            }
+                            re([])
+                        }, 1000)
+                    })
+                    
                 }}
                 draggable
                 tree={tree}
@@ -101,6 +150,7 @@ export default () => {
                         key: '2',
                         onClick: () => {
                             rowKey.current = 0
+                            countReload += 1
                             tree.current.reload()
                         }
                     },{
