@@ -69,6 +69,8 @@ export interface ColumnProps<T> {
     formatter?: React.ComponentType<FormatterProps<T, unknown>>;
     // 当前列的编辑器
     editor?:React.ComponentType<EditorProps<T[keyof T], T, unknown>>;
+    // 单元格的class
+    cellClass?: string | ((row: T) => string);
 }
 
 
@@ -184,6 +186,11 @@ export interface TableProps<T> {
      * 行的点击事件
      */
     onRowClick?: (rowIdx: number, row: T, column: CalculatedColumn<T>) => void;
+
+    /**
+     * 当前行的class
+     */
+    rowClass?: (row: T) => string | undefined;
 
     /**
      * 用户更新表格Rows的事件

@@ -445,6 +445,7 @@ export function Table<T>(props: TableProps<T>) {
                         })
                         setSelectedRows(select)
                     }}
+                    rowClass={props.rowClass}
                     onRowClick={props.onRowClick}
                     rowRenderer={(rowProps: RowRendererProps<T, unknown>) => {
                         if (isEnableGroupColumn()) {
@@ -586,6 +587,7 @@ export function Table<T>(props: TableProps<T>) {
         props.enableCellCopyPaste,
         props.enableCellDragAndDrop,
         props.groupColumn,
+        props.rowClass,
         state.loading,
         state.datas,
         selectedRows,
