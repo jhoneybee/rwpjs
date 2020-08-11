@@ -21,7 +21,7 @@ title: Table 表格
  */
 
 import React, { useState, useRef } from 'react'
-import { Table, Input } from '@rwp/react-ui'
+import { Table, Input, toDoubleClick } from '@rwp/react-ui'
 import { Menu, Button, Space } from 'antd'
 
 
@@ -128,7 +128,9 @@ export default () => {
               console.log(sortColumns)
             }}
             onRowClick={(rowIdx, row, column) => {
-              console.log(rowIdx, row, column)
+              toDoubleClick('uuuuuuu', () => {
+                console.log('这是双击事件')
+              })
             }}
             loadData={(pageNo , pageSize, params) => {  
               return new Promise((resolve) =>{
@@ -166,7 +168,7 @@ export default () => {
  */
 
 import React, { useState } from 'react'
-import { Table, Input } from '@rwp/react-ui'
+import { Table, Input} from '@rwp/react-ui'
 import { Menu, Button, DatePicker } from 'antd'
 import moment from 'moment'
 
@@ -299,7 +301,7 @@ export default () => {
 |onRowClick  | 表格的row的点击事件| `(rowIdx: number, row: T, column: CalculatedColumn<T>) => void;`
 |onRowsUpdate| 用户更新表格触发的事件| ` <E extends RowsUpdateEvent>(event: E, onCommit: () => void) => Promise<boolean>;`
 |table       | 用来获取当前的表格进行数据操作 | `TableHandle`
-
+|rowClass | 设置当前行的class名称 | `(row: T) => string | undefined;`
 
 ### TableHandle 的方法
  
@@ -349,7 +351,7 @@ const Demo = () => {
 |frozen | 冻结列 |`boolean`
 |formatter|格式化当前列的数据 | `React.ComponentType<FormatterProps<T, unknown>>`
 |editor | 单元格使用的编辑器| `React.ComponentType<EditorProps<T[keyof T], T, unknown>>`
-
+|cellClass | 设置单元格的class| `string | ((row: T) => string);`
 
 
 > 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts
