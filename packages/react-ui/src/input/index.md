@@ -40,6 +40,25 @@ export default () => {
 
 ```tsx
 /**
+ * title: 文本输入
+ * desc: 文本输入框
+ */
+
+import React from 'react'
+import { Input } from '@rwp/react-ui'
+
+export default () => {
+    console.log(Input)
+    return (
+        <>
+          <Input.TextArea maxLength={100}/> 
+        </>
+    )
+}
+```
+
+```tsx
+/**
  * title: 密码输入框
  * desc: 输入密码类型的输入框,同样也可以通过style来设置宽度
  */

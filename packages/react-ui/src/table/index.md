@@ -358,6 +358,11 @@ const Demo = () => {
 
 ## FAQ 
 
+#### 如何将单击事件转换为一个双击事件？
+
+使用 `import { toDoubleClick } from '@rwp/react-ui'` 方法即可。
+
+
 #### 如何控制表格标题和内容采用不同的方式对其?
 
 列的 align 属性可以使用  `{align: 'left|center'}`  控制标题和内容的居中方式。
