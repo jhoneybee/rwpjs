@@ -69,7 +69,7 @@ export default () => {
                                     key: 4,
                                     children: []
                                 }])
-                                return;
+                                return; 
                             }
                             if(node.key === 1){
                                 re([{
