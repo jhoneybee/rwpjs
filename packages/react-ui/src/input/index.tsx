@@ -7,7 +7,6 @@ import { classPrefix } from '../utils'
 import './style/index.less'
 
 interface TextAreaProps extends AntTextAreaProps {
-
 }
 interface InputType extends React.FC<InputProps>{
     Password: React.FunctionComponent<PasswordProps>
