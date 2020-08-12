@@ -128,6 +128,7 @@ export function Table<T>(props: TableProps<T>) {
         })
     }
 
+    // 重新刷新数据,返回到第一行
     const reloadFun = async (param: Object) => {
         await dispatch({
             type: 'SET_LOADING',
@@ -169,6 +170,7 @@ export function Table<T>(props: TableProps<T>) {
                 loading: false,
             },
         })
+        updateDataSource.current = resp.datas
     }
 
     useEffect(() => () => {
