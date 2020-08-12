@@ -51,7 +51,9 @@ export default () => {
     console.log(Input)
     return (
         <>
+          <div style={{ height: 100 }} />
           <Input.TextArea maxLength={100}/> 
+          <div style={{ height: 100 }} />
         </>
     )
 }
