@@ -230,6 +230,7 @@ export function Table<T>(props: TableProps<T>) {
 
             let format = (cellProps: FormatterProps) => (
                 <div
+                    className={`${tableClassPrefix}-cell`}
                     style={{
                         textAlign: bodyTextAlign,
                     }}>
@@ -241,6 +242,7 @@ export function Table<T>(props: TableProps<T>) {
                 // 如果字符串不超过对应的长度,则使用默认的div
                 format = (cellProps: FormatterProps) => (
                     <div
+                        className={`${tableClassPrefix}-cell`}
                         style={{
                             textAlign: bodyTextAlign,
                         }}>
@@ -248,8 +250,8 @@ export function Table<T>(props: TableProps<T>) {
                             cellProps.row.$type ? (
                                 cellProps.row[cellProps.column.key]
                             ) : (
-                                    <Formatter {...cellProps} />
-                                )}
+                                <Formatter {...cellProps} />
+                            )}
                     </div>
                 )
             }
