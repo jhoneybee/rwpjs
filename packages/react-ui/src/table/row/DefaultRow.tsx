@@ -1,33 +1,44 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import {
-    Cell,
     RowRendererProps,
     Row,
+    Position,
 } from 'react-data-grid-temp'
 
 import { TableContext } from '../index'
+import { ColumnProps } from '../../interface'
 
-export const DefaultRow = React.forwardRef((props: RowRendererProps<any, unknown>, _ref) => {
+
+interface DefaultRowProps extends RowRendererProps<any, unknown> {
+    columns: ColumnProps<any>[]
+}
+
+export const DefaultRow = ({
+    row,
+    rowIdx,
+    eventBus,
+    columns = [],
+    ...restProps
+}: DefaultRowProps) => {
     const { dispatch } = useContext(TableContext)
+    useEffect(() => eventBus.subscribe('SELECT_CELL', (position: Position) => {
+        if (rowIdx === position.rowIdx) {
+            dispatch({
+                type: 'SET_CONTEXTMENU',
+                payload: {
+                    row,
+                    rowIdx,
+                    column: columns[position.idx] as any,
+                },
+            })
+        }
+    }));
     return (
         <Row
-            {...props}
-            cellRenderer={cellProps => (
-                <Cell
-                    {...cellProps}
-                    onContextMenu={e => {
-                        e.preventDefault()
-                        dispatch({
-                            type: 'SET_CONTEXTMENU',
-                            payload: {
-                                row: props.row,
-                                rowIdx: props.rowIdx,
-                                column: cellProps.column,
-                            },
-                        })
-                    }}
-                />
-            )}
+            row={row}
+            rowIdx={rowIdx}
+            eventBus={eventBus}
+            {...restProps}
         />
     )
-})
+}

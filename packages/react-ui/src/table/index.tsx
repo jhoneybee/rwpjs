@@ -46,7 +46,6 @@ const tableClassPrefix = `${classPrefix}-table`
 
 export const TableContext = React.createContext({} as IContextProps);
 
-
 export function Table<T>(props: TableProps<T>) {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [selectedRows, setSelectedRows] = useState(() => new Set<T[keyof T]>());
@@ -59,41 +58,13 @@ export function Table<T>(props: TableProps<T>) {
 
     // 查询的数据
     const beforeDatas = useRef<T[]>([])
-    /**
-     * 装载表格数据
-     */
-    const loadDataFun = async () => {
-        await dispatch({
-            type: 'SET_LOADING',
-            payload: {
-                loading: true,
-            },
-        })
-        const res = props.loadData(state.pageNo, props.pageSize!, props.params!)
-        const resp = await (res as PromiseLike<{ total: number, datas: T[] }>)
-        await dispatch({
-            type: 'SET_ADD_ROWS',
-            payload: {
-                rows: resp,
-                loading: false,
-            },
-        })
-    }
 
     const { table, enableInitLoadData } = props
 
     // 防止timeout内存溢出
     let scrollTimeOut: NodeJS.Timeout;
-    useEffect(() => () => {
-        if (scrollTimeOut) {
-            clearTimeout(scrollTimeOut)
-        }
-    })
 
-    useEffect(() => {
-        // 装载数据
-        if (enableInitLoadData) loadDataFun()
-    }, [])
+    const updateDataSource = useRef<T[]>(state.datas as T[])
 
     // 旧的分组数据
     const oldGroupData = useRef<{
@@ -173,10 +144,43 @@ export function Table<T>(props: TableProps<T>) {
             type: 'SET_RELOAD_ROWS',
             payload: resp,
         })
+        updateDataSource.current = resp.datas
         if (gridRef) {
             gridRef.scrollToRow(0)
         }
     }
+
+    /**
+     * 装载表格数据
+     */
+    const loadDataFun = async () => {
+        await dispatch({
+            type: 'SET_LOADING',
+            payload: {
+                loading: true,
+            },
+        })
+        const res = props.loadData(state.pageNo, props.pageSize!, props.params!)
+        const resp = await (res as PromiseLike<{ total: number, datas: T[] }>)
+        await dispatch({
+            type: 'SET_ADD_ROWS',
+            payload: {
+                rows: resp,
+                loading: false,
+            },
+        })
+    }
+
+    useEffect(() => () => {
+        if (scrollTimeOut) {
+            clearTimeout(scrollTimeOut)
+        }
+    })
+
+    useEffect(() => {
+        // 装载数据
+        if (enableInitLoadData) loadDataFun()
+    }, [])
 
     useEffect(() => {
         if (props.groupColumn && props.groupColumn.length > 0) {
@@ -325,13 +329,14 @@ export function Table<T>(props: TableProps<T>) {
                     rowIdx: state.contextMenu!.rowIdx as number,
                     column: state.contextMenu!.column as Column<T>,
                 }),
-                getDataSource: () => cloneDeep(state.datas as T[]),
+                getDataSource: () => updateDataSource.current as any[],
                 getSelect: () => selectedRows,
                 setSelect: (selects: Set<T[keyof T]>) => {
                     setSelectedRows(selects)
                 },
                 update: change => {
                     const newData = (state.datas as T[]).map((ele: T) => change(ele) || ele)
+                    updateDataSource.current = newData
                     dispatch({
                         type: 'SET_UPDATE_ROWS',
                         payload: newData,
@@ -393,6 +398,7 @@ export function Table<T>(props: TableProps<T>) {
             clearInterval(interval)
         }
     }, [])
+
     return useMemo(() => {
         const rdg = (
             <>
@@ -451,6 +457,7 @@ export function Table<T>(props: TableProps<T>) {
                         if (isEnableGroupColumn()) {
                             return (
                                 <GroupRow
+                                    columns={props.columns}
                                     rowProps={rowProps}
                                     contextMenu={props.overlay}
                                     groupRenderer={props.groupRenderer}
@@ -461,6 +468,7 @@ export function Table<T>(props: TableProps<T>) {
                         if (props.overlay) {
                             return (
                                 <DropdownRow
+                                    columns={props.columns}
                                     rowProps={rowProps}
                                     contextMenu={props.overlay}
                                 />

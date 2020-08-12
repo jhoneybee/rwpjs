@@ -132,7 +132,7 @@ export default () => {
                                 return;
                             }
                             re([])
-                        }, 1000)
+                        }, re.key === 11 ? 5000 : 1000 )
                     })
                     
                 }}

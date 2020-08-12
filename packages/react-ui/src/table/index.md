@@ -102,7 +102,7 @@ export default () => {
         </div>
           <Table
             columns={getColumns()}
-            contextMenu={()=>{
+            overlay={()=>{
               return (
                 <Menu>
                   <Menu.Item
@@ -116,6 +116,7 @@ export default () => {
               )
             }}
             onRowsUpdate={(e, onCommit) => {
+              console.log(e, 'onRowsUpdate')
               onCommit()
             }}
             pageSize={500}
@@ -191,21 +192,10 @@ const getColumns = () => {
   return columns
 }
 
-const EditorDatePicker = (props) => {
-  return (
-    <DatePicker
-      showTime
-      style={props.style}
-      placeholder="选择日期"
-      value={moment(props.value || 0)}
-      onChange={(e) => {
-        props.onChange(e.valueOf())
-      }}
-    />
-  )
-}
+
 
 export default () => {
+    const table = React.useRef()
     return (
         <>
           <Table
@@ -218,7 +208,22 @@ export default () => {
               name: `date`,
               title: `日期编辑器`,
               editable: true,
-              editor: EditorDatePicker
+              editor: (props) => {
+                return (
+                  <DatePicker
+                    showTime
+                    style={props.style}
+                    placeholder="选择日期"
+                    value={moment(props.value || 0)}
+                    onChange={(e) => {
+                      table.current.update((ele) => {
+                        return { ...ele, 'field2': '修改成功', 'field3': '修改二' }
+                      })
+                      props.onChange(e.valueOf())
+                    }}
+                  />
+                )
+              }
             },{
               name: `field2`,
               title: `字段-2`,
@@ -247,10 +252,10 @@ export default () => {
               name: `field10`,
               title: `字段-10`,
             }]}
-            table={(table: any) => {
-              console.log(table)
-            }}
+            table={table}
             onRowsUpdate={(e, onCommit) => {
+              console.log(e, 'onRowsUpdate')
+              console.log(table.current.getDataSource())
               onCommit()
             }}
             loadData={(pageNo , pageSize, params) => {  
@@ -296,7 +301,7 @@ export default () => {
 |width | 表格的宽度 | `number` |
 |height| 表格的高度 | `number` |
 |rowKey| 用户唯一的rowKey| `string`|
-|contextMenu| 右键菜单   | `React.ReactElement`&#124;`OverlayFunc`|
+|overlay | 右键菜单   | `React.ReactElement`&#124;`OverlayFunc`|
 |onSort      | 排序触发的事件| `(sortColumns: SortColumn[]) => void;`| -
 |onRowClick  | 表格的row的点击事件| `(rowIdx: number, row: T, column: CalculatedColumn<T>) => void;`
 |onRowsUpdate| 用户更新表格触发的事件| ` <E extends RowsUpdateEvent>(event: E, onCommit: () => void) => Promise<boolean>;`

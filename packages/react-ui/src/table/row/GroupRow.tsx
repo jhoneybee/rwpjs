@@ -5,7 +5,7 @@ import {
 } from 'react-data-grid-temp'
 import classnames from 'classnames'
 
-import { OverlayFunc } from '../../interface'
+import { OverlayFunc, ColumnProps } from '../../interface'
 import { DefaultRow } from './DefaultRow'
 import { DropdownRow } from './DropdownRow'
 import 'antd/es/table/style/index.less'
@@ -19,12 +19,14 @@ export interface GroupRendererProps {
 interface GroupRowProps {
     contextMenu?: React.ReactElement | OverlayFunc
     rowProps: RowRendererProps<any, unknown>
+    columns: ColumnProps<any>[]
     groupRenderer?: React.ComponentType<GroupRendererProps>
 }
 
 export const GroupRow = ({
     contextMenu,
     rowProps,
+    columns,
     groupRenderer: GroupRenderer,
 }: GroupRowProps) => {
     const { count, title } = rowProps.row
@@ -63,10 +65,10 @@ export const GroupRow = ({
     }
 
     if (contextMenu) {
-        return <DropdownRow contextMenu={contextMenu} rowProps={rowProps} />
+        return <DropdownRow columns={columns} contextMenu={contextMenu} rowProps={rowProps} />
     }
 
     return (
-        <DefaultRow {...rowProps} />
+        <DefaultRow columns={columns} {...rowProps} />
     )
 }
