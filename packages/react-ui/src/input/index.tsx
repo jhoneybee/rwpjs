@@ -37,13 +37,13 @@ const TextArea = (props: TextAreaProps) => {
     const [value, setValue] = useState<string>(props.value as string || '')
 
     let footer = (
-        <div className={textAreaClassPrefix} style={restProps.style}>
+        <div className={textAreaClassPrefix} >
             最多可输入 {props.maxLength} 字
         </div>
     )
     if (value.length > 0) {
         footer = (
-            <div className={textAreaClassPrefix} style={restProps.style}>
+            <div className={textAreaClassPrefix} >
                 已输入<span>{value.length}</span>/{props.maxLength} 字
             </div>
         )

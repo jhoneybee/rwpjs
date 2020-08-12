@@ -5,7 +5,6 @@ import { ModalProps } from 'antd/lib/modal'
 import { classPrefix } from '../utils'
 import { State, Action, reducer } from './reducer'
 
-import 'react-resizable/css/styles.css'
 import './style/index.less'
 
 interface ModalHandle {

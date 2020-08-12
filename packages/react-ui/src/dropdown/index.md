@@ -10,7 +10,46 @@ title: Dropdown 下拉菜单
 
 # Dropdown 下拉菜单
 
+```tsx
+/**
+ * title: 基础
+ * desc: 一个简单的下拉菜单
+ */
+import React from 'react'
+import { Menu, Dropdown } from '@rwp/react-ui'
+import { DownOutlined } from '@ant-design/icons';
 
+const menu = (
+  <Menu>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/jhoneybee">
+        下拉选项一
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/jhoneybee">
+        下拉选项二
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/jhoneybee">
+        下拉选项三
+      </a>
+    </Menu.Item>
+    <Menu.Item danger> 危险操作 </Menu.Item>
+  </Menu>
+);
+
+export default () => {
+  return (
+    <Dropdown overlay={menu}>
+      <a onClick={e => e.preventDefault()}>
+        移到到此处 <DownOutlined />
+      </a>
+    </Dropdown>
+  )
+}
+```
 
 ## API
 

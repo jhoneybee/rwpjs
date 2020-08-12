@@ -52,7 +52,7 @@ export default () => {
     return (
         <>
           <div style={{ height: 100 }} />
-          <Input.TextArea maxLength={100}/> 
+          <Input.TextArea style={{ marginTop: 20 }} maxLength={100}/> 
           <div style={{ height: 100 }} />
         </>
     )
