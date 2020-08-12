@@ -55,19 +55,15 @@ export default () => {
                                 re([{
                                     title: `标题 - 1 - ${countReload}`,
                                     key:  1,
-                                    children: []
                                 },{
                                     title: `标题 - 2 - ${countReload}`,
                                     key: 2,
-                                    children: []
                                 },{
                                     title: `标题 - 3 - ${countReload}`,
                                     key: 3,
-                                    children: []
                                 },{
                                     title: `标题 - 4 - ${countReload}`,
                                     key: 4,
-                                    children: []
                                 }])
                                 return; 
                             }
@@ -75,19 +71,15 @@ export default () => {
                                 re([{
                                     title: `标题 - 11 - ${countReload}`,
                                     key:  11,
-                                    children: []
                                 },{
                                     title: `标题 - 12 - ${countReload}`,
                                     key: 12,
-                                    children: []
                                 },{
                                     title: `标题 - 13 - ${countReload}`,
                                     key: 13,
-                                    children: []
                                 },{
                                     title: `标题 - 14 - ${countReload}`,
                                     key: 14,
-                                    children: []
                                 }])
                                 return;
                             }
@@ -95,44 +87,44 @@ export default () => {
                                 re([{
                                     title: `标题 - 24 - ${countReload}`,
                                     key:  24,
-                                    children: []
+                                    isLeaf: true,
                                 },{
                                     title: `标题 - 23 - ${countReload}`,
+                                    isLeaf: true,
                                     key: 23,
-                                    children: []
                                 },{
                                     title: `标题 - 22 - ${countReload}`,
+                                    isLeaf: true,
                                     key: 22,
-                                    children: []
                                 },{
                                     title: `标题 - 21 - ${countReload}`,
+                                    isLeaf: true,
                                     key: 21,
-                                    children: []
                                 }])
                                 return;
                             }
                             if(node.key  === 11){
                                 re([{
                                     title: `标题 - 21 - ${countReload}`,
+                                    isLeaf: true,
                                     key:  21,
-                                    children: []
                                 },{
                                     title: `标题 - 22 - ${countReload}`,
+                                    isLeaf: true,
                                     key: 22,
-                                    children: []
                                 },{
                                     title: `标题 - 23 - ${countReload}`,
+                                    isLeaf: true,
                                     key: 23,
-                                    children: []
                                 },{
                                     title: `标题 - 24 - ${countReload}`,
+                                    isLeaf: true,
                                     key: 24,
-                                    children: []
                                 }])
                                 return;
                             }
                             re([])
-                        }, re.key === 11 ? 5000 : 1000 )
+                        }, re.key === 1 ? 5000 : 1000 )
                     })
                     
                 }}
@@ -151,7 +143,7 @@ export default () => {
                         onClick: () => {
                             rowKey.current = 0
                             countReload += 1
-                            tree.current.reload()
+                            tree.current.reload(treeNode)
                         }
                     },{
                         title: '更新节点',

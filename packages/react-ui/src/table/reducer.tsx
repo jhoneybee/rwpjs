@@ -40,7 +40,7 @@ export const initialState: State<any> = {
     total: 0,
     selectAll: false,
     groupExpanded: [],
-    loading: true,
+    loading: false,
     pageNo: 1,
 }
 
