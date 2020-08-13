@@ -193,6 +193,7 @@ export const Tree = (props: Props) => {
                     }
                     loops(currentNode)
                 }
+
                 setExpandedKeys(expandKey)
                 setLoadedKeys([])
                 setTreeNodes([...treeNodes])
