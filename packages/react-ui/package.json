@@ -65,7 +65,7 @@
         "jest": "~26.0.1",
         "lint-staged": "~10.0.7",
         "prettier": "~1.19.1",
-        "react-test-renderer": "~16.9.0",
+        "react-test-renderer": "~16.13.1",
         "typescript": "~3.5.3"
     },
     "bugs": {
