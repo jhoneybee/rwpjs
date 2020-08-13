@@ -130,63 +130,60 @@ export const Tree = (props: Props) => {
         const { tree } = props
         tree.current = {
             reload: async (treeNode: CustomEventDataNode) => {
-                let removeLoadedKeys: (string | number)[] = []
-                let currentNode;
+                let currentNode: CustomEventDataNode | undefined;
                 const expandKey: (string | number)[] = []
                 // 如果是最顶部的root节点
                 if (treeNodes.some(node => node.key === treeNode.key)) {
                     reload()
                     setLoadedKeys([])
                     setExpandedKeys([])
-                } else {
-                    await new Promise<void>(resolve => {
-                        const findTreeNodeFun = (ele: DataNode) => {
-                            const { children = [] } = ele
-                            const some = (chil: DataNode) => {
-                                if (chil.key === treeNode.key) {
-                                    currentNode = ele as CustomEventDataNode
-                                    props.loadData(ele as EventDataNode).then(nodeData => {
-                                        // eslint-disable-next-line no-param-reassign
-                                        ele.children = nodeData.map(node => {
-                                            let menuItem: ReactNode[] = []
-                                            if (props.overlay) {
-                                                menuItem = props.overlay(node).map(menu => {
-                                                    const { title, ...restProps } = menu
-                                                    return (
-                                                        <Menu.Item
-                                                            {...restProps}
-                                                        >
-                                                            {title}
-                                                        </Menu.Item>
-                                                    )
-                                                })
-                                            }
-                                            return {
-                                                ...node,
-                                                parent: ele,
-                                                title: (
-                                                    <Dropdown
-                                                        overlay={<Menu>{menuItem}</Menu>}
-                                                        trigger={['contextMenu']}
-                                                    >
-                                                        <span>{node.title}</span>
-                                                    </Dropdown>
-                                                ),
-                                            }
-                                        })
-                                        removeLoadedKeys = nodeData.map(node => node.key)
-                                        resolve()
-                                    })
-                                    return true
-                                }
-                                return false
-                            }
-                            return children.some(some)
-                        }
-                        findTreeNode(treeNodes, findTreeNodeFun)
-                    })
-                    setLoadedKeys(loadedKeys.filter(ele => !removeLoadedKeys.includes(ele)))
+                    return
                 }
+                await new Promise<void>(resolve => {
+                    const findTreeNodeFun = (ele: DataNode) => {
+                        const { children = [] } = ele
+                        const some = (chil: DataNode) => {
+                            if (chil.key === treeNode.key) {
+                                currentNode = ele as CustomEventDataNode
+                                props.loadData(ele as EventDataNode).then(nodeData => {
+                                    // eslint-disable-next-line no-param-reassign
+                                    ele.children = nodeData.map(node => {
+                                        let menuItem: ReactNode[] = []
+                                        if (props.overlay) {
+                                            menuItem = props.overlay(node).map(menu => {
+                                                const { title, ...restProps } = menu
+                                                return (
+                                                    <Menu.Item
+                                                        {...restProps}
+                                                    >
+                                                        {title}
+                                                    </Menu.Item>
+                                                )
+                                            })
+                                        }
+                                        return {
+                                            ...node,
+                                            parent: ele,
+                                            title: (
+                                                <Dropdown
+                                                    overlay={<Menu>{menuItem}</Menu>}
+                                                    trigger={['contextMenu']}
+                                                >
+                                                    <span>{node.title}</span>
+                                                </Dropdown>
+                                            ),
+                                        }
+                                    })
+                                    resolve()
+                                })
+                                return true
+                            }
+                            return false
+                        }
+                        return children.some(some)
+                    }
+                    findTreeNode(treeNodes, findTreeNodeFun)
+                })
                 if (currentNode) {
                     const loops = (node: CustomEventDataNode) => {
                         if (node.parent) {
@@ -197,6 +194,7 @@ export const Tree = (props: Props) => {
                     loops(currentNode)
                 }
                 setExpandedKeys(expandKey)
+                setLoadedKeys([])
                 setTreeNodes([...treeNodes])
             },
             scrollTo: (key: string) => {
