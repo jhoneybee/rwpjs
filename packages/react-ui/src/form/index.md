@@ -20,12 +20,13 @@ title: Form 表单组件
  */
 
 import React from 'react'
-import { Form, Input } from '@rwp/react-ui'
+import { Form, Input, Card} from '@rwp/react-ui'
 
 
 export default () => {
 
     return (
+      <Card>
         <Form
             cols={5}
             onValuesChange={(changedValues, allValues) => {
@@ -64,6 +65,7 @@ export default () => {
             <Input />
           </Form.Item>
         </Form>
+      </Card>
     )
 }
 ```

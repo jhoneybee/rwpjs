@@ -24,6 +24,10 @@ interface TreeHandle {
     filter: (callback: () => Promise<EventDataNode[]>) => void
 }
 
+interface CustomEventDataNode extends EventDataNode{
+    parent?: CustomEventDataNode
+}
+
 interface OverlayMenu extends Omit<MenuItemProps, 'children'> {
     title: string | ReactNode
 }
@@ -67,7 +71,7 @@ const findTreeNode = (treeNodes: DataNode[], callback: (treeNode: DataNode) => b
 
 export const Tree = (props: Props) => {
     // 当前的树节点信息
-    const [treeNodes, setTreeNodes] = useState<EventDataNode[]>([])
+    const [treeNodes, setTreeNodes] = useState<CustomEventDataNode[]>([])
     // 装载的节点信息
     const [loadedKeys, setLoadedKeys] = useState<(string | number)[]>([])
     // 展开指定的节点
@@ -125,8 +129,10 @@ export const Tree = (props: Props) => {
     if (props.tree) {
         const { tree } = props
         tree.current = {
-            reload: async (treeNode: EventDataNode) => {
+            reload: async (treeNode: CustomEventDataNode) => {
                 let removeLoadedKeys: (string | number)[] = []
+                let currentNode;
+                const expandKey: (string | number)[] = []
                 // 如果是最顶部的root节点
                 if (treeNodes.some(node => node.key === treeNode.key)) {
                     reload()
@@ -138,6 +144,7 @@ export const Tree = (props: Props) => {
                             const { children = [] } = ele
                             const some = (chil: DataNode) => {
                                 if (chil.key === treeNode.key) {
+                                    currentNode = ele as CustomEventDataNode
                                     props.loadData(ele as EventDataNode).then(nodeData => {
                                         // eslint-disable-next-line no-param-reassign
                                         ele.children = nodeData.map(node => {
@@ -156,6 +163,7 @@ export const Tree = (props: Props) => {
                                             }
                                             return {
                                                 ...node,
+                                                parent: ele,
                                                 title: (
                                                     <Dropdown
                                                         overlay={<Menu>{menuItem}</Menu>}
@@ -179,6 +187,16 @@ export const Tree = (props: Props) => {
                     })
                     setLoadedKeys(loadedKeys.filter(ele => !removeLoadedKeys.includes(ele)))
                 }
+                if (currentNode) {
+                    const loops = (node: CustomEventDataNode) => {
+                        if (node.parent) {
+                            loops(node.parent)
+                        }
+                        expandKey.push(node.key)
+                    }
+                    loops(currentNode)
+                }
+                setExpandedKeys(expandKey)
                 setTreeNodes([...treeNodes])
             },
             scrollTo: (key: string) => {
@@ -254,6 +272,7 @@ export const Tree = (props: Props) => {
                             }
                             return {
                                 ...chil,
+                                parent: ele,
                                 title: (
                                     <Dropdown
                                         overlay={<Menu>{menuItem}</Menu>}
