@@ -48,7 +48,7 @@
         "react-window": "^1.8.5"
     },
     "devDependencies": {
-        "@testing-library/react": "~10.3.0",
+        "@testing-library/react": "~10.4.8",
         "@types/classnames": "^2.2.10",
         "@types/jest": "~26.0.0",
         "@types/nprogress": "^0.2.0",
@@ -63,7 +63,7 @@
         "father-build": "~1.17.2",
         "husky": "~4.2.5",
         "jest": "~26.4.0",
-        "lint-staged": "~10.0.7",
+        "lint-staged": "~10.2.11",
         "prettier": "~1.19.1",
         "react-test-renderer": "~16.13.1",
         "typescript": "~3.5.3"
