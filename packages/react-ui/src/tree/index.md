@@ -19,7 +19,7 @@ title: Tree 树形控件
  * desc: 简单的树结构, 可通过`tree.current.filter`来进行远程服务器数据筛选
  */
 
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Tree, Input } from '@rwp/react-ui'
 
 
@@ -28,6 +28,8 @@ export default () => {
     const rowKey = useRef<number>(0)
     const tree = useRef()
     const search = useRef<string>('')
+    const [selectKeys, setSelectKeys] = useState<(number | string)[]>([])
+    const [expandedKeys, setExpandedKeys] = useState<(string | number)[]>([])
     return (
         <>
             <Input.Search
@@ -130,6 +132,14 @@ export default () => {
                 }}
                 draggable
                 tree={tree}
+                onSelect={(keys) => {
+                    setSelectKeys(keys)
+                }}
+                onExpand={(keys) => {
+                    setExpandedKeys(keys)
+                }}
+                expandedKeys={expandedKeys}
+                selectedKeys={selectKeys}
                 overlay={(treeNode) => {
                     return [{
                         title: '删除节点',
@@ -155,6 +165,18 @@ export default () => {
                                 }
                             })
                         }
+                    },{
+                        title: '选中此节点',
+                        key: '4',
+                        onClick: () => {
+                            setSelectKeys([treeNode.key])
+                        }
+                    },{
+                        title: '展开此节点',
+                        key: '4',
+                        onClick: () => {
+                            setExpandedKeys(expandedKeys.concat(treeNode.key))
+                        }
                     }]
                 }}
             />
@@ -169,7 +191,9 @@ export default () => {
 |-----      |------       |-----     |-----    
 |loadData   |装载数据的接口|`(treeNode: EventDataNode &#124; null) => Promise<EventDataNode[]>` | -
 |tree       |当前tree | `React.MutableRefObject<TreeHandle &#124; null>` | -
-|height|设置Tree的高度| `number`| -         
+|height|设置Tree的高度| `number`| -      
+|expandedKeys| 展开的节点信息| `Key[]`| -
+|selectedKeys| 选择的节点信息|  `Key[]`| - 
 |autoExpandParent|是否自动展开父节点| `boolean` | `true`
 |blockNode|是否节点占据一行 | `boolean` | `false`
 |checkable|节点前添加 Checkbox 复选框  | `boolean` | `false`

@@ -37,9 +37,7 @@ interface Props extends Omit<TreeProps,
     'treeData' |
     'checkedKeys' |
     'checkStrictly' |
-    'expandedKeys' |
     'loadedKeys' |
-    'selectedKeys' |
     'onRightClick' |
     'defaultCheckedKeys' |
     'defaultExpandAll' |
@@ -75,8 +73,9 @@ export const Tree = (props: Props) => {
     // 装载的节点信息
     const [loadedKeys, setLoadedKeys] = useState<(string | number)[]>([])
     // 展开指定的节点
-    const [expandedKeys, setExpandedKeys] = useState<(string | number)[]>([])
-
+    const [expandedKeys, setExpandedKeys] = useState<(string | number)[]>(props.expandedKeys || [])
+    // 设置选中的节点
+    const [selectedKeys, setSelectedKeys] = useState<(string | number)[]>(props.selectedKeys || [])
     const treeRef = useRef<RcTree>(null)
 
     const reload = async () => {
@@ -249,6 +248,13 @@ export const Tree = (props: Props) => {
         reload()
     }, [])
 
+    useEffect(() => {
+        setExpandedKeys(props.expandedKeys as (string | number)[])
+    }, [props.expandedKeys])
+
+    useEffect(() => {
+        setSelectedKeys(props.selectedKeys as (string | number)[])
+    }, [props.selectedKeys])
     return (
         <AntTree
             ref={treeRef}
@@ -290,6 +296,7 @@ export const Tree = (props: Props) => {
                 setTreeNodes([...treeNodes])
             }}
             expandedKeys={expandedKeys}
+            selectedKeys={selectedKeys}
             loadedKeys={loadedKeys}
             treeData={treeNodes}
             height={props.height}
@@ -303,7 +310,12 @@ export const Tree = (props: Props) => {
             showIcon={props.showIcon}
             switcherIcon={props.switcherIcon}
             showLine={props.showLine}
-            onSelect={props.onSelect}
+            onSelect={(keys, info) => {
+                setSelectedKeys(keys)
+                if (props.onSelect) {
+                    props.onSelect(keys, info)
+                }
+            }}
             onCheck={props.onCheck}
             onExpand={(keys, info) => {
                 setExpandedKeys(keys)
