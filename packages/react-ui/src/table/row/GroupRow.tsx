@@ -46,6 +46,7 @@ export const GroupRow = ({
             >
                 <button
                     type="button"
+                    aria-label="expand"
                     className={classnames({
                         'ant-table-row-expand-icon': true,
                         'ant-table-row-expand-icon-expanded': expand,

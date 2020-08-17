@@ -75,5 +75,8 @@
         "type": "git",
         "url": "https://github.com/jhoneybee/rwpjs"
     },
+    "resolutions": {
+        "@umijs/fabric": "^2.2.2"
+    },
     "gitHead": "25501269b57ef2184233321f9c1049b2241577d5"
 }

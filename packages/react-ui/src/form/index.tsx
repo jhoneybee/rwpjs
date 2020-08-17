@@ -23,7 +23,7 @@ export const Form = (props: FormProps) => {
 
     const colsNode: JSX.Element[] = []
     for (let i = 0; i < cols; i += 1) {
-        colsNode.push(<th style={{ width: `${Math.round(1 / cols * 10000) / 100.00}%` }} />)
+        colsNode.push(<th aria-label="th" style={{ width: `${Math.round(1 / cols * 10000) / 100.00}%` }} />)
     }
     return (
         <AntForm
