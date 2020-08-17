@@ -40,9 +40,9 @@
     rc-util "^5.0.1"
 
 "@ant-design/pro-layout@^6.2.5":
-  version "6.4.4"
-  resolved "https://registry.yarnpkg.com/@ant-design/pro-layout/-/pro-layout-6.4.4.tgz#6263d4cc78f4ffe0b3957635d969ba5f6a5d14d9"
-  integrity sha512-TpMX+k/bjlwqMFAtCXSNIfznt/GqmMMwlePmL+De0STB3Bm4CDv2qNN57IPtmMqV3vjnZm2chcdGzmDXk1axFg==
+  version "6.4.6"
+  resolved "https://registry.yarnpkg.com/@ant-design/pro-layout/-/pro-layout-6.4.6.tgz#edd740a0a554184ca757faba69026f25f2a94b6a"
+  integrity sha512-5bAFM+9S9fSucpJ+4oz0xAoySmOVLQ8X07yLIJFej9Vli2KgWOa+DgPS6ye+5inTCSRHfcUg47ADJyL03XYCTw==
   dependencies:
     "@ant-design/icons" "^4.0.0"
     "@ant-design/pro-provider" "0.0.5"
