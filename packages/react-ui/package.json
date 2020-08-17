@@ -60,6 +60,7 @@
         "@umijs/preset-react": "~1.x",
         "@umijs/test": "~3.2.15",
         "dumi": "~1.0.34",
+        "@umijs/fabric": "^2.2.2",
         "father-build": "~1.18.2",
         "husky": "~4.2.5",
         "jest": "~26.4.0",
@@ -67,6 +68,10 @@
         "prettier": "~2.0.5",
         "react-test-renderer": "~16.13.1",
         "typescript": "~3.9.7"
+        
+    },
+    "resolutions": {
+        "@typescript-eslint/eslint-plugin": "^3.7.1"
     },
     "bugs": {
         "url": "https://github.com/jhoneybee/rwpjs/issues"
@@ -74,9 +79,6 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/jhoneybee/rwpjs"
-    },
-    "resolutions": {
-        "@umijs/fabric": "^2.2.2"
     },
     "gitHead": "25501269b57ef2184233321f9c1049b2241577d5"
 }
