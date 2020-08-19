@@ -85,7 +85,7 @@ export default () => {
             > 重新装载数据 </Button>
             <Button
               onClick={() => {
-                console.log(table.current.getSelect())
+                console.log(table.current.getSelect().has('123'))
               }}
             > 获取表格选中的数据 </Button>
               <Button

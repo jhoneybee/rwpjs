@@ -115,7 +115,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 column: store.contextMenu!.column as Column<Row>,
             }),
             getDataSource: () => cloneDeep(store.datas as Row[]),
-            getSelect: () => toJS(store.selectedRows),
+            getSelect: () => new Set<string>(toJS(store.selectedRows)),
             setSelect: (selects: Set<Row[keyof Row]>) => {
                 store.setSelectedRows(selects)
             },
@@ -323,6 +323,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                     ref={divRef}
                     style={{
                         width: '100%',
+                        height: props.height,
                     }}
                 >
                     {width > 0 ? rdg : undefined}
