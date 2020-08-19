@@ -73,6 +73,7 @@ export default () => {
                   if (ele.$index === 0){
                     return { ...ele, 'testfield0': '修改成功'}
                   }
+                  return ele
                 })
               }}
             > 点击修改不在列里面的数据 </Button>

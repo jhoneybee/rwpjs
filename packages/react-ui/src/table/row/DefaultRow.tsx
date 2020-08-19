@@ -1,16 +1,16 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import {
     RowRendererProps,
     Row,
     Position,
 } from 'react-data-grid-temp'
 
-import { TableContext } from '../index'
-import { ColumnProps } from '../../interface'
+import { useStore } from '../store'
+import { ColumnProps } from '../type'
 
 
 interface DefaultRowProps extends RowRendererProps<any, unknown> {
-    columns: ColumnProps<any>[]
+    columns: ColumnProps[]
 }
 
 export const DefaultRow = ({
@@ -20,16 +20,13 @@ export const DefaultRow = ({
     columns = [],
     ...restProps
 }: DefaultRowProps) => {
-    const { dispatch } = useContext(TableContext)
+    const store = useStore()
     useEffect(() => eventBus.subscribe('SELECT_CELL', (position: Position) => {
         if (rowIdx === position.rowIdx) {
-            dispatch({
-                type: 'SET_CONTEXTMENU',
-                payload: {
-                    row,
-                    rowIdx,
-                    column: columns[position.idx] as any,
-                },
+            store.setContextMenu({
+                row,
+                rowIdx,
+                column: columns[position.idx] as any,
             })
         }
     }));

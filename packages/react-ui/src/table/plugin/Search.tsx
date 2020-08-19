@@ -1,7 +1,7 @@
 import React from 'react'
 import { UnControlled as CodeMirror } from 'react-codemirror2'
 import { classPrefix } from '../../utils'
-import { ColumnProps } from '../../interface'
+import { ColumnProps } from '../type'
 import './mode'
 import 'codemirror/addon/hint/show-hint'
 import 'codemirror/lib/codemirror.css'
@@ -10,7 +10,7 @@ import './style/index.less'
 
 interface Props {
     // 列的信息
-    columns: ColumnProps<any>[]
+    columns: ColumnProps[]
     onPressEnter: (value: string) => void
     onChange: (value: string) => void
 }

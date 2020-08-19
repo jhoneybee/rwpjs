@@ -1,15 +1,16 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 
 import {
     RowRendererProps,
 } from 'react-data-grid-temp'
 import classnames from 'classnames'
 
-import { OverlayFunc, ColumnProps } from '../../interface'
+import { OverlayFunc, ColumnProps } from '../type'
 import { DefaultRow } from './DefaultRow'
 import { DropdownRow } from './DropdownRow'
+import { useStore } from '../store'
+
 import 'antd/es/table/style/index.less'
-import { TableContext } from '../index'
 
 
 export interface GroupRendererProps {
@@ -19,7 +20,7 @@ export interface GroupRendererProps {
 interface GroupRowProps {
     contextMenu?: React.ReactElement | OverlayFunc
     rowProps: RowRendererProps<any, unknown>
-    columns: ColumnProps<any>[]
+    columns: ColumnProps[]
     groupRenderer?: React.ComponentType<GroupRendererProps>
 }
 
@@ -30,8 +31,9 @@ export const GroupRow = ({
     groupRenderer: GroupRenderer,
 }: GroupRowProps) => {
     const { count, title } = rowProps.row
-    const { dispatch, state } = useContext(TableContext)
-    const [expand, setExpand] = useState<boolean>(state.groupExpanded.includes(title))
+    const store = useStore()
+    const [expand, setExpand] = useState<boolean>(store.groupExpanded.includes(title))
+
     if (rowProps.row.$type === 'group') {
         let groupTitle = <h4 >{title}({count})</h4>
 
@@ -54,10 +56,7 @@ export const GroupRow = ({
                     })}
                     onClick={() => {
                         setExpand(!expand)
-                        dispatch({
-                            type: 'SET_GROUP_EXPANDED',
-                            payload: title,
-                        })
+                        store.setGroupExpanded(title)
                     }}
                 />
                 { groupTitle }
