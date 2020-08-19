@@ -109,6 +109,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
             scrollToColumn: gridRef.current.scrollToColumn,
             scrollToRow: gridRef.current.scrollToRow,
             selectCell: gridRef.current.selectCell,
+            commitChanges: gridRef.current.commitChanges,
             rightContext: () => ({
                 row: store.contextMenu!.row as Row,
                 rowIdx: store.contextMenu!.rowIdx as number,
