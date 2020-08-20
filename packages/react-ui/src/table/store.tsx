@@ -111,7 +111,11 @@ export function createStore() {
         setGroupColumn(groupColumn: string[]) {
             this.groupColumn = groupColumn
             // 没有分组信息,则不执行分组逻辑
-            if (this.groupColumn.length === 0) return;
+            if (this.groupColumn.length === 0) {
+                // 退出分组的时候，清空缓存，重新计算
+                this.cacheGroupDatas = undefined
+                return;
+            }
             this.groupDatas = this.getGroupDatas()
         },
         // 设置总数

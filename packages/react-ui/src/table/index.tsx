@@ -84,6 +84,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
 
     useEffect(() => {
         store.setGroupColumn(props.groupColumn || [])
+        
     }, [props.groupColumn])
 
     // 是否启用分组
