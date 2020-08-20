@@ -1,7 +1,6 @@
 import React from 'react'
 import { Column, RowsUpdateEvent } from 'react-data-grid-temp'
-import { toJS } from 'mobx'
-import { groupBy } from 'lodash'
+import { groupBy, isEqual } from 'lodash'
 import { generate } from 'shortid'
 import { Row, GroupRowData } from './type'
 
@@ -77,14 +76,14 @@ export function createStore() {
                 })
                 return result
             }
-
-            let groupDatas = toJS(this.cacheGroupDatas);
+            let groupDatas = this.cacheGroupDatas;
             if (!groupDatas) {
-                groupDatas = loops(null, toJS(this.datas), 0)
+                groupDatas = loops(null, this.datas, 0)
                 this.cacheGroupDatas = groupDatas
             }
             const newData: Row[] = []
 
+            const historyExpandedKeys: string[] = []
             const loopsGroupData = (loppsData: GroupRowData[] | Row[]) => {
                 loppsData.forEach(ele => {
                     if (ele.$parent === null) {
@@ -92,7 +91,12 @@ export function createStore() {
                     }
                     
                     if (ele.$parent && expandedKeys.includes(ele.$parent.$id)) {
+                        historyExpandedKeys.push(ele.$parent.$id)
                         newData.push(ele)
+                    }
+
+                    if (isEqual(historyExpandedKeys, expandedKeys)){
+                        return;
                     }
 
                     if (ele.$children && ele.$children.length > 0) {

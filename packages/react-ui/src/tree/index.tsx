@@ -390,11 +390,13 @@ export const Tree = (props: Props) => {
                     return result
                 }
                 let preventDefault = false
+
                 if (props.onDrop) {
                     // eslint-disable-next-line no-param-reassign
                     info.event.preventDefault = () => {
                         preventDefault = true
                     }
+                    props.onDrop(info)
                 }
                 if (preventDefault) return
 

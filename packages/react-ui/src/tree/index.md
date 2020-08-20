@@ -138,6 +138,9 @@ export default () => {
                 onExpand={(keys) => {
                     setExpandedKeys(keys)
                 }}
+                onDrop={e => {
+                    console.log(e, '拖拽成功')
+                }}
                 expandedKeys={expandedKeys}
                 selectedKeys={selectKeys}
                 overlay={(treeNode) => {
