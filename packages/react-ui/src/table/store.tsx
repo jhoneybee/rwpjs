@@ -60,7 +60,6 @@ export function createStore() {
                 if (currentLevel >= this.groupColumn.length) {
                     return datas.map(ele => ({...ele, $parent: parent}));
                 }
-                    
                 const result: GroupRowData[] = []
                 const groupData = groupBy(datas, this.groupColumn[currentLevel])
                 Object.keys(groupData).forEach(key => {
