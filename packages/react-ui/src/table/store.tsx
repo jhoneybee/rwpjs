@@ -1,8 +1,9 @@
 import React from 'react'
 import { Column, RowsUpdateEvent } from 'react-data-grid-temp'
-import { orderBy } from 'lodash'
 import { toJS } from 'mobx'
-import { Row } from './type'
+import { groupBy } from 'lodash'
+import { generate } from 'shortid'
+import { Row, GroupRowData } from './type'
 
 export type ContextMenu = {
     row: Row,
@@ -10,9 +11,6 @@ export type ContextMenu = {
     column: Column<any, unknown>
 }
 
-type GroupCache = {
-    datas: Row[],
-}
 
 export function createStore() {
     const formatData = (datas: Row[]) => datas.map((ele, index) => ({
@@ -22,20 +20,21 @@ export function createStore() {
     return {
         // 当前显示的数据
         datas: [] as Row[],
-        // 缓存的分组数据
-        groupCache: undefined as GroupCache | undefined,
+        // 分组数据
+        groupDatas: [] as GroupRowData[] | Row[],
+        cacheGroupDatas: undefined as GroupRowData[] | Row[] | undefined,
         // 当前数据的总数
         total: 0,
         // 当前第几页
         pageNo: 1,
         // 选中的数据
         selectedRows: new Set<Row[keyof Row]>(),
-        // 展开的数据
-        groupExpanded: [] as string[],
         // loading的状态
         loading: false,
         // 分组列
         groupColumn: [] as string[],
+        // 展开的分组节点信息
+        expandedKeys: [] as string[],
         // 右键的上下文
         contextMenu: {} as ContextMenu,
         // 装载数据
@@ -46,27 +45,71 @@ export function createStore() {
         setSelectedRows(keys: Set<Row[keyof Row]>) {
             this.selectedRows = keys
         },
+        setExpandedKeys(keys: string[]) {
+            this.expandedKeys = keys
+            this.groupDatas = this.getGroupDatas()
+        },
         // 重新装载数据
         reloadRows(rows: any[]) {
             this.datas = formatData(rows)
             this.pageNo = 1
         },
+        getGroupDatas() {
+            const { expandedKeys } = this
+            const loops = (parent: any, datas: Row[], currentLevel: number) => {
+                if (currentLevel >= this.groupColumn.length) {
+                    return datas.map(ele => ({...ele, $parent: parent}));
+                }
+                    
+                const result: GroupRowData[] = []
+                const groupData = groupBy(datas, this.groupColumn[currentLevel])
+                Object.keys(groupData).forEach(key => {
+                    const dataNode: GroupRowData = {
+                        $id: generate(),
+                        $title: key,
+                        $type: 'GROUP',
+                        $parent: parent,
+                        $space: (currentLevel + 1) * 20,
+                    }
+                    result.push({
+                        ...dataNode,
+                        $children: loops(dataNode, groupData[key], currentLevel + 1)
+                    })
+                })
+                return result
+            }
+
+            let groupDatas = toJS(this.cacheGroupDatas);
+            if (!groupDatas) {
+                groupDatas = loops(null, toJS(this.datas), 0)
+                this.cacheGroupDatas = groupDatas
+            }
+            const newData: Row[] = []
+
+            const loopsGroupData = (loppsData: GroupRowData[] | Row[]) => {
+                loppsData.forEach(ele => {
+                    if (ele.$parent === null) {
+                        newData.push(ele)
+                    }
+                    
+                    if (ele.$parent && expandedKeys.includes(ele.$parent.$id)) {
+                        newData.push(ele)
+                    }
+
+                    if (ele.$children && ele.$children.length > 0) {
+                        loopsGroupData(ele.$children)
+                    }
+
+                })
+            }
+            loopsGroupData(groupDatas)
+            return newData
+        },
         setGroupColumn(groupColumn: string[]) {
             this.groupColumn = groupColumn
-        },
-        setGroupExpanded(expand: string) {
-            const index = this.groupExpanded.indexOf(expand)
-            if (index !== -1) {
-                this.groupExpanded.splice(index, 1)
-            } else {
-                this.groupExpanded.push(expand)
-            }
-            this.groupDataFun()
-        },
-        // 清除展开数据
-        cleanGroupExpanded() {
-            this.groupExpanded = []
-            this.groupCache = undefined
+            // 没有分组信息,则不执行分组逻辑
+            if (this.groupColumn.length === 0) return;
+            this.groupDatas = this.getGroupDatas()
         },
         // 设置总数
         setTotal(total: number) {
@@ -99,54 +142,6 @@ export function createStore() {
                 }))
                 resolve()
             })
-        },
-        /**
-        * 装载分组数据
-        */
-        groupDataFun() {
-            const self = this
-            let datas = toJS(this.datas)
-            if(!this.groupCache){
-                this.groupCache = {
-                    datas,
-                }
-            }else{
-                datas = this.groupCache.datas
-            }
-
-            const groupDataOld = orderBy(
-                datas,
-                this.groupColumn,
-                this.groupColumn.map(() => 'asc'),
-            )
-            const groupMap = new Map<string, Row[]>()
-            groupDataOld.forEach((ele: any) => {
-                let key = ''
-                this.groupColumn!.forEach(group => {
-                    key += `${ele[group]},`
-                })
-                key = key.substr(0, key.length - 1)
-
-                const value = groupMap.get(key)
-                if (value) {
-                    value.push(ele)
-                } else {
-                    groupMap.set(key, [ele])
-                }
-            })
-            let groupDatas: any[] = []
-            Array.from(groupMap.keys()).forEach(key => {
-                const data = groupMap.get(key)!
-                groupDatas.push({
-                    $type: 'group',
-                    title: key,
-                    count: data.length,
-                })
-                if ((self.groupExpanded as string[]).includes(key)) {
-                    groupDatas = groupDatas.concat(data)
-                }
-            })
-            this.reloadRows(groupDatas)
         },
         // 提交修改的信息
         commit(e: RowsUpdateEvent) {

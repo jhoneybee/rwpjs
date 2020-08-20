@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 import {
     DataGridHandle,
     Column,
@@ -7,12 +9,33 @@ import {
     CalculatedColumn,
     RowsUpdateEvent,
 } from 'react-data-grid-temp';
-import { GroupRendererProps } from './row/GroupRow';
+
 
 export interface Row {
-    $index: number
-    $state: 'UPDATE' | 'DELETE' | 'CREATE'
+    $index?: number
+    $state?: 'UPDATE' | 'DELETE' | 'CREATE'
     [propName: string]: any
+}
+
+
+export interface GroupRendererProps {
+    row: Row
+}
+
+// 定义分组结构
+export interface GroupRowData extends Row {
+    // 唯一ID
+    $id?: string,
+    // 数据类型, GROUP 表示分组类型, ROW 表示行数据
+    $type: 'GROUP' | 'ROW'
+    // 当前展开节点的标题
+    $title: ReactNode
+    // 父节点信息
+    $parent?: GroupRowData
+    // 当前节点的间隔
+    $space?: number
+    // 当前的子节点信息
+    $children?: GroupRowData[] | Row[]
 }
 
 export interface TableHandle extends DataGridHandle {

@@ -1,21 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import {
     RowRendererProps,
 } from 'react-data-grid-temp'
-import classnames from 'classnames'
-
-import { OverlayFunc, ColumnProps } from '../type'
+import { RightOutlined, DownOutlined } from '@ant-design/icons'
+import { OverlayFunc, ColumnProps, GroupRendererProps } from '../type'
 import { DefaultRow } from './DefaultRow'
 import { DropdownRow } from './DropdownRow'
-import { useStore } from '../store'
+
 
 import 'antd/es/table/style/index.less'
+import { useStore } from '../store'
 
 
-export interface GroupRendererProps {
-    row: any
-}
 
 interface GroupRowProps {
     contextMenu?: React.ReactElement | OverlayFunc
@@ -30,33 +27,31 @@ export const GroupRow = ({
     columns,
     groupRenderer: GroupRenderer,
 }: GroupRowProps) => {
-    const { count, title } = rowProps.row
+    const { $id, $type, $title, $space } = rowProps.row
     const store = useStore()
-    const [expand, setExpand] = useState<boolean>(store.groupExpanded.includes(title))
-
-    if (rowProps.row.$type === 'group') {
-        let groupTitle = <h4 >{title}({count})</h4>
-
+    if ($type === 'GROUP') {
+        let groupTitle = <h4 >{$title}</h4>
         if (GroupRenderer) {
             groupTitle = <GroupRenderer row={rowProps.row}/>
         }
-
+        const Icon = store.expandedKeys.includes($id) ?  DownOutlined : RightOutlined
         return (
             <div
                 className="rdg-row rdg-row-default-group"
-                style={{ top: rowProps.top }}
+                style={{ top: rowProps.top}}
             >
-                <button
-                    type="button"
-                    aria-label="expand"
-                    className={classnames({
-                        'ant-table-row-expand-icon': true,
-                        'ant-table-row-expand-icon-expanded': expand,
-                        'ant-table-row-expand-icon-collapsed': !expand,
-                    })}
+                <Icon
+                    style={{
+                        marginLeft: $space
+                    }}
                     onClick={() => {
-                        setExpand(!expand)
-                        store.setGroupExpanded(title)
+                        // 如果节点是展开的,则删除对应的数据
+                        if(store.expandedKeys.includes($id)){
+                            store.setExpandedKeys(store.expandedKeys.filter(ele => ele !== $id))
+                            return;
+                        }
+                        store.setExpandedKeys(store.expandedKeys.concat($id))
+                        
                     }}
                 />
                 { groupTitle }

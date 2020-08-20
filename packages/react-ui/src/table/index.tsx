@@ -84,14 +84,6 @@ export const Table = observer<TableProps>((props: TableProps) => {
 
     useEffect(() => {
         store.setGroupColumn(props.groupColumn || [])
-        if (props.groupColumn && props.groupColumn.length > 0) {
-            store.groupDataFun()
-        } else if (props.groupColumn && props.groupColumn.length === 0) {
-            if (store.groupCache) {
-                store.reloadRows(store.groupCache.datas)
-            }
-            store.cleanGroupExpanded()
-        }
     }, [props.groupColumn])
 
     // 是否启用分组
@@ -169,6 +161,11 @@ export const Table = observer<TableProps>((props: TableProps) => {
         }
     }, [])
 
+
+    let rows: Row[] = store.datas
+    if (props.groupColumn && props.groupColumn.length > 0){
+        rows = store.groupDatas
+    }
     const rdg = (
         <>
             <ReactDataGrid
@@ -176,7 +173,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 width={width}
                 height={props.height}
                 columns={columns}
-                rows={store.datas as Row[]}
+                rows={rows}
                 onScroll={onScroll}
                 rowKey={props.rowKey}
                 enableCellCopyPaste={props.enableCellCopyPaste}

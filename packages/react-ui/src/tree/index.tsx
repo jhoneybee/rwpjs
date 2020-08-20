@@ -337,9 +337,9 @@ export const Tree = (props: Props) => {
             // 将元素拖到放置目标上时执行
             onDragOver={props.onDragOver}
             // 元素放入目标位置
-            onDragEnter={props.onDragEnd}
+            onDragEnter={props.onDragEnter}
             // 元素离开目标位置
-            onDragLeave={props.onDragEnd}
+            onDragLeave={props.onDragLeave}
             // 用户完成拖动元素时发生
             onDragEnd={props.onDragEnd}
             // 在将拖动的元素放到放置目标上时发生
