@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Input as AntInput } from 'antd'
 import { PasswordProps, SearchProps, GroupProps, TextAreaProps as AntTextAreaProps } from 'antd/lib/input'
 import { InputProps as AntInputProps } from '../interface'
@@ -32,8 +32,12 @@ Input.Password = AntInput.Password
 
 const textAreaClassPrefix = `${classPrefix}-text-area-footer`
 const TextArea = (props: TextAreaProps) => {
-    const { onChange, ...restProps } = props
-    const [value, setValue] = useState<string>(props.value as string || '')
+    const { onChange, value: propsValue = '', ...restProps } = props
+    const [value, setValue] = useState<string>(propsValue as string)
+
+    useEffect(() => {
+        setValue(propsValue as string)
+    }, [props.value])
 
     let footer = (
         <div className={textAreaClassPrefix} >

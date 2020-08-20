@@ -240,62 +240,11 @@ export const Table = observer<TableProps>((props: TableProps) => {
         <div
             className={`${tableClassPrefix}-footer`}
         >
-            {/* <Search
-                columns={props.columns}
-                onChange={async value => {
-                    if (beforeDatas.current.length === 0) {
-                        beforeDatas.current = cloneDeep(state.datas) as Row[]
-                    }
-                    if (value === '' && beforeDatas.current.length !== 0) {
-                        await dispatch({
-                            type: 'SET_RELOAD_ROWS',
-                            payload: {
-                                total: state.total,
-                                datas: beforeDatas.current,
-                            },
-                        })
-                        beforeDatas.current = []
-                    }
-                }}
-                onPressEnter={async value => {
-                    if (value === '' && beforeDatas.current.length !== 0) {
-                        await dispatch({
-                            type: 'SET_RELOAD_ROWS',
-                            payload: {
-                                total: state.total,
-                                datas: beforeDatas.current,
-                            },
-                        })
-                        beforeDatas.current = []
-                    } else {
-                        try {
-                            let realValue = value
-                            props.columns.forEach(col => {
-                                realValue = realValue.replace(new RegExp(col.title, 'g'), col.name)
-                            })
-                            const filter = compileExpression(realValue)
-                            if (filter) {
-                                let filterData = state.datas
-                                if (beforeDatas.current.length > 0) {
-                                    filterData = beforeDatas.current
-                                }
-                                await dispatch({
-                                    type: 'SET_RELOAD_ROWS',
-                                    payload: {
-                                        total: state.total,
-                                        datas: filterData.filter(ele => (
-                                            filter(ele) === 1
-                                        )),
-                                    },
-                                })
-                            }
-                            // eslint-disable-next-line no-empty
-                        } catch (error) {
-                        }
-                    }
-                }}
-            /> */}
-            <span>总数 {store.total} 条 / 已加载 </span>
+            <span
+                className={`${tableClassPrefix}-footer-total`}
+            >
+                {store.total}
+            </span>
             <Progress
                 style={{
                     width: 100,
