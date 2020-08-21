@@ -29,11 +29,12 @@
     },
     "dependencies": {
         "@ant-design/icons": "~4.2.1",
-        "@ant-design/pro-layout": "^6.2.5",
+        "@ant-design/pro-layout": "~6.2.5",
         "antd": "~4.5.4",
         "classnames": "~2.2.6",
         "codemirror": "~5.56.0",
         "filtrex-x": "~2.0.0",
+        "immer": "~7.0.7",
         "lodash": "~4.17.15",
         "mobx": "^5.15.6",
         "mobx-react-lite": "^2.0.7",
@@ -70,6 +71,7 @@
         "jest": "~26.4.0",
         "lint-staged": "~10.2.11",
         "prettier": "~2.0.5",
+        "rc-tree": "^3.9.2",
         "react-test-renderer": "~16.13.1",
         "typescript": "~3.9.7"
     },

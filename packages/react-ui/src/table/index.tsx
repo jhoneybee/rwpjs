@@ -2,6 +2,7 @@ import React, {
     useEffect,
     useRef,
     useState,
+    ReactNode,
 } from 'react'
 import ReactDataGrid, {
     RowRendererProps,
@@ -20,6 +21,8 @@ import { useRowRenderer } from './row'
 import { usePreFormatColumn } from './column'
 import { classPrefix } from '../utils'
 import { StoreContext, createStore } from './store'
+import { Tools } from './plugin/Tools'
+
 import {
     TableProps,
     Row,
@@ -84,7 +87,6 @@ export const Table = observer<TableProps>((props: TableProps) => {
 
     useEffect(() => {
         store.setGroupColumn(props.groupColumn || [])
-        
     }, [props.groupColumn])
 
     // 是否启用分组
@@ -95,7 +97,12 @@ export const Table = observer<TableProps>((props: TableProps) => {
         return false
     }
 
-    const columns = usePreFormatColumn(props, store)
+    const columns = usePreFormatColumn(store, props.selectBox!, props.rowKey!)
+
+    useEffect(() => {
+        store.columns = props.columns
+        store.visibleColumns = props.columns.map(ele => ele.name)
+    }, [props.columns])
 
     if (table && gridRef.current) {
         const tempTable: TableHandle = {
@@ -171,7 +178,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
         <>
             <ReactDataGrid
                 ref={gridRef}
-                width={width}
+                width={width - 20}
                 height={props.height}
                 columns={columns}
                 rows={rows}
@@ -234,7 +241,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
         (ceil(store.datas.length / store.total, 2) * 100).toFixed(),
         10)
 
-    const search = (
+    const footer = (
         <div
             className={`${tableClassPrefix}-footer`}
         >
@@ -262,6 +269,10 @@ export const Table = observer<TableProps>((props: TableProps) => {
             />
         </div>
     )
+
+  
+
+    const getReactNode = (node: ReactNode) => width > 0 ? node : undefined
     return (
         <StoreContext.Provider value={store}>
             <Spin
@@ -269,15 +280,19 @@ export const Table = observer<TableProps>((props: TableProps) => {
             >
                 <div
                     ref={divRef}
+                    className={`${tableClassPrefix}-content`}
                     style={{
-                        width: '100%',
                         height: props.height,
                     }}
                 >
-                    {width > 0 ? rdg : undefined}
+                    {getReactNode(rdg)}
+                    {getReactNode(
+                        <Tools height={props.height!} />
+                    )}
                 </div>
+
             </Spin>
-            {width > 0 ? search : undefined}
+            {getReactNode(footer)}
         </StoreContext.Provider>
     )
 })

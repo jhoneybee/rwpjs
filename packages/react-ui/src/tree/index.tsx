@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef, ReactNode } from 'react';
 import { Tree as AntTree, Dropdown, Menu } from 'antd'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import RcTree from 'rc-tree';
+import { NodeDragEventParams, Key } from 'rc-tree/lib/interface'
 import { EventDataNode, TreeProps, DataNode } from 'antd/lib/tree';
 import { MenuItemProps } from 'antd/lib/menu/MenuItem';
 
 
-interface TreeHandle {
+export interface TreeHandle {
 
     // 重新加载表格信息
     reload: (treeNode: EventDataNode) => Promise<void>,
@@ -35,7 +35,6 @@ interface OverlayMenu extends Omit<MenuItemProps, 'children'> {
 interface Props extends Omit<TreeProps,
     'loadData' |
     'treeData' |
-    'checkedKeys' |
     'checkStrictly' |
     'loadedKeys' |
     'onRightClick' |
@@ -44,14 +43,21 @@ interface Props extends Omit<TreeProps,
     'defaultExpandedKeys' |
     'defaultExpandParent' |
     'defaultSelectedKeys' |
-    'filterAntTreeNode'
+    'filterAntTreeNode'|
+    'onDrop'
     > {
     // 装载数据的信息
-    loadData: (treeNode: EventDataNode | null) => Promise<EventDataNode[]>;
+    loadData: (treeNode: EventDataNode | null) => Promise<DataNode[]>;
     overlay?: (treeNode: DataNode) => OverlayMenu[]
     tree?: React.MutableRefObject<TreeHandle | null>
     // 全部展开节点
     expandAll?: boolean
+    onDrop?: (info: NodeDragEventParams & {
+        dragNode: EventDataNode;
+        dragNodesKeys: Key[];
+        dropPosition: number;
+        dropToGap: boolean;
+    }, dragState: 'INSERT'| 'BEFORE' | 'AFTER' | 'NORMAL') => void
 }
 
 // 筛选树节点信息
@@ -76,6 +82,12 @@ export const Tree = (props: Props) => {
     const [expandedKeys, setExpandedKeys] = useState<(string | number)[]>(props.expandedKeys || [])
     // 设置选中的节点
     const [selectedKeys, setSelectedKeys] = useState<(string | number)[]>(props.selectedKeys || [])
+    // 设置选中的tree
+    const [checkedKeys, setCheckedKeys] = useState<Key[] | {
+        checked: Key[];
+        halfChecked: Key[];
+    }>(props.checkedKeys || [])
+
     const treeRef = useRef<RcTree>(null)
 
     const reload = async () => {
@@ -83,7 +95,8 @@ export const Tree = (props: Props) => {
         if (props.expandAll) {
             setExpandedKeys(expandedKeys.concat(tempTreeNode.map(ele => ele.key)))
         }
-        setTreeNodes(tempTreeNode.map(chil => {
+        setTreeNodes(tempTreeNode.map(ele => {
+            const chil = ele as EventDataNode
             let menuItem: ReactNode[] = []
             if (props.overlay) {
                 menuItem = props.overlay(chil).map(menu => {
@@ -295,6 +308,7 @@ export const Tree = (props: Props) => {
                 })
                 setTreeNodes([...treeNodes])
             }}
+            checkedKeys={checkedKeys}
             expandedKeys={expandedKeys}
             selectedKeys={selectedKeys}
             loadedKeys={loadedKeys}
@@ -316,7 +330,10 @@ export const Tree = (props: Props) => {
                     props.onSelect(keys, info)
                 }
             }}
-            onCheck={props.onCheck}
+            onCheck={(checked, info)=> {
+                setCheckedKeys(checked)
+                props.onCheck?.(checked,info)
+            }}
             onExpand={(keys, info) => {
                 setExpandedKeys(keys)
                 if (props.onExpand) {
@@ -354,6 +371,7 @@ export const Tree = (props: Props) => {
                 } = info
 
                 const filterTreeNodes = filter(ele => ele.key === dragNode.key)
+                let dragState: 'INSERT'| 'BEFORE' | 'AFTER' | 'NORMAL' = 'NORMAL'
                 const loops = (loopsTreeNodes: DataNode[]): DataNode[] => {
                     const result: DataNode[] = []
                     loopsTreeNodes.forEach(ele => {
@@ -370,18 +388,22 @@ export const Tree = (props: Props) => {
                                 if (dropPosition < index) {
                                     result.push(dragNode)
                                     result.push(treeNode)
+                                    dragState = 'BEFORE'
                                 }
                                 if (dropPosition > index) {
                                     result.push(treeNode)
                                     result.push(dragNode)
+                                    dragState = 'AFTER'
                                 }
                             } else if (treeNode.children) {
                                 treeNode.children.push(dragNode)
                                 result.push(treeNode)
+                                dragState = 'INSERT'
                             } else {
                                 // eslint-disable-next-line no-param-reassign
                                 treeNode.children = [dragNode]
                                 result.push(treeNode)
+                                dragState = 'INSERT'
                             }
                         } else {
                             result.push(treeNode)
@@ -396,7 +418,7 @@ export const Tree = (props: Props) => {
                     info.event.preventDefault = () => {
                         preventDefault = true
                     }
-                    props.onDrop(info)
+                    props.onDrop(info, dragState)
                 }
                 if (preventDefault) return
 
