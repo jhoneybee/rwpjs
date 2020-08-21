@@ -32,7 +32,7 @@
         "@ant-design/pro-layout": "~6.2.5",
         "antd": "~4.5.4",
         "classnames": "~2.2.6",
-        "codemirror": "~5.56.0",
+        "codemirror": "~5.57.0",
         "filtrex-x": "~2.0.0",
         "immer": "~7.0.7",
         "lodash": "~4.17.15",
@@ -73,7 +73,7 @@
         "prettier": "~2.0.5",
         "rc-tree": "^3.9.2",
         "react-test-renderer": "~16.13.1",
-        "typescript": "~3.9.7"
+        "typescript": "~4.0.2"
     },
     "resolutions": {
         "@typescript-eslint/eslint-plugin": "^3.7.1"
