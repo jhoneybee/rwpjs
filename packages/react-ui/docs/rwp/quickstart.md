@@ -10,6 +10,10 @@ order: 0
 
 # 快速开始
 
+## 版本
+
+- 最新版本: [![react-ui](https://img.shields.io/npm/v/@rwp/react-ui.svg?style=flat-square)](https://www.npmjs.com/package/@rwp/react-ui)
+
 ## 在浏览器中使用
 
 在浏览器中使用 script 和 link 标签直接引入文件，并使用全局变量 `RWP`
