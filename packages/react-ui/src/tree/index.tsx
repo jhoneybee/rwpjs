@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, ReactNode } from 'react';
 import { Tree as AntTree, Dropdown, Menu } from 'antd'
 import RcTree from 'rc-tree';
-import { NodeDragEventParams, Key } from 'rc-tree/lib/interface'
+import { Key } from 'rc-tree/lib/interface'
+import { NodeDragEventParams } from 'rc-tree/lib/contextTypes'
 import { EventDataNode, TreeProps, DataNode } from 'antd/lib/tree';
 import { MenuItemProps } from 'antd/lib/menu/MenuItem';
 

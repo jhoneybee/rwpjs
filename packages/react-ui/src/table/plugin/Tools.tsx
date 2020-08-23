@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { MenuOutlined } from '@ant-design/icons'
 import { useLocalStore, useObserver } from 'mobx-react-lite'
 import { EventDataNode } from 'antd/lib/tree'
-import { Tree, Select, Button, Input, Space } from '../../index'
+import { Tree } from '../../index'
 import { classPrefix } from '../../utils'
 import { useStore } from '../store'
 import { TreeHandle } from '../../tree'
@@ -44,9 +44,9 @@ export const Tools = ({
                             className={`${tableClassPrefix}-right-column`}
                         >
                             <h4>
-                                列配置
+                                列信息
                             </h4>
-                            <Input.Group>
+                            {/* <Input.Group>
                                 <Select
                                     size="small"
                                     style={{
@@ -62,18 +62,18 @@ export const Tools = ({
                                 >
                                     保存
                                 </Button>
-                            </Input.Group>
+                            </Input.Group> */}
                             <Tree
                                 tree={tree}
                                 checkedKeys={globalStore.visibleColumns || []}
-                                height={height - 75}
+                                height={height - 30}
                                 loadData={loadData}
                                 onCheck={checked => {
                                     globalStore.visibleColumns = checked as string[]
                                 }}
                                 checkable
                             />
-                            <Space>
+                            {/* <Space>
                                 
                                 <Button
                                     type="text"
@@ -88,7 +88,7 @@ export const Tools = ({
                                 >
                                     删除方案
                                 </Button>
-                            </Space>
+                            </Space> */}
                         </div>
                         {/* <div
                             className={`${tableClassPrefix}-right-group`}
