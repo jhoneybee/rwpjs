@@ -20,7 +20,7 @@ export const Tools = ({
 }: ToolsProps) => {
     const store = useLocalStore(() => ({
         visible: false,
-        activeKey: '',
+        activeKey: ''
     }))
     const tree = useRef<TreeHandle | null>(null)
     const globalStore = useStore()
@@ -70,6 +70,17 @@ export const Tools = ({
                                 loadData={loadData}
                                 onCheck={checked => {
                                     globalStore.visibleColumns = checked as string[]
+                                }}
+                                onLoad={() => {
+                                }}
+                                draggable
+                                onDrop={info => {
+                                    // 如果是插入节点，则取消不进行任何操作
+                                    if (!info.dropToGap) {
+                                        info.event.preventDefault()
+                                        return;
+                                    }
+                                    globalStore.switchColumns(info.node.key, info.dragNode.key)
                                 }}
                                 checkable
                             />

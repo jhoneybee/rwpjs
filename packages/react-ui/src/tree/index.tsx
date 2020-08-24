@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, ReactNode } from 'react';
 import { Tree as AntTree, Dropdown, Menu } from 'antd'
 import RcTree from 'rc-tree';
+import { isArray, isObject } from 'lodash'
 import { Key } from 'rc-tree/lib/interface'
 import { NodeDragEventParams } from 'rc-tree/lib/contextTypes'
 import { EventDataNode, TreeProps, DataNode } from 'antd/lib/tree';
@@ -51,6 +52,8 @@ interface Props extends Omit<TreeProps,
     loadData: (treeNode: EventDataNode | null) => Promise<DataNode[]>;
     overlay?: (treeNode: DataNode) => OverlayMenu[]
     tree?: React.MutableRefObject<TreeHandle | null>
+    // 采用文件目录的结构
+    enableDirectoryTree?: boolean,
     // 全部展开节点
     expandAll?: boolean
     onDrop?: (info: NodeDragEventParams & {
@@ -58,7 +61,7 @@ interface Props extends Omit<TreeProps,
         dragNodesKeys: Key[];
         dropPosition: number;
         dropToGap: boolean;
-    }, dragState: 'INSERT'| 'BEFORE' | 'AFTER' | 'NORMAL') => void
+    }) => void
 }
 
 // 筛选树节点信息
@@ -87,7 +90,7 @@ export const Tree = (props: Props) => {
     const [checkedKeys, setCheckedKeys] = useState<Key[] | {
         checked: Key[];
         halfChecked: Key[];
-    }>(props.checkedKeys || [])
+    }>([])
 
     const treeRef = useRef<RcTree>(null)
 
@@ -96,15 +99,53 @@ export const Tree = (props: Props) => {
         if (props.expandAll) {
             setExpandedKeys(expandedKeys.concat(tempTreeNode.map(ele => ele.key)))
         }
+        const { checkedKeys: propsCheckedKeys } = props
+        const realCheckedKeys: Key[] | {
+            checked: Key[];
+            halfChecked: Key[];
+        } = isArray(propsCheckedKeys) ? [] : {
+            checked: [],
+            halfChecked: []
+        }
         setTreeNodes(tempTreeNode.map(ele => {
             const chil = ele as EventDataNode
             let menuItem: ReactNode[] = []
+            if (
+                propsCheckedKeys
+                &&
+                isArray(propsCheckedKeys)
+                &&
+                isArray(realCheckedKeys)
+                &&
+                propsCheckedKeys.includes(ele.key)
+            ) {
+                realCheckedKeys.push(ele.key as Key)
+            }else if (
+                propsCheckedKeys
+                &&
+                isObject(propsCheckedKeys)
+                &&
+                isObject(realCheckedKeys)
+            ){
+                const tempCheckedKeys = realCheckedKeys as {
+                    checked: Key[];
+                    halfChecked: Key[];
+                }
+                if (tempCheckedKeys.checked && tempCheckedKeys.checked.includes(ele.key)) {
+                    tempCheckedKeys.checked.push(ele.key)
+                }
+                if (tempCheckedKeys.halfChecked && tempCheckedKeys.halfChecked.includes(ele.key)) {
+                    tempCheckedKeys.halfChecked.push(ele.key)
+                }
+            }
+
             if (props.overlay) {
                 menuItem = props.overlay(chil).map(menu => {
                     const { title, ...restProps } = menu
                     return <Menu.Item {...restProps} >{title}</Menu.Item>
                 })
             }
+
             return {
                 ...chil,
                 title: (
@@ -117,6 +158,8 @@ export const Tree = (props: Props) => {
                 ),
             }
         }))
+        
+        setCheckedKeys(realCheckedKeys)
     }
 
     const filter = (callback: (dataNode: EventDataNode) => boolean) => {
@@ -269,8 +312,10 @@ export const Tree = (props: Props) => {
     useEffect(() => {
         setSelectedKeys(props.selectedKeys as (string | number)[])
     }, [props.selectedKeys])
+
+    const TreeNode = props.enableDirectoryTree ? AntTree.DirectoryTree : AntTree
     return (
-        <AntTree
+        <TreeNode
             ref={treeRef}
             loadData={async treeNode => {
                 loadedKeys.push(treeNode.key)
@@ -278,6 +323,15 @@ export const Tree = (props: Props) => {
                 if (props.expandAll) {
                     setExpandedKeys(expandedKeys.concat(children.map(ele => ele.key)))
                 }
+                const { checkedKeys: propsCheckedKeys } = props
+                const realCheckedKeys: Key[] | {
+                    checked: Key[];
+                    halfChecked: Key[];
+                } = isArray(propsCheckedKeys) ? [] : {
+                    checked: [],
+                    halfChecked: []
+                }
+                
                 findTreeNode(treeNodes, ele => {
                     if (ele.key === treeNode.key) {
                         // eslint-disable-next-line no-param-reassign
@@ -303,11 +357,41 @@ export const Tree = (props: Props) => {
 
                             }
                         })
-                        return true
+                        if(!propsCheckedKeys) return true
                     }
+                    if (
+                        propsCheckedKeys
+                        &&
+                        isArray(propsCheckedKeys)
+                        &&
+                        isArray(realCheckedKeys)
+                        &&
+                        propsCheckedKeys.includes(ele.key)
+                    ) {
+                        realCheckedKeys.push(ele.key as Key)
+                    }else if (
+                        propsCheckedKeys
+                        &&
+                        isObject(propsCheckedKeys)
+                        &&
+                        isObject(realCheckedKeys)
+                    ){
+                        const tempCheckedKeys = realCheckedKeys as {
+                            checked: Key[];
+                            halfChecked: Key[];
+                        }
+                        if (tempCheckedKeys.checked && tempCheckedKeys.checked.includes(ele.key)) {
+                            tempCheckedKeys.checked.push(ele.key)
+                        }
+                        if (tempCheckedKeys.halfChecked && tempCheckedKeys.halfChecked.includes(ele.key)) {
+                            tempCheckedKeys.halfChecked.push(ele.key)
+                        }
+                    }
+
                     return false
                 })
                 setTreeNodes([...treeNodes])
+                setCheckedKeys(realCheckedKeys)
             }}
             checkedKeys={checkedKeys}
             expandedKeys={expandedKeys}
@@ -372,7 +456,6 @@ export const Tree = (props: Props) => {
                 } = info
 
                 const filterTreeNodes = filter(ele => ele.key === dragNode.key)
-                let dragState: 'INSERT'| 'BEFORE' | 'AFTER' | 'NORMAL' = 'NORMAL'
                 const loops = (loopsTreeNodes: DataNode[]): DataNode[] => {
                     const result: DataNode[] = []
                     loopsTreeNodes.forEach(ele => {
@@ -389,22 +472,18 @@ export const Tree = (props: Props) => {
                                 if (dropPosition < index) {
                                     result.push(dragNode)
                                     result.push(treeNode)
-                                    dragState = 'BEFORE'
                                 }
                                 if (dropPosition > index) {
                                     result.push(treeNode)
                                     result.push(dragNode)
-                                    dragState = 'AFTER'
                                 }
                             } else if (treeNode.children) {
                                 treeNode.children.push(dragNode)
                                 result.push(treeNode)
-                                dragState = 'INSERT'
                             } else {
                                 // eslint-disable-next-line no-param-reassign
                                 treeNode.children = [dragNode]
                                 result.push(treeNode)
-                                dragState = 'INSERT'
                             }
                         } else {
                             result.push(treeNode)
@@ -419,7 +498,7 @@ export const Tree = (props: Props) => {
                     info.event.preventDefault = () => {
                         preventDefault = true
                     }
-                    props.onDrop(info, dragState)
+                    props.onDrop(info)
                 }
                 if (preventDefault) return
 

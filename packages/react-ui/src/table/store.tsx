@@ -3,6 +3,7 @@ import { Column, RowsUpdateEvent } from 'react-data-grid-temp'
 import { groupBy, isEqual } from 'lodash'
 import { generate } from 'shortid'
 import { Row, GroupRowData, ColumnProps } from './type'
+import { Key } from 'rc-tree/lib/interface'
 
 export type ContextMenu = {
     row: Row,
@@ -43,6 +44,32 @@ export function createStore() {
         loadRows(rows: any[]) {
             this.datas = formatData(rows.concat(this.datas))
             this.pageNo += 1
+        },
+        /**
+         * 将两个节点进行交换
+         * @param node 当前node节点
+         * @param targeNode 交换的目标节点
+         */
+        switchColumns(node: Key, targeNode: Key){
+            // const column = this.columns.find(ele => ele.name === node)
+            // const targeColumn = this.columns.find(ele => ele.name === targeNode)
+            let column: ColumnProps
+            let columnIndex: number
+            let targeColumn: ColumnProps
+            let targeColumnIndex: number
+            this.columns.forEach((value, index) => {
+                if (value.name === node){
+                    column = value 
+                    columnIndex = index
+                }
+                if (value.name === targeNode){
+                    targeColumn = value
+                    targeColumnIndex = index
+                }
+            })
+            this.columns.splice(columnIndex!, 1, targeColumn!)
+            this.columns.splice(targeColumnIndex!, 1, column!)
+
         },
         setSelectedRows(keys: Set<Row[keyof Row]>) {
             this.selectedRows = keys
@@ -144,6 +171,11 @@ export function createStore() {
                 this.setDataSource(datas)
                 resolve()
             })
+        },
+        // 新增数据
+        add(rows: Row[]){
+            const addRows: Row[] = rows.map(ele => ({ ...ele, $state: 'CREATE'}))
+            this.dataSource.splice(0, 0, ...addRows)
         },
         // 更新数据
         update(change: (data: Row) => Row) {

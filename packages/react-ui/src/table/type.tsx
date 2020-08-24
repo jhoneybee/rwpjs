@@ -75,6 +75,11 @@ export interface TableHandle extends DataGridHandle {
      */
     del: (filter: (ele: Row) => boolean) => Promise<void>
 
+    /**
+     * 新增数据
+     */
+    add: (rows: Row[]) => void
+
 }
 
 export interface ColumnProps {

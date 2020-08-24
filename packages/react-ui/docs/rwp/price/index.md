@@ -34,4 +34,4 @@ title: 授权说明
 |提供nodejs后端程序| ✔️     | ✔️ 需要遵循[AGPL](https://www.gnu.org/licenses/agpl-3.0.en.html)的协议
 |提供权限表结构设计 | ✔️    | ✔️ 需要遵循[AGPL](https://www.gnu.org/licenses/agpl-3.0.en.html)的协议
 |不限项目以及站点使用数量| ✔️ | ✔️
-
+|支持传统方式接入组件 | ✔️    | ✔️

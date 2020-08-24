@@ -39,10 +39,19 @@
             display: flex;
             align-items: center; 
         }
-        >.ant-tree{
+        >.@{ant-prefix}-tree{
             border-bottom: 1px solid #ddd;
             border-top: 1px solid #ddd;
+            .drag-over{
+                color: white;
+                background-color: #FFF;
+                .draggable{
+                    color: black;
+                    background-color: #FFF;
+                }
+            }
         }
+        
     }
     .@{table-prefix-cls}-right-group {
         height: 100px;
