@@ -31,7 +31,7 @@
     "dependencies": {
         "@ant-design/icons": "~4.2.1",
         "@ant-design/pro-layout": "~6.2.5",
-        "antd": "~4.6.0",
+        "antd": "~4.6.1",
         "classnames": "~2.2.6",
         "codemirror": "~5.57.0",
         "filtrex-x": "~2.0.0",
