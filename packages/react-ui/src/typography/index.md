@@ -68,8 +68,6 @@ export default () => {
 
 ## API
 
-时间轴。
-
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 |code     |添加代码样式  |`boolean` | `false`
