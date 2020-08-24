@@ -35,3 +35,6 @@ title: 授权说明
 |提供权限表结构设计 | ✔️    | ✔️ 需要遵循[AGPL](https://www.gnu.org/licenses/agpl-3.0.en.html)的协议
 |不限项目以及站点使用数量| ✔️ | ✔️
 |支持传统方式接入组件 | ✔️    | ✔️
+
+
+如需购买授权,请联系 微信/手机: MTg4MjcwMDU2OTQ=
