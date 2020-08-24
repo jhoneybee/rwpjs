@@ -103,7 +103,7 @@ export default () => {
               onClick={async () => {
                 table.current.add([{
                   field0: '1231'
-                }])
+                }], 1)
               }}
             >
               新增数据

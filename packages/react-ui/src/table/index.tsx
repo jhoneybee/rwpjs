@@ -128,7 +128,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 
             },
             del: filter => store.del(filter),
-            add: rows => store.add(rows)
+            add: (rows, start) => store.add(rows, start)
         }
         table.current = tempTable
     }

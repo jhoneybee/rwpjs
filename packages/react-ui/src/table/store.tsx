@@ -173,9 +173,9 @@ export function createStore() {
             })
         },
         // 新增数据
-        add(rows: Row[]){
+        add(rows: Row[], start?: number ){
             const addRows: Row[] = rows.map(ele => ({ ...ele, $state: 'CREATE'}))
-            this.dataSource.splice(0, 0, ...addRows)
+            this.dataSource.splice(start || 0, 0, ...addRows)
         },
         // 更新数据
         update(change: (data: Row) => Row) {

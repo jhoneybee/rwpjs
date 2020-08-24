@@ -78,7 +78,7 @@ export interface TableHandle extends DataGridHandle {
     /**
      * 新增数据
      */
-    add: (rows: Row[]) => void
+    add: (rows: Row[], start?: number) => void
 
 }
 
