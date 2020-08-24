@@ -19,7 +19,7 @@ export interface Row {
 
 
 export interface GroupRendererProps {
-    row: Row
+    row: GroupRowData | Row 
 }
 
 // 定义分组结构
