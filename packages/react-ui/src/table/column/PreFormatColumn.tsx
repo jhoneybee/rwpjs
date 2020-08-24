@@ -7,15 +7,17 @@ import {
 } from 'react-data-grid-temp'
 import { classPrefix } from '../../utils'
 import { Input, Checkbox } from '../../index'
-import { TableProps, Row } from '../type'
+import { Row } from '../type'
 import { DefaultEditor } from '../editor/DefaultEditor'
 import { MultipleSelectColumn } from './MultipleSelectColumn'
 import { TableStore } from '../store'
 
 const tableClassPrefix = `${classPrefix}-table`
 
-export const usePreFormatColumn = (props: TableProps, store: TableStore) => {
-    const columns: Column<Row, unknown>[] = props.columns.map((element => {
+export const usePreFormatColumn = (store: TableStore,selectBox: string, rowKey: string) => {
+    const columns: Column<Row, unknown>[] = store.columns
+    .filter(column => store.visibleColumns?.includes(column.name))
+    .map((element => {
         const { name, title, editor, editable, formatter, align = 'left', ...restProps } = element
         const TempEditor = editable ? editor || Input : undefined
 
@@ -89,7 +91,7 @@ export const usePreFormatColumn = (props: TableProps, store: TableStore) => {
             ...restProps,
         }
     }))
-    if (props.selectBox === 'multiple') {
+    if (selectBox === 'multiple') {
         const select: Column<Row, unknown> = {
             key: '$select',
             name: '',
@@ -107,7 +109,7 @@ export const usePreFormatColumn = (props: TableProps, store: TableStore) => {
                         const selectKeys = new Set<Row[keyof Row]>()
                         if (e.target.checked) {
                             store.datas.forEach((ele: any) => {
-                                const value = ele[props.rowKey!] as Row[keyof Row]
+                                const value = ele[rowKey!] as Row[keyof Row]
                                 selectKeys.add(value)
                             })
                         }

@@ -22,7 +22,7 @@ title: Table 表格
 
 import React, { useState, useRef } from 'react'
 import { Table, Input, toDoubleClick } from '@rwp/react-ui'
-import { Menu, Button, Space } from 'antd'
+import { Menu, Button, Space, message } from 'antd'
 
 
 const getColumns = () => {
@@ -85,7 +85,7 @@ export default () => {
             > 重新装载数据 </Button>
             <Button
               onClick={() => {
-                console.log(table.current.getSelect().has('123'))
+                console.log(table.current.getSelect())
               }}
             > 获取表格选中的数据 </Button>
               <Button
@@ -99,6 +99,15 @@ export default () => {
                 }
               }}
             > {disable ? '取消字段分组': '字段一分组'} </Button>
+            <Button
+              onClick={async () => {
+                table.current.add([{
+                  field0: '1231'
+                }])
+              }}
+            >
+              新增数据
+            </Button>
           </Space>
         </div>
           <Table
@@ -291,6 +300,7 @@ export default () => {
 
 | 参数      | 说明       | 类型     | 
 | ---      | ---        | ---     | --- |
+|columns   | 列的信息    | `ColumnProps[]`| -
 |loadData  | 装载数据   |`(pageNo: number, pageSize: number, params: Object) => PromiseLike<{total: number, datas: T[]}>`
 |pageSize  | 初始化页面的分页大小| `number` 
 |params    | 装载数据的参数      | `Object` 
@@ -324,7 +334,7 @@ export default () => {
 | setSelect        | 设置选中的数据        | `(selects: Set<T[keyof T]>) => void`
 | reload           | 重新装载表格         | `(param: Object) => void`
 | del              | 删除返回为true的数据 | `(filter: (ele: T) => boolean) => void`
-
+| add              | 新增表格一行数据     | `(rows: Row[]) => void`
 
 ```ts
 const Demo = () => {

@@ -1,0 +1,61 @@
+@import '../../../style/core/global.less';
+
+@table-prefix-cls: ~'@{rwp-prefix}-table';
+
+.@{table-prefix-cls}-right{
+    display: flex;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    width: 20px;
+    .@{table-prefix-cls}-right-button {
+        height: fit-content;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        width: inherit;
+       >span{
+            display: flex;
+            cursor: pointer;
+            width: inherit;
+            margin: 8px 0px;
+            padding-right: 1px;
+            user-select: none;
+            writing-mode: vertical-rl;
+       }
+    }
+    .@{table-prefix-cls}-right-content {
+        position: absolute;
+        border-right: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        width: 250px;
+        margin-left: -250px;
+        background: #f9f9f9;
+    }
+    .@{table-prefix-cls}-right-column {
+        >h4{
+            height: 28px;
+            margin-bottom: 0px;
+            margin-left: 1rem;
+            display: flex;
+            align-items: center; 
+        }
+        >.@{ant-prefix}-tree{
+            border-bottom: 1px solid #ddd;
+            border-top: 1px solid #ddd;
+            .drag-over{
+                color: white;
+                background-color: #FFF;
+                .draggable{
+                    color: black;
+                    background-color: #FFF;
+                }
+            }
+        }
+        
+    }
+    .@{table-prefix-cls}-right-group {
+        height: 100px;
+        width: 100%;
+        border-top: 1px solid #ddd;
+    }
+}

@@ -2,7 +2,8 @@ import React from 'react'
 import { Column, RowsUpdateEvent } from 'react-data-grid-temp'
 import { groupBy, isEqual } from 'lodash'
 import { generate } from 'shortid'
-import { Row, GroupRowData } from './type'
+import { Row, GroupRowData, ColumnProps } from './type'
+import { Key } from 'rc-tree/lib/interface'
 
 export type ContextMenu = {
     row: Row,
@@ -17,6 +18,9 @@ export function createStore() {
         $index: index + 1,
     }))
     return {
+        columns: [] as ColumnProps[],
+        // 可见的列的信息
+        visibleColumns: null as string[] | null,
         // 当前显示的数据
         datas: [] as Row[],
         // 分组数据
@@ -41,6 +45,32 @@ export function createStore() {
             this.datas = formatData(rows.concat(this.datas))
             this.pageNo += 1
         },
+        /**
+         * 将两个节点进行交换
+         * @param node 当前node节点
+         * @param targeNode 交换的目标节点
+         */
+        switchColumns(node: Key, targeNode: Key){
+            // const column = this.columns.find(ele => ele.name === node)
+            // const targeColumn = this.columns.find(ele => ele.name === targeNode)
+            let column: ColumnProps
+            let columnIndex: number
+            let targeColumn: ColumnProps
+            let targeColumnIndex: number
+            this.columns.forEach((value, index) => {
+                if (value.name === node){
+                    column = value 
+                    columnIndex = index
+                }
+                if (value.name === targeNode){
+                    targeColumn = value
+                    targeColumnIndex = index
+                }
+            })
+            this.columns.splice(columnIndex!, 1, targeColumn!)
+            this.columns.splice(targeColumnIndex!, 1, column!)
+
+        },
         setSelectedRows(keys: Set<Row[keyof Row]>) {
             this.selectedRows = keys
         },
@@ -63,7 +93,7 @@ export function createStore() {
                 const groupData = groupBy(datas, this.groupColumn[currentLevel])
                 Object.keys(groupData).forEach(key => {
                     const dataNode: GroupRowData = {
-                        $id: generate(),
+                        $id: parent === null ? 'root' : `${parent.$id}/${generate()}`,
                         $title: key,
                         $type: 'GROUP',
                         $parent: parent,
@@ -114,6 +144,7 @@ export function createStore() {
             if (this.groupColumn.length === 0) {
                 // 退出分组的时候，清空缓存，重新计算
                 this.cacheGroupDatas = undefined
+                this.expandedKeys = []
                 return;
             }
             this.groupDatas = this.getGroupDatas()
@@ -133,28 +164,37 @@ export function createStore() {
         // 删除数据
         del(filter: (ele: Row) => boolean) {
             return new Promise<void>(resolve => {
-                this.datas = this.datas.map(ele => ({
+                const datas = this.dataSource.map(ele => ({
                     ...ele,
                     $state: filter(ele) ? 'DELETE' : ele.$state,
                 }))
+                this.setDataSource(datas)
                 resolve()
             })
+        },
+        // 新增数据
+        add(rows: Row[]){
+            const addRows: Row[] = rows.map(ele => ({ ...ele, $state: 'CREATE'}))
+            this.dataSource.splice(0, 0, ...addRows)
         },
         // 更新数据
         update(change: (data: Row) => Row) {
             return new Promise<void>(resolve => {
-                this.datas = this.datas.map(ele => ({
+                const datas = this.dataSource.map(ele => ({
                     ...change(ele),
                     $state: 'UPDATE',
                 }))
+                this.setDataSource(datas)
                 resolve()
             })
         },
         // 提交修改的信息
         commit(e: RowsUpdateEvent) {
             return new Promise<void>(resolve => {
+                const rows: Row[] = this.dataSource
+
                 if (e.action === 'CELL_UPDATE' || e.action === 'COPY_PASTE') {
-                    this.datas[e.toRow] = { ...this.datas[e.toRow], ...(e.updated as any) }
+                    rows[e.toRow] = { ...rows[e.toRow], ...(e.updated as any) }
                 }
 
                 if (e.action === 'CELL_DRAG') {
@@ -162,14 +202,29 @@ export function createStore() {
                     for (let i = e.fromRow; i <= e.toRow; i += 1) {
                         cells.push(i)
                     }
-                    this.datas.forEach((value, index) => {
+                    rows.forEach((value, index) => {
                         if (cells.includes(index)) {
-                            this.datas[index] = { ...this.datas[index], ...(e.updated as any) }
+                            rows[index] = { ...rows[index], ...(e.updated as any) }
                         }
                     })
                 }
+                this.setDataSource(rows)
                 resolve()
             })
+        },
+        get isGroup(){
+            return this.groupColumn && this.groupColumn.length > 0
+        },
+        get dataSource(){
+            const isGroup = this.groupColumn && this.groupColumn.length > 0
+            return isGroup ? this.groupDatas : this.datas
+        },
+        setDataSource(datas: any[]){
+            if(this.isGroup){
+                this.groupDatas = datas
+                return 
+            }
+            this.datas = datas
         }
     }
 }
