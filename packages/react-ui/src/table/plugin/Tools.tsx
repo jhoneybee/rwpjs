@@ -71,8 +71,6 @@ export const Tools = ({
                                 onCheck={checked => {
                                     globalStore.visibleColumns = checked as string[]
                                 }}
-                                onLoad={() => {
-                                }}
                                 draggable
                                 onDrop={info => {
                                     // 如果是插入节点，则取消不进行任何操作
