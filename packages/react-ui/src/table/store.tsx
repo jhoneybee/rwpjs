@@ -2,8 +2,8 @@ import React from 'react'
 import { Column, RowsUpdateEvent } from 'react-data-grid-temp'
 import { groupBy, isEqual } from 'lodash'
 import { generate } from 'shortid'
-import { Row, GroupRowData, ColumnProps } from './type'
 import { Key } from 'rc-tree/lib/interface'
+import { Row, GroupRowData, ColumnProps } from './type'
 
 export type ContextMenu = {
     row: Row,
