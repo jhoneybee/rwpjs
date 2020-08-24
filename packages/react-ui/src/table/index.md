@@ -334,7 +334,7 @@ export default () => {
 | setSelect        | 设置选中的数据        | `(selects: Set<T[keyof T]>) => void`
 | reload           | 重新装载表格         | `(param: Object) => void`
 | del              | 删除返回为true的数据 | `(filter: (ele: T) => boolean) => void`
-| add              | 新增表格一行数据     | `(rows: Row[]) => void`
+| add              | 新增表格一行数据     | `(rows: Row[], start: number) => void`
 
 ```ts
 const Demo = () => {
