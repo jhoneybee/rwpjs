@@ -93,7 +93,7 @@ export function createStore() {
                 const groupData = groupBy(datas, this.groupColumn[currentLevel])
                 Object.keys(groupData).forEach(key => {
                     const dataNode: GroupRowData = {
-                        $id: parent === null ? 'root' : `${parent.$id}/${generate()}`,
+                        $id: parent === null ?  `root/${generate()}` : `${parent.$id}/${generate()}`,
                         $title: key,
                         $type: 'GROUP',
                         $parent: parent,
