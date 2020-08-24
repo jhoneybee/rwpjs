@@ -24,6 +24,7 @@ export default () => {
     return (
          <ConfigProvider locale={zhCN}>
             <DatePicker style={{ margin: 8}}  />
+            <DatePicker style={{ margin: 8}} showTime placeholder="请选择日期和时间"  />
             <DatePicker style={{ margin: 8}} picker="week" />
             <DatePicker style={{ margin: 8}} picker="month" />
             <DatePicker style={{ margin: 8}} picker="quarter" />
@@ -47,7 +48,7 @@ const { RangePicker } = DatePicker;
 export default () => {
     return (
          <ConfigProvider locale={zhCN}>
-            <RangePicker style={{ margin: 8}}  />
+            <RangePicker style={{ margin: 8}} />
             <RangePicker style={{ margin: 8}} picker="week" />
             <RangePicker style={{ margin: 8}} picker="month" />
             <RangePicker style={{ margin: 8}} picker="quarter" />
