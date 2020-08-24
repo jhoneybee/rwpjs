@@ -20,7 +20,7 @@ order: 3
 
 ### 1.11.1-alpha.0
 
-- 🔥 [更新到antd 依赖到 4.6.1](https://ant.design/changelog-cn#4.6.0)
+- 🔥 [更新到antd 依赖到 4.6.1](https://ant.design/changelog-cn#4.6.1)
 
 ### 1.11.0-alpha.0
 
