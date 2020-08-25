@@ -9,7 +9,6 @@ import {
     CalculatedColumn,
     RowsUpdateEvent,
 } from 'react-data-grid-temp';
-
 import { OverlayFunc } from '../interface';
 
 export interface Row {
@@ -41,6 +40,10 @@ export interface GroupRowData extends Row {
     $column?: string
     // 当前的层级
     $level?: number
+}
+
+export interface SelectProps extends Omit<FormatterProps<any, unknown>, 'onRowSelectionChange'> {
+    onChange?: (value: boolean) => void;
 }
 
 export interface TableHandle extends DataGridHandle {
@@ -153,7 +156,9 @@ export interface TableProps {
     groupColumn?: string[]
     // 表格分组的渲染
     groupRenderer?: React.ComponentType<GroupRendererProps>
+    // 组件的宽度
     width?: number
+    // 组件的高度
     height?: number
     // 用户唯一的rowKey
     rowKey?: string

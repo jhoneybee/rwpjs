@@ -14,7 +14,11 @@ import { TableStore } from '../store'
 
 const tableClassPrefix = `${classPrefix}-table`
 
-export const usePreFormatColumn = (store: TableStore,selectBox: string, rowKey: string) => {
+export const usePreFormatColumn = (
+    store: TableStore,
+    selectBox: string,
+    rowKey: string,
+) => {
     const columns: Column<Row, unknown>[] = store.columns
     .filter(column => store.visibleColumns?.includes(column.name))
     .map((element => {

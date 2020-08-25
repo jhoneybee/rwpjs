@@ -74,9 +74,11 @@ export const Table = observer<TableProps>((props: TableProps) => {
         store.setLoading(false)
     }
 
-    useEffect(() => () => {
-        if (scrollTimeOut) {
-            clearTimeout(scrollTimeOut)
+    useEffect(() => {
+        return () => {
+            if (scrollTimeOut) {
+                clearTimeout(scrollTimeOut)
+            }
         }
     })
 
@@ -273,8 +275,6 @@ export const Table = observer<TableProps>((props: TableProps) => {
             />
         </div>
     )
-
-  
 
     const getReactNode = (node: ReactNode) => width > 0 ? node : undefined
     return (
