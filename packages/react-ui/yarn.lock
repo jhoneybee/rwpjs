@@ -128,7 +128,7 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
-"@babel/core@7.11.1", "@babel/core@>=7.2.2", "@babel/core@>=7.9.0", "@babel/core@^7.1.0", "@babel/core@^7.4.5", "@babel/core@^7.7.2", "@babel/core@^7.7.5":
+"@babel/core@7.11.1":
   version "7.11.1"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.11.1.tgz#2c55b604e73a40dc21b0e52650b11c65cf276643"
   integrity sha512-XqF7F6FWQdKGGWAzGELL+aCO1p+lRY5Tj5/tbT3St1G8NaH70jhhDIKknIZaDans0OQBG5wRAldROLHSt44BgQ==
@@ -192,7 +192,7 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
-"@babel/core@~7.11.4":
+"@babel/core@>=7.2.2", "@babel/core@>=7.9.0", "@babel/core@^7.1.0", "@babel/core@^7.4.5", "@babel/core@^7.7.2", "@babel/core@^7.7.5", "@babel/core@~7.11.4":
   version "7.11.4"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.11.4.tgz#4301dfdfafa01eeb97f1896c5501a3f0655d4229"
   integrity sha512-5deljj5HlqRXN+5oJTY7Zs37iH3z3b++KjiKtIsJy1NrjOOVSEaJHEetLBhyu0aQOSNNZ/0IuEAan9GzRuDXHg==
@@ -8930,9 +8930,9 @@ fastq@^1.6.0:
     reusify "^1.0.4"
 
 father-build@~1.18.2:
-  version "1.18.2"
-  resolved "https://registry.yarnpkg.com/father-build/-/father-build-1.18.2.tgz#4850cead0f1547510c5d2d85fc7e5ab077c75998"
-  integrity sha512-5WoR0zzy8pdY1dyk/KlaFRJ2LR9Z8NiQvTwdMH061aeR3SVXDgWGjhXaSeKEFxb2k/clXB2h86mvMBF8YUvYGw==
+  version "1.18.3"
+  resolved "https://registry.yarnpkg.com/father-build/-/father-build-1.18.3.tgz#422c3b9936d68dfe8fdcb5fa817629a04ef014a5"
+  integrity sha512-ydpbaaDIZXwfMjLHyy0xSYEm3m/yjS1HRNXyl6pVNN5LrJwX4VwLBuMyaWiGepjnTD/ZfPQoxkNFKhJ8SkzB3w==
   dependencies:
     "@babel/core" "7.4.5"
     "@babel/plugin-proposal-class-properties" "7.4.4"
