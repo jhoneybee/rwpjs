@@ -200,7 +200,6 @@ export default () => {
                         <Menu.Item
                             key="6"
                              onClick={(e) => {
-                                e.domEvent.stopPropagation()
                                 console.log(e.domEvent.preventDefault())
                             }}
                         >
