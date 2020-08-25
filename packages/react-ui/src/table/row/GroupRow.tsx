@@ -4,9 +4,10 @@ import {
     RowRendererProps,
 } from 'react-data-grid-temp'
 import { RightOutlined, DownOutlined } from '@ant-design/icons'
-import { OverlayFunc, ColumnProps, GroupRendererProps } from '../type'
+import { ColumnProps, GroupRendererProps } from '../type'
 import { DefaultRow } from './DefaultRow'
 import { DropdownRow } from './DropdownRow'
+import { OverlayFunc } from '../../interface'
 
 
 import 'antd/es/table/style/index.less'

@@ -13,7 +13,8 @@ export declare type ButtonHTMLType = typeof ButtonHTMLTypes[number];
 export declare type LegacyButtonType = ButtonType | 'danger';
 
 export declare type SizeType = 'small' | 'middle' | 'large' | undefined;
-declare const SizeContext: React.Context<SizeType>;
+
+export declare type OverlayFunc = () => React.ReactElement;
 
 // 导出Router的Props
 export { RouteComponentProps } from 'react-router-dom'

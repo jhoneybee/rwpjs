@@ -4,8 +4,9 @@ import {
 } from 'react-data-grid-temp'
 import { Dropdown } from 'antd'
 
-import { OverlayFunc, ColumnProps } from '../type'
+import { ColumnProps } from '../type'
 import { DefaultRow } from './DefaultRow'
+import { OverlayFunc } from '../../interface'
 
 type DropdownRowProps<T> = {
     contextMenu: React.ReactElement | OverlayFunc

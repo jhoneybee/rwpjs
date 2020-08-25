@@ -10,6 +10,7 @@ import {
     RowsUpdateEvent,
 } from 'react-data-grid-temp';
 
+import { OverlayFunc } from '../interface';
 
 export interface Row {
     $index?: number
@@ -116,8 +117,6 @@ export interface ColumnProps {
     // 单元格的class
     cellClass?: string | ((row: Row) => string);
 }
-
-export declare type OverlayFunc = () => React.ReactElement;
 
 export declare type TableFunc = (table: TableHandle) => void;
 

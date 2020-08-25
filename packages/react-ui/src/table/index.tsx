@@ -257,13 +257,18 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 percent={percent}
             />
             <ReloadOutlined
+                disabled
                 style={{
                     marginLeft: 0,
                     top: 2,
                     position: 'relative',
+                    cursor: isDisableLoadData() ? 'not-allowed': 'pointer',
+                    opacity: isDisableLoadData() ? 0.1 : 1,
                 }}
                 onClick={() => {
-                    reloadFun()
+                    if(!isDisableLoadData()){
+                        reloadFun()
+                    }
                 }}
             />
         </div>

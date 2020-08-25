@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef, ReactNode } from 'react';
-import { Tree as AntTree, Dropdown, Menu } from 'antd'
+import React, { useState, useEffect, useRef } from 'react';
+import { Tree as AntTree, Dropdown } from 'antd'
 import RcTree from 'rc-tree';
 import { isArray, isObject } from 'lodash'
 import { Key } from 'rc-tree/lib/interface'
 import { NodeDragEventParams } from 'rc-tree/lib/contextTypes'
 import { EventDataNode, TreeProps, DataNode } from 'antd/lib/tree';
-import { MenuItemProps } from 'antd/lib/menu/MenuItem';
+import { OverlayFunc } from '../interface';
 
 
 export interface TreeHandle {
@@ -24,22 +24,23 @@ export interface TreeHandle {
 
     // 筛选节点,
     filter: (callback: () => Promise<EventDataNode[]>) => void
+
+    /**
+     * 获取当前右键的上下文
+     */
+    rightContext: () => EventDataNode | null
 }
 
 interface CustomEventDataNode extends EventDataNode{
     parent?: CustomEventDataNode
 }
 
-interface OverlayMenu extends Omit<MenuItemProps, 'children'> {
-    title: string | ReactNode
-}
 
 interface Props extends Omit<TreeProps,
     'loadData' |
     'treeData' |
     'checkStrictly' |
     'loadedKeys' |
-    'onRightClick' |
     'defaultCheckedKeys' |
     'defaultExpandAll' |
     'defaultExpandedKeys' |
@@ -50,7 +51,7 @@ interface Props extends Omit<TreeProps,
     > {
     // 装载数据的信息
     loadData: (treeNode: EventDataNode | null) => Promise<DataNode[]>;
-    overlay?: (treeNode: DataNode) => OverlayMenu[]
+    overlay?: React.ReactElement | OverlayFunc
     tree?: React.MutableRefObject<TreeHandle | null>
     // 采用文件目录的结构
     enableDirectoryTree?: boolean,
@@ -86,6 +87,8 @@ export const Tree = (props: Props) => {
     const [expandedKeys, setExpandedKeys] = useState<(string | number)[]>(props.expandedKeys || [])
     // 设置选中的节点
     const [selectedKeys, setSelectedKeys] = useState<(string | number)[]>(props.selectedKeys || [])
+    // 获取当前右键的节点
+    const contextNode = useRef<EventDataNode | null>(null)
     // 设置选中的tree
     const [checkedKeys, setCheckedKeys] = useState<Key[] | {
         checked: Key[];
@@ -109,7 +112,6 @@ export const Tree = (props: Props) => {
         }
         setTreeNodes(tempTreeNode.map(ele => {
             const chil = ele as EventDataNode
-            let menuItem: ReactNode[] = []
             if (
                 propsCheckedKeys
                 &&
@@ -139,23 +141,20 @@ export const Tree = (props: Props) => {
                 }
             }
 
-            if (props.overlay) {
-                menuItem = props.overlay(chil).map(menu => {
-                    const { title, ...restProps } = menu
-                    return <Menu.Item {...restProps} >{title}</Menu.Item>
-                })
-            }
-
-            return {
-                ...chil,
-                title: (
+            let { title } = chil
+            if (props.overlay){
+                title = (
                     <Dropdown
-                        overlay={<Menu>{menuItem}</Menu>}
+                        overlay={props.overlay}
                         trigger={['contextMenu']}
                     >
                         <span>{chil.title}</span>
                     </Dropdown>
-                ),
+                )
+            }
+            return {
+                ...chil,
+                title,
             }
         }))
         
@@ -204,30 +203,22 @@ export const Tree = (props: Props) => {
                                 props.loadData(ele as EventDataNode).then(nodeData => {
                                     // eslint-disable-next-line no-param-reassign
                                     ele.children = nodeData.map(node => {
-                                        let menuItem: ReactNode[] = []
+                                        let { title } = node
                                         if (props.overlay) {
-                                            menuItem = props.overlay(node).map(menu => {
-                                                const { title, ...restProps } = menu
-                                                return (
-                                                    <Menu.Item
-                                                        {...restProps}
-                                                    >
-                                                        {title}
-                                                    </Menu.Item>
-                                                )
-                                            })
-                                        }
-                                        return {
-                                            ...node,
-                                            parent: ele,
-                                            title: (
+                                            title = (
                                                 <Dropdown
-                                                    overlay={<Menu>{menuItem}</Menu>}
+                                                    overlay={props.overlay}
                                                     trigger={['contextMenu']}
                                                 >
                                                     <span>{node.title}</span>
                                                 </Dropdown>
-                                            ),
+                                            )
+                                        }
+                                        
+                                        return {
+                                            ...node,
+                                            parent: ele,
+                                            title,
                                         }
                                     })
                                     resolve()
@@ -273,23 +264,20 @@ export const Tree = (props: Props) => {
             },
             update: callback => {
                 findTreeNode(treeNodes, treeNode => {
-                    let menuItem: ReactNode[] = []
-                    if (props.overlay) {
-                        menuItem = props.overlay(treeNode).map(menu => {
-                            const { title, ...restProps } = menu
-                            return <Menu.Item {...restProps} >{title}</Menu.Item>
-                        })
-                    }
                     callback(treeNode as EventDataNode);
+                    let { title } = treeNode
+                    if (props.overlay) {
+                        title = (
+                            <Dropdown
+                                overlay={props.overlay}
+                                trigger={['contextMenu']}
+                            >
+                                <span>{treeNode.title}</span>
+                            </Dropdown>
+                        )
+                    }
                     // eslint-disable-next-line no-param-reassign
-                    treeNode.title = (
-                        <Dropdown
-                            overlay={<Menu>{menuItem}</Menu>}
-                            trigger={['contextMenu']}
-                        >
-                            <span>{treeNode.title}</span>
-                        </Dropdown>
-                    )
+                    treeNode.title = title
                     return false
                 })
                 setTreeNodes([...treeNodes])
@@ -297,6 +285,7 @@ export const Tree = (props: Props) => {
             del: (callback: (dataNode: EventDataNode) => boolean) => {
                 setTreeNodes(filter(callback))
             },
+            rightContext: () => contextNode.current,
         }
     }
 
@@ -336,24 +325,21 @@ export const Tree = (props: Props) => {
                     if (ele.key === treeNode.key) {
                         // eslint-disable-next-line no-param-reassign
                         ele.children = children.map(chil => {
-                            let menuItem: ReactNode[] = []
+                            let { title } = chil
                             if (props.overlay) {
-                                menuItem = props.overlay(chil).map(menu => {
-                                    const { title, ...restProps } = menu
-                                    return <Menu.Item {...restProps} >{title}</Menu.Item>
-                                })
-                            }
-                            return {
-                                ...chil,
-                                parent: ele,
-                                title: (
+                                title = (
                                     <Dropdown
-                                        overlay={<Menu>{menuItem}</Menu>}
+                                        overlay={props.overlay}
                                         trigger={['contextMenu']}
                                     >
                                         <span>{chil.title}</span>
                                     </Dropdown>
-                                ),
+                                )
+                            }
+                            return {
+                                ...chil,
+                                parent: ele,
+                                title,
 
                             }
                         })
@@ -430,6 +416,12 @@ export const Tree = (props: Props) => {
             onLoad={props.onLoad}
             onClick={props.onClick}
             onDoubleClick={props.onDoubleClick}
+            onRightClick={info => {
+                contextNode.current = info.node
+                if (props.onRightClick) {
+                    props.onRightClick(info)
+                }
+            }}
             onFocus={props.onFocus}
             onKeyDown={props.onKeyDown}
             onMouseEnter={props.onMouseEnter}

@@ -20,7 +20,7 @@ title: Tree 树形控件
  */
 
 import React, { useRef, useState } from 'react'
-import { Tree, Input } from '@rwp/react-ui'
+import { Tree, Input, Menu } from '@rwp/react-ui'
 
 
 let countReload = 0
@@ -133,6 +133,7 @@ export default () => {
                 draggable
                 tree={tree}
                 onSelect={(keys) => {
+                    debugger
                     setSelectKeys(keys)
                 }}
                 onExpand={(keys) => {
@@ -143,45 +144,70 @@ export default () => {
                 }}
                 expandedKeys={expandedKeys}
                 selectedKeys={selectKeys}
-                overlay={(treeNode) => {
-                    return [{
-                        title: '删除节点',
-                        key: '1',
-                        onClick: () => {
-                            tree.current.del((ele) => ele.key === treeNode.key)
-                        }
-                    },{
-                        title: '刷新节点',
-                        key: '2',
-                        onClick: () => {
-                            rowKey.current = 0
-                            countReload += 1
-                            tree.current.reload(treeNode)
-                        }
-                    },{
-                        title: '更新节点',
-                        key: '3',
-                        onClick: () => {
-                            tree.current.update(node => {
+                overlay={
+                    <Menu>
+                        <Menu.Item
+                            key="1"
+                            onClick={() => {
+                                const ele = tree.current.rightContext()
+                                tree.current.del((ele) => ele.key === treeNode.key)
+                            }}
+                        >
+                            删除节点
+                        </Menu.Item>
+                        <Menu.Item
+                            key="2"
+                            onClick={() => {
+                                const treeNode = tree.current.rightContext()
+                                rowKey.current = 0
+                                countReload += 1
+                                tree.current.reload(treeNode)
+                            }}
+                        >
+                            刷新节点
+                        </Menu.Item>
+                        <Menu.Item
+                            key="3"
+                            onClick={() => {
+                                const treeNode = tree.current.rightContext()
+                                tree.current.update(node => {
                                 if(treeNode.key === node.key){
                                     node.title = '这是更新后的标题'
                                 }
                             })
-                        }
-                    },{
-                        title: '选中此节点',
-                        key: '4',
-                        onClick: () => {
-                            setSelectKeys([treeNode.key])
-                        }
-                    },{
-                        title: '展开此节点',
-                        key: '4',
-                        onClick: () => {
-                            setExpandedKeys(expandedKeys.concat(treeNode.key))
-                        }
-                    }]
-                }}
+                            }}
+                        >
+                            更新节点
+                        </Menu.Item>
+                        <Menu.Item
+                            key="4"
+                            onClick={() => {
+                                const treeNode = tree.current.rightContext()
+                                setSelectKeys([treeNode.key])
+                            }}
+                        >
+                            选中此节点
+                        </Menu.Item>
+                        <Menu.Item
+                            key="5"
+                            onClick={() => {
+                                const treeNode = tree.current.rightContext()
+                                setExpandedKeys(expandedKeys.concat(treeNode.key))
+                            }}
+                        >
+                            展开此节点
+                        </Menu.Item>
+                        <Menu.Item
+                            key="6"
+                             onClick={(e) => {
+                                e.domEvent.stopPropagation()
+                                console.log(e.domEvent.preventDefault())
+                            }}
+                        >
+                            测试
+                        </Menu.Item>
+                    </Menu>
+                }
             />
         </>
     )
