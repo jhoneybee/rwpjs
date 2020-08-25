@@ -36,6 +36,10 @@ export interface GroupRowData extends Row {
     $space?: number
     // 当前的子节点信息
     $children?: GroupRowData[] | Row[]
+    // 当前列的name
+    $column?: string
+    // 当前的层级
+    $level?: number
 }
 
 export interface TableHandle extends DataGridHandle {

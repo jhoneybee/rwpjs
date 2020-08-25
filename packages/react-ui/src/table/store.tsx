@@ -86,18 +86,22 @@ export function createStore() {
         getGroupDatas() {
             const { expandedKeys } = this
             const loops = (parent: any, datas: Row[], currentLevel: number) => {
-                if (currentLevel >= this.groupColumn.length) {
+                const groupColumns = this.groupColumn
+                if (currentLevel >= groupColumns.length) {
                     return datas.map(ele => ({...ele, $parent: parent}));
                 }
                 const result: GroupRowData[] = []
-                const groupData = groupBy(datas, this.groupColumn[currentLevel])
+                const columnName = groupColumns[currentLevel]
+                const groupData = groupBy(datas, columnName)
                 Object.keys(groupData).forEach(key => {
                     const dataNode: GroupRowData = {
                         $id: parent === null ?  `root/${generate()}` : `${parent.$id}/${generate()}`,
                         $title: key,
                         $type: 'GROUP',
                         $parent: parent,
+                        $column: columnName,
                         $space: (currentLevel + 1) * 20,
+                        $level: currentLevel,
                     }
                     result.push({
                         ...dataNode,
