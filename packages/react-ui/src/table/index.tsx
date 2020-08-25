@@ -144,10 +144,10 @@ export const Table = observer<TableProps>((props: TableProps) => {
             // 判断是否滚动到底部
             target.scrollHeight - target.scrollTop <= target.clientHeight + 2
             &&
-            // 判断数据大于0
-            store.datas.length > 0
+            // 判断数据大于0, 并且小于当前总数。
+            store.datas.length > 0 && store.datas.length < store.total
             &&
-            beforeScrollHeight.current !== target.scrollHeight
+            beforeScrollHeight.current !== target.scrollHeight            
         ) {
             scrollTimeOut = setTimeout(() => {
                 loadDataFun()
