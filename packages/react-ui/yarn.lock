@@ -3688,10 +3688,10 @@
   resolved "https://registry.yarnpkg.com/@umijs/plugin-analytics/-/plugin-analytics-0.2.2.tgz#575fd231d4327ea13413217aa1b5fc6bdd89465e"
   integrity sha512-dVDzUfgIdEwdCC6a5IsMYpIPI+bEZjBEqIhAvw9dic6Vk77w9RxQxyRfW11dDmdXLAwWphp22NntQNt1ejZPtg==
 
-"@umijs/plugin-antd@0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-antd/-/plugin-antd-0.7.0.tgz#c9bbfd9f29bd1f6be7cc36d7226ffa5fbde1b9cc"
-  integrity sha512-IK580GohCnOInlZVsmG868sZnLxJxpI0w8h7jDlse6S6j+nNOQ8XQHsHYC+W6SBHjoQ0l6JY8uRgqnotLVcL5A==
+"@umijs/plugin-antd@0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-antd/-/plugin-antd-0.8.0.tgz#0dae96f2aada81dbd494ee19f9329f1a63cff1ff"
+  integrity sha512-Pz9DOd6kwYvAQUGbKfyVnezCROGLLQzwfi6QFvMnsCh1iV2g1Kfk0tg3hEbzsUkXHPgeMLx+qj7KQFwHWWM1+w==
   dependencies:
     antd "^4.1.3"
     antd-mobile "^2.3.1"
@@ -3701,20 +3701,20 @@
   resolved "https://registry.yarnpkg.com/@umijs/plugin-crossorigin/-/plugin-crossorigin-1.1.1.tgz#0e5ffb8013c95470fce79cfbd6a29a9ad58df4c9"
   integrity sha512-2ryOjsGqgRv6YqSHqHRqvPc6cg0JSYAnqr9OB2bOjZVAQevFpovetHGDXxIKzUtb09MwrrSQvaH9K7uGZtACow==
 
-"@umijs/plugin-dva@0.7.4":
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-dva/-/plugin-dva-0.7.4.tgz#07e1c2dcb466df0187cd9ec483598b267628095c"
-  integrity sha512-kWpfbTEeV0AJcap4xhAL8J6T5W/Y1VZT7EU7H9KcMQ+QLX+jdBwmftxJ4BP9DY0cCee1NYv/UWTkbVw3GJwZHw==
+"@umijs/plugin-dva@0.8.2":
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-dva/-/plugin-dva-0.8.2.tgz#85a052d77d7520fca539415cc8c8c56432806892"
+  integrity sha512-4LhVk7AJwgzyoTjzEsMwHljsiR6+FBSakt+rNO3sI4ciYQkNWkXDXekjuw/ZQz3FXHf2uTAk4fgPsJBqq8frAw==
   dependencies:
     babel-plugin-dva-hmr "^0.4.2"
     dva "^2.6.0-beta.20"
     dva-immer "^0.4.19"
     dva-loading "^3.0.20"
 
-"@umijs/plugin-helmet@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-helmet/-/plugin-helmet-1.0.2.tgz#9db9d1d257778f94d12587dd6b717af91970e4c9"
-  integrity sha512-GBGQk8VPqEPj3EQnVGmQfI4iGTlwr/kiQZUWm4zrbfDgXf9ydz8sxrQnHWZ1TDu37EnPvaxFHqIAb6KR547JlQ==
+"@umijs/plugin-helmet@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-helmet/-/plugin-helmet-1.1.0.tgz#9bcd53089011a7fbdf1f3c17ead3f7718d854c63"
+  integrity sha512-baCRZ2dneLjFuu5AUG276RA+WffTBEITBClMq8byIDQnWKCpR3WqmvB1oiKb96DY0p6W+K12EB7oq2Xd4AaVkA==
   dependencies:
     "@types/react-helmet" "6.0.0"
     react-helmet "6.0.0"
@@ -3724,20 +3724,20 @@
   resolved "https://registry.yarnpkg.com/@umijs/plugin-initial-state/-/plugin-initial-state-2.2.1.tgz#cd7592aa90b6b369bd0df297254320088397ff67"
   integrity sha512-qDtWguduISeG+EObgKbImuRX3FyLrNcj3yQtY24HdYkDTGmtsmA4ZKB7Q/N+V/O0Yxep06bCotTK3jFV9KXuEA==
 
-"@umijs/plugin-layout@0.11.15":
-  version "0.11.15"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-layout/-/plugin-layout-0.11.15.tgz#1209a5b1ae05aa7ec3a8e35b7c5ef83a86b3ad5a"
-  integrity sha512-wyjoCN4eDF7yCKDoFzBdGDOqp9KO7gFx6WOEK6D2h4deTKMD8+IAxj8MPnifVQgd+HQvGgAAqZ+5q9nv25N30A==
+"@umijs/plugin-layout@0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-layout/-/plugin-layout-0.12.0.tgz#2de9f2c6660a075f7dacdd096005cc886cc1cc60"
+  integrity sha512-TWSyofRoWxR8VVoM1GSLoymp9cXI3GU2+qBEMudXFufvyXPScAU8gN6fukFMf/CGD+w9UwBOOr/SFOi+9HaUJQ==
   dependencies:
     "@umijs/route-utils" "^1.0.7"
     antd "^4.1.2"
     lodash "^4.17.15"
     path-to-regexp "1.x"
 
-"@umijs/plugin-locale@0.9.1":
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-locale/-/plugin-locale-0.9.1.tgz#bf1bd948f615b7860c0d67e41b93ebb843a997f1"
-  integrity sha512-Z5/riKkBDSNEDD9qE/K0AcGJoggZVuEzrjBCYGek6P95Hc55TZdHXdFtM2lfW9gWpFSpqeL59UyHk2lGbpkagA==
+"@umijs/plugin-locale@0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-locale/-/plugin-locale-0.10.0.tgz#de0adfb44bb951e6e3600f70af44d4274dd3316d"
+  integrity sha512-fvpW6n6QSYfDvl6XfMC1+WuB4iS4lE879dv+KV34kwcS4EdAwZxLKsFJ6t408TJ0+x7h6MnA79dzbKcjaTuZaQ==
   dependencies:
     "@ant-design/icons" "^4.1.0"
     "@formatjs/intl-pluralrules" "^1.5.0"
@@ -3754,10 +3754,10 @@
   dependencies:
     fast-deep-equal "3.1.1"
 
-"@umijs/plugin-request@2.4.2":
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-request/-/plugin-request-2.4.2.tgz#9fa59d355dd6018b6bd14573c4413d2ea2f3fd1e"
-  integrity sha512-Og5Uc8Q72SefSAC0G1gnTQpjH5+GWBdDweOPCJ3EyibJWSvukdOcoqmaTvfpltUu5Tx6g3ZRo1PB1LDwvhdEpg==
+"@umijs/plugin-request@2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-request/-/plugin-request-2.5.0.tgz#3b222be9400c3c21ac84bdeefbd4103e48690748"
+  integrity sha512-fC0zLMmMP0PGqFtI6pyb8fJd9HovMuNPUSrjDH2YFcyyd0m9FOdjnuL2VcfvHBI1RcpfdW6LJ/dxw+ggeeoyaQ==
   dependencies:
     "@ahooksjs/use-request" "^2.0.0"
     umi-request "^1.2.14"
@@ -3854,21 +3854,21 @@
     unist-util-visit-parents "^3.0.1"
 
 "@umijs/preset-react@~1.x":
-  version "1.5.22"
-  resolved "https://registry.yarnpkg.com/@umijs/preset-react/-/preset-react-1.5.22.tgz#1c68e9990ef67c0d2db2d515a204c7fa99e00213"
-  integrity sha512-1FFz+1g8Nz/wRN9fAnGq1Ah7zmtVydc6UZEEQexu5e4+DNwLNW2/npd9PMm1VBZeL4Fn+cA8QDZ4qQ+0Mv1d9Q==
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@umijs/preset-react/-/preset-react-1.6.2.tgz#fd166a11a267124b3d8f1374dc5a8507c49a28e8"
+  integrity sha512-JVjEubThsRa4MNpM3o4MzPp+ivNiYFtxnR5ulAfeuNoD0tko8dPtr5rNZzBrgOqg5H0hy++1c3RgqfG3OCLa8Q==
   dependencies:
     "@umijs/plugin-access" "2.3.1"
     "@umijs/plugin-analytics" "0.2.2"
-    "@umijs/plugin-antd" "0.7.0"
+    "@umijs/plugin-antd" "0.8.0"
     "@umijs/plugin-crossorigin" "1.1.1"
-    "@umijs/plugin-dva" "0.7.4"
-    "@umijs/plugin-helmet" "1.0.2"
+    "@umijs/plugin-dva" "0.8.2"
+    "@umijs/plugin-helmet" "1.1.0"
     "@umijs/plugin-initial-state" "2.2.1"
-    "@umijs/plugin-layout" "0.11.15"
-    "@umijs/plugin-locale" "0.9.1"
+    "@umijs/plugin-layout" "0.12.0"
+    "@umijs/plugin-locale" "0.10.0"
     "@umijs/plugin-model" "2.5.3"
-    "@umijs/plugin-request" "2.4.2"
+    "@umijs/plugin-request" "2.5.0"
     "@umijs/plugin-test" "1.0.0"
 
 "@umijs/renderer-mpa@3.2.14":
