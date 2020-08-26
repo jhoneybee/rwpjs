@@ -30,7 +30,7 @@
     },
     "dependencies": {
         "@ant-design/icons": "~4.2.1",
-        "@ant-design/pro-layout": "~6.2.5",
+        "@ant-design/pro-layout": "~6.4.11",
         "antd": "~4.6.1",
         "classnames": "~2.2.6",
         "codemirror": "~5.57.0",
