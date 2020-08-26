@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { MenuOutlined } from '@ant-design/icons'
 import { useLocalStore, useObserver } from 'mobx-react-lite'
 import { EventDataNode } from 'antd/lib/tree'
@@ -11,19 +11,18 @@ import './style/tools.less'
 
 const tableClassPrefix = `${classPrefix}-table`
 
-interface ToolsProps {
-    height: number,
-}
-
-export const Tools = ({
-    height,
-}: ToolsProps) => {
+export const Tools = () => {
     const store = useLocalStore(() => ({
         visible: false,
-        activeKey: ''
+        activeKey: '',
+        treeHeight: 0,
     }))
     const tree = useRef<TreeHandle | null>(null)
+    const divRef = useRef<HTMLDivElement | null>(null)
     const globalStore = useStore()
+    useEffect(() => {
+        store.treeHeight = divRef.current!.clientHeight - 30
+    }, [])
     return useObserver(() => {
         const switchContent = () => {
             if (store.activeKey === 'column'){
@@ -46,31 +45,14 @@ export const Tools = ({
                             <h4>
                                 列信息
                             </h4>
-                            {/* <Input.Group>
-                                <Select
-                                    size="small"
-                                    style={{
-                                        width: '75%'
-                                    }}
-                                    defaultValue="default"
-                                >
-                                    <Select.Option value='default'>默认方案</Select.Option>
-                                </Select>
-                                <Button
-                                    type="link"
-                                    size="small"
-                                >
-                                    保存
-                                </Button>
-                            </Input.Group> */}
                             <Tree
                                 tree={tree}
                                 checkedKeys={globalStore.visibleColumns || []}
-                                height={height - 30}
                                 loadData={loadData}
                                 onCheck={checked => {
                                     globalStore.visibleColumns = checked as string[]
                                 }}
+                                height={store.treeHeight}
                                 draggable
                                 onDrop={info => {
                                     // 如果是插入节点，则取消不进行任何操作
@@ -82,27 +64,7 @@ export const Tools = ({
                                 }}
                                 checkable
                             />
-                            {/* <Space>
-                                
-                                <Button
-                                    type="text"
-                                    size="small"
-                                >
-                                    另存为新方案
-                                </Button>
-                                <Button
-                                    type="link"
-                                    size="small"
-                                    danger
-                                >
-                                    删除方案
-                                </Button>
-                            </Space> */}
                         </div>
-                        {/* <div
-                            className={`${tableClassPrefix}-right-group`}
-                        >
-                        </div> */}
                     </>
                 )
             }
@@ -112,8 +74,8 @@ export const Tools = ({
         return (
             <div
                 className={`${tableClassPrefix}-right`}
+                ref={divRef}
                 style={{
-                    height,
                     width: 20,
                     overflow: 'visible'
                 }}
@@ -137,9 +99,6 @@ export const Tools = ({
                     store.visible ? (
                         <div
                             className={`${tableClassPrefix}-right-content`}
-                            style={{
-                                height,
-                            }}
                         >
                             {switchContent()}
                         </div>

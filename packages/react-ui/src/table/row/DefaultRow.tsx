@@ -31,11 +31,13 @@ export const DefaultRow = ({
         }
     }));
     return (
-        <Row
-            row={row}
-            rowIdx={rowIdx}
-            eventBus={eventBus}
-            {...restProps}
-        />
+        <>
+            <Row
+                row={row}
+                rowIdx={rowIdx}
+                eventBus={eventBus}
+                {...restProps}
+            />
+        </>
     )
 }

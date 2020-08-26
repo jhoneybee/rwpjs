@@ -49,6 +49,8 @@ export default () => {
     const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
     const [groupField, setGroupField] = useState([])
     const [disable, setDisable] = useState(false)
+    const [columns, setColumns] = useState(getColumns())
+
     return (
         <>
         <div
@@ -108,10 +110,17 @@ export default () => {
             >
               新增数据
             </Button>
+             <Button
+              onClick={async () => {
+                setColumns([])
+              }}
+            >
+              清空列
+            </Button>
           </Space>
         </div>
           <Table
-            columns={getColumns()}
+            columns={columns}
             overlay={()=>{
               return (
                 <Menu>
@@ -174,35 +183,14 @@ export default () => {
 
 ```tsx
 /**
- * title: 可编辑的表格
- * desc: 编辑组件要接受一个 `onChange` 和一个 `value` 属性
+ * title: 简约类型的表格
+ * desc: 只有表格信息，没有其他
  */
 
 import React, { useState } from 'react'
 import { Table, Input} from '@rwp/react-ui'
 import { Menu, Button, DatePicker } from 'antd'
 import moment from 'moment'
-
-const getColumns = () => {
-  const columns = [{
-    name: '$index',
-    title: '序号',
-  }]
-  for(let i=0; i< 100 ; i ++){
-    columns.push({
-      name: `field${i}`,
-      title: `字段-${i}`,
-      width: 120,
-      align: 'center',
-      editable: true,
-      sortable: true,
-      editor: Input
-    })
-  }
-  return columns
-}
-
-
 
 export default () => {
     const table = React.useRef()
@@ -268,7 +256,7 @@ export default () => {
               console.log(table.current.getDataSource())
               onCommit()
             }}
-            enableInitLoadData={false}
+            mode='SIMPLE'
             loadData={(pageNo , pageSize, params) => {  
               return new Promise((resolve) =>{
                 const datas = []
@@ -300,6 +288,7 @@ export default () => {
 
 | 参数      | 说明       | 类型     | 
 | ---      | ---        | ---     | --- |
+|mode      | 显示模式    |`'SIMPLE'` \| `'NORMAL'` | SIMPLE 表示简约模式 NORMAL表示正常模式
 |columns   | 列的信息    | `ColumnProps[]`| -
 |loadData  | 装载数据   |`(pageNo: number, pageSize: number, params: Object) => PromiseLike<{total: number, datas: T[]}>`
 |pageSize  | 初始化页面的分页大小| `number` 
@@ -310,8 +299,6 @@ export default () => {
 |selectBox      | 启动选择框   | `'multiple'` &#124; `'none'` | `'none'`
 |groupColumn    | 启动分组,根据列的name来进行分组     | `string[]` | `[]`
 |groupRenderer        | 渲染分组行的的render, 可拦截重新填充值 | `React.ComponentType`| -
-|width | 表格的宽度 | `number` |
-|height| 表格的高度 | `number` |
 |rowKey| 用户唯一的rowKey| `string`|
 |overlay | 右键菜单   | `React.ReactElement`&#124;`OverlayFunc`|
 |onSort      | 排序触发的事件| `(sortColumns: SortColumn[]) => void;`| -

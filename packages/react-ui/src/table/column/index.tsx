@@ -1,2 +1,2 @@
 export { MultipleSelectColumn } from './MultipleSelectColumn'
-export { usePreFormatColumn } from './PreFormatColumn'
+export { preFormatColumn } from './PreFormatColumn'

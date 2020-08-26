@@ -14,7 +14,7 @@ import { TableStore } from '../store'
 
 const tableClassPrefix = `${classPrefix}-table`
 
-export const usePreFormatColumn = (
+export const preFormatColumn = (
     store: TableStore,
     selectBox: string,
     rowKey: string,

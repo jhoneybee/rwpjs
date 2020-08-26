@@ -14,7 +14,8 @@
     z-index: 1060;
 }
 .rdg-row-default-group {
-    border-bottom: 2px solid #fb8b0d; 
+    // border-bottom: 2px solid #fb8b0d;
+    border-bottom: 1px solid rgb(221, 221, 221);
     display: flex;
     align-items: center;
     height: 35px;
@@ -50,7 +51,9 @@
 
 .@{table-prefix-cls}-content{
     display: flex;
-    width: 100%;
+    .rdg {
+        flex: 1,
+    }
 }
 
 

@@ -18,7 +18,7 @@ import { observer, useLocalStore } from 'mobx-react-lite'
 import { toJS } from 'mobx'
 import { Spin } from '../index'
 import { useRowRenderer } from './row'
-import { usePreFormatColumn } from './column'
+import { preFormatColumn } from './column'
 import { classPrefix } from '../utils'
 import { StoreContext, createStore } from './store'
 import { Tools } from './plugin/Tools'
@@ -99,7 +99,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
         return false
     }
 
-    const columns = usePreFormatColumn(store, props.selectBox!, props.rowKey!)
+    const columns = preFormatColumn(store, props.selectBox!, props.rowKey!)
 
     useEffect(() => {
         store.columns = props.columns
@@ -157,35 +157,21 @@ export const Table = observer<TableProps>((props: TableProps) => {
     }
     const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
 
-    const divRef = useRef<HTMLDivElement>(null)
-    const [width, setWidth] = useState<number>(props.width || 0)
-    useEffect(() => {
-        const interval = setInterval(() => {
-            if (divRef.current && !props.width) {
-                setWidth(divRef.current.offsetWidth)
-            }
-        }, 400)
-        return () => {
-            clearInterval(interval)
-        }
-    }, [])
-
-
     let rows: Row[] = store.datas
     if (props.groupColumn && props.groupColumn.length > 0){
         rows = store.groupDatas
     }
+
     const rdg = (
         <>
             <ReactDataGrid
                 ref={gridRef}
-                width={width - 20}
-                height={props.height}
                 columns={columns}
                 rows={rows}
                 onScroll={onScroll}
                 rowKey={props.rowKey}
                 enableCellCopyPaste={props.enableCellCopyPaste}
+                summaryRows={props.summaryRows}
                 sortDirection={sortDirection}
                 onSort={(columnKey, direction) => {
                     // 如果是分组状态,禁止操作
@@ -275,28 +261,24 @@ export const Table = observer<TableProps>((props: TableProps) => {
             />
         </div>
     )
-
-    const getReactNode = (node: ReactNode) => width > 0 ? node : undefined
+    
+    const getPluginNode = (node: ReactNode) => {
+        if(props.mode === 'SIMPLE') return undefined;
+        return node
+    }
     return (
         <StoreContext.Provider value={store}>
             <Spin
                 spinning={store.loading}
             >
                 <div
-                    ref={divRef}
                     className={`${tableClassPrefix}-content`}
-                    style={{
-                        height: props.height,
-                    }}
                 >
-                    {getReactNode(rdg)}
-                    {getReactNode(
-                        <Tools height={props.height!} />
-                    )}
+                   {rdg}
+                   {getPluginNode(<Tools />)}
                 </div>
-
+                {getPluginNode(footer)}
             </Spin>
-            {getReactNode(footer)}
         </StoreContext.Provider>
     )
 })
@@ -309,6 +291,6 @@ Table.defaultProps = {
     enableCellDragAndDrop: false,
     onRowsUpdate: async () => true,
     selectBox: 'none',
-    height: 300,
+    mode: 'NORMAL',
     onSort: () => { },
 }

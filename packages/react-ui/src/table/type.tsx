@@ -129,6 +129,32 @@ type LoadDataRespType = {
 }
 
 export interface TableProps {
+
+    /**
+     * 模式
+     */
+    mode: 'SIMPLE' | 'NORMAL',
+
+    /**
+     * 行高
+     */
+    rowHeight?: number;
+    
+    /**
+     * 表格头部高度
+     */
+    headerRowHeight?: number;
+    
+    /**
+     * 汇总
+     */
+    summaryRows?: Row[],
+
+    /**
+     * 展开表格
+     */
+    expandable?: (row: Row) => ReactNode
+
     // 表格列的信息
     columns: ColumnProps[]
 
@@ -156,10 +182,7 @@ export interface TableProps {
     groupColumn?: string[]
     // 表格分组的渲染
     groupRenderer?: React.ComponentType<GroupRendererProps>
-    // 组件的宽度
-    width?: number
-    // 组件的高度
-    height?: number
+    
     // 用户唯一的rowKey
     rowKey?: string
     /**
