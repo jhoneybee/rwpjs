@@ -14,15 +14,16 @@ title: Table 表格
 
 ## 代码演示
 
-```tsx
+```jsx
 /**
  * title: 简单的表格
  * desc: 包含了一千列的数据
  */
 
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
 import { Table, Input, toDoubleClick } from '@rwp/react-ui'
-import { Menu, Button, Space, message } from 'antd'
+import { Menu, Button, Space } from 'antd'
 
 
 const getColumns = () => {
@@ -44,9 +45,8 @@ const getColumns = () => {
   return columns
 }
 
-export default () => {
+const MyTable = () => {
     const table = React.useRef()
-    const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
     const [groupField, setGroupField] = useState([])
     const [disable, setDisable] = useState(false)
     const [columns, setColumns] = useState(getColumns())
@@ -119,7 +119,7 @@ export default () => {
             </Button>
           </Space>
         </div>
-          <Table
+        <Table
             columns={columns}
             overlay={()=>{
               return (
@@ -140,10 +140,10 @@ export default () => {
             }}
             pageSize={500}
             table={table}
+            mode='SIMPLE'
             selectBox="multiple"
             rowKey='field0'
             groupColumn={groupField}
-            sortDirection={sortDirection}
             onSort={ sortColumns => {
               console.log(sortColumns)
             }}
@@ -176,12 +176,25 @@ export default () => {
               })
             }}
           /> 
-        </>
+      </>
     )
 }
+
+export default MyTable;
+
+ReactDOM.render((
+  <div
+    style={{
+      height: 900
+    }}
+  >
+    <MyTable />
+  </div>
+), window.document.querySelector('#root'))
+
 ```
 
-```tsx
+```jsx
 /**
  * title: 简约类型的表格
  * desc: 只有表格信息，没有其他

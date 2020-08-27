@@ -51,12 +51,19 @@
 
 .@{table-prefix-cls}-content{
     display: flex;
+    height: 100%;
     .rdg {
-        flex: 1,
+        flex: 1;
+        height: 100%;
     }
 }
 
-
+.@{table-prefix-cls}-spin{
+    height: 100%;
+    >div{
+        height: 100%;
+    }
+}
 
 .@{table-prefix-cls}-footer-total{
     &::before {

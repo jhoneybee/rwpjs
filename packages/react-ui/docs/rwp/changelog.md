@@ -26,6 +26,15 @@ group:
  - 次版本号：每月发布一个带有新特性的向下兼容的版本。
  - 修订版本号：每周会进行日常 bugfix 更新。（如果有紧急的 bugfix，则任何时候都可发布）
 
+### 1.15.0-alpha.0
+
+- Upload
+  - 🆕 添加一个`UploadPicturesWall` 图片墙展现组件。负责图片的上传和展示
+- Tree
+  - 🐞 修复设置了`expandedKeys` 但是没有正确进行展开的问题。
+- Table
+  - 🐞 修复一个自适应高度的问题
+
 ### 1.14.1-alpha.0
 
 - Table

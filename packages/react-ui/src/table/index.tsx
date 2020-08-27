@@ -271,6 +271,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
         <StoreContext.Provider value={store}>
             <Spin
                 spinning={store.loading}
+                wrapperClassName={`${tableClassPrefix}-spin`}
             >
                 <div
                     className={`${tableClassPrefix}-content`}

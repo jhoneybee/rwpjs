@@ -102,6 +102,9 @@ export const Tree = (props: Props) => {
         if (props.expandAll) {
             setExpandedKeys(expandedKeys.concat(tempTreeNode.map(ele => ele.key)))
         }
+
+
+
         const { checkedKeys: propsCheckedKeys } = props
         const realCheckedKeys: Key[] | {
             checked: Key[];
@@ -110,6 +113,15 @@ export const Tree = (props: Props) => {
             checked: [],
             halfChecked: []
         }
+
+        const joinExpandedKeys: Key[] = []
+        tempTreeNode.forEach(ele => {
+            if(props.expandedKeys?.includes(ele.key)){
+                joinExpandedKeys.push(ele.key)
+            }
+        })
+      
+
         setTreeNodes(tempTreeNode.map(ele => {
             const chil = ele as EventDataNode
             if (
@@ -157,7 +169,7 @@ export const Tree = (props: Props) => {
                 title,
             }
         }))
-        
+        setExpandedKeys(expandedKeys.concat(joinExpandedKeys))
         setCheckedKeys(realCheckedKeys)
     }
 
@@ -295,11 +307,20 @@ export const Tree = (props: Props) => {
     }, [])
 
     useEffect(() => {
+
         setExpandedKeys(props.expandedKeys as (string | number)[])
     }, [props.expandedKeys])
 
     useEffect(() => {
-        setSelectedKeys(props.selectedKeys as (string | number)[])
+        const keys: Key[] = []
+        findTreeNode(treeNodes, node => {
+            if(props.expandedKeys?.includes(node.key)){
+                keys.push(node.key)
+            }
+            return false
+        })
+
+        setSelectedKeys(keys)
     }, [props.selectedKeys])
 
     const TreeNode = props.enableDirectoryTree ? AntTree.DirectoryTree : AntTree
@@ -373,11 +394,19 @@ export const Tree = (props: Props) => {
                             tempCheckedKeys.halfChecked.push(ele.key)
                         }
                     }
-
                     return false
                 })
                 setTreeNodes([...treeNodes])
                 setCheckedKeys(realCheckedKeys)
+                const joinExpandedKeys: Key[] = []
+                children.forEach(ele => {
+                    if(props.expandedKeys?.includes(ele.key)){
+                        joinExpandedKeys.push(ele.key)
+                    }
+                })
+                setExpandedKeys(expandedKeys.concat(joinExpandedKeys))
+      
+
             }}
             checkedKeys={checkedKeys}
             expandedKeys={expandedKeys}

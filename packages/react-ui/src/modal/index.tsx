@@ -7,7 +7,7 @@ import { State, Action, reducer } from './reducer'
 
 import './style/index.less'
 
-interface ModalHandle {
+export interface ModalHandle {
     show: () => void
     hide: () => void
 }
