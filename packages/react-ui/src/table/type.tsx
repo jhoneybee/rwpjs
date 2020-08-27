@@ -133,7 +133,7 @@ export interface TableProps {
     /**
      * 模式
      */
-    mode: 'SIMPLE' | 'NORMAL',
+    mode?: 'SIMPLE' | 'NORMAL',
 
     /**
      * 行高

@@ -3,19 +3,21 @@
  */
 export const classPrefix = 'rwp'
 
-
-const countClickMap = new Map<string, Date>()
+// 单击次数
+let singleClickNumber: number = 0
+// 最后单击时间
+let lastClickDate: Date | null = null
 
 /**
  * 单击事件转换为双击事件
  * @param key 唯一ID
  */
-export const toDoubleClick = (callback: () => void, key?: string) => {
-    const realKey = key || 'normal'
-    const currentDate = countClickMap.get(realKey)
-    if (currentDate && new Date().getTime() - currentDate.getTime() < 900) {
+export const toDoubleClick = (callback: () => void) => {
+    singleClickNumber += 1 
+    lastClickDate = new Date()
+    if (singleClickNumber > 1 && new Date().getTime() - lastClickDate.getTime() < 900) {
         callback()
-        countClickMap.delete(realKey)
+        singleClickNumber = 0
+        lastClickDate = null
     }
-    countClickMap.set(realKey, new Date())
 }
