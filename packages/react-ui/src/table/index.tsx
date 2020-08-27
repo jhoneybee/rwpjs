@@ -207,6 +207,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 selectedRows={store.selectedRows}
                 onSelectedRowsChange={select => {
                     store.setSelectedRows(select)
+                    props.onSelectedRowsChange?.(select)
                 }}
                 rowClass={props.rowClass}
                 onRowClick={props.onRowClick}

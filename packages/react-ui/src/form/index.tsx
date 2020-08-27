@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Form as AntForm } from 'antd';
 import { isArray, cloneDeep } from 'lodash'
 import { FormProps, FormItemProps } from '../interface'
 
 export const Form = (props: FormProps) => {
     const { cols = 5, children, ...restProps } = props
-    const items: JSX.Element[] = []
+    const items: ReactNode[] = []
     if (isArray(children)) {
-        const cells: JSX.Element[] = []
+        const cells: ReactNode[] = []
         let count: number = 0
         children.forEach(item => {
             const { br, colSpan = 1 } = item.props
@@ -21,7 +21,7 @@ export const Form = (props: FormProps) => {
         })
     }
 
-    const colsNode: JSX.Element[] = []
+    const colsNode: ReactNode[] = []
     for (let i = 0; i < cols; i += 1) {
         colsNode.push(<th aria-label="th" style={{ width: `${Math.round(1 / cols * 10000) / 100.00}%` }} />)
     }

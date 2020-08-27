@@ -18,12 +18,18 @@ order: 3
  - 次版本号：每月发布一个带有新特性的向下兼容的版本。
  - 修订版本号：每周会进行日常 bugfix 更新。（如果有紧急的 bugfix，则任何时候都可发布）
 
+### 1.14.1-alpha.0
+
+- Table
+  - 🆕 添加 onSelectedRowsChange 事件,可获取用户点击select框获取改变的事件。
+
+
 ### 1.14.0-alpha.0
 
 - Table
   - ⚡️ 提升表格初始化的加载速度。
   - 🆕 添加mode属性来设置表格的布局。以及对应的文档说明。
-  - 🆕 添加summaryRows汇总行
+  - 🆕 添加 summaryRows 汇总行
   - 🆕 添加 rowHeight 来设置行高
   - 🆕 添加 headerRowHeight 来设置头部高度
   - 🔥 修改表格分组,分组行的样式。

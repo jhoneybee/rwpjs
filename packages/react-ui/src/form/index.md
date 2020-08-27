@@ -34,35 +34,35 @@ export default () => {
               console.log(allValues)
             }}
         >
-          <Form.Item key="Field 0" name="Field 0" label="字段 0">
+          <Form.Item key="Field 0" label="字段 0">
             <Input />
           </Form.Item>
-          <Form.Item key="Field 1" name="Field 1" label="字段 1" colSpan={2}>
+          <Form.Item key="Field 1" label="字段 1" colSpan={2}>
             <Input />
           </Form.Item>
-          <Form.Item key="Field 2" name="Field 2" label="字段 2">
+          <Form.Item key="Field 2" label="字段 2">
             <Input />
           </Form.Item>
-          <Form.Item key="Field 3" name="Field 3" label="字段 3">
+          <Form.Item key="Field 3" label="字段 3">
             <Input />
           </Form.Item>
-          <Form.Item key="Field 4" name="Field 4" label="字段 4">
+          <Form.Item key="Field 4" label="字段 4">
             <Input />
           </Form.Item>
-          <Form.Item key="Field 5" name="Field 5" label="字段 5">
+          <Form.Item key="Field 5" label="字段 5">
             <Input />
           </Form.Item>
-          <Form.Item key="Field 6" name="Field 6" label="字段 6">
+          <Form.Item key="Field 6" label="字段 6">
             <Input />
           </Form.Item>
-          <Form.Item key="Field 7" name="Field 7" label="字段 7">
+          <Form.Item key="Field 7" label="字段 7">
             <Input />
           </Form.Item>
-          <Form.Item key="Field 8" name="Field 8" rowSpan={3}>
+          <Form.Item key="Field 8" rowSpan={3}>
             <div style={{ height: 100, width: 160, marginLeft: 20,backgroundColor: '#999999'}} />
           </Form.Item>
-          <Form.Item key="Field 9" name="Field 9" label="字段 9" br colSpan={4}>
-            <Input />
+          <Form.Item key="Field 9" label="字段 9" br colSpan={4}>
+            <Input.TextArea maxLength={100} />
           </Form.Item>
         </Form>
       </Card>

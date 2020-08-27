@@ -144,6 +144,8 @@ export interface TableProps {
      * 表格头部高度
      */
     headerRowHeight?: number;
+
+    
     
     /**
      * 汇总
@@ -209,6 +211,11 @@ export interface TableProps {
      * 当前行的class
      */
     rowClass?: (row: object) => string | undefined;
+
+    /**
+     * 用户改变行选择框的时候触发事件
+     */
+    onSelectedRowsChange?: (selectedRows: Set<Row[keyof Row]>) => void
 
     /**
      * 用户更新表格Rows的事件
