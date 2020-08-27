@@ -12,6 +12,7 @@ export default defineConfig({
   navs: [
     null,
     { title: 'GitHub', path: 'https://github.com/jhoneybee/rwpjs' },
+    
   ],
   extraBabelPlugins: [
     [

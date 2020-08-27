@@ -1,16 +1,24 @@
 ---
 nav:
-  title: 文档
-  path: /introduce
+  title: 更新日志
+  path: /changelog
+  order: 0
 group:
-  path: /introduce
-  title: RWP.JS
-order: 3
+  path: /changelog
 ---
 
 # 更新日志 
 
-`@rwp/react-ui` [![react-ui](https://img.shields.io/npm/v/@rwp/react-ui.svg?style=flat-square)](https://www.npmjs.com/package/@rwp/react-ui) 遵循 Semantic Versioning 2.0.0 语义化版本规范。
+遵循 Semantic Versioning 2.0.0 语义化版本规范。
+
+## 最新版本
+
+| 描述               | 版本号
+|----                |------
+|alpha 内部测试版本   | [![react-ui](https://img.shields.io/npm/v/@rwp/react-ui.svg?style=flat-square)](https://www.npmjs.com/package/@rwp/react-ui)
+|rc 预发布版本        | 未发布
+|stable 稳定版本      | 未发布
+
 
 ## 发布周期
 
