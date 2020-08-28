@@ -119,6 +119,11 @@ const MyTable = () => {
             </Button>
           </Space>
         </div>
+        <div
+          style={{
+            height: 400,
+          }}
+        >
         <Table
             columns={columns}
             overlay={()=>{
@@ -140,7 +145,7 @@ const MyTable = () => {
             }}
             pageSize={500}
             table={table}
-            mode='SIMPLE'
+            // mode='SIMPLE'
             selectBox="multiple"
             rowKey='field0'
             groupColumn={groupField}
@@ -176,22 +181,12 @@ const MyTable = () => {
               })
             }}
           /> 
+          </div>
       </>
     )
 }
 
 export default MyTable;
-
-ReactDOM.render((
-  <div
-    style={{
-      height: 900
-    }}
-  >
-    <MyTable />
-  </div>
-), window.document.querySelector('#root'))
-
 ```
 
 ```jsx
@@ -208,7 +203,11 @@ import moment from 'moment'
 export default () => {
     const table = React.useRef()
     return (
-        <>
+        <div
+           style={{
+            height: 400,
+          }}
+        >
           <Table
             columns={[{
               name: `field0`,
@@ -289,7 +288,7 @@ export default () => {
               })
             }}
           /> 
-        </>
+        </div>
     )
 }
 ```
