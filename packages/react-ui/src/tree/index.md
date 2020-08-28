@@ -29,7 +29,7 @@ export default () => {
     const tree = useRef()
     const search = useRef<string>('')
     const [selectKeys, setSelectKeys] = useState<(number | string)[]>([])
-    const [expandedKeys, setExpandedKeys] = useState<(string | number)[]>([1, 11])
+    const [expandedKeys, setExpandedKeys] = useState<(string | number)[]>([])
     return (
         <>
             <Input.Search
@@ -133,12 +133,12 @@ export default () => {
                 draggable
                 tree={tree}
                 onSelect={(keys) => {
-                    debugger
                     setSelectKeys(keys)
                 }}
                 onExpand={(keys) => {
                     setExpandedKeys(keys)
                 }}
+                
                 onDrop={e => {
                     console.log(e, '拖拽成功')
                 }}

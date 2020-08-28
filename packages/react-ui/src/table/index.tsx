@@ -291,7 +291,7 @@ Table.defaultProps = {
     enableInitLoadData: true,
     enableCellCopyPaste: false,
     enableCellDragAndDrop: false,
-    onRowsUpdate: async () => true,
+    onRowsUpdate: async () => {},
     selectBox: 'none',
     mode: 'NORMAL',
     onSort: () => { },

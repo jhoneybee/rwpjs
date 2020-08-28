@@ -1,10 +1,15 @@
 import React, { ReactNode } from 'react';
 import { Form as AntForm } from 'antd';
 import { isArray, cloneDeep } from 'lodash'
+import { useForm } from 'antd/lib/form/Form';
 import { FormProps, FormItemProps } from '../interface'
 
 export const Form = (props: FormProps) => {
-    const { cols = 5, children, ...restProps } = props
+    const { cols = 5, form: propsForm, children, ...restProps } = props
+    const [form] = useForm()
+    if (propsForm){
+        propsForm.current = form
+    }
     const items: ReactNode[] = []
     if (isArray(children)) {
         const cells: ReactNode[] = []
@@ -28,6 +33,7 @@ export const Form = (props: FormProps) => {
     return (
         <AntForm
             {...restProps}
+            form={form}
         >
             <table
                 style={{

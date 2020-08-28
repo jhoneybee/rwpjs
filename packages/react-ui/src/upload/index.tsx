@@ -2,7 +2,8 @@ import React, { ComponentType, useState, useRef, useEffect, CSSProperties, React
 import { PlusOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons'
 import { generate } from 'shortid'
 import classnames from 'classnames'
-import { Modal, Spin } from '../index'
+import { Carousel as AntCarousel } from 'antd'
+import { Modal, Spin, Carousel } from '../index'
 import { ModalHandle } from '../modal/index'
 import { classPrefix } from '../utils'
 import './style/index.less'
@@ -152,7 +153,26 @@ export const UploadPicturesWall = ({
                         getImgsAsync(files)
                     }
                 }, [files])
-            
+
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                const carousel = useRef<AntCarousel | null>(null)
+
+                const getCarouselImages = () => {
+                    if(image){
+                        const newImages: Image[] = [image]
+                        return newImages.concat(images.filter(eleImage => eleImage.id !== image.id)).map(ele => (
+                            <div>
+                                <img
+                                    src={ele.url}
+                                    style={{ width: '100%', height: 400 }}
+                                    alt={ele.name}
+                                />
+                            </div>
+                        ))
+
+                    }
+                    return undefined
+                }
                 return (
                     <>
                         {images.map(ele => (
@@ -179,6 +199,7 @@ export const UploadPicturesWall = ({
                                         key='eye'
                                         onClick={e => {
                                             setImage(ele)
+                                          
                                             modal.current?.show()
                                             e.stopPropagation()
                                         }}
@@ -211,14 +232,21 @@ export const UploadPicturesWall = ({
                         <Modal
                             modal={modal}
                             footer={false}
+                            width={900}
+                            title="图片预览"
                         >
-                            {image ? (
-                                <img
-                                    src={image.url}
-                                    style={{width: '100%', height: '100%'}}
-                                    alt={image.name}
-                                />
-                            ) : undefined}
+                            <div
+                                style={{
+                                    margin: 20
+                                }}
+                            >
+                                <Carousel
+                                    arrows
+                                    ref={carousel}
+                                >
+                                    {getCarouselImages()}
+                                </Carousel>
+                            </div>
                         </Modal>
                     </>
                 )

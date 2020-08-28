@@ -13,7 +13,7 @@ title: Form 表单组件
 ## 代码演示
 
 
-```tsx
+```jsx
 /**
  * title: 简单的表单
  * desc: 一个简单的表单演示,尽管重复设置 key，和name 很繁琐，但是根据 https://zh-hans.reactjs.org/warnings/special-props.html 需要这样做
@@ -70,21 +70,24 @@ export default () => {
 }
 ```
 
-```tsx
+```jsx
 /**
  * title: 表单联动
  * desc: 通过一个字段改变另外一个字段的组件,基于`shouldUpdate`
  */
 
-import React from 'react'
+import React, { useRef } from 'react'
 import { Form, Input, Checkbox } from '@rwp/react-ui'
 
 
 export default () => {
+    const form = useRef()
     return (
         <Form
+            form={form}
             cols={5}
             onValuesChange={(changedValues, allValues) => {
+              console.log(form)
               console.log(changedValues)
               console.log(allValues)
             }}
@@ -144,7 +147,7 @@ Form属性说明如下：
 |onFinishFailed | 提交表单且数据验证失败后回调事件                      | `Function({ values, errorFields, outOfDate })`|
 |onFieldsChange | 字段更新时触发回调事件                               | `Function(changedFields, allFields)`
 |onValuesChange | 字段值更新时触发回调事件                             | `Function(changedValues, allValues)`
-
+|form           | form实例对象                                       | `React.MutableRefObject` | -
 
 
 ## Form.Item

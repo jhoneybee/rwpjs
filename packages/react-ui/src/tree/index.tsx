@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Tree as AntTree, Dropdown } from 'antd'
 import RcTree from 'rc-tree';
-import { isArray, isObject } from 'lodash'
+import { isArray, isObject, uniqWith } from 'lodash'
 import { Key } from 'rc-tree/lib/interface'
 import { NodeDragEventParams } from 'rc-tree/lib/contextTypes'
 import { EventDataNode, TreeProps, DataNode } from 'antd/lib/tree';
@@ -307,20 +307,11 @@ export const Tree = (props: Props) => {
     }, [])
 
     useEffect(() => {
-
         setExpandedKeys(props.expandedKeys as (string | number)[])
     }, [props.expandedKeys])
 
     useEffect(() => {
-        const keys: Key[] = []
-        findTreeNode(treeNodes, node => {
-            if(props.expandedKeys?.includes(node.key)){
-                keys.push(node.key)
-            }
-            return false
-        })
-
-        setSelectedKeys(keys)
+        setSelectedKeys(props.selectedKeys || [])
     }, [props.selectedKeys])
 
     const TreeNode = props.enableDirectoryTree ? AntTree.DirectoryTree : AntTree
@@ -404,7 +395,11 @@ export const Tree = (props: Props) => {
                         joinExpandedKeys.push(ele.key)
                     }
                 })
-                setExpandedKeys(expandedKeys.concat(joinExpandedKeys))
+                if(treeNode){
+                    setExpandedKeys(uniqWith(expandedKeys.concat(joinExpandedKeys).concat(treeNode.key)))
+                }else{
+                    setExpandedKeys(expandedKeys.concat(joinExpandedKeys))
+                }
       
 
             }}

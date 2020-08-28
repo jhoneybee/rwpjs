@@ -29,7 +29,7 @@ export default () => {
     useEffect(() => {
       setImages([{
         id: '1',
-        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        url: 'https://user-images.githubusercontent.com/24241052/91524537-0b925f00-e932-11ea-8f8d-d037d9520059.jpg',
         fileName: '可爱的小姐姐'
       }])
     }, [])
@@ -68,6 +68,6 @@ export default () => {
 |images    |要展现的图片 | `Image[]` | `[]`
 |onUpload  |图片上传的事件| `(file: File) => Promise<Image>`| -
 |style     |样式  | `CSSProperties` | -
-
+|actionRender| 动作的按钮渲染| `ComponentType<{className: string, children: ReactNode}>` 
 
 > 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

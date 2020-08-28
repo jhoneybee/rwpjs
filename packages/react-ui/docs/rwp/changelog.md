@@ -26,6 +26,17 @@ group:
  - 次版本号：每月发布一个带有新特性的向下兼容的版本。
  - 修订版本号：每周会进行日常 bugfix 更新。（如果有紧急的 bugfix，则任何时候都可发布）
 
+### 1.16.0-alpha.0
+
+- Carousel
+  - 🆕 引入antd的Carousel
+- Tree
+  - 🐞 修复需要点击两次才能够展开的问题
+- Upload
+  - 🔥 采用轮播方式预览图片
+- Form 
+  - 🆕 添加一个 `form` 属性来获取form的实例对象
+
 ### 1.15.1-alpha.0
 
 - Table

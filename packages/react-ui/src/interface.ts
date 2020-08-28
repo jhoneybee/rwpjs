@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import { LiteralUnion } from 'antd/lib/_util/type';
-import { FormItemProps as AntFormItemProps, FormProps as AntFormProps } from 'antd/lib/form';
+import { FormItemProps as AntFormItemProps, FormProps as AntFormProps, FormInstance } from 'antd/lib/form';
 import { ButtonProps as AntButtonProps } from 'antd/lib/button';
 
 
@@ -43,9 +43,10 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
 }
 
 
-export interface FormProps extends AntFormProps{
+export interface FormProps extends Omit<AntFormProps, 'form'>{
     // 当前列的总数
     cols?: number
+    form?: React.MutableRefObject<FormInstance | null>
     children: JSX.Element[]
 }
 

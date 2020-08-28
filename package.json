@@ -10,7 +10,8 @@
     "lerna": "~3.22.1"
   },
   "version": "0.0.0",
-  "resolutions":{
+  "resolutions": {
     "dot-prop": "5.2.0"
-  }
+  },
+  "dependencies": {}
 }
