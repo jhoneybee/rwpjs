@@ -42,7 +42,6 @@
         "nprogress": "~0.2.0",
         "pinyin": "~2.9.1",
         "rc-menu": "^8.5.3",
-        "rc-tree": "~3.9.2",
         "re-resizable": "~6.5.4",
         "react": "~16.13.1",
         "react-codemirror2": "~7.2.1",
@@ -94,7 +93,8 @@
         "webpack-cli": "^3.3.12"
     },
     "resolutions": {
-        "@typescript-eslint/eslint-plugin": "~3.7.1"
+        "@typescript-eslint/eslint-plugin": "~3.7.1",
+        "rc-tree": "~3.9.2"
     },
     "bugs": {
         "url": "https://github.com/jhoneybee/rwpjs/issues"
