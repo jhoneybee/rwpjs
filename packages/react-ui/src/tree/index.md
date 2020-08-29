@@ -138,10 +138,6 @@ export default () => {
                 onExpand={(keys) => {
                     setExpandedKeys(keys)
                 }}
-                
-                onDrop={e => {
-                    console.log(e, '拖拽成功')
-                }}
                 expandedKeys={expandedKeys}
                 selectedKeys={selectKeys}
                 overlay={() => {
@@ -220,6 +216,7 @@ export default () => {
 |属性        |说明	       |类型	  |默认属性
 |-----      |------       |-----     |-----    
 |loadData   |装载数据的接口|`(treeNode: EventDataNode &#124; null) => Promise<EventDataNode[]>` | -
+|style      |样式         |``
 |tree       |当前tree | `React.MutableRefObject<TreeHandle &#124; null>` | -
 |height|设置Tree的高度| `number`| -      
 |expandedKeys| 展开的节点信息| `Key[]`| -
