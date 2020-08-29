@@ -157,7 +157,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
     }
     const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
 
-    let rows: Row[] = store.datas
+    let rows: Row[] = store.datas.filter(data => data.$state !== 'DELETE')
     if (props.groupColumn && props.groupColumn.length > 0){
         rows = store.groupDatas
     }

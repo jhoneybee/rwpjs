@@ -117,6 +117,17 @@ const MyTable = () => {
             >
               清空列
             </Button>
+            <Button
+              onClick={async () => {
+                const selects = table.current.getSelect()
+                table.current.del(ele => {
+                  debugger
+                  return selects.has(ele.field0)
+                })
+              }}
+            >
+              删除选中数据
+            </Button>
           </Space>
         </div>
         <div
@@ -153,7 +164,7 @@ const MyTable = () => {
               console.log(sortColumns)
             }}
             onRowClick={(rowIdx, row, column) => {
-              toDoubleClick('uuuuuuu', () => {
+              toDoubleClick(() => {
                 console.log('这是双击事件')
               })
             }}
