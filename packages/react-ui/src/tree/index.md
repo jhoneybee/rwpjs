@@ -140,6 +140,7 @@ export default () => {
                 }}
                 
                 onDrop={e => {
+                    debugger
                     console.log(e, '拖拽成功')
                 }}
                 expandedKeys={expandedKeys}

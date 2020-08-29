@@ -16870,7 +16870,7 @@ rc-tree-select@~4.1.1:
     rc-tree "^3.8.0"
     rc-util "^5.0.5"
 
-rc-tree@^3.8.0, rc-tree@~3.9.0, rc-tree@~3.9.2:
+rc-tree@^3.8.0, rc-tree@~3.9.0:
   version "3.9.4"
   resolved "https://registry.yarnpkg.com/rc-tree/-/rc-tree-3.9.4.tgz#aa83a2abc59d4b3b869b26ded3caab20ba237b01"
   integrity sha512-uzgpQL4LLoriYE7xTro2tzb5rd6Eg9lhjWZlN/MaWn+lsFw2nnlLbMULejHd7RQXdYB7t3tTCwk7DiKSN+udrA==

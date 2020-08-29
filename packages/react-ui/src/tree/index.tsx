@@ -473,7 +473,7 @@ export const Tree = (props: Props) => {
                    dropPosition,
                    dropToGap,
                 } = info
-
+                
                 const filterTreeNodes = filter(ele => ele.key === dragNode.key)
                 const loops = (loopsTreeNodes: DataNode[]): DataNode[] => {
                     const result: DataNode[] = []
