@@ -466,7 +466,6 @@ export const Tree = (props: Props) => {
             onDragEnd={props.onDragEnd}
             // 在将拖动的元素放到放置目标上时发生
             onDrop={info => {
-                debugger
                 const {
                    // 目标节点
                    node,
