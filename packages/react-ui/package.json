@@ -5,7 +5,7 @@
     "scripts": {
         "start": "dumi dev",
         "docs:build": "dumi build",
-        "docs:deploy": "gh-pages -d docs-dist",
+        "docs:deploy": "COMPRESS=NONE && gh-pages -d docs-dist",
         "build": "father-build && yarn build:browser ",
         "build:browser": "webpack --config webpack.config.js",
         "deploy": "yarn docs:build && yarn run docs:deploy",
