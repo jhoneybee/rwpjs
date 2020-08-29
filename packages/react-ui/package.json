@@ -4,7 +4,7 @@
     "license": "AGPL-3.0",
     "scripts": {
         "start": "dumi dev",
-        "docs:build": "COMPRESS=NONE && dumi build",
+        "docs:build": "dumi build",
         "docs:deploy": "gh-pages -d docs-dist",
         "build": "father-build && yarn build:browser ",
         "build:browser": "webpack --config webpack.config.js",
