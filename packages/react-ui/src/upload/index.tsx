@@ -129,8 +129,6 @@ export const UploadPicturesWall = ({
                 // eslint-disable-next-line react-hooks/rules-of-hooks
                 const [selectKeys, setSelectKey] = useState<string[]>([])
                 // eslint-disable-next-line react-hooks/rules-of-hooks
-                const [image, setImage] = useState<Image | null >(null)
-                // eslint-disable-next-line react-hooks/rules-of-hooks
                 const modal = useRef<ModalHandle | null>(null)
                 // eslint-disable-next-line react-hooks/rules-of-hooks
                 const [spinning, setSpinning] = useState<boolean>(false)
@@ -156,23 +154,6 @@ export const UploadPicturesWall = ({
 
                 // eslint-disable-next-line react-hooks/rules-of-hooks
                 const carousel = useRef<AntCarousel | null>(null)
-
-                const getCarouselImages = () => {
-                    if(image){
-                        const newImages: Image[] = [image]
-                        return newImages.concat(images.filter(eleImage => eleImage.id !== image.id)).map(ele => (
-                            <div>
-                                <img
-                                    src={ele.url}
-                                    style={{ width: '100%', height: 400 }}
-                                    alt={ele.name}
-                                />
-                            </div>
-                        ))
-
-                    }
-                    return undefined
-                }
                 return (
                     <>
                         {images.map(ele => (
@@ -198,8 +179,8 @@ export const UploadPicturesWall = ({
                                         className="upload-action-icon"
                                         key='eye'
                                         onClick={e => {
-                                            setImage(ele)
-                                          
+                                            const index = images.findIndex(img => ele.id === img.id)
+                                            carousel.current?.goTo(index)
                                             modal.current?.show()
                                             e.stopPropagation()
                                         }}
@@ -233,6 +214,7 @@ export const UploadPicturesWall = ({
                             modal={modal}
                             footer={false}
                             width={900}
+                            forceRender
                             title="图片预览"
                         >
                             <div
@@ -244,7 +226,15 @@ export const UploadPicturesWall = ({
                                     arrows
                                     ref={carousel}
                                 >
-                                    {getCarouselImages()}
+                                    {images.map(ele => (
+                                        <div>
+                                            <img
+                                                src={ele.url}
+                                                style={{ width: '100%', height: 400 }}
+                                                alt={ele.name}
+                                            />
+                                        </div>
+                                    ))}
                                 </Carousel>
                             </div>
                         </Modal>
