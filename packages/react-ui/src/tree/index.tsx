@@ -106,8 +106,6 @@ export const Tree = (props: Props) => {
             setExpandedKeys(expandedKeys.concat(tempTreeNode.map(ele => ele.key)))
         }
 
-
-
         const { checkedKeys: propsCheckedKeys } = props
         const realCheckedKeys: Key[] | {
             checked: Key[];
@@ -175,6 +173,7 @@ export const Tree = (props: Props) => {
         setExpandedKeys(expandedKeys.concat(joinExpandedKeys))
         setCheckedKeys(realCheckedKeys)
     }
+
 
     const filter = (callback: (dataNode: EventDataNode) => boolean) => {
         const loopsDel = (loopNodes: EventDataNode[]): EventDataNode[] => {
@@ -477,16 +476,13 @@ export const Tree = (props: Props) => {
                 
                 const loops = (loopsTreeNodes: DataNode[]): DataNode[] => {
                     const result: DataNode[] = []
-                    loopsTreeNodes.forEach(ele => {
+                    loopsTreeNodes.forEach((ele, index) => {
                         const treeNode = { ...ele }
                         if (ele.children) {
                             treeNode.children = loops(ele.children)
                         }
                         if (treeNode.key === node.key) {
                             if (dropToGap) {
-                                const index = treeNodes.findIndex(
-                                    element => element.key === node.key,
-                                )
                                 if (dropPosition < index) {
                                     result.push(dragNode)
                                     result.push(treeNode)
@@ -503,7 +499,7 @@ export const Tree = (props: Props) => {
                                 treeNode.children = [dragNode]
                                 result.push(treeNode)
                             }
-                        } else {
+                        } else if(treeNode.key !== dragNode.key){
                             result.push(treeNode)
                         }
                     })
@@ -520,8 +516,7 @@ export const Tree = (props: Props) => {
                 }
                 if (preventDefault) return
 
-                const filterTreeNodes = filter(ele => ele.key === dragNode.key)
-                setTreeNodes(loops(filterTreeNodes) as EventDataNode[])
+                setTreeNodes(loops(treeNodes) as EventDataNode[])
             }}
             icon={props.icon}
         />
