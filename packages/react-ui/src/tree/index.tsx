@@ -321,6 +321,7 @@ export const Tree = (props: Props) => {
     return (
         <TreeNode
             ref={treeRef}
+            style={props.style}
             loadData={async treeNode => {
                 loadedKeys.push(treeNode.key)
                 const children = await props.loadData(treeNode)
@@ -474,7 +475,6 @@ export const Tree = (props: Props) => {
                    dropToGap,
                 } = info
                 
-                const filterTreeNodes = filter(ele => ele.key === dragNode.key)
                 const loops = (loopsTreeNodes: DataNode[]): DataNode[] => {
                     const result: DataNode[] = []
                     loopsTreeNodes.forEach(ele => {
@@ -482,10 +482,9 @@ export const Tree = (props: Props) => {
                         if (ele.children) {
                             treeNode.children = loops(ele.children)
                         }
-                        // eslint-disable-next-line no-empty
                         if (treeNode.key === node.key) {
                             if (dropToGap) {
-                                const index = loopsTreeNodes.findIndex(
+                                const index = treeNodes.findIndex(
                                     element => element.key === node.key,
                                 )
                                 if (dropPosition < index) {
@@ -521,6 +520,7 @@ export const Tree = (props: Props) => {
                 }
                 if (preventDefault) return
 
+                const filterTreeNodes = filter(ele => ele.key === dragNode.key)
                 setTreeNodes(loops(filterTreeNodes) as EventDataNode[])
             }}
             icon={props.icon}
