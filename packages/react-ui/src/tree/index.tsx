@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Tree as AntTree, Dropdown } from 'antd'
-import RcTree from 'rc-tree';
 import { isArray, isObject, uniqWith } from 'lodash'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import RcTree from 'rc-tree';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Key } from 'rc-tree/lib/interface'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { NodeDragEventParams } from 'rc-tree/lib/contextTypes'
 import { EventDataNode, TreeProps, DataNode } from 'antd/lib/tree';
 import { OverlayFunc } from '../interface';

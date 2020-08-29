@@ -2,6 +2,7 @@ import React from 'react'
 import { Column, RowsUpdateEvent } from 'react-data-grid-temp'
 import { groupBy, isEqual } from 'lodash'
 import { generate } from 'shortid'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Key } from 'rc-tree/lib/interface'
 import { Row, GroupRowData, ColumnProps } from './type'
 
