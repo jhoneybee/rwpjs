@@ -120,8 +120,8 @@ const MyTable = () => {
             <Button
               onClick={async () => {
                 const selects = table.current.getSelect()
+                console.log(selects)
                 table.current.del(ele => {
-                  debugger
                   return selects.has(ele.field0)
                 })
               }}

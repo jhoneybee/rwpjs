@@ -101,6 +101,14 @@ export const Table = observer<TableProps>((props: TableProps) => {
 
     const columns = preFormatColumn(store, props.selectBox!, props.rowKey!)
 
+    const getRows = () => {
+        let rows: Row[] = store.datas.filter(data => data.$state !== 'DELETE')
+        if (props.groupColumn && props.groupColumn.length > 0){
+            rows = store.groupDatas.filter(data => data.$state !== 'DELETE')
+        }
+        return rows
+    }
+
     useEffect(() => {
         store.columns = props.columns
         store.visibleColumns = props.columns.map(ele => ele.name)
@@ -118,7 +126,12 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 column: store.contextMenu!.column as Column<Row>,
             }),
             getDataSource: () => cloneDeep(store.datas as Row[]),
-            getSelect: () => new Set<string>(toJS(store.selectedRows)),
+            getSelect: () => {
+                const selectedRowsData = toJS(store.selectedRows) as unknown as Array<Row[keyof Row]>
+                const rowData = getRows()
+                const filterData = selectedRowsData.filter(ele => rowData.some((row: Row[keyof Row]) => row[props.rowKey!] === ele ))
+                return new Set<Row[keyof Row]>(filterData)
+            },
             setSelect: (selects: Set<Row[keyof Row]>) => {
                 store.setSelectedRows(selects)
             },
@@ -157,17 +170,12 @@ export const Table = observer<TableProps>((props: TableProps) => {
     }
     const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
 
-    let rows: Row[] = store.datas.filter(data => data.$state !== 'DELETE')
-    if (props.groupColumn && props.groupColumn.length > 0){
-        rows = store.groupDatas
-    }
-
     const rdg = (
         <>
             <ReactDataGrid
                 ref={gridRef}
                 columns={columns}
-                rows={rows}
+                rows={getRows()}
                 onScroll={onScroll}
                 rowKey={props.rowKey}
                 enableCellCopyPaste={props.enableCellCopyPaste}
