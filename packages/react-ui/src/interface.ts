@@ -23,8 +23,6 @@ export { RouteComponentProps } from 'react-router-dom'
  * 按钮的属性
  */
 export interface ButtonProps extends Omit<AntButtonProps, 'onClick'> {
-    // 是否在点击的时候自动加载loading的状态, 默认为 true
-    enableAutoLoading?: boolean
     // 按钮的点击事件
     onClick?: () => Promise<void>
 }
