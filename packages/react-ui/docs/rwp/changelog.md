@@ -26,6 +26,12 @@ group:
  - 次版本号：每月发布一个带有新特性的向下兼容的版本。
  - 修订版本号：每周会进行日常 bugfix 更新。（如果有紧急的 bugfix，则任何时候都可发布）
 
+### 1.16.4-alpha.0
+
+- Button
+  - 🔥 移除点击的 `loading` 的视觉效果,改为 `disabled` 提升视觉体验。
+  - 🗑  移除 `enableAutoLoading` 的属性
+
 ### 1.16.3-alpha.0
 
 - Upload

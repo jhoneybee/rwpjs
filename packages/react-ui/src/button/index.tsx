@@ -1,18 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button as AntButton } from 'antd'
 import { ButtonProps } from '../interface'
 
 export const Button = (props: ButtonProps) => {
-    const [loading, setLoading] = useState(false)
-    const { enableAutoLoading, ...restProps } = props
+    const [disabled, setDisabled] = useState(false)
+    useEffect(() => {
+        if(props.disabled !== undefined){
+            setDisabled(props.disabled)
+        }
+    } , [props.disabled])
+    const { ...restProps } = props
     return (
         <AntButton
             {...restProps}
-            loading={enableAutoLoading ? loading : props.loading}
+            disabled={disabled}
             onClick={() => {
-                setLoading(true)
+                setDisabled(true)
                 props.onClick!().then(() => {
-                    setLoading(false)
+                    setDisabled(false)
                 })
             }}
         />
@@ -20,6 +25,5 @@ export const Button = (props: ButtonProps) => {
 }
 
 Button.defaultProps = {
-    enableAutoLoading: true,
     onClick: async () => {},
 }

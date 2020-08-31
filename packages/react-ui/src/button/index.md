@@ -97,7 +97,7 @@ export default () => {
 ```tsx
 /**
  * title: 执行异步方法
- * desc: 例如请求后端的时候，会执行一个异步方案，而且很耗时的时候默认是有loading进行状态显示，如果不需要可以通过`enableAutoLoading`来取消
+ * desc: 例如请求后端的时候，会执行一个异步方案。
  */
 
 import React from 'react'
@@ -138,7 +138,6 @@ export default () => {
 |block      |将按钮宽度调整为其父宽度的选项 | `boolean` | `false`
 |disabled   |按钮失效状态   | `boolean` | `false`
 |onClick    |按钮点击事件   | `() => PromiseLike<void>` &#124; `void` | 
-|enableenableAutoLoading|是否在点击的时候自动加载loading的状态| `boolean` | `true`
 |loading    |装载状态        | `boolean` | `false`
 
 
