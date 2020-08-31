@@ -69,4 +69,4 @@ export default () => {
 |effect      | 动画效果函数| `scrollx` \| `fade` | `scrollx`
 
 
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts
+> 更多 API 可参考：https://react-slick.neostack.com/docs/api

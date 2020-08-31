@@ -41,10 +41,12 @@ export const Form = (props: FormProps) => {
                     borderSpacing: '8px 0px',
                 }}
             >
+                <tbody>
                 <tr>
                     {colsNode}
                 </tr>
                 {items}
+                </tbody>
             </table>
         </AntForm>
     )

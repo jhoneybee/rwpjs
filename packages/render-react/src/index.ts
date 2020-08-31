@@ -10,14 +10,14 @@ const copyFileTo = (source: string , targe: string) => {
     writeFileSync(join(process.cwd(), 'src', 'pages', '.rwp', targe), txt)
     utimesSync(
         join(process.cwd(), 'src', 'pages', '.rwp', targe),
-        ((Date.now() - 10 * 1000)) / 1000, (Date.now() - 10 * 1000) / 1000);
+        (Date.now() - 10 * 1000) / 1000, (Date.now() - 10 * 1000) / 1000);
 }
 
 const writeFile = (path: string, txt: string) => {
     writeFileSync(path, txt)
     utimesSync(
         path,
-        ((Date.now() - 10 * 1000)) / 1000, (Date.now() - 10 * 1000) / 1000);
+        (Date.now() - 10 * 1000) / 1000, (Date.now() - 10 * 1000) / 1000);
 }
 
 const writeRouteFile = () => {

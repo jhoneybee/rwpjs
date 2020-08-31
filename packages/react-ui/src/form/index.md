@@ -19,15 +19,26 @@ title: Form 表单组件
  * desc: 一个简单的表单演示,尽管重复设置 key，和name 很繁琐，但是根据 https://zh-hans.reactjs.org/warnings/special-props.html 需要这样做
  */
 
-import React from 'react'
-import { Form, Input, Card} from '@rwp/react-ui'
+import React, { useRef } from 'react'
+import { Form, Input, Card, Button } from '@rwp/react-ui'
 
 
 export default () => {
-
+    const form = useRef()
     return (
-      <Card>
+      <>
+        <Button
+          onClick={() => {
+            form.current.validateFields().then(value => {
+              console.log(value)
+            })
+          }}
+        >
+          触发校验
+        </Button>
+        <br />
         <Form
+            form={form}
             cols={5}
             onValuesChange={(changedValues, allValues) => {
               console.log(changedValues)
@@ -65,7 +76,7 @@ export default () => {
             <Input.TextArea maxLength={100} />
           </Form.Item>
         </Form>
-      </Card>
+      </>
     )
 }
 ```
@@ -83,10 +94,12 @@ import { Form, Input, Checkbox } from '@rwp/react-ui'
 export default () => {
     const form = useRef()
     return (
+      <>
         <Form
             form={form}
             cols={5}
             onValuesChange={(changedValues, allValues) => {
+              
               console.log(form)
               console.log(changedValues)
               console.log(allValues)
@@ -115,7 +128,7 @@ export default () => {
                     )
             }}
           </Form.Item>
-           <Form.Item key="Field 4" name="Field 4" label={<span>你好</span>}>
+            <Form.Item key="Field 4" name="Field 4" label={<span>你好</span>}>
             <Input />
           </Form.Item>
           <Form.Item key="Field 5" name="Field 5" label="字段 5">
@@ -131,6 +144,7 @@ export default () => {
             <Input />
           </Form.Item>
         </Form>
+      </>
     )
 }
 ```

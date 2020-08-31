@@ -37,13 +37,11 @@ const RouteComponent = (
             exact
             render={
                 props => (element.routes && element.routes.length > 0 ? (
-                    (
-                        <element.component {...props} >
-                            <Switch>
-                                {RouteComponent(element.routes)}
-                            </Switch>
-                        </element.component>
-                    )
+                    <element.component {...props} >
+                        <Switch>
+                            {RouteComponent(element.routes)}
+                        </Switch>
+                    </element.component>
                 ) : (
                     <element.component {...props} />
                 ))

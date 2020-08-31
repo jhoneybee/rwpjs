@@ -41,13 +41,18 @@ const TextArea = (props: TextAreaProps) => {
 
     let footer = (
         <div className={textAreaClassPrefix} >
-            最多可输入 {props.maxLength} 字
+            <span className={`${textAreaClassPrefix}-text`}>最多可输入</span>
+            <span> {props.maxLength} </span>
+            <span className={`${textAreaClassPrefix}-text`}>字</span>
         </div>
     )
     if (value && value.length > 0) {
         footer = (
             <div className={textAreaClassPrefix} >
-                已输入<span>{value.length}</span>/{props.maxLength} 字
+                <span className={`${textAreaClassPrefix}-text`}>已输入 </span>
+                <span className={`${textAreaClassPrefix}-input-number`}>{value.length}</span>
+                <span > / {props.maxLength}</span>
+                <span className={`${textAreaClassPrefix}-text`}> 字</span>
             </div>
         )
     }

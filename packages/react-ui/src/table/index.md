@@ -329,7 +329,7 @@ export default () => {
 |onRowsUpdate| 用户更新表格触发的事件| ` <E extends RowsUpdateEvent>(event: E, onCommit: () => void) => Promise<boolean>;`
 |onSelectedRowsChange| 用户改变行选择框的时候触发事件| `onSelectedRowsChange?: (selectedRows: Set<Row[keyof Row]>) => void`
 |table       | 用来获取当前的表格进行数据操作 | `TableHandle`
-|rowClass | 设置当前行的class名称 | (row: T) => string \| undefined;
+|rowClass | 设置当前行的class名称 | `(row: T) => string` \| `undefined`;
 
 ### TableHandle 的方法
 

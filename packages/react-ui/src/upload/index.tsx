@@ -227,7 +227,9 @@ export const UploadPicturesWall = ({
                                     ref={carousel}
                                 >
                                     {images.map(ele => (
-                                        <div>
+                                        <div
+                                            key={generate()}
+                                        >
                                             <img
                                                 src={ele.url}
                                                 style={{ width: '100%', height: 400 }}

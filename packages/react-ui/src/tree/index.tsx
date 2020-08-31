@@ -322,7 +322,9 @@ export const Tree = (props: Props) => {
             ref={treeRef}
             style={props.style}
             loadData={async treeNode => {
-                loadedKeys.push(treeNode.key)
+                if (treeNode){
+                    loadedKeys.push(treeNode.key)
+                }
                 const children = await props.loadData(treeNode)
                 if (props.expandAll) {
                     setExpandedKeys(expandedKeys.concat(children.map(ele => ele.key)))
