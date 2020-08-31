@@ -28,7 +28,7 @@ export default () => {
     return (
       <>
         <Button
-          onClick={() => {
+          onClick={async () => {
             form.current.validateFields().then(value => {
               console.log(value)
             })

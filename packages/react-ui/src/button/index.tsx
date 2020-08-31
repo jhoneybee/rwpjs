@@ -16,7 +16,7 @@ export const Button = (props: ButtonProps) => {
             disabled={disabled}
             onClick={() => {
                 setDisabled(true)
-                props.onClick!().then(() => {
+                props.onClick?.()?.then(() => {
                     setDisabled(false)
                 })
             }}

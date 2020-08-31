@@ -22,8 +22,8 @@ title: Table 表格
 
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
-import { Table, Input, toDoubleClick } from '@rwp/react-ui'
-import { Menu, Button, Space } from 'antd'
+import { Table, Input, toDoubleClick, Row } from '@rwp/react-ui'
+import { Button, Space } from 'antd'
 
 
 const getColumns = () => {
@@ -130,11 +130,6 @@ const MyTable = () => {
             </Button>
           </Space>
         </div>
-        <div
-          style={{
-            height: 400,
-          }}
-        >
         <Table
             columns={columns}
             overlay={()=>{
@@ -192,7 +187,6 @@ const MyTable = () => {
               })
             }}
           /> 
-          </div>
       </>
     )
 }
