@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import { Form as AntForm } from 'antd';
 import { isArray, cloneDeep } from 'lodash'
 import { useForm } from 'antd/lib/form/Form';
+import { generate } from 'shortid'
 import { FormProps, FormItemProps } from '../interface'
 
 export const Form = (props: FormProps) => {
@@ -15,11 +16,19 @@ export const Form = (props: FormProps) => {
         const cells: ReactNode[] = []
         let count: number = 0
         children.forEach(item => {
-            const { br, colSpan = 1 } = item.props
-            cells.push(item)
+            const { br, colSpan = 1, rowSpan } = item.props
+            cells.push(
+                <td
+                    key={generate()}
+                    colSpan={colSpan}
+                    rowSpan={rowSpan}
+                >
+                    {item}
+                </td>
+            )
             count += colSpan
             if (count === cols || br) {
-                items.push(<tr>{cloneDeep(cells)}</tr>)
+                items.push(<tr key={generate()}>{cloneDeep(cells)}</tr>)
                 cells.splice(0)
                 count = 0
             }
@@ -28,7 +37,7 @@ export const Form = (props: FormProps) => {
 
     const colsNode: ReactNode[] = []
     for (let i = 0; i < cols; i += 1) {
-        colsNode.push(<th aria-label="th" style={{ width: `${Math.round(1 / cols * 10000) / 100.00}%` }} />)
+        colsNode.push(<th key={generate()} aria-label="th" style={{ width: `${Math.round(1 / cols * 10000) / 100.00}%` }} />)
     }
     return (
         <AntForm
@@ -43,7 +52,9 @@ export const Form = (props: FormProps) => {
             >
                 <tbody>
                 <tr>
-                    {colsNode}
+                    <>
+                        {colsNode}
+                    </>
                 </tr>
                 {items}
                 </tbody>
@@ -60,18 +71,13 @@ const Item = (props: FormItemProps) => {
         cleanMarginBottom.marginBottom = 0
     }
     return (
-        <td
-            colSpan={colSpan}
-            rowSpan={rowSpan}
-        >
-            <AntForm.Item
-                style={{
-                    ...cleanMarginBottom,
-                    ...style,
-                }}
-                {...restProps}
-            />
-        </td>
+        <AntForm.Item
+            style={{
+                ...cleanMarginBottom,
+                ...style,
+            }}
+            {...restProps}
+        />
     )
 }
 Form.Item = Item
