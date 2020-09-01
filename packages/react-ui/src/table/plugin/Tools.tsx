@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { MenuOutlined } from '@ant-design/icons'
 import { useLocalStore, useObserver } from 'mobx-react-lite'
 import { EventDataNode } from 'antd/lib/tree'
+import { generate } from 'shortid'
 import { Tree } from '../../index'
 import { classPrefix } from '../../utils'
 import { useStore } from '../store'
@@ -47,6 +48,7 @@ export const Tools = () => {
                             </h4>
                             <Tree
                                 tree={tree}
+                                key={generate()}
                                 checkedKeys={globalStore.visibleColumns || []}
                                 loadData={loadData}
                                 onCheck={checked => {
