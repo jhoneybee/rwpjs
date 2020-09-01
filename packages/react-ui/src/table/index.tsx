@@ -296,7 +296,7 @@ Table.defaultProps = {
     pageSize: 50,
     params: {},
     enableInitLoadData: true,
-    enableCellCopyPaste: false,
+    enableCellCopyPaste: true,
     enableCellDragAndDrop: false,
     onRowsUpdate: async () => {},
     selectBox: 'none',
