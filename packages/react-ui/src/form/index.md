@@ -214,5 +214,3 @@ Form属性说明如下：
 |type                   |类型，常见有 string \|number \|boolean \|url \| email。更多请参考此处|`string`
 |validator              |自定义校验，接收 Promise 作为返回值。示例参考|`(rule, value) => Promise`
 |whitespace             |如果字段仅包含空格则校验不通过| `boolean`
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

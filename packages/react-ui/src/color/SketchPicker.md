@@ -39,4 +39,3 @@ export default () => {
 |style      |css样式          |`Omit<CSSProperties, 'background'>` | -
 |onChange   |改变颜色触发的事件|`onChange?: (value: RGBColor) => void` | -
 |value      |当前颜色值        |`value?: RGBColor` | -
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

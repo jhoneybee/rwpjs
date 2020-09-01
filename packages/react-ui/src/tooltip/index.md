@@ -99,5 +99,3 @@ export default () => {
 |onVisibleChange | 显示隐藏的回调| `(visible) => void`| -
 |align | 该值将合并到 placement 的配置中，设置参考 rc-tooltip| `object` | -
 |destroyTooltipOnHide | 关闭后是否销毁 Tooltip，当 keepParent 为 false 时销毁父容器 | `boolean` \| `{ keepParent?: boolean }` |`false`
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

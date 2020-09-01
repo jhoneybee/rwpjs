@@ -97,5 +97,3 @@ export default () => {
 |-----      |------       |-----     |-----   
 |checked    |设置标签的选中状态| `boolean`| `false`
 |onChange   |点击标签时触发的回调| `(checked) => void`| -
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

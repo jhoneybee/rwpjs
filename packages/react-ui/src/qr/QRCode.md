@@ -47,6 +47,3 @@ export default () => {
 |-----      |------       |-----     |-----    
 |value       |二维码的内容 |`string`  |-
 |style       |当前组件的样式| `CSSProperties`| -
-
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

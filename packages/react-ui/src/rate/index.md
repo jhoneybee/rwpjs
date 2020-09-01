@@ -52,6 +52,3 @@ export default () => {
 |onFocus     |获取焦点时的回调| `function()`| -
 |onHoverChange|鼠标经过时数值变化的回调| `function(value: number)`| -
 |onKeyDown   |按键回调 | `function(event)`| -
-
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

@@ -102,5 +102,3 @@ export default () => {
 |zIndex  | 设置 Modal 的 z-index | `number`
 |onCancel | 点击遮罩层或右上角叉或取消按钮的回调 | `function(e)`
 |onOk | 点击确定回调 | `function(e)`
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

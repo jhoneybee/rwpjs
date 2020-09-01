@@ -158,10 +158,6 @@ Input 的其他属性和 React 自带的 [input](https://facebook.github.io/reac
 | ---------------- | ---------------- | ------- | ------ |
 | visibilityToggle | 是否显示切换按钮 | `boolean` | `true`   |
 
-
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts
-
 ## FAQ
 
 ### 为什么我动态改变 `prefix/suffix` 时，Input 会失去焦点？

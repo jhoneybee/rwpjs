@@ -56,5 +56,3 @@ export default () => {
 |space	 | 设置 Space 的 size | 
 |virtual | 	设置 false 时关闭虚拟滚动 | `boolean`
 |dropdownMatchSelectWidth| 下拉菜单和选择器同宽。默认将设置 min-width，当值小于选择框宽度时会被忽略。false 时会关闭虚拟滚动|`boolean` \| `number`
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

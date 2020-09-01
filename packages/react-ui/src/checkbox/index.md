@@ -63,5 +63,3 @@ export default () => {
 |-----      |------       
 |blur()     |移除焦点	
 |focus()    |获取焦点
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

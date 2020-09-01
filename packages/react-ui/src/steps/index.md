@@ -65,6 +65,3 @@ Steps.Step 步骤条内的每一个步骤。
 |title       |标题  | `string` \| `ReactNode`| -
 |subTitle    |子标题 | `string` \| `ReactNode`|-
 |disabled    |禁用点击| `boolean` | `false`
-
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

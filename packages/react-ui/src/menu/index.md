@@ -108,5 +108,3 @@ export default () => {
 |title      |设置收缩时展示的悬浮标题|`string`|-
 |icon       |菜单图标|`ReactNode`|-
 |danger     |展示错误状态样式|`boolean`|`false`
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

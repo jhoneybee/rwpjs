@@ -78,5 +78,3 @@ export default () => {
 |key        |当前提示的唯一标志  | `string` \| `number`| -
 |className  |自定义 CSS class   | `string`| -
 |style      |自定义内联样式     | `CSSProperties`| -
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

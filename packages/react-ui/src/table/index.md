@@ -375,9 +375,6 @@ const Demo = () => {
 |editor | 单元格使用的编辑器| `React.ComponentType<EditorProps<T[keyof T], T, unknown>>`
 |cellClass | 设置单元格的class| `string` \| `((row: T) => string);`
 
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts
-
 ## FAQ 
 
 #### 如何将单击事件转换为一个双击事件？

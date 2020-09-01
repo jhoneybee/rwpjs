@@ -163,5 +163,3 @@ export default () => {
 |value|日期|moment[]
 |onCalendarChange|待选日期发生变化的回调|`function(dates: [moment, moment], dateStrings: [string, string])`
 |onChange|日期范围发生变化的回调|`function(dates: [moment, moment], dateStrings: [string, string])`
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

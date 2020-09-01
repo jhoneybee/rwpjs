@@ -61,8 +61,6 @@ export default () => {
 |optionType  |	用于设置 Radio options 类型| 	`default` \| `button`| `default`
 |buttonStyle |RadioButton 的风格样式，目前有描边和填色两种风格 | 	`outline` \| `solid`| `default`
 
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts
-
 ## 方法
 
 |名称        |说明	      

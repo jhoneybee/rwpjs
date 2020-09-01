@@ -73,5 +73,3 @@ Tabs 属性说明如下：
 |key          | 对应 activeKey           | `string`
 |tab          | 选项卡头显示文字          | `string` \| `ReactNode`
 |closeIcon    | 自定义关闭图标,在 `type="editable-card"`时有效| `ReactNode`
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

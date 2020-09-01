@@ -89,5 +89,3 @@ overlay 菜单使用 Menu，还包括菜单项 Menu.Item，分割线 Menu.Divide
 |onClick    |点击左侧按钮的回调，和 Button 一致|`function`| -
 |onVisibleChange|菜单显示状态改变时调用，参数为 `visible`|`function`| -
 |buttonsRender |自定义左右两个按钮| `([buttons: ReactNode[]]) => ReactNode`| -
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

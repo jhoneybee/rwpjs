@@ -69,5 +69,3 @@ export default () => {
 |onUpload  |图片上传的事件| `(file: File) => Promise<Image>`| -
 |style     |样式  | `CSSProperties` | -
 |actionRender| 动作的按钮渲染| `ComponentType<{className: string, children: ReactNode}>` 
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

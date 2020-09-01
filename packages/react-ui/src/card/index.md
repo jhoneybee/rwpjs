@@ -122,5 +122,3 @@ export default () => {
 |description|描述内容      |`ReactNode`|-
 |style      |定义容器类名的样式|`CSSProperties`|-
 |title      |标题内容         |`ReactNode`|-
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts

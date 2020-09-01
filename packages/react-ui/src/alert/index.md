@@ -77,5 +77,3 @@ export default () => {
 |-----      |------       |-----     |-----    
 |message    |自定义错误标题，如果未指定会展示原生报错信息|`ReactNode`|`{{ error }}`
 |description|自定义错误内容，如果未指定会展示报错堆栈|`ReactNode`| `{{ error stack }}`	
-
-> 更多详细信息查看 https://github.com/jhoneybee/rwpjs/blob/master/packages/react-ui/src/interface.ts
