@@ -158,6 +158,9 @@ const MyTable = () => {
             onSort={ sortColumns => {
               console.log(sortColumns)
             }}
+            onSelectedRowsChange={changes => {
+              console.log(changes, 'onSelectedRowsChange')
+            }}
             onRowClick={(rowIdx, row, column) => {
               toDoubleClick(() => {
                 console.log('这是双击事件')

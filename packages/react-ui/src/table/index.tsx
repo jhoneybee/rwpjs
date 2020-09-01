@@ -99,7 +99,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
         return false
     }
 
-    const columns = preFormatColumn(store, props.selectBox!, props.rowKey!)
+    const columns = preFormatColumn(store, props.selectBox!, props.rowKey!, props.onSelectedRowsChange)
 
     const getRows = () => {
         let rows: Row[] = store.datas.filter(data => data.$state !== 'DELETE')
@@ -214,8 +214,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 enableCellDragAndDrop={props.enableCellDragAndDrop}
                 selectedRows={store.selectedRows}
                 onSelectedRowsChange={select => {
-                    store.setSelectedRows(select)
-                    props.onSelectedRowsChange?.(select)
+                    store.setSelectedRows(select, props.onSelectedRowsChange)
                 }}
                 rowClass={props.rowClass}
                 onRowClick={props.onRowClick}

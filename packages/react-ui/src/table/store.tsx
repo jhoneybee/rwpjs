@@ -72,8 +72,10 @@ export function createStore() {
             this.columns.splice(targeColumnIndex!, 1, column!)
 
         },
-        setSelectedRows(keys: Set<Row[keyof Row]>) {
+        setSelectedRows(keys: Set<Row[keyof Row]>, onSelectedRowsChange?: (selectedRows: Set<Row[keyof Row]>) => void) {
+            onSelectedRowsChange?.(keys)
             this.selectedRows = keys
+
         },
         setExpandedKeys(keys: string[]) {
             this.expandedKeys = keys

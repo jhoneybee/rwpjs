@@ -18,6 +18,7 @@ export const preFormatColumn = (
     store: TableStore,
     selectBox: string,
     rowKey: string,
+    onSelectedRowsChange?: (selectedRows: Set<Row[keyof Row]>) => void
 ) => {
     const columns: Column<Row, unknown>[] = store.columns
     .filter(column => store.visibleColumns?.includes(column.name))
@@ -117,7 +118,7 @@ export const preFormatColumn = (
                                 selectKeys.add(value)
                             })
                         }
-                        store.setSelectedRows(selectKeys)
+                        store.setSelectedRows(selectKeys, onSelectedRowsChange)
                     }}
                 />
             ),
