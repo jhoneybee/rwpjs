@@ -30,7 +30,7 @@
     "@rwp/react-ui": "latest"
   },
   "devDependencies": {
-    "@babel/register": "~7.10.1",
+    "@babel/register": "~7.11.5",
     "@umijs/fabric": "~2.1.1",
     "eslint": "~7.8.0",
     "gulp": "~4.0.2",
