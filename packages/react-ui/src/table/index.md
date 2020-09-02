@@ -22,7 +22,7 @@ title: Table 表格
 
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
-import { Table, Input, toDoubleClick, Row } from '@rwp/react-ui'
+import { Table, Input, toDoubleClick, Row, Menu } from '@rwp/react-ui'
 import { Button, Space } from 'antd'
 
 
