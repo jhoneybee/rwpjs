@@ -16618,7 +16618,7 @@ rc-mentions@~1.4.0:
     rc-trigger "^4.3.0"
     rc-util "^5.0.1"
 
-rc-menu@^8.0.1, rc-menu@^8.2.1, rc-menu@^8.5.3, rc-menu@~8.5.2:
+rc-menu@^8.0.1, rc-menu@^8.2.1, rc-menu@~8.5.2:
   version "8.5.3"
   resolved "https://registry.yarnpkg.com/rc-menu/-/rc-menu-8.5.3.tgz#ac427c50929a2bc1a5fb1ce57e187033d3f09361"
   integrity sha512-OLdN+jwhabgyRZDvWYjYpO7RP7wLybhNuAulgGqx1oUPBJrtgVlG/X4HtPb7nypRx/n+eicj6H8CtbCs0L4m/Q==
@@ -16973,10 +16973,10 @@ react-css@0.0.2:
     lodash "^2.4.1"
     to-camel-case "^0.2.1"
 
-react-data-grid-temp@~7.0.0-canary.21.1:
-  version "7.0.0-canary.21.1"
-  resolved "https://registry.yarnpkg.com/react-data-grid-temp/-/react-data-grid-temp-7.0.0-canary.21.1.tgz#45e0f1cb799b2b8e086193d906f8988df34a7175"
-  integrity sha512-/djNWYOMxZMs6W1a30bXPz80Un7dzrFqfDxPQfHxZGWwYakJ8tqgtg5VJNjORBNhySU36o1gJnYtKQaXA7Wo7Q==
+react-data-grid-temp@~7.0.0-canary.22:
+  version "7.0.0-canary.22"
+  resolved "https://registry.yarnpkg.com/react-data-grid-temp/-/react-data-grid-temp-7.0.0-canary.22.tgz#a1efec3f0807dbea26e6ce08417a3ce00f442a33"
+  integrity sha512-0jeHyZcAyBs9oSGnoYAYkdcPhYajWHD1qLak2Bbf8XllnTN+BQ+FhZ/BbxxfFz0UjsfJ5wnbpolijd79Igfjzg==
   dependencies:
     clsx "^1.1.1"
 

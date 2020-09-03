@@ -4,7 +4,9 @@
 
 import React, { FunctionComponent, FC } from 'react'
 import { Menu as AntMenu } from 'antd'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { DividerProps } from 'rc-menu/es/Divider'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { MenuItemGroupProps } from 'rc-menu/es/MenuItemGroup'
 import { MenuProps } from 'antd/es/menu'
 import { MenuItemProps } from 'antd/es/menu/MenuItem'
