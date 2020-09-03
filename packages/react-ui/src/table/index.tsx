@@ -99,7 +99,10 @@ export const Table = observer<TableProps>((props: TableProps) => {
         return false
     }
 
-    const columns = preFormatColumn(store, props.selectBox!, props.rowKey!, props.onSelectedRowsChange)
+    const columns = preFormatColumn(
+        store,
+        props,
+    )
 
     const getRows = () => {
         let rows: Row[] = store.datas.filter(data => data.$state !== 'DELETE')
@@ -119,7 +122,6 @@ export const Table = observer<TableProps>((props: TableProps) => {
             scrollToColumn: gridRef.current.scrollToColumn,
             scrollToRow: gridRef.current.scrollToRow,
             selectCell: gridRef.current.selectCell,
-            commitChanges: gridRef.current.commitChanges,
             rightContext: () => ({
                 row: store.contextMenu!.row as Row,
                 rowIdx: store.contextMenu!.rowIdx as number,
@@ -180,6 +182,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 rowKey={props.rowKey}
                 enableCellCopyPaste={props.enableCellCopyPaste}
                 summaryRows={props.summaryRows}
+                rowHeight={props.rowHeight}
                 sortDirection={sortDirection}
                 onSort={(columnKey, direction) => {
                     // 如果是分组状态,禁止操作
@@ -295,6 +298,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
 Table.defaultProps = {
     pageSize: 50,
     params: {},
+    rowHeight: 35,
     enableInitLoadData: true,
     enableCellCopyPaste: true,
     enableCellDragAndDrop: false,

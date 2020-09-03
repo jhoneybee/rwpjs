@@ -26,8 +26,13 @@ export interface GroupRendererProps {
 export interface GroupRowData extends Row {
     // 唯一ID
     $id?: string,
-    // 数据类型, GROUP 表示分组类型, ROW 表示行数据
-    $type: 'GROUP' | 'ROW'
+    /**
+     * 数据类型
+     * GROUP 数据是分组类型
+     * ROW   行数据类型
+     * EXPANDABLE 额外的展开行
+     */
+    $type: 'GROUP' | 'ROW' | 'EXPANDABLE'
     // 当前展开节点的标题
     $title: ReactNode
     // 父节点信息
@@ -119,6 +124,14 @@ export interface ColumnProps {
     editor?:React.ComponentType<EditorProps<Row[keyof Row], Row, unknown>>;
     // 单元格的class
     cellClass?: string | ((row: Row) => string);
+    // 编辑器属性
+    editorOptions?: {
+        /** Default: true for editor1 and false for editor2 */
+        createPortal?: boolean;
+        /** Default: false */
+        editOnClick?: boolean;
+        onCellKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+    };
 }
 
 export declare type TableFunc = (table: TableHandle) => void;
@@ -155,7 +168,14 @@ export interface TableProps {
     /**
      * 展开表格
      */
-    expandable?: (row: Row) => ReactNode
+    expandable?: {
+        // 展开的className
+        expandedRowClassName?: (row: Row) => boolean
+        // 是否允许展开
+        rowExpandable?: (row: Row) => boolean
+        // 额外的展开行
+        expandedRowRender?: (row: Row) => ReactNode
+    }
 
     // 表格列的信息
     columns: ColumnProps[]

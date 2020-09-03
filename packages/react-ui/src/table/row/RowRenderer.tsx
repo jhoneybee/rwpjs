@@ -1,40 +1,37 @@
 import React from 'react'
 import {
     RowRendererProps,
-    Row as RowRender,
 } from 'react-data-grid-temp'
 import { DropdownRow } from './DropdownRow'
+import { DefaultRow } from './DefaultRow'
 import { GroupRow } from './GroupRow'
 import { Row, TableProps } from '../type'
 
 export const useRowRenderer = (
     rowProps: RowRendererProps<Row, unknown>,
     isDisableLoadData: boolean,
-    {
-        columns,
-        overlay,
-        groupRenderer,
-    }: TableProps
+    tableProps: TableProps,
 ) => {
+
     if (isDisableLoadData) {
         return (
             <GroupRow
-                columns={columns}
+                tableProps={tableProps}
                 rowProps={rowProps}
-                contextMenu={overlay}
-                groupRenderer={groupRenderer}
+                contextMenu={tableProps.overlay}
+                groupRenderer={tableProps.groupRenderer}
             />
         )
     }
 
-    if (overlay) {
+    if (tableProps.overlay) {
         return (
             <DropdownRow
-                columns={columns}
+                tableProps={tableProps}
                 rowProps={rowProps}
-                contextMenu={overlay}
+                contextMenu={tableProps.overlay}
             />
         )
     }
-    return <RowRender {...rowProps} />
+    return <DefaultRow tableProps={tableProps} {...rowProps} />
 }

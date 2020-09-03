@@ -22,6 +22,8 @@ export function createStore() {
         columns: [] as ColumnProps[],
         // 可见的列的信息
         visibleColumns: null as string[] | null,
+        // 展开的表格信息
+        expandedRowNumber:  -1,
         // 当前显示的数据
         datas: [] as Row[],
         // 分组数据
@@ -232,6 +234,10 @@ export function createStore() {
                 return 
             }
             this.datas = datas
+        },
+        setExpandedRowNumber(index: number) {
+            this.setDataSource([...this.getGroupDatas()])
+            this.expandedRowNumber = index
         }
     }
 }

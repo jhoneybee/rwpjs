@@ -4,28 +4,25 @@ import {
     RowRendererProps,
 } from 'react-data-grid-temp'
 import { RightOutlined, DownOutlined } from '@ant-design/icons'
-import { ColumnProps, GroupRendererProps } from '../type'
+import { TableProps, GroupRendererProps } from '../type'
 import { DefaultRow } from './DefaultRow'
 import { DropdownRow } from './DropdownRow'
 import { OverlayFunc } from '../../interface'
 
-
 import 'antd/es/table/style/index.less'
 import { useStore } from '../store'
 
-
-
 interface GroupRowProps {
-    contextMenu?: React.ReactElement | OverlayFunc
     rowProps: RowRendererProps<any, unknown>
-    columns: ColumnProps[]
+    contextMenu?: React.ReactElement | OverlayFunc
+    tableProps: TableProps
     groupRenderer?: React.ComponentType<GroupRendererProps>
 }
 
 export const GroupRow = ({
     contextMenu,
     rowProps,
-    columns,
+    tableProps,
     groupRenderer: GroupRenderer,
 }: GroupRowProps) => {
     const { $id, $type, $title, $space } = rowProps.row
@@ -61,10 +58,10 @@ export const GroupRow = ({
     }
 
     if (contextMenu) {
-        return <DropdownRow columns={columns} contextMenu={contextMenu} rowProps={rowProps} />
+        return <DropdownRow tableProps={tableProps} contextMenu={contextMenu} rowProps={rowProps} />
     }
 
     return (
-        <DefaultRow columns={columns} {...rowProps} />
+        <DefaultRow tableProps={tableProps} {...rowProps} />
     )
 }

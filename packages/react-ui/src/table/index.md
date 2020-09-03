@@ -145,6 +145,11 @@ const MyTable = () => {
                 </Menu>
               )
             }}
+            expandable={{
+              expandedRowRender: () => {
+                return <div style={{height: 200}}> 这是一个可展开的节点数据</div>
+              }
+            }}
             onRowsUpdate={(e, onCommit) => {
               console.log(e, 'onRowsUpdate')
               onCommit()
@@ -377,6 +382,19 @@ const Demo = () => {
 |formatter|格式化当前列的数据 | `React.ComponentType<FormatterProps<T, unknown>>`
 |editor | 单元格使用的编辑器| `React.ComponentType<EditorProps<T[keyof T], T, unknown>>`
 |cellClass | 设置单元格的class| `string` \| `((row: T) => string);`
+|editorOptions| 编辑器属性   | - | -
+
+### editorOptions 编辑器属性
+
+```js
+{
+  // 编辑器模式(内部使用)
+  createPortal?: boolean;
+  // 是否点击编辑
+  editOnClick?: boolean;
+  onCellKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+};
+```
 
 ## FAQ 
 

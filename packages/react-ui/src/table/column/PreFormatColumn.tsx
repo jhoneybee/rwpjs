@@ -5,20 +5,20 @@ import {
     HeaderRendererProps,
     EditorProps,
 } from 'react-data-grid-temp'
+import { RightOutlined, DownOutlined } from '@ant-design/icons'
+
 import { classPrefix } from '../../utils'
 import { Input, Checkbox } from '../../index'
-import { Row } from '../type'
+import { Row, TableProps } from '../type'
 import { DefaultEditor } from '../editor/DefaultEditor'
 import { MultipleSelectColumn } from './MultipleSelectColumn'
-import { TableStore } from '../store'
+import { TableStore, useStore } from '../store'
 
 const tableClassPrefix = `${classPrefix}-table`
 
 export const preFormatColumn = (
     store: TableStore,
-    selectBox: string,
-    rowKey: string,
-    onSelectedRowsChange?: (selectedRows: Set<Row[keyof Row]>) => void
+    tableProps: TableProps,
 ) => {
     const columns: Column<Row, unknown>[] = store.columns
     .filter(column => store.visibleColumns?.includes(column.name))
@@ -96,11 +96,12 @@ export const preFormatColumn = (
             ...restProps,
         }
     }))
-    if (selectBox === 'multiple') {
+    if (tableProps.selectBox === 'multiple') {
         const select: Column<Row, unknown> = {
             key: '$select',
             name: '',
             frozen: true,
+            selectCell: false,
             maxWidth: 35,
             formatter: MultipleSelectColumn,
             headerRenderer: () => (
@@ -114,16 +115,54 @@ export const preFormatColumn = (
                         const selectKeys = new Set<Row[keyof Row]>()
                         if (e.target.checked) {
                             store.datas.forEach((ele: any) => {
-                                const value = ele[rowKey!] as Row[keyof Row]
+                                const value = ele[tableProps.rowKey!] as Row[keyof Row]
                                 selectKeys.add(value)
                             })
                         }
-                        store.setSelectedRows(selectKeys, onSelectedRowsChange)
+                        store.setSelectedRows(selectKeys, tableProps.onSelectedRowsChange)
                     }}
                 />
             ),
         }
         columns.splice(0, 0, select)
+    }
+
+    if (tableProps.expandable?.expandedRowRender) {
+        const expandable: Column<Row, unknown> = {
+            key: '$expandable',
+            name: '',
+            frozen: true,
+            maxWidth: 35,
+            selectCell: false,
+            formatter: formatterProps => {
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                const globalStore = useStore()
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                const Icon = globalStore.expandedRowNumber === formatterProps.rowIdx ? DownOutlined : RightOutlined
+                const nodeIcon = (
+                    <Icon
+                        style={{
+                            cursor: 'pointer',
+                        }}
+                        onClick={() => {
+                            if (globalStore.expandedRowNumber === formatterProps.rowIdx ){
+                                globalStore.setExpandedRowNumber(-1)
+                            }else {
+                                globalStore.setExpandedRowNumber(formatterProps.rowIdx)
+                            }
+                        }}
+                    />
+                )
+                const isRowExpandable = tableProps.expandable?.rowExpandable?.(formatterProps.row)
+                if (
+                    isRowExpandable || isRowExpandable === undefined
+                ){
+                    return nodeIcon;
+                }
+                return null;
+            }
+        }
+        columns.splice(0, 0, expandable)
     }
     return columns
 }
