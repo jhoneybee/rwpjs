@@ -189,10 +189,13 @@ export function createStore() {
         // 更新数据
         update(change: (data: Row) => Row) {
             return new Promise<void>(resolve => {
-                const datas = this.dataSource.map(ele => ({
-                    ...change(ele),
-                    $state: 'UPDATE',
-                }))
+                const datas = this.dataSource.map(ele => {
+                    const row = change(ele)
+                    if (isEqual(row, ele)) {
+                        return ele
+                    }
+                    return {...row, $state: 'UPDATE'}
+                })
                 this.setDataSource(datas)
                 resolve()
             })
