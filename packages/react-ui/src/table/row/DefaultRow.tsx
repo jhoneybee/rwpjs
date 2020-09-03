@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import {
     RowRendererProps,
     Row,
@@ -41,7 +41,6 @@ export const DefaultRow = ({
         }
     }));
 
-    const rowRef = useRef<HTMLDivElement | null>(null)
     let expandable = null
     if(
         (tableProps?.expandable?.rowExpandable?.(row)
@@ -53,11 +52,11 @@ export const DefaultRow = ({
         expandable = (
             <div
                 className={classNames({
-                    [`${tableClassPrefix}-expandable`]: true
+                    [`${tableClassPrefix}-expandable`]: true,
                 })}
                 style={{
                     top: restProps.top + tableProps.rowHeight!,
-                    width: rowRef.current?.clientWidth,
+                    width: 'var(--row-width)',
                 }}
             >
                 {tableProps.expandable?.expandedRowRender?.(row)}
@@ -68,7 +67,6 @@ export const DefaultRow = ({
     return (
         <>
             <Row
-                ref={rowRef}
                 row={row}
                 rowIdx={rowIdx}
                 eventBus={eventBus}

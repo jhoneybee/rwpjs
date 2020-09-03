@@ -39,6 +39,9 @@ const getColumns = () => {
       align: 'center|left',
       sortable: true,
       editable: true,
+      editorOptions: {
+        editOnClick: true
+      },
       editor: Input
     })
   }
