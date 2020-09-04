@@ -21,4 +21,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: yarn global add lerna && lerna bootstrap && lerna run lint:script
+    - run: yarn
+    - run: yarn bootstrap
+    - run: yarn test

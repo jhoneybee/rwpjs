@@ -1,13 +1,14 @@
 {
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "publish": "lerna publish"
+    "publish": "lerna publish",
+    "test": "lerna run test"
   },
   "author": "zhangj",
   "license": "AGPL-3.0",
   "name": "rwp",
   "devDependencies": {
-    "lerna": "~3.22.1"
+    "lerna": "^3.22.1"
   },
   "version": "0.0.0",
   "resolutions": {
