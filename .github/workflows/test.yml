@@ -1,4 +1,4 @@
-name: ESlint
+name: Test
 
 on: [pull_request]
 
@@ -19,4 +19,4 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: yarn
     - run: yarn bootstrap
-    - run: yarn test
+    - run: yarn lint:script
