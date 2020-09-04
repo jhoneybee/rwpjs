@@ -3,6 +3,9 @@
 
 name: ESlint
 
+on: [pull_request]
+
+
 jobs:
   build:
 
