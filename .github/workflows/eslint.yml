@@ -21,6 +21,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: apt install lerna -y 
+    - run: yarn global add lerna
     - run: lerna bootstrap
     - run: lerna run lint:script
