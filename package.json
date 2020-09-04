@@ -2,6 +2,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "publish": "lerna publish",
+    "lint:script": "lerna run lint:script",
     "test": "lerna run test"
   },
   "author": "zhangj",
