@@ -194,7 +194,7 @@ export function createStore() {
                     if (isEqual(row, ele)) {
                         return ele
                     }
-                    return {...row, $state: 'UPDATE'}
+                    return {...row, $state: row.$state === 'DELETE' ? 'DELETE' : 'UPDATE'}
                 })
                 this.setDataSource(datas)
                 resolve()
