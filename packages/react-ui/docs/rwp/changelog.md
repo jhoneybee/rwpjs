@@ -25,6 +25,11 @@ group:
  - 次版本号：每月发布一个带有新特性的向下兼容的版本。
  - 修订版本号：每周会进行日常 bugfix 更新。（如果有紧急的 bugfix，则任何时候都可发布）
 
+### 1.18.4-alpha.0
+
+- Tree
+  - 🐞 修复 onDrop 在执行异步方法的时候preventDefault会失效 
+
 ### 1.18.3-alpha.0
 
 - Table
