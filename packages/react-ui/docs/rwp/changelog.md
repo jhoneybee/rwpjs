@@ -13,10 +13,11 @@ group:
 
 ## 最新版本
 
-| 描述               | 版本号
-|----                |------
-|alpha 内部测试版本   | [![react-ui](https://img.shields.io/npm/v/@rwp/react-ui/alpha)](https://www.npmjs.com/package/@rwp/react-ui)
-|stable 稳定版本      | [![react-ui](https://img.shields.io/npm/v/@rwp/react-ui/latest)](https://www.npmjs.com/package/@rwp/react-ui)
+
+|名称 | 描述               | 版本号
+|----- |----                |------
+| `@rwp/react-ui` |alpha 内部测试版本   | [![react-ui](https://img.shields.io/npm/v/@rwp/react-ui/alpha)](https://www.npmjs.com/package/@rwp/react-ui)
+| |stable 稳定版本      | [![react-ui](https://img.shields.io/npm/v/@rwp/react-ui/latest)](https://www.npmjs.com/package/@rwp/react-ui)
 
 
 ## 发布周期
@@ -24,13 +25,12 @@ group:
  - 主版本号：含有破坏性更新和新特性，不在发布周期内。
  - 次版本号：每月发布一个带有新特性的向下兼容的版本。
  - 修订版本号：每周会进行日常 bugfix 更新。（如果有紧急的 bugfix，则任何时候都可发布）
-
-
+ 
 ## stable 稳定版本
 
 ### 1.0.0
 
-2020年9月8日，今天是我的生日，于是在生日这天，发布了1.0正式版本。这一年以来收获很多很多。也是第一会拥有了自己的开源项目。
+2020年9月8日，今天是我的生日，于是在生日这天，发布了1.0正式版本。这一年以来收获很多很多。也是第一次拥有了自己的开源项目。
 
 在此时此刻，我定义以下准则，这是一辈子需要遵循的。
 
