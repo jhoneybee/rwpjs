@@ -132,6 +132,14 @@ export default () => {
                 }}
                 draggable
                 tree={tree}
+                onDrop={(info) => {
+                    return new Promise((re) => {
+                        setTimeout(() => {
+                            console.log(info.event.preventDefault)
+                            re()
+                        }, 1000)
+                    })
+                }}
                 onSelect={(keys) => {
                     setSelectKeys(keys)
                 }}

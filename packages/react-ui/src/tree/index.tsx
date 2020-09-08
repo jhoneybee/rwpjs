@@ -65,7 +65,7 @@ interface Props extends Omit<TreeProps,
         dragNodesKeys: Key[];
         dropPosition: number;
         dropToGap: boolean;
-    }) => void
+    }) => void | Promise<void>
 }
 
 // 筛选树节点信息
@@ -508,19 +508,30 @@ export const Tree = (props: Props) => {
                     return result
                 }
 
-                (async () => {
-                    let preventDefault = false
-    
-                    if (props.onDrop) {
-                        // eslint-disable-next-line no-param-reassign
-                        info.event.preventDefault = () => {
-                            preventDefault = true
-                        }
-                        await props.onDrop(info)
-                    }
+                let preventDefault = false
+
+                const commit = () => {
                     if (preventDefault) return
                     setTreeNodes(loops(treeNodes) as EventDataNode[])
-                })()
+                }
+                if (props.onDrop) {
+                    const onDropResult = props.onDrop({
+                        ...info,
+                        event: {
+                            ...info.event,
+                            preventDefault: () => {
+                                preventDefault = true
+                            }
+                        }
+                    })
+                    if (onDropResult && onDropResult.then) {
+                        onDropResult.then(() => {
+                            commit()
+                        })
+                    }
+                } else {
+                    commit()
+                }
             }}
             icon={props.icon}
         />
