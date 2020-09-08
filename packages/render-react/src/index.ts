@@ -45,7 +45,24 @@ const compiler = (compiler) => {
 // 初始化webpack相关的信息
 export default ({ config }) => {
     const tempConfig = config
-        
+
+    // 如果是 web-rwp-particle 类型
+    if (tempConfig.target === 'web-rwp-particle') {
+
+        // 设置入口信息
+        tempConfig.entry = join(process.cwd(),'src', 'index.tsx')
+        tempConfig.output.filename = 'rwp.particle.js'
+
+        if (tempConfig.particle){
+            // 设置为导出库的名称
+            tempConfig.output.library = `RWP_PARTICLE_${tempConfig.particle.library}`
+        }
+        return {
+            config: tempConfig,
+            compiler,
+        }
+    }
+
     tempConfig.plugins.push(
         new HtmlWebpackPlugin({
             hash: true,
@@ -102,6 +119,8 @@ export default ({ config }) => {
     tempConfig.entry = join(process.cwd(),'src','pages','.rwp', 'rwp.tsx')
     // 设置对react-router-dom 的 BrowserRouter 的支持
     tempConfig.devServer.historyApiFallback = true
+
+
     return {
         config: tempConfig,
         compiler,

@@ -1,6 +1,6 @@
 import { join } from 'path'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
-import { Configuration } from 'webpack'
+import { Configuration, DefinePlugin } from 'webpack'
 import * as TerserPlugin from 'terser-webpack-plugin';
 import * as WebpackBar from 'webpackbar';
 
@@ -64,7 +64,13 @@ const getTemplateConfig = (config: Config): Configuration => {
             },
             ]
         },
-        plugins: [new WebpackBar()]
+        plugins: [
+            new WebpackBar(),
+            new DefinePlugin({
+                // 微前端的注册中心
+                RWP_PARTICLE_URL: config.particle !== undefined ? config.particle.url : undefined,
+            })
+        ]
     }
 }
 

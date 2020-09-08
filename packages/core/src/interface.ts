@@ -1,13 +1,18 @@
-type ImportStyle = {
-    libraryName: string 
-    style: boolean | string
-    libraryDirectory?: string
+export interface Particle {
+    // 注册中心
+    url: string
+    // 库的名称
+    library: string
 }
 
 export interface Config {
-    // 默认为web在浏览器中使用. see https://webpack.js.org/configuration/target/
-    target: 'web' | 'webworker' | 'async-node' | 'node' | 'electron-main' | 'electron-renderer' | 'node-webkit' | string;
-    // 扩展额外的
+    /**
+     * 默认为web在浏览器中使用. see https://webpack.js.org/configuration/target/
+     * 
+     * 新增一个类型: web-rwp-particle web的粒子，做为微前端的构建
+     */
+    target: 'web-rwp-particle' | 'web' | 'webworker' | 'async-node' | 'node' | 'electron-main' | 'electron-renderer' | 'node-webkit' | string;
+    // 额外的babel引用
     extraBabelIncludes: RegExp[]
     // 开发服务器配置 see https://webpack.js.org/configuration/dev-server/
     devServer: {
@@ -21,5 +26,7 @@ export interface Config {
         proxy?:{
             [key: string]: any
         }
-    } 
+    },
+    // 微前端的密钥信息
+    particle: Particle | undefined
 }
