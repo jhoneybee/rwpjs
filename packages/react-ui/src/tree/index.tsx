@@ -507,18 +507,20 @@ export const Tree = (props: Props) => {
                     })
                     return result
                 }
-                let preventDefault = false
 
-                if (props.onDrop) {
-                    // eslint-disable-next-line no-param-reassign
-                    info.event.preventDefault = () => {
-                        preventDefault = true
+                (async () => {
+                    let preventDefault = false
+    
+                    if (props.onDrop) {
+                        // eslint-disable-next-line no-param-reassign
+                        info.event.preventDefault = () => {
+                            preventDefault = true
+                        }
+                        await props.onDrop(info)
                     }
-                    props.onDrop(info)
-                }
-                if (preventDefault) return
-
-                setTreeNodes(loops(treeNodes) as EventDataNode[])
+                    if (preventDefault) return
+                    setTreeNodes(loops(treeNodes) as EventDataNode[])
+                })()
             }}
             icon={props.icon}
         />
