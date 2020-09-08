@@ -3041,10 +3041,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-grid-layout@~0.17.2":
-  version "0.17.2"
-  resolved "https://registry.yarnpkg.com/@types/react-grid-layout/-/react-grid-layout-0.17.2.tgz#43d59d2c342988966d2567b95a2c52b4f38b8f08"
-  integrity sha512-iLKQ5rI9KyPGs/BlWmeBfoikRnoOmTuddK8V5mOCgJ46e2JaecZuPhuIX1kV0mkQSk6X3XoEZALVW0XQbz9g5Q==
+"@types/react-grid-layout@~1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@types/react-grid-layout/-/react-grid-layout-1.1.0.tgz#6592d391d64b9efebd5588a6a8fbbb9040c30998"
+  integrity sha512-lnt4YEXRHWimtbrghVSq+Ug7ByQl9cROM/xJewjLNeuqrT4tnKGe4tXX/3+/xYANG96L57F4+G0qf8jCgvDxWA==
   dependencies:
     "@types/react" "*"
 
