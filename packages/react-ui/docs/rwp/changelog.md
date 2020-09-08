@@ -48,6 +48,11 @@ group:
 
 ## alpha 内测开发版本
 
+### 1.18.5-alpha.0
+
+- Tree
+  - 🐞 修复 onDrop 的问题
+
 ### 1.18.4-alpha.0
 
 - Tree
