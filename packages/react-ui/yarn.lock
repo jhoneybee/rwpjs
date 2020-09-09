@@ -47,15 +47,14 @@
     rc-util "^5.0.1"
 
 "@ant-design/pro-layout@~6.4.11":
-  version "6.4.14"
-  resolved "https://registry.yarnpkg.com/@ant-design/pro-layout/-/pro-layout-6.4.14.tgz#44758fb3ca80c286e5edca6a9d1a2d2d0eaa91b2"
-  integrity sha512-yBT2lYtroj9rNecMnuD1hHe7udQFAT/O0RS/zJUke6oUJPfWXVpwuOg7+XYRmTPhV2vvI4GKu2n/KWwSJYJO3g==
+  version "6.4.15"
+  resolved "https://registry.yarnpkg.com/@ant-design/pro-layout/-/pro-layout-6.4.15.tgz#8aa0dc9ec5bb316095a804875d79e7df5cf3e3d4"
+  integrity sha512-Esk7tCDzAq8ra98GfzTbY7uM5c3BGKF9jTKswcBLXuFiMt37Jns+AMrtESt5+3gKGCdOdl7orsbvBVrCg0EcUA==
   dependencies:
     "@ant-design/icons" "^4.0.0"
-    "@ant-design/pro-provider" "0.0.6"
-    "@ant-design/pro-utils" "0.1.2"
+    "@ant-design/pro-provider" "0.1.0"
+    "@ant-design/pro-utils" "0.2.0"
     "@umijs/route-utils" "^1.0.5"
-    antd "^4.2.0"
     classnames "^2.2.6"
     history "^4.10.1"
     memoize-one "^5.1.1"
@@ -71,17 +70,17 @@
     use-media-antd-query "^1.0.1"
     warning "^4.0.3"
 
-"@ant-design/pro-provider@0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@ant-design/pro-provider/-/pro-provider-0.0.6.tgz#2fe9a05ceb6f76403994ddc507a13d14e551c4c2"
-  integrity sha512-xFo45aNFb9VKUiXtv1j5aoz6KPgcwW1/49wtKOcqqzavscPEAK14lQgff24oXe/Zy7awzoBc6fEq6wjOryWULg==
+"@ant-design/pro-provider@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@ant-design/pro-provider/-/pro-provider-0.1.0.tgz#e7e68ec67e6d306968d208b763db92030b4a2d31"
+  integrity sha512-BEdfpHV1+UloMN57ldEsoqlvISYka956KpX1vmcRLcFEdVclnE8/hOaETq0mlLXC2EkvkaMIk9qw3kBCK5jsJw==
   dependencies:
     rc-util "^5.0.1"
 
-"@ant-design/pro-utils@0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@ant-design/pro-utils/-/pro-utils-0.1.2.tgz#b9e1115e97d1ba5ac946f2f77136758c8335114b"
-  integrity sha512-5O9k2asNFTuSh+YWACZJ25DuPurWPPhr3AyDx6Pvj5lxb8t/1yJmmWJluwmVLJ65A9oKgwiWU87NHWnsP2cSYw==
+"@ant-design/pro-utils@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@ant-design/pro-utils/-/pro-utils-0.2.0.tgz#f0e3c865ddd7b8c8486cb3b7793d5988bfd1e755"
+  integrity sha512-6S5a95wi3atUBU9zcJ3Q5SGAf246/OYqOPVKE1vNY++emWOldkTes0WhrwdjE4jQRHBhDVvXhZ99nP78+0zQXg==
   dependencies:
     "@types/lodash.isequal" "^4.5.5"
     lodash.isequal "^4.5.0"
@@ -3041,10 +3040,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-grid-layout@~0.17.2":
-  version "0.17.2"
-  resolved "https://registry.yarnpkg.com/@types/react-grid-layout/-/react-grid-layout-0.17.2.tgz#43d59d2c342988966d2567b95a2c52b4f38b8f08"
-  integrity sha512-iLKQ5rI9KyPGs/BlWmeBfoikRnoOmTuddK8V5mOCgJ46e2JaecZuPhuIX1kV0mkQSk6X3XoEZALVW0XQbz9g5Q==
+"@types/react-grid-layout@~1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@types/react-grid-layout/-/react-grid-layout-1.1.0.tgz#6592d391d64b9efebd5588a6a8fbbb9040c30998"
+  integrity sha512-lnt4YEXRHWimtbrghVSq+Ug7ByQl9cROM/xJewjLNeuqrT4tnKGe4tXX/3+/xYANG96L57F4+G0qf8jCgvDxWA==
   dependencies:
     "@types/react" "*"
 
