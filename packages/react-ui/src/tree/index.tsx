@@ -39,7 +39,7 @@ interface CustomEventDataNode extends EventDataNode{
 }
 
 
-interface Props extends Omit<TreeProps,
+export interface Props extends Omit<TreeProps,
     'loadData' |
     'treeData' |
     'checkStrictly' |
