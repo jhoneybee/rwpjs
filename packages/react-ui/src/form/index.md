@@ -20,7 +20,7 @@ title: Form 表单组件
  */
 
 import React, { useRef } from 'react'
-import { Form, Input, Card, Button } from '@rwp/react-ui'
+import { Form, Input, Card, Button, Checkbox } from '@rwp/react-ui'
 
 
 export default () => {
@@ -45,7 +45,7 @@ export default () => {
               console.log(allValues)
             }}
         >
-          <Form.Item key="Field 0" label="字段 0">
+          <Form.Item key="Field 0" label="字段 0" >
             <Input />
           </Form.Item>
           <Form.Item key="Field 1" label="字段 1" colSpan={2}>
@@ -72,9 +72,10 @@ export default () => {
           <Form.Item key="Field 8" rowSpan={3}>
             <div style={{ height: 100, width: 160, marginLeft: 20,backgroundColor: '#999999'}} />
           </Form.Item>
-          <Form.Item key="Field 9" label="字段 9" br colSpan={4}>
+          <Form.Item key="Field 9" label="字段 9" colSpan={4}>
             <Input.TextArea maxLength={100} />
           </Form.Item>
+          
         </Form>
       </>
     )
