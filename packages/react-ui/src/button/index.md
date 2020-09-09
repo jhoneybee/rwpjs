@@ -66,11 +66,11 @@ export default () => {
     return (
         <>
           <br/><br/>
-          <Button type="primary" style={{ marginRight: 8}} loading={true} enableAutoLoading={false} > 按钮(primary)</Button>
-          <Button style={{ marginRight: 8}} loading={true} enableAutoLoading={false} >默认按钮类型</Button>
-          <Button type="dashed" style={{ marginRight: 8}} loading={true} enableAutoLoading={false}> 按钮(dashed)</Button>
-          <Button type="text" style={{ marginRight: 8}} loading={true} enableAutoLoading={false}>按钮(text)</Button>
-          <Button type="link" style={{ marginRight: 8}} loading={true} enableAutoLoading={false}>按钮(link)</Button>
+          <Button type="primary" style={{ marginRight: 8}} loading={true} > 按钮(primary)</Button>
+          <Button style={{ marginRight: 8}} loading={true} >默认按钮类型</Button>
+          <Button type="dashed" style={{ marginRight: 8}} loading={true} > 按钮(dashed)</Button>
+          <Button type="text" style={{ marginRight: 8}} loading={true} >按钮(text)</Button>
+          <Button type="link" style={{ marginRight: 8}} loading={true} >按钮(link)</Button>
           <br/><br/>
           <Button type="primary" style={{ marginRight: 8}} danger={true}> 按钮(primary)</Button>
           <Button style={{ marginRight: 8}} danger={true}>默认按钮类型</Button>

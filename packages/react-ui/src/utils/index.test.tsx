@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { render, fireEvent } from '@testing-library/react'
 
-import { classPrefix, toDoubleClick } from './index';
+import { classPrefix, toDoubleClick, isPromise } from './index';
 
 /**
  * 测试获className的前缀名称
@@ -39,4 +39,13 @@ test('toDoubleClick', () => {
     fireEvent.click(divDom!)
     fireEvent.click(divDom!)
     expect(divDom?.style.width).toEqual('600px')
+})
+
+/**
+ * 判断是否是promis对象
+ */
+test('isPromise', () => {
+    expect(isPromise(null)).toBe(false)
+    const promise = new Promise<void>(re => { re()})
+    expect(isPromise(promise)).toBe(true)
 })

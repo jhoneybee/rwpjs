@@ -21,3 +21,11 @@ export const toDoubleClick = (callback: () => void) => {
         lastClickDate = null
     }
 }
+
+/**
+ * 判断是否是Promise对象
+ * source https://github.com/then/is-promise/blob/master/index.js
+ */
+export const isPromise = (obj: any) => {
+    return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
+}

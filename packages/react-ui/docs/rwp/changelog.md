@@ -48,9 +48,20 @@ group:
 
 ## alpha 内测开发版本
 
+### 1.18.6-alpha.0
+
+2020-9-9
+
+- Button
+  - 🐞 修复按钮，在非Promise对象中，点击后会一直处于禁用状态
+- 🆕 添加一个isPromise的方法
+- 🗑 删除dumi的按需加载antd的样式
+- 🗑 删除react-slick的依赖，此依赖项是多余的
+- 🔥 优化一些网站的Demo
+
 ### 1.18.5-alpha.0
 
-2020-9-8 14:00
+2020-9-8
 
 - Tree
   - 🐞 修复 onDrop 的问题

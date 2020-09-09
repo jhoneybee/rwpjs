@@ -12,16 +12,5 @@ export default defineConfig({
   navs: [
     null,
     { title: 'GitHub', path: 'https://github.com/jhoneybee/rwpjs' },
-    
-  ],
-  extraBabelPlugins: [
-    [
-      'import',
-      {
-        libraryName: 'antd',
-        libraryDirectory: 'es',
-        style: 'css',
-      },
-    ]
-  ],
+  ]
 });

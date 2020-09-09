@@ -22,8 +22,7 @@ title: Table 表格
 
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
-import { Table, Input, toDoubleClick, Row, Menu } from '@rwp/react-ui'
-import { Button, Space } from 'antd'
+import { Table, Input, toDoubleClick, Row, Menu, Space, Button } from '@rwp/react-ui'
 
 
 const getColumns = () => {
@@ -62,6 +61,14 @@ const MyTable = () => {
           }}
         >
           <Space>
+            <Button
+              onClick={() => {
+                const dataSource = table.current.getDataSource()
+                console.log(dataSource)
+              }}
+            >
+            点击保存数据
+            </Button>
             <Button
               onClick={() => {
                 table.current.update((ele) => {
