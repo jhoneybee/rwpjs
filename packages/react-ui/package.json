@@ -67,7 +67,7 @@
         "@types/jest": "~26.0.0",
         "@types/nprogress": "~0.2.0",
         "@types/react-color": "~3.0.4",
-        "@types/react-grid-layout": "~0.17.2",
+        "@types/react-grid-layout": "~1.1.0",
         "@types/react-resizable": "~1.7.2",
         "@types/react-window": "~1.8.2",
         "@types/shortid": "~0.0.29",
