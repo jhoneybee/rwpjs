@@ -10,6 +10,9 @@ import { NodeDragEventParams } from 'rc-tree/lib/contextTypes'
 import { EventDataNode, TreeProps, DataNode } from 'antd/lib/tree';
 import { OverlayFunc } from '../interface';
 
+const getPopupContainer = (container: HTMLElement) => {
+    return container.parentNode?.parentNode?.parentNode?.parentNode?.parentElement!
+}
 
 export interface TreeHandle {
 
@@ -160,6 +163,7 @@ export const Tree = (props: Props) => {
                     <Dropdown
                         overlay={props.overlay}
                         trigger={['contextMenu']}
+                        getPopupContainer={getPopupContainer}
                     >
                         <span>{chil.title}</span>
                     </Dropdown>
@@ -222,6 +226,7 @@ export const Tree = (props: Props) => {
                                             title = (
                                                 <Dropdown
                                                     overlay={props.overlay}
+                                                    getPopupContainer={getPopupContainer}
                                                     trigger={['contextMenu']}
                                                 >
                                                     <span>{node.title}</span>
@@ -285,6 +290,7 @@ export const Tree = (props: Props) => {
                             <Dropdown
                                 overlay={props.overlay}
                                 trigger={['contextMenu']}
+                                getPopupContainer={getPopupContainer}
                             >
                                 <span>{treeNode.title}</span>
                             </Dropdown>
@@ -348,6 +354,7 @@ export const Tree = (props: Props) => {
                                     <Dropdown
                                         overlay={props.overlay}
                                         trigger={['contextMenu']}
+                                        getPopupContainer={getPopupContainer}
                                     >
                                         <span>{chil.title}</span>
                                     </Dropdown>

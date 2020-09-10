@@ -50,6 +50,7 @@ export default () => {
                 }}
             />
             <Tree
+                height={250}
                 loadData={(node) => {
                     return new Promise((re) => {
                         setTimeout(() => {
@@ -66,6 +67,39 @@ export default () => {
                                 },{
                                     title: `标题 - 4 - ${countReload}`,
                                     key: 4,
+                                },{
+                                    title: `标题 - 5 - ${countReload}`,
+                                    key: 5,
+                                },{
+                                    title: `标题 - 6 - ${countReload}`,
+                                    key: 6,
+                                },{
+                                    title: `标题 - 7 - ${countReload}`,
+                                    key: 7,
+                                },{
+                                    title: `标题 - 8 - ${countReload}`,
+                                    key: 8,
+                                },{
+                                    title: `标题 - 9 - ${countReload}`,
+                                    key: 9,
+                                },{
+                                    title: `标题 - 10 - ${countReload}`,
+                                    key: 910,
+                                },{
+                                    title: `标题 - 11 - ${countReload}`,
+                                    key: 911,
+                                },{
+                                    title: `标题 - 12 - ${countReload}`,
+                                    key: 912,
+                                },{
+                                    title: `标题 - 13 - ${countReload}`,
+                                    key: 913,
+                                },{
+                                    title: `标题 - 14 - ${countReload}`,
+                                    key: 914,
+                                },{
+                                    title: `标题 - 15 - ${countReload}`,
+                                    key: 915,
                                 }])
                                 return; 
                             }
