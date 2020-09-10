@@ -73,19 +73,21 @@ export const DefaultRow = ({
                 eventBus={eventBus}
                 {...restProps}
             />
-            <div
-                className={classNames({
-                    [`${tableClassPrefix}-expandable`]: true,
-                    [`${tableClassPrefix}-expandable-hide`]: !isExpandable(),
-                })}
-                style={{
-                    top: restProps.top + tableProps.rowHeight!,
-                    width: 'var(--row-width)',
-                    height: addRowCount * tableProps.rowHeight!
-                }}
-            >
-                {tableProps.expandable?.expandedRowRender?.(row)}
-            </div>
+            {isExpandable() ? (
+                <div
+                    className={classNames({
+                        [`${tableClassPrefix}-expandable`]: true,
+                    })}
+                    style={{
+                        top: restProps.top + tableProps.rowHeight!,
+                        width: 'var(--row-width)',
+                        height: addRowCount * tableProps.rowHeight!
+                    }}
+                >
+                    {tableProps.expandable?.expandedRowRender?.(row)}
+                </div>
+            ) : undefined}
+            
         </>
     )
 }

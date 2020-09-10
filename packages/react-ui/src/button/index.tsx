@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Button as AntButton } from 'antd'
-import { isFunction } from 'lodash'
 import { isPromise } from '../utils'
 import { ButtonProps } from '../interface'
 
@@ -17,15 +16,16 @@ export const Button = (props: ButtonProps) => {
             {...restProps}
             disabled={disabled}
             onClick={() => {
-                if(isPromise(props.onClick)){
+                if(props.onClick){
                     setDisabled(true)
-                    props.onClick?.()?.then(() => {
+                    const clickThen = props.onClick!() as Promise<void>
+                    if (isPromise(clickThen)) {
+                        clickThen.then(() => {
+                            setDisabled(false)
+                        })
+                    }else {
                         setDisabled(false)
-                    })
-                }else if(isFunction(props.onClick)){
-                    setDisabled(true)
-                    props.onClick?.()
-                    setDisabled(false)
+                    }
                 }
             }}
         />

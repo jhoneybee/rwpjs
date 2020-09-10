@@ -24,7 +24,7 @@ export { RouteComponentProps } from 'react-router-dom'
  */
 export interface ButtonProps extends Omit<AntButtonProps, 'onClick'> {
     // 按钮的点击事件
-    onClick?: () => Promise<void>
+    onClick?: () => Promise<void> | void
 }
 
 export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix' | 'type'| 'on' | 'onChange'> {
