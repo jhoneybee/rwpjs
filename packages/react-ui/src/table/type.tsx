@@ -32,7 +32,7 @@ export interface GroupRowData extends Row {
      * ROW   行数据类型
      * EXPANDABLE 额外的展开行
      */
-    $type: 'GROUP' | 'ROW' | 'EXPANDABLE'
+    $type: 'GROUP' | 'ROW' | 'EXPANDABLE' | 'FILL'
     // 当前展开节点的标题
     $title: ReactNode
     // 父节点信息
@@ -169,6 +169,8 @@ export interface TableProps {
      * 展开表格
      */
     expandable?: {
+        // 展开的高度
+        height?: number
         // 展开的className
         expandedRowClassName?: (row: Row) => boolean
         // 是否允许展开

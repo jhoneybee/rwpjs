@@ -145,10 +145,13 @@ export const preFormatColumn = (
                             cursor: 'pointer',
                         }}
                         onClick={() => {
+                            // 要添加的条目数
+                            const height = tableProps.expandable?.height || tableProps.rowHeight! * 6
+                            const addRowCount = Math.ceil(height / tableProps.rowHeight!)
                             if (globalStore.expandedRowNumber === formatterProps.rowIdx ){
-                                globalStore.setExpandedRowNumber(-1)
+                                globalStore.setExpandedRowNumber(-1, addRowCount)
                             }else {
-                                globalStore.setExpandedRowNumber(formatterProps.rowIdx)
+                                globalStore.setExpandedRowNumber(formatterProps.rowIdx, addRowCount)
                             }
                         }}
                     />

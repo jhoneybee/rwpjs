@@ -238,8 +238,21 @@ export function createStore() {
             }
             this.datas = datas
         },
-        setExpandedRowNumber(index: number) {
-            this.setDataSource([...this.getGroupDatas()])
+        setExpandedRowNumber(index: number, count: number) {
+            const newDataSource = [...this.getGroupDatas()]
+            
+            if (index !== -1){
+                const fillData: Row[] = []
+                // 获取要填充的数据
+                for (let i = 0; i< count; i += 1) {
+                    fillData.push({
+                        $type: 'FILL'
+                    })
+                }
+                newDataSource.splice(index + 1, 0, ...fillData)
+            }
+            // 填充对应的数据到data
+            this.setDataSource(newDataSource)
             this.expandedRowNumber = index
         }
     }

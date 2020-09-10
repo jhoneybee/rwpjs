@@ -27,8 +27,21 @@ export const DefaultRow = ({
 }: DefaultRowProps) => {
     const store = useStore()
     let columns: ColumnProps[] = []
-    if (tableProps && tableProps.columns){
+    if (tableProps.columns){
         columns = tableProps.columns
+    }
+
+    const isExpandable = () => {
+        if(
+            (tableProps.expandable?.rowExpandable?.(row)
+            ||
+            (tableProps.expandable && tableProps.expandable.expandedRowRender)
+            ) &&
+            store.expandedRowNumber === rowIdx
+        ){
+            return true
+        }
+        return false
     }
 
     useEffect(() => eventBus.subscribe('SELECT_CELL', (position: Position) => {
@@ -41,29 +54,17 @@ export const DefaultRow = ({
         }
     }));
 
-    let expandable = null
-    if(
-        (tableProps?.expandable?.rowExpandable?.(row)
-        ||
-        (tableProps.expandable && tableProps.expandable.expandedRowRender)
-        ) &&
-        store.expandedRowNumber === rowIdx
-    ){
-        expandable = (
+    if (row.$type === 'FILL'){
+        return (
             <div
-                className={classNames({
-                    [`${tableClassPrefix}-expandable`]: true,
-                })}
-                style={{
-                    top: restProps.top + tableProps.rowHeight!,
-                    width: 'var(--row-width)',
-                }}
-            >
-                {tableProps.expandable?.expandedRowRender?.(row)}
-            </div>
+                className="rdg-row rdg-row-default-group"
+                style={{ top: restProps.top}}
+            />
         )
     }
 
+    const height = tableProps.expandable?.height || tableProps.rowHeight! * 6
+    const addRowCount = Math.ceil( height/ tableProps.rowHeight!)
     return (
         <>
             <Row
@@ -72,7 +73,19 @@ export const DefaultRow = ({
                 eventBus={eventBus}
                 {...restProps}
             />
-            {expandable}
+            <div
+                className={classNames({
+                    [`${tableClassPrefix}-expandable`]: true,
+                    [`${tableClassPrefix}-expandable-hide`]: !isExpandable(),
+                })}
+                style={{
+                    top: restProps.top + tableProps.rowHeight!,
+                    width: 'var(--row-width)',
+                    height: addRowCount * tableProps.rowHeight!
+                }}
+            >
+                {tableProps.expandable?.expandedRowRender?.(row)}
+            </div>
         </>
     )
 }
