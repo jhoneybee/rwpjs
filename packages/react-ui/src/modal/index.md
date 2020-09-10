@@ -81,7 +81,6 @@ export default () => {
 |centered   | 垂直居中展示 Modal| `boolean`
 |closable   | 是否显示右上角的关闭按钮| `boolean`
 |closeIcon  | 自定义关闭图标| `ReactNode`
-|confirmLoading| 确定按钮 loading| `boolean`
 |destroyOnClose| 关闭时销毁 Modal 里的子元素| `boolean`
 |footer        | 底部内容，当不需要默认底部按钮时，可以设为 footer={null}| `string` \| `ReactNode`
 |forceRender   | 强制渲染 Modal | `boolean`

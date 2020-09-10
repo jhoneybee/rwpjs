@@ -20,7 +20,7 @@ title: Table 表格
  * desc: 包含了一千列的数据
  */
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { Table, Input, toDoubleClick, Row, Menu, Space, Button } from '@rwp/react-ui'
 
@@ -45,6 +45,14 @@ const getColumns = () => {
     })
   }
   return columns
+}
+
+const MyDiv = () => {
+
+  useEffect(() => {
+    console.log('这是一个可展开的节点数据')
+  }, [])
+  return  <div style={{height: 200}}> 这是一个可展开的节点数据</div>
 }
 
 const MyTable = () => {
@@ -157,7 +165,7 @@ const MyTable = () => {
             }}
             expandable={{
               expandedRowRender: () => {
-                return <div style={{height: 200}}> 这是一个可展开的节点数据</div>
+                return <MyDiv />
               }
             }}
             onRowsUpdate={(e, onCommit) => {
