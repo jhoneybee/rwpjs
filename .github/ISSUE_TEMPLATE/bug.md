@@ -1,5 +1,5 @@
 ---
-name: 问题
+name: bug
 about: 提交反馈问题
 title: "[BUG \U0001F41E] - "
 labels: bug
