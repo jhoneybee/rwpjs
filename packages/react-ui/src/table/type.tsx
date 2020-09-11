@@ -13,7 +13,7 @@ import { OverlayFunc } from '../interface';
 
 export interface Row {
     $index?: number
-    $state?: 'UPDATE' | 'DELETE' | 'CREATE'
+    $state?: 'UPDATE' | 'CREATE'
     [propName: string]: any
 }
 

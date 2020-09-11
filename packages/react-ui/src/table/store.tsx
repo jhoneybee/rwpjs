@@ -173,11 +173,21 @@ export function createStore() {
         // 删除数据
         del(filter: (ele: Row) => boolean) {
             return new Promise<void>(resolve => {
-                const datas = this.dataSource.map(ele => ({
-                    ...ele,
-                    $state: filter(ele) ? 'DELETE' : ele.$state,
-                }))
-                this.setDataSource(datas)
+                const delIndex: number[] = []
+                const datas: Row[] = this.dataSource.filter((ele, index) => {
+                    const isDelete: boolean = filter(ele)
+                    if (isDelete) {
+                        delIndex.push(index)
+                    }
+                    return !isDelete
+                })
+                if (delIndex.includes(this.expandedRowNumber)) {
+                    this.expandedRowNumber = -1
+                    this.setDataSource(datas.filter(data => data.$type !== 'FILL'))
+                }else {
+                    this.setDataSource(datas)
+                }
+                
                 resolve()
             })
         },
@@ -194,7 +204,7 @@ export function createStore() {
                     if (isEqual(row, ele)) {
                         return ele
                     }
-                    return {...row, $state: row.$state === 'DELETE' ? 'DELETE' : 'UPDATE'}
+                    return {...row, $state: 'UPDATE'}
                 })
                 this.setDataSource(datas)
                 resolve()
@@ -229,7 +239,8 @@ export function createStore() {
         },
         get dataSource(){
             const isGroup = this.groupColumn && this.groupColumn.length > 0
-            return isGroup ? this.groupDatas : this.datas
+            const data = isGroup ? this.groupDatas : this.datas
+            return data
         },
         setDataSource(datas: any[]){
             if(this.isGroup){
@@ -239,8 +250,7 @@ export function createStore() {
             this.datas = datas
         },
         setExpandedRowNumber(index: number, count: number) {
-            const newDataSource = [...this.getGroupDatas()]
-            
+            const newDataSource = this.dataSource.filter(data => data.$type !== 'FILL')
             if (index !== -1){
                 const fillData: Row[] = []
                 // 获取要填充的数据

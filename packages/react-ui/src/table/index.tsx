@@ -105,9 +105,9 @@ export const Table = observer<TableProps>((props: TableProps) => {
     )
 
     const getRows = () => {
-        let rows: Row[] = store.datas.filter(data => data.$state !== 'DELETE')
+        let rows: Row[] = store.datas
         if (props.groupColumn && props.groupColumn.length > 0){
-            rows = store.groupDatas.filter(data => data.$state !== 'DELETE')
+            rows = store.groupDatas
         }
         return rows
     }
