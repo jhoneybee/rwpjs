@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { MenuOutlined } from '@ant-design/icons'
 import { useLocalStore, useObserver } from 'mobx-react-lite'
 import { EventDataNode } from 'antd/lib/tree'
+import { autorun } from 'mobx'
 import { generate } from 'shortid'
 import { Tree } from '../../index'
 import { classPrefix } from '../../utils'
@@ -20,10 +21,23 @@ export const Tools = () => {
     }))
     const tree = useRef<TreeHandle | null>(null)
     const divRef = useRef<HTMLDivElement | null>(null)
+    const isMouseOut = useRef<boolean>(false)
     const globalStore = useStore()
+
+    const contentRef = useRef<HTMLDivElement | null>(null)
     useEffect(() => {
         store.treeHeight = divRef.current!.clientHeight - 30
     }, [])
+
+
+    useEffect(() => {
+        autorun(() => {
+            if (contentRef.current && store.visible) {
+                contentRef.current.focus()
+            }
+        })
+    }, [store.visible])
+    
     return useObserver(() => {
         const switchContent = () => {
             if (store.activeKey === 'column'){
@@ -84,9 +98,6 @@ export const Tools = () => {
             >
                 <div
                     className={`${tableClassPrefix}-right-button`}
-                    style={{
-                        marginTop: 35,
-                    }}
                 >
                     <span
                         onClick={() => {
@@ -94,13 +105,27 @@ export const Tools = () => {
                             store.visible = !store.visible
                         }}
                     >
-                        <MenuOutlined style={{ paddingRight: 3 , marginBottom: 8}} /> 列信息
+                        <MenuOutlined style={{ paddingRight: 3}} />
                     </span>
                 </div>
                 {
                     store.visible ? (
                         <div
                             className={`${tableClassPrefix}-right-content`}
+                            tabIndex={-1}
+                            ref={contentRef}
+                            onBlur={() => {
+                                if (isMouseOut.current) {
+                                    store.visible = false
+                                }
+                            }}
+                            onFocus={() => {}}
+                            onMouseOut={() => {
+                                isMouseOut.current = true
+                            }}
+                            onMouseOver={() => {
+                                isMouseOut.current = false
+                            }}
                         >
                             {switchContent()}
                         </div>

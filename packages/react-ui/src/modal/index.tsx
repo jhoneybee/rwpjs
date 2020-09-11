@@ -113,7 +113,7 @@ export const Modal = (props: Props) => {
                         setLoading(true)
                         props.onOk(e).then(result => {
                             if (result) {
-                                setVisible(true)
+                                setVisible(false)
                             }
                             setLoading(false)
                         }).catch(() => {

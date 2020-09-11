@@ -46,7 +46,7 @@ export default () => {
               mask={false}
               maskClosable={false}
               onOk={async () => {
-                modal2.current.show()
+                // modal2.current.show()
                 return false
               }}
               title="这是一个简单的对话框"
