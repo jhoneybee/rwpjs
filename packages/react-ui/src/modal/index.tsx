@@ -2,7 +2,7 @@ import React, { useState, useEffect, ReactNode, useRef, Dispatch, useReducer } f
 import { Modal as AntModal } from 'antd'
 import classNames from 'classnames'
 import { ModalProps } from 'antd/lib/modal'
-import { classPrefix } from '../utils'
+import { classPrefix, isPromise } from '../utils'
 import { State, Action, reducer } from './reducer'
 
 import './style/index.less'
@@ -20,7 +20,7 @@ interface Props extends Omit<ModalProps,
     'width' |
     'getContainer'
     > {
-    onOk?: (e: React.MouseEvent<HTMLElement>) => Promise<boolean>
+    onOk?: (e: React.MouseEvent<HTMLElement>) => Promise<boolean> | boolean
     onCancel?: (e: React.MouseEvent<HTMLElement>) => Promise<void>
     modal?: React.MutableRefObject<ModalHandle | null>
     children?: ReactNode,
@@ -111,14 +111,22 @@ export const Modal = (props: Props) => {
                 onOk={e => {
                     if (props.onOk) {
                         setLoading(true)
-                        props.onOk(e).then(result => {
-                            if (result) {
+                        const onOkThen = props.onOk!(e)
+                        if (isPromise(onOkThen)) {
+                            (onOkThen as Promise<boolean>).then(result => {
+                                if (result) {
+                                    setVisible(false)
+                                }
+                                setLoading(false)
+                            }).catch(() => {
+                                setLoading(false)
+                            })
+                        } else {
+                            if (onOkThen) {
                                 setVisible(false)
                             }
                             setLoading(false)
-                        }).catch(() => {
-                            setLoading(false)
-                        })
+                        }
                     } else {
                         setVisible(false)
                     }
