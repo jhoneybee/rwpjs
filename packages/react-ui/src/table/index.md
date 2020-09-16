@@ -38,9 +38,6 @@ const getColumns = () => {
       align: 'center|left',
       sortable: true,
       editable: true,
-      editorOptions: {
-        editOnClick: true
-      },
       editor: Input
     })
   }
@@ -168,6 +165,7 @@ const MyTable = () => {
                 return <MyDiv />
               }
             }}
+            enableCellCopyPaste={true}
             onRowsUpdate={(e, onCommit) => {
               console.log(e, 'onRowsUpdate')
               onCommit()
