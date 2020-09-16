@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "rwp dev"
+  },
+  "dependencies": {
+    "@rwp/cli": "file:..",
+    "@rwp/react-ui": "file:../../react-ui",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
