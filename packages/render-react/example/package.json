@@ -7,10 +7,11 @@
     "watch": "rwp --watch"
   },
   "dependencies": {
-    "react": "latest",
-    "react-dom": "latest",
     "@rwp/core": "link:../../core/",
     "@rwp/react-ui": "link:../../react-ui/",
-    "@rwp/render-react": "link:.."
+    "@rwp/render-react": "link:..",
+    "react": "latest",
+    "react-dom": "latest",
+    "webpack": "^4.44.1"
   }
 }
