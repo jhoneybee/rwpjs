@@ -102,7 +102,9 @@ export const Tools = () => {
                     <span
                         onClick={() => {
                             store.activeKey = 'column'
-                            store.visible = !store.visible
+                            if (!store.visible) {
+                                store.visible = true
+                            }
                         }}
                     >
                         <MenuOutlined style={{ paddingRight: 3}} />
