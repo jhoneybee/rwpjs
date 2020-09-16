@@ -44,9 +44,9 @@ export function createStore() {
         // 右键的上下文
         contextMenu: {} as ContextMenu,
         // 装载数据
-        loadRows(rows: any[]) {
+        loadRows(rows: any[], pageNo: number) {
             this.datas = formatData(rows.concat(this.datas))
-            this.pageNo += 1
+            this.pageNo = pageNo
         },
         /**
          * 将两个节点进行交换

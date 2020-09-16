@@ -67,10 +67,11 @@ export const Table = observer<TableProps>((props: TableProps) => {
      */
     const loadDataFun = async () => {
         store.setLoading(true)
-        const res = props.loadData(store.pageNo, props.pageSize!, props.params!)
+        const pageNo = store.pageNo + 1
+        const res = props.loadData(pageNo, props.pageSize!, props.params!)
         const resp = await (res as PromiseLike<{ total: number, datas: Row[] }>)
-        store.loadRows(resp.datas)
         store.setTotal(resp.total)
+        store.loadRows(resp.datas, pageNo)
         store.setLoading(false)
     }
 
@@ -84,7 +85,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
 
     useEffect(() => {
         // 装载数据
-        if (enableInitLoadData) loadDataFun()
+        if (enableInitLoadData) reloadFun()
     }, [])
 
     useEffect(() => {
@@ -150,7 +151,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
         table.current = tempTable
     }
 
-    const beforeScrollHeight = useRef<number>(0)
+    const beforeScrollLeft = useRef<number>(0)
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         const target = e.currentTarget
         // 如果是分组状态,禁止操作
@@ -162,13 +163,13 @@ export const Table = observer<TableProps>((props: TableProps) => {
             // 判断数据大于0, 并且小于当前总数。
             store.datas.length > 0 && store.datas.length < store.total
             &&
-            beforeScrollHeight.current !== target.scrollHeight            
+            target.scrollLeft === beforeScrollLeft.current            
         ) {
             scrollTimeOut = setTimeout(() => {
                 loadDataFun()
             }, 200);
-            beforeScrollHeight.current = target.scrollHeight
         }
+        beforeScrollLeft.current = target.scrollLeft
     }
     const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
 

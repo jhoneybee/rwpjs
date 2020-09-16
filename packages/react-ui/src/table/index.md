@@ -187,7 +187,8 @@ const MyTable = () => {
                 console.log('这是双击事件')
               })
             }}
-            loadData={(pageNo , pageSize, params) => {  
+            loadData={(pageNo , pageSize, params) => {
+              console.log(pageNo, 'pageNo')
               return new Promise((resolve) =>{
                 const datas = []
                 for(let i=0; i< 50 ; i++){
