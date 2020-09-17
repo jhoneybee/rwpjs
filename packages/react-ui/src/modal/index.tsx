@@ -42,7 +42,7 @@ export const Modal = (props: Props) => {
 
     const [state, dispatch] = useReducer(reducer, {
         top: 100,
-        left: -1,
+        left: (window.innerWidth - (props.width ?? 520)) / 2,
     });
 
     const mouseState = useRef<'UP' | 'DOWN'>('UP')
@@ -69,8 +69,15 @@ export const Modal = (props: Props) => {
 
     useEffect(() => {
         const onMouseMove = (e: MouseEvent): void => {
+
             // 鼠标按下的时候修改当前的位置信息
-            if (mouseState.current === 'DOWN') {
+            if (
+                mouseState.current === 'DOWN'
+                &&
+                e.clientY > 0
+                &&
+                e.clientY < window.innerHeight
+            ) {
                 const moveLeft = e.clientX - beforeClientX.current
                 const moveTop = e.clientY - beforeClientY.current
                 dispatch({
@@ -157,7 +164,7 @@ export const Modal = (props: Props) => {
                 cancelButtonProps={props.cancelButtonProps}
                 style={{
                     ...props.style,
-                    left: state.left === -1 ? undefined : state.left,
+                    left: state.left,
                     top: state.top,
                 }}
                 title={(

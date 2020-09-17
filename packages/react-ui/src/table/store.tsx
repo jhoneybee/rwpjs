@@ -45,7 +45,7 @@ export function createStore() {
         contextMenu: {} as ContextMenu,
         // 装载数据
         loadRows(rows: any[], pageNo: number) {
-            this.datas = formatData(rows.concat(this.datas))
+            this.datas = formatData(this.datas.concat(rows))
             this.pageNo = pageNo
         },
         /**

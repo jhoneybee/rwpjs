@@ -26,7 +26,9 @@ export const Tools = () => {
 
     const contentRef = useRef<HTMLDivElement | null>(null)
     useEffect(() => {
-        store.treeHeight = divRef.current!.clientHeight - 30
+        autorun(() => {
+            store.treeHeight = divRef.current!.clientHeight - 30
+        })
     }, [])
 
 
