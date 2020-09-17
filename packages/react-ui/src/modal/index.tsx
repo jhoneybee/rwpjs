@@ -64,29 +64,33 @@ export const Modal = (props: Props) => {
         }
     }, [])
 
+
+    const left = useRef<number>(0)
+    const top = useRef<number>(0)
+
+
     const beforeClientX = useRef<number>(0)
     const beforeClientY = useRef<number>(0)
 
     useEffect(() => {
         const onMouseMove = (e: MouseEvent): void => {
-
+            if (e.clientY < 0  || e.clientY > window.innerHeight) return
             // 鼠标按下的时候修改当前的位置信息
             if (
                 mouseState.current === 'DOWN'
-                &&
-                e.clientY > 0
-                &&
-                e.clientY < window.innerHeight
             ) {
                 const moveLeft = e.clientX - beforeClientX.current
                 const moveTop = e.clientY - beforeClientY.current
                 dispatch({
                     type: 'SET_POSITION',
                     payload: {
-                        left: moveLeft + state.left,
-                        top: moveTop + state.top,
+                        left: moveLeft + left.current,
+                        top: moveTop + top.current,
                     },
                 })
+            } else {
+                beforeClientX.current = e.clientX
+                beforeClientY.current = e.clientY
             }
         }
         window.addEventListener('mousemove', onMouseMove, { passive: true })
@@ -170,14 +174,16 @@ export const Modal = (props: Props) => {
                 title={(
                     <div
                         // 鼠标按下
-                        onMouseDown={e => {
+                        onMouseDown={() => {
                             mouseState.current = 'DOWN'
-                            if (beforeClientX.current === 0) {
-                                beforeClientX.current = e.clientX
-                            }
-                            if (beforeClientY.current === 0) {
-                                beforeClientY.current = e.clientY
-                            }
+                            left.current = state.left
+                            top.current = state.top
+                            // if (beforeClientX.current === 0) {
+                            //     beforeClientX.current = e.clientX
+                            // }
+                            // if (beforeClientY.current === 0) {
+                            //     beforeClientY.current = e.clientY
+                            // }
                         }}
                     >
                         {props.title}
