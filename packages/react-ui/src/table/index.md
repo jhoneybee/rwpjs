@@ -195,7 +195,7 @@ const MyTable = () => {
                   const data = {}
                   for(let z=0; z< 1000 ; z ++){
                     if(z === 1){
-                      data[`field${z}`] = `${pageNo}-field${i%2}-${i%2}`;
+                      data[`field${z}`] = `当前页:${pageNo}`;
                     }else{
                       data[`field${z}`] = `${pageNo}-field${i%5}-${i%5}`;
                     }
