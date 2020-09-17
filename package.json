@@ -2,7 +2,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "publish:alpha": "lerna publish --dist-tag alpha",
-    "publish": "lerna publish",
+    "publish:stable": "lerna publish",
     "lint:script": "lerna run lint:script",
     "test": "lerna run test"
   },
