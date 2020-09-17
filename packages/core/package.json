@@ -36,7 +36,7 @@
     "style-loader": "~1.2.1",
     "terser-webpack-plugin": "~4.2.0",
     "webpack": "~4.44.1",
-    "webpack-bundle-analyzer": "~3.8.0",
+    "webpack-bundle-analyzer": "~3.9.0",
     "webpack-dev-server": "~3.11.0",
     "webpackbar": "~4.0.0",
     "yargs": "^16.0.1"
