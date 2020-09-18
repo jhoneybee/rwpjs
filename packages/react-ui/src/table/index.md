@@ -37,6 +37,8 @@ const MyTable = () => {
     const table = React.useRef()
     const [groupField, setGroupField] = useState([])
     const [disable, setDisable] = useState(false)
+
+    const [columns, setColumns] = useState([])
     const getColumns = () => {
       const columns = [{
         name: '$index',
@@ -78,7 +80,12 @@ const MyTable = () => {
       }
       return columns
     }
-    const [columns, setColumns] = useState(getColumns())
+    useEffect(() => {
+      setTimeout(() => {
+        setColumns(getColumns())
+      }, 200)
+    }, [])
+    
     return (
         <>
         <div
