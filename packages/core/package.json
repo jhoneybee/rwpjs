@@ -44,7 +44,7 @@
   "devDependencies": {
     "@babel/register": "~7.11.5",
     "@types/gulp": "^4.0.6",
-    "@types/node": "~14.10.0 ",
+    "@types/node": "~14.11.1 ",
     "@types/yargs": "^15.0.5",
     "@umijs/fabric": "^2.1.1",
     "eslint": "~7.9.0",
