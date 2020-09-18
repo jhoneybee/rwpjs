@@ -56,8 +56,6 @@ export function createStore() {
          * @param targeNode 交换的目标节点
          */
         switchColumns(node: Key, targeNode: Key){
-            // const column = this.columns.find(ele => ele.name === node)
-            // const targeColumn = this.columns.find(ele => ele.name === targeNode)
             let column: ColumnProps
             let columnIndex: number
             let targeColumn: ColumnProps
