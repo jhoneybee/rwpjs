@@ -204,13 +204,11 @@ export function createStore() {
                     if (isEqual(row, ele)) {
                         return ele
                     }
-                    let state = 'UPDATE'
-                    if (ele.$state === undefined || ele.$state === 'UPDATE') {
-                        state = 'UPDATE'
-                    }else {
-                        state = ele.$state
+                    let newState = 'UPDATE'
+                    if (ele.$state !== undefined && ele.$state !== 'UPDATE') {
+                        newState = ele.$state
                     }
-                    return {...row, $state: state}
+                    return {...row, $state: newState}
                 })
                 this.setDataSource(datas)
                 resolve()
