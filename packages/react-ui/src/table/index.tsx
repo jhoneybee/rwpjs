@@ -218,7 +218,19 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 enableCellDragAndDrop={props.enableCellDragAndDrop}
                 selectedRows={store.selectedRows}
                 onSelectedRowsChange={select => {
-                    store.setSelectedRows(select, props.onSelectedRowsChange)
+                    // 如果是单选
+                    if (props.selectBox === 'single') {
+                        if (store.selectedRows.size > 0) {
+                            store.setSelectedRows(new Set<any>([Array.from(select)[1]]), props.onSelectedRowsChange)
+                        } else {
+                            store.setSelectedRows(select, props.onSelectedRowsChange)
+                        }
+                    }
+
+                    // 如果是多选
+                    if (props.selectBox === 'multiple') {
+                        store.setSelectedRows(select, props.onSelectedRowsChange)
+                    }
                 }}
                 rowClass={props.rowClass}
                 onRowClick={props.onRowClick}

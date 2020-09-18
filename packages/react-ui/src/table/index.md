@@ -201,7 +201,7 @@ const MyTable = () => {
             pageSize={500}
             table={table}
             // mode='SIMPLE'
-            selectBox="multiple"
+            selectBox="single"
             rowKey='field0'
             groupColumn={groupField}
             onSort={ sortColumns => {

@@ -96,7 +96,7 @@ export const preFormatColumn = (
             ...restProps,
         }
     }))
-    if (tableProps.selectBox === 'multiple') {
+    if (tableProps.selectBox !== 'none') {
         const select: Column<Row, unknown> = {
             key: '$select',
             name: '',
@@ -104,7 +104,7 @@ export const preFormatColumn = (
             selectCell: false,
             maxWidth: 35,
             formatter: MultipleSelectColumn,
-            headerRenderer: () => (
+            headerRenderer: tableProps.selectBox === 'multiple' ? () => (
                 <Checkbox
                     checked={(
                         store.selectedRows.size === store.datas.length
@@ -122,7 +122,7 @@ export const preFormatColumn = (
                         store.setSelectedRows(selectKeys, tableProps.onSelectedRowsChange)
                     }}
                 />
-            ),
+            ) : undefined,
         }
         columns.splice(0, 0, select)
     }

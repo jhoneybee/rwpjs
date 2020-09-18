@@ -29,7 +29,6 @@ export const Tools = () => {
         })
     }, [])
 
-    const isClickVisible = useRef<boolean>(false)
     useEffect(() => {
         autorun(() => {
             if (contentRef.current && store.visible) {
