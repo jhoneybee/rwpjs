@@ -17,7 +17,7 @@ const getPopupContainer = (container: HTMLElement) => {
 export interface TreeHandle {
 
     // 重新加载表格信息
-    reload: (treeNode: EventDataNode) => Promise<void>,
+    reload: (treeNode?: EventDataNode) => Promise<void>,
 
     // 滚动到指定的位置
     scrollTo: (key: string) => void
@@ -202,11 +202,11 @@ export const Tree = (props: Props) => {
     if (props.tree) {
         const { tree } = props
         tree.current = {
-            reload: async (treeNode: CustomEventDataNode) => {
+            reload: async (treeNode?: CustomEventDataNode) => {
                 let currentNode: CustomEventDataNode | undefined;
                 const expandKey: (string | number)[] = []
                 // 如果是最顶部的root节点
-                if (treeNodes.some(node => node.key === treeNode.key)) {
+                if (treeNode === undefined || treeNodes.some(node => node.key === treeNode.key)) {
                     reload()
                     setLoadedKeys([])
                     setExpandedKeys([])

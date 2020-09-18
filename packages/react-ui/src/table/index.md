@@ -22,30 +22,11 @@ title: Table 表格
 
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import { Table, Input, toDoubleClick, Row, Menu, Space, Button } from '@rwp/react-ui'
+import { Table, Select, toDoubleClick, Row, Menu, Space, Button } from '@rwp/react-ui'
 
 
-const getColumns = () => {
-  const columns = [{
-    name: '$index',
-    title: '序号',
-  }]
-  for(let i=0; i< 1000 ; i ++){
-    columns.push({
-      name: `field${i}`,
-      title: `字段-${i}`,
-      width: 120,
-      align: 'center|left',
-      sortable: true,
-      editable: true,
-      editor: Input
-    })
-  }
-  return columns
-}
 
 const MyDiv = () => {
-
   useEffect(() => {
     console.log('这是一个可展开的节点数据')
   }, [])
@@ -56,8 +37,48 @@ const MyTable = () => {
     const table = React.useRef()
     const [groupField, setGroupField] = useState([])
     const [disable, setDisable] = useState(false)
+    const getColumns = () => {
+      const columns = [{
+        name: '$index',
+        title: '序号',
+      }]
+      for(let i=0; i< 1000 ; i ++){
+        columns.push({
+          name: `field${i}`,
+          title: `字段-${i}`,
+          width: 120,
+          align: 'center|left',
+          sortable: true,
+          editable: true,
+          editor: ({onChange, value, style, row}) => {
+            return (
+              <Select
+                value={value}
+                style={{
+                  ...style,
+                  width: '100%'
+                }}
+                allowClear
+                onChange={(e) => {
+                  table.current.update((data) => {
+                    if (row.$index === data.$index) {
+                      return { ...data, field1:  e , field2: '修改的数据' }
+                    }
+                    return data
+                  })
+                  onChange(e)
+                }}
+              >
+                <Select.Option value="man">男</Select.Option>
+                <Select.Option value="woman">女</Select.Option>
+            </Select>
+            )
+          }
+        })
+      }
+      return columns
+    }
     const [columns, setColumns] = useState(getColumns())
-
     return (
         <>
         <div
@@ -182,10 +203,13 @@ const MyTable = () => {
             onSelectedRowsChange={changes => {
               console.log(changes, 'onSelectedRowsChange')
             }}
+            onRowsChange={(row) => {
+              console.log(row, 'onRowsChange')
+            }}
             onRowClick={(rowIdx, row, column) => {
               toDoubleClick(() => {
                 console.log('这是双击事件')
-              })
+              }, rowIdx)
             }}
             loadData={(pageNo , pageSize, params) => {
               console.log(pageNo, 'pageNo')

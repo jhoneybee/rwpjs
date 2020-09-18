@@ -1,5 +1,5 @@
 import React from 'react'
-import { Column, RowsUpdateEvent } from 'react-data-grid-temp'
+import { Column, RowsUpdateEvent, Position } from 'react-data-grid-temp'
 import { groupBy, isEqual } from 'lodash'
 import { generate } from 'shortid'
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -10,6 +10,8 @@ export type ContextMenu = {
     row: Row,
     rowIdx: number,
     column: Column<any, unknown>
+    openEditor: boolean,
+    position: Position
 }
 
 

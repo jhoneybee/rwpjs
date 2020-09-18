@@ -74,7 +74,7 @@ export const Modal = (props: Props) => {
 
     useEffect(() => {
         const onMouseMove = (e: MouseEvent): void => {
-            if (e.clientY < 0  || e.clientY > window.innerHeight) return
+            if (e.clientY < 0  || e.clientX < 0) return
             // 鼠标按下的时候修改当前的位置信息
             if (
                 mouseState.current === 'DOWN'

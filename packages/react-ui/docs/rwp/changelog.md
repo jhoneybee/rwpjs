@@ -48,6 +48,14 @@ group:
 
 ## alpha 内测开发版本
 
+### 1.19.10-alpha.0
+
+- Table
+  - 🐞 修复Table的Tools工具栏列信息显示的问题
+- 🆕 toDoubleClick 添加一个参数区分点击的载体
+- Modal
+  - 🐞 修复Modal移动的问题
+
 ### 1.19.9-alpha.0
 
 - 🐞 修复版本发布的问题

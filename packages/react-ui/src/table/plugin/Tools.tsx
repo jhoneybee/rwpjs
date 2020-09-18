@@ -23,7 +23,7 @@ export const Tools = () => {
     const divRef = useRef<HTMLDivElement | null>(null)
     const isMouseOut = useRef<boolean>(false)
     const globalStore = useStore()
-
+    const isBlur = useRef<boolean>(true)
     const contentRef = useRef<HTMLDivElement | null>(null)
     useEffect(() => {
         autorun(() => {
@@ -104,8 +104,11 @@ export const Tools = () => {
                     <span
                         onClick={() => {
                             store.activeKey = 'column'
-                            if (!store.visible) {
+                            if (!store.visible && isBlur.current) {
                                 store.visible = true
+                                tree.current?.reload()
+                            }else {
+                                store.visible = false
                             }
                         }}
                     >
@@ -119,8 +122,12 @@ export const Tools = () => {
                             tabIndex={-1}
                             ref={contentRef}
                             onBlur={() => {
+                                isBlur.current = false
                                 if (isMouseOut.current) {
                                     store.visible = false
+                                    setTimeout(() => {
+                                        isBlur.current = true
+                                    }, 100)
                                 }
                             }}
                             onFocus={() => {}}

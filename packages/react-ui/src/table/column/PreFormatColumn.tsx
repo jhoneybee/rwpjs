@@ -20,9 +20,9 @@ export const preFormatColumn = (
     store: TableStore,
     tableProps: TableProps,
 ) => {
-    const columns: Column<Row, unknown>[] = store.columns
-    .filter(column => store.visibleColumns?.includes(column.name))
-    .map((element => {
+    const columns: Column<Row, unknown>[] = store.columns.filter(
+        column => store.visibleColumns?.includes(column.name)
+    ).map((element => {
         const { name, title, editor, editable, formatter, align = 'left', ...restProps } = element
         const TempEditor = editable ? editor || Input : undefined
 
