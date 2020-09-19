@@ -101,8 +101,8 @@ export const Modal = (props: Props) => {
         const onMouseUp = (): void => {
             mouseState.current = 'UP'
         }
-        window.addEventListener('mouseup', onMouseUp)
-        return () => window.removeEventListener('mouseup', onMouseUp)
+        document.body.addEventListener('mouseup', onMouseUp)
+        return () => document.body.removeEventListener('mouseup', onMouseUp)
     }, [])
 
     return (
