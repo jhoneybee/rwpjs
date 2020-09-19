@@ -24,7 +24,7 @@ interface Props extends Omit<ModalProps,
     onCancel?: (e: React.MouseEvent<HTMLElement>) => Promise<void>
     modal?: React.MutableRefObject<ModalHandle | null>
     children?: ReactNode,
-    width?: number,
+    width?: number ,
     getContainer?: () => HTMLElement
 }
 
@@ -35,21 +35,36 @@ interface IContextProps {
 
 const ModalContext = React.createContext({} as IContextProps);
 
+const getWidth = (width?: number | string) => {
+    let widthNum = 520 
+
+    if (typeof width === 'string') {
+        if (/^\d+(\.?\d+)?%$/g.test(width)) {
+            widthNum = document.body.offsetWidth * (Number.parseFloat(width) / 100)
+        } else {
+            widthNum = Number.parseFloat(width)
+        }
+    }
+    return widthNum
+}
+
 export const Modal = (props: Props) => {
-    const [width, setWidth] = useState<number>(props.width || 520)
+
+    const [width, setWidth] = useState<number>(getWidth(props.width))
     const [visible, setVisible] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
 
     const [state, dispatch] = useReducer(reducer, {
         top: 100,
-        left: (window.innerWidth - (props.width ?? 520)) / 2,
+        left: (document.body.offsetWidth - getWidth(props.width)) / 2,
     });
 
     const mouseState = useRef<'UP' | 'DOWN'>('UP')
 
     useEffect(() => {
-        setWidth(props.width || 520)
+        setWidth(getWidth(props.width))
     }, [props.width])
+
     useEffect(() => {
         if (props.modal) {
             // eslint-disable-next-line no-param-reassign
@@ -64,10 +79,8 @@ export const Modal = (props: Props) => {
         }
     }, [])
 
-
     const left = useRef<number>(0)
     const top = useRef<number>(0)
-
 
     const previousX = useRef<number>(0)
     const previousY = useRef<number>(0)
