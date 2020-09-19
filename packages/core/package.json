@@ -5,8 +5,7 @@
   "author": "zhangj",
   "scripts": {
     "build": "gulp build-ts",
-    "lint:script": "eslint ./src/**/*.{js,jsx,ts,tsx}",
-    "prepublishOnly": "yarn build"
+    "lint:script": "eslint ./src/**/*.{js,jsx,ts,tsx}"
   },
   "license": "AGPL-3.0",
   "bin": {
