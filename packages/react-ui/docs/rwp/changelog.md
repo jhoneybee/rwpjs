@@ -48,6 +48,11 @@ group:
 
 ## alpha 内测开发版本
 
+### 1.20.1-alpha.0
+
+- Modal
+  - 🐞修复弹框移动问题
+
 ### 1.20.0-alpha.0
 
 - Table
