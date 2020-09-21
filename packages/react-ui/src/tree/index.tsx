@@ -45,7 +45,6 @@ interface CustomEventDataNode extends EventDataNode{
 export interface Props extends Omit<TreeProps,
     'loadData' |
     'treeData' |
-    'checkStrictly' |
     'loadedKeys' |
     'defaultCheckedKeys' |
     'defaultExpandAll' |
@@ -420,6 +419,7 @@ export const Tree = (props: Props) => {
             selectedKeys={selectedKeys}
             loadedKeys={loadedKeys}
             treeData={treeNodes}
+            checkStrictly={props.checkStrictly}
             height={props.height}
             autoExpandParent={props.autoExpandParent}
             blockNode={props.blockNode}
