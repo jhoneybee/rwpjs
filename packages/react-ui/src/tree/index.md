@@ -165,6 +165,8 @@ export default () => {
                     
                 }}
                 draggable
+                checkable
+                checkStrictly
                 tree={tree}
                 onDrop={(info) => {
                     return new Promise((re) => {
