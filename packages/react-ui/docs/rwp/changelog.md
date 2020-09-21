@@ -46,6 +46,11 @@ group:
 
 ## alpha 内测开发版本
 
+### 1.20.4-alpha.0
+
+- Modal
+  - 🐞 修复数据类型如果是 `number` 类型,宽度不会生效的问题
+
 ### 1.20.3-alpha.0
 
 - Tree

@@ -43,7 +43,7 @@ export default () => {
             </Button>
             <Modal
               modal={modal}
-              width="80%"
+              width={900}
               mask={false}
               maskClosable={false}
               onOk={async () => {

@@ -44,6 +44,8 @@ const getWidth = (width?: number | string) => {
         } else {
             widthNum = Number.parseFloat(width)
         }
+    }else if (typeof width === 'number') {
+        widthNum = width
     }
     return widthNum
 }
