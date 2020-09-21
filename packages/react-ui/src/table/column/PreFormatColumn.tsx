@@ -103,7 +103,7 @@ export const preFormatColumn = (
             frozen: true,
             selectCell: false,
             maxWidth: 35,
-            formatter: MultipleSelectColumn,
+            formatter: tableProps.selectRenderer ?? MultipleSelectColumn,
             headerRenderer: tableProps.selectBox === 'multiple' ? () => (
                 <Checkbox
                     checked={(

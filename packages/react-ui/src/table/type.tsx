@@ -206,6 +206,9 @@ export interface TableProps {
     groupColumn?: string[]
     // 表格分组的渲染
     groupRenderer?: React.ComponentType<GroupRendererProps>
+
+    // 表格选中框的render
+    selectRenderer?: React.ComponentType<FormatterProps<any, unknown>>
     
     // 用户唯一的rowKey
     rowKey?: string
