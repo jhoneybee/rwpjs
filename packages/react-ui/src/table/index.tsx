@@ -139,10 +139,10 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 store.setSelectedRows(selects)
             },
             update: change => store.update(change),
-            reload: (param: Object) => {
+            reload: async (param: Object) => {
                 // 如果是分组状态,禁止操作
                 if (isDisableLoadData()) return;
-                reloadFun(param)
+                return reloadFun(param)
                 
             },
             del: filter => store.del(filter),

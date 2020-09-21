@@ -125,7 +125,9 @@ const MyTable = () => {
             <Button
               disabled={disable}
               onClick={() => {
-                table.current.reload({})
+                table.current.reload({}).then(() => {
+                  table.current.setSelect(new Set([1]))
+                })
               }}
             > 重新装载数据 </Button>
             <Button
@@ -202,7 +204,7 @@ const MyTable = () => {
             table={table}
             // mode='SIMPLE'
             selectBox="single"
-            rowKey='field0'
+            rowKey='$index'
             groupColumn={groupField}
             onSort={ sortColumns => {
               console.log(sortColumns)

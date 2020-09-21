@@ -81,7 +81,7 @@ export interface TableHandle extends DataGridHandle {
      * 重新装载表格数据
      * @param 表格请求数据的参数
      */
-    reload: (param: Object) => void
+    reload: (param: Object) => Promise<void>
 
     /**
      * 删除返回为true的数据
