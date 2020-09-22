@@ -1,0 +1,12 @@
+{
+    "rootDir": "src", 
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "compilerOptions": {
+        "types": ["node", "@types/jest"],
+        "target": "es5",
+        "outDir": "bin",
+        "resolveJsonModule": true
+    },
+    "exclude": ["node_modules", "template", "example"]
+}

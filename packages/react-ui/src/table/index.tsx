@@ -142,8 +142,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
             reload: async (param: Object) => {
                 // 如果是分组状态,禁止操作
                 if (isDisableLoadData()) return;
-                return reloadFun(param)
-                
+                await reloadFun(param)
             },
             del: filter => store.del(filter),
             add: (rows, start) => store.add(rows, start)

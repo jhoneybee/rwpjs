@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test presetBabelReact 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "test": /\\\\\\.ts\\(x\\?\\)\\$/,
+        "use": Array [
+          Object {
+            "loader": "babel-loader",
+            "options": Object {
+              "presets": Array [
+                Array [
+                  "@babel/preset-env",
+                  Object {
+                    "targets": "defaults and not ie 11 and last 2 versions",
+                  },
+                ],
+                "@babel/preset-react",
+                "@babel/preset-typescript",
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+`;

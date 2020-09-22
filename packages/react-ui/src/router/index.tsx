@@ -16,8 +16,6 @@ import './style/index.less';
 interface Component {
     // 当前的路由路径
     path: string
-    // 子路由信息
-    routes: Component[]
     // 当前的组件
     component: React.FunctionComponent<RouteComponentProps>
 }
@@ -35,17 +33,7 @@ const RouteComponent = (
             path={element.path}
             key={element.path}
             exact
-            render={
-                props => (element.routes && element.routes.length > 0 ? (
-                    <element.component {...props} >
-                        <Switch>
-                            {RouteComponent(element.routes)}
-                        </Switch>
-                    </element.component>
-                ) : (
-                    <element.component {...props} />
-                ))
-            }
+            render={props => <element.component {...props} />}
         />
     ))
 )
