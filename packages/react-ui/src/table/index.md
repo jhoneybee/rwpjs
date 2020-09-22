@@ -22,30 +22,11 @@ title: Table 表格
 
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import { Table, Input, toDoubleClick, Row, Menu, Space, Button } from '@rwp/react-ui'
+import { Table, Select, toDoubleClick, Row, Menu, Space, Button } from '@rwp/react-ui'
 
 
-const getColumns = () => {
-  const columns = [{
-    name: '$index',
-    title: '序号',
-  }]
-  for(let i=0; i< 1000 ; i ++){
-    columns.push({
-      name: `field${i}`,
-      title: `字段-${i}`,
-      width: 120,
-      align: 'center|left',
-      sortable: true,
-      editable: true,
-      editor: Input
-    })
-  }
-  return columns
-}
 
 const MyDiv = () => {
-
   useEffect(() => {
     console.log('这是一个可展开的节点数据')
   }, [])
@@ -56,8 +37,55 @@ const MyTable = () => {
     const table = React.useRef()
     const [groupField, setGroupField] = useState([])
     const [disable, setDisable] = useState(false)
-    const [columns, setColumns] = useState(getColumns())
 
+    const [columns, setColumns] = useState([])
+    const getColumns = () => {
+      const columns = [{
+        name: '$index',
+        title: '序号',
+      }]
+      for(let i=0; i< 1000 ; i ++){
+        columns.push({
+          name: `field${i}`,
+          title: `字段-${i}`,
+          width: 120,
+          align: 'center|left',
+          sortable: true,
+          editable: true,
+          editor: ({onChange, value, style, row}) => {
+            return (
+              <Select
+                value={value}
+                style={{
+                  ...style,
+                  width: '100%'
+                }}
+                allowClear
+                onChange={(e) => {
+                  table.current.update((data) => {
+                    if (row.$index === data.$index) {
+                      return { ...data, field1:  e , field2: '修改的数据' }
+                    }
+                    return data
+                  })
+                  onChange(e)
+                }}
+              >
+                <Select.Option value="man">男</Select.Option>
+                <Select.Option value="woman">女</Select.Option>
+            </Select>
+            )
+          }
+        })
+      }
+      return columns
+    }
+    useEffect(() => {
+      setTimeout(() => {
+        setColumns(getColumns())
+      }, 200)
+    }, [])
+    
     return (
         <>
         <div
@@ -97,7 +125,9 @@ const MyTable = () => {
             <Button
               disabled={disable}
               onClick={() => {
-                table.current.reload({})
+                table.current.reload({}).then(() => {
+                  table.current.setSelect(new Set([1]))
+                })
               }}
             > 重新装载数据 </Button>
             <Button
@@ -173,8 +203,8 @@ const MyTable = () => {
             pageSize={500}
             table={table}
             // mode='SIMPLE'
-            selectBox="multiple"
-            rowKey='field0'
+            selectBox="single"
+            rowKey='$index'
             groupColumn={groupField}
             onSort={ sortColumns => {
               console.log(sortColumns)
@@ -182,10 +212,13 @@ const MyTable = () => {
             onSelectedRowsChange={changes => {
               console.log(changes, 'onSelectedRowsChange')
             }}
+            onRowsChange={(row) => {
+              console.log(row, 'onRowsChange')
+            }}
             onRowClick={(rowIdx, row, column) => {
               toDoubleClick(() => {
                 console.log('这是双击事件')
-              })
+              }, rowIdx)
             }}
             loadData={(pageNo , pageSize, params) => {
               console.log(pageNo, 'pageNo')
@@ -341,6 +374,7 @@ export default () => {
 |selectBox      | 启动选择框   | `'multiple'` &#124; `'none'` | `'none'`
 |groupColumn    | 启动分组,根据列的name来进行分组     | `string[]` | `[]`
 |groupRenderer        | 渲染分组行的的render, 可拦截重新填充值 | `React.ComponentType`| -
+|selectRenderer      | 自定义选择框的 | `React.ComponentType`| -
 |rowKey| 用户唯一的rowKey| `string`|
 |overlay | 右键菜单   | `React.ReactElement`&#124;`OverlayFunc`|
 |onSort      | 排序触发的事件| `(sortColumns: SortColumn[]) => void;`| -

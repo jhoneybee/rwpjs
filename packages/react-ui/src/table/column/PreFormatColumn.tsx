@@ -20,9 +20,9 @@ export const preFormatColumn = (
     store: TableStore,
     tableProps: TableProps,
 ) => {
-    const columns: Column<Row, unknown>[] = store.columns
-    .filter(column => store.visibleColumns?.includes(column.name))
-    .map((element => {
+    const columns: Column<Row, unknown>[] = store.columns.filter(
+        column => store.visibleColumns?.includes(column.name)
+    ).map((element => {
         const { name, title, editor, editable, formatter, align = 'left', ...restProps } = element
         const TempEditor = editable ? editor || Input : undefined
 
@@ -96,15 +96,15 @@ export const preFormatColumn = (
             ...restProps,
         }
     }))
-    if (tableProps.selectBox === 'multiple') {
+    if (tableProps.selectBox !== 'none') {
         const select: Column<Row, unknown> = {
             key: '$select',
             name: '',
             frozen: true,
             selectCell: false,
             maxWidth: 35,
-            formatter: MultipleSelectColumn,
-            headerRenderer: () => (
+            formatter: tableProps.selectRenderer ?? MultipleSelectColumn,
+            headerRenderer: tableProps.selectBox === 'multiple' ? () => (
                 <Checkbox
                     checked={(
                         store.selectedRows.size === store.datas.length
@@ -122,7 +122,7 @@ export const preFormatColumn = (
                         store.setSelectedRows(selectKeys, tableProps.onSelectedRowsChange)
                     }}
                 />
-            ),
+            ) : undefined,
         }
         columns.splice(0, 0, select)
     }

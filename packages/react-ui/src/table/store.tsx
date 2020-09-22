@@ -1,5 +1,5 @@
 import React from 'react'
-import { Column, RowsUpdateEvent } from 'react-data-grid-temp'
+import { Column, RowsUpdateEvent, Position } from 'react-data-grid-temp'
 import { groupBy, isEqual } from 'lodash'
 import { generate } from 'shortid'
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -10,6 +10,8 @@ export type ContextMenu = {
     row: Row,
     rowIdx: number,
     column: Column<any, unknown>
+    openEditor: boolean,
+    position: Position
 }
 
 
@@ -54,8 +56,6 @@ export function createStore() {
          * @param targeNode 交换的目标节点
          */
         switchColumns(node: Key, targeNode: Key){
-            // const column = this.columns.find(ele => ele.name === node)
-            // const targeColumn = this.columns.find(ele => ele.name === targeNode)
             let column: ColumnProps
             let columnIndex: number
             let targeColumn: ColumnProps
@@ -204,7 +204,11 @@ export function createStore() {
                     if (isEqual(row, ele)) {
                         return ele
                     }
-                    return {...row, $state: 'UPDATE'}
+                    let newState = 'UPDATE'
+                    if (ele.$state !== undefined && ele.$state !== 'UPDATE') {
+                        newState = ele.$state
+                    }
+                    return {...row, $state: newState}
                 })
                 this.setDataSource(datas)
                 resolve()

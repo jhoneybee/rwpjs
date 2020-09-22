@@ -165,6 +165,8 @@ export default () => {
                     
                 }}
                 draggable
+                checkable
+                checkStrictly
                 tree={tree}
                 onDrop={(info) => {
                     return new Promise((re) => {
@@ -261,6 +263,7 @@ export default () => {
 |style      |样式         |``
 |tree       |当前tree | `React.MutableRefObject<TreeHandle &#124; null>` | -
 |height|设置Tree的高度| `number`| -      
+|checkStrictly| checkable 状态下节点选择完全受控（父子节点选中状态不再关联） | `boolean` | `false`
 |expandedKeys| 展开的节点信息| `Key[]`| -
 |selectedKeys| 选择的节点信息|  `Key[]`| - 
 |autoExpandParent|是否自动展开父节点| `boolean` | `true`

@@ -81,7 +81,7 @@ export interface TableHandle extends DataGridHandle {
      * 重新装载表格数据
      * @param 表格请求数据的参数
      */
-    reload: (param: Object) => void
+    reload: (param: Object) => Promise<void>
 
     /**
      * 删除返回为true的数据
@@ -201,11 +201,14 @@ export interface TableProps {
     // 启动下拉编辑
     enableCellDragAndDrop?: boolean
     // 启动选择框 multiple表示多选，默认为none表示无选择器
-    selectBox?: 'multiple' | 'none'
+    selectBox?: 'multiple' | 'none' | 'single'
     // 根据分组的列进行分组，参数为列的name字段
     groupColumn?: string[]
     // 表格分组的渲染
     groupRenderer?: React.ComponentType<GroupRendererProps>
+
+    // 表格选中框的render
+    selectRenderer?: React.ComponentType<FormatterProps<any, unknown>>
     
     // 用户唯一的rowKey
     rowKey?: string

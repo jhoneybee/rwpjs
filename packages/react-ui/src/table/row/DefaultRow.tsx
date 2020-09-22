@@ -44,11 +44,13 @@ export const DefaultRow = ({
         return false
     }
 
-    useEffect(() => eventBus.subscribe('SELECT_CELL', (position: Position) => {
+    useEffect(() => eventBus.subscribe('SELECT_CELL', (position: Position, openEditor) => {
         if (rowIdx === position.rowIdx) {
             store.setContextMenu({
                 row,
                 rowIdx,
+                openEditor: openEditor === true,
+                position,
                 column: columns[position.idx] as any,
             })
         }

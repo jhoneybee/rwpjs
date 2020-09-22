@@ -3,7 +3,6 @@ import { MenuOutlined } from '@ant-design/icons'
 import { useLocalStore, useObserver } from 'mobx-react-lite'
 import { EventDataNode } from 'antd/lib/tree'
 import { autorun } from 'mobx'
-import { generate } from 'shortid'
 import { Tree } from '../../index'
 import { classPrefix } from '../../utils'
 import { useStore } from '../store'
@@ -23,14 +22,12 @@ export const Tools = () => {
     const divRef = useRef<HTMLDivElement | null>(null)
     const isMouseOut = useRef<boolean>(false)
     const globalStore = useStore()
-
     const contentRef = useRef<HTMLDivElement | null>(null)
     useEffect(() => {
         autorun(() => {
             store.treeHeight = divRef.current!.clientHeight - 30
         })
     }, [])
-
 
     useEffect(() => {
         autorun(() => {
@@ -64,7 +61,6 @@ export const Tools = () => {
                             </h4>
                             <Tree
                                 tree={tree}
-                                key={generate()}
                                 checkedKeys={globalStore.visibleColumns || []}
                                 loadData={loadData}
                                 onCheck={checked => {
@@ -102,11 +98,13 @@ export const Tools = () => {
                     className={`${tableClassPrefix}-right-button`}
                 >
                     <span
+                        style={{
+                            pointerEvents: store.visible ? 'none' : undefined
+                        }}
                         onClick={() => {
                             store.activeKey = 'column'
-                            if (!store.visible) {
-                                store.visible = true
-                            }
+                            store.visible = !store.visible
+                            tree.current?.reload()
                         }}
                     >
                         <MenuOutlined style={{ paddingRight: 3}} />
@@ -123,7 +121,7 @@ export const Tools = () => {
                                     store.visible = false
                                 }
                             }}
-                            onFocus={() => {}}
+                            onFocus={() => { }}
                             onMouseOut={() => {
                                 isMouseOut.current = true
                             }}

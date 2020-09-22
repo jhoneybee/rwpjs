@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test presetCss 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "test": /\\\\\\.css\\$/,
+        "use": Array [
+          Object {
+            "loader": "style-loader",
+          },
+          Object {
+            "loader": "css-loader",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`test presetLess 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "test": /\\\\\\.less\\$/,
+        "use": Array [
+          Object {
+            "loader": "style-loader",
+          },
+          Object {
+            "loader": "css-loader",
+          },
+          Object {
+            "loader": "less-loader",
+            "options": Object {
+              "lessOptions": Object {
+                "javascriptEnabled": true,
+              },
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+`;

@@ -24,7 +24,7 @@ interface Props extends Omit<ModalProps,
     onCancel?: (e: React.MouseEvent<HTMLElement>) => Promise<void>
     modal?: React.MutableRefObject<ModalHandle | null>
     children?: ReactNode,
-    width?: number,
+    width?: number ,
     getContainer?: () => HTMLElement
 }
 
@@ -35,21 +35,38 @@ interface IContextProps {
 
 const ModalContext = React.createContext({} as IContextProps);
 
+const getWidth = (width?: number | string) => {
+    let widthNum = 520 
+
+    if (typeof width === 'string') {
+        if (/^\d+(\.?\d+)?%$/g.test(width)) {
+            widthNum = document.body.offsetWidth * (Number.parseFloat(width) / 100)
+        } else {
+            widthNum = Number.parseFloat(width)
+        }
+    }else if (typeof width === 'number') {
+        widthNum = width
+    }
+    return widthNum
+}
+
 export const Modal = (props: Props) => {
-    const [width, setWidth] = useState<number>(props.width || 520)
+
+    const [width, setWidth] = useState<number>(getWidth(props.width))
     const [visible, setVisible] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
 
     const [state, dispatch] = useReducer(reducer, {
         top: 100,
-        left: (window.innerWidth - (props.width ?? 520)) / 2,
+        left: (document.body.offsetWidth - getWidth(props.width)) / 2,
     });
 
     const mouseState = useRef<'UP' | 'DOWN'>('UP')
 
     useEffect(() => {
-        setWidth(props.width || 520)
+        setWidth(getWidth(props.width))
     }, [props.width])
+
     useEffect(() => {
         if (props.modal) {
             // eslint-disable-next-line no-param-reassign
@@ -64,23 +81,20 @@ export const Modal = (props: Props) => {
         }
     }, [])
 
-
     const left = useRef<number>(0)
     const top = useRef<number>(0)
 
-
-    const beforeClientX = useRef<number>(0)
-    const beforeClientY = useRef<number>(0)
+    const previousX = useRef<number>(0)
+    const previousY = useRef<number>(0)
 
     useEffect(() => {
         const onMouseMove = (e: MouseEvent): void => {
-            if (e.clientY < 0  || e.clientY > window.innerHeight) return
+            const moveLeft = e.clientX - previousX.current
+            const moveTop = e.clientY - previousY.current
             // 鼠标按下的时候修改当前的位置信息
             if (
                 mouseState.current === 'DOWN'
             ) {
-                const moveLeft = e.clientX - beforeClientX.current
-                const moveTop = e.clientY - beforeClientY.current
                 dispatch({
                     type: 'SET_POSITION',
                     payload: {
@@ -89,12 +103,12 @@ export const Modal = (props: Props) => {
                     },
                 })
             } else {
-                beforeClientX.current = e.clientX
-                beforeClientY.current = e.clientY
+                previousX.current = e.clientX
+                previousY.current = e.clientY
             }
         }
-        window.addEventListener('mousemove', onMouseMove, { passive: true })
-        return () => window.removeEventListener('mousemove', onMouseMove)
+        document.body.addEventListener('mousemove', onMouseMove, { passive: true })
+        return () => document.body.removeEventListener('mousemove', onMouseMove)
     }, [])
 
 
@@ -102,8 +116,8 @@ export const Modal = (props: Props) => {
         const onMouseUp = (): void => {
             mouseState.current = 'UP'
         }
-        window.addEventListener('mouseup', onMouseUp)
-        return () => window.removeEventListener('mouseup', onMouseUp)
+        document.body.addEventListener('mouseup', onMouseUp)
+        return () => document.body.removeEventListener('mouseup', onMouseUp)
     }, [])
 
     return (
@@ -178,12 +192,6 @@ export const Modal = (props: Props) => {
                             mouseState.current = 'DOWN'
                             left.current = state.left
                             top.current = state.top
-                            // if (beforeClientX.current === 0) {
-                            //     beforeClientX.current = e.clientX
-                            // }
-                            // if (beforeClientY.current === 0) {
-                            //     beforeClientY.current = e.clientY
-                            // }
                         }}
                     >
                         {props.title}

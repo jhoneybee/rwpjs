@@ -139,11 +139,10 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 store.setSelectedRows(selects)
             },
             update: change => store.update(change),
-            reload: (param: Object) => {
+            reload: async (param: Object) => {
                 // 如果是分组状态,禁止操作
                 if (isDisableLoadData()) return;
-                reloadFun(param)
-                
+                await reloadFun(param)
             },
             del: filter => store.del(filter),
             add: (rows, start) => store.add(rows, start)
@@ -218,7 +217,19 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 enableCellDragAndDrop={props.enableCellDragAndDrop}
                 selectedRows={store.selectedRows}
                 onSelectedRowsChange={select => {
-                    store.setSelectedRows(select, props.onSelectedRowsChange)
+                    // 如果是单选
+                    if (props.selectBox === 'single') {
+                        if (store.selectedRows.size > 0) {
+                            store.setSelectedRows(new Set<any>([Array.from(select)[1]]), props.onSelectedRowsChange)
+                        } else {
+                            store.setSelectedRows(select, props.onSelectedRowsChange)
+                        }
+                    }
+
+                    // 如果是多选
+                    if (props.selectBox === 'multiple') {
+                        store.setSelectedRows(select, props.onSelectedRowsChange)
+                    }
                 }}
                 rowClass={props.rowClass}
                 onRowClick={props.onRowClick}
