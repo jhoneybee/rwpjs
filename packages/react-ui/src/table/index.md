@@ -374,6 +374,7 @@ export default () => {
 |selectBox      | 启动选择框   | `'multiple'` &#124; `'none'` | `'none'`
 |groupColumn    | 启动分组,根据列的name来进行分组     | `string[]` | `[]`
 |groupRenderer        | 渲染分组行的的render, 可拦截重新填充值 | `React.ComponentType`| -
+|selectRenderer      | 自定义选择框的 | `React.ComponentType`| -
 |rowKey| 用户唯一的rowKey| `string`|
 |overlay | 右键菜单   | `React.ReactElement`&#124;`OverlayFunc`|
 |onSort      | 排序触发的事件| `(sortColumns: SortColumn[]) => void;`| -

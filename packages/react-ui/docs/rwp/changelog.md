@@ -46,6 +46,11 @@ group:
 
 ## alpha 内测开发版本
 
+### 1.21.0-alpha.0
+
+- Table
+  - 🆕 添加一个selectRenderer
+
 ### 1.20.5-alpha.0
 
 - Table
