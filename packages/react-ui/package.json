@@ -1,6 +1,6 @@
 {
     "name": "@rwp/react-ui",
-    "version": "1.21.1-alpha.0",
+    "version": "1.21.2-alpha.0",
     "license": "AGPL-3.0",
     "scripts": {
         "start": "dumi dev",
