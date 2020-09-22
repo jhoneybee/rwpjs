@@ -1,18 +1,17 @@
-import * as Config from 'webpack-chain'
+import * as Config from 'webpack-chain';
 
 export const presetCss = (config: Config) => {
     config
-    .module
-    .rule('css')
-    .test(/\.css$/)
-    .use('style-loader')
-    .loader('style-loader')
-    .end()
-    .use('css/loader')
-    .loader('css-loader')
-    .end()
-    
-}
+        .module
+        .rule('css')
+        .test(/\.css$/)
+        .use('style-loader')
+        .loader('style-loader')
+        .end()
+        .use('css/loader')
+        .loader('css-loader')
+        .end();
+};
 
 export const presetLess = (config: Config) => {
     config
@@ -29,8 +28,8 @@ export const presetLess = (config: Config) => {
         .loader('less-loader')
         .options({
             lessOptions: {
-                javascriptEnabled: true
-            }
+                javascriptEnabled: true,
+            },
         })
-        .end()
-}
+        .end();
+};

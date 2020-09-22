@@ -8,5 +8,5 @@
         "outDir": "bin",
         "resolveJsonModule": true
     },
-    "exclude": ["node_modules", "template", "example", "**/*.spec.ts"]
+    "exclude": ["node_modules", "template", "example"]
 }

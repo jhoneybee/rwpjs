@@ -1,4 +1,4 @@
-import * as Config from 'webpack-chain'
+import * as Config from 'webpack-chain';
 
 export const presetBabelReact = (config: Config) => {
     config
@@ -9,11 +9,12 @@ export const presetBabelReact = (config: Config) => {
         .loader('babel-loader')
         .options({
             presets: [
-                ['@babel/preset-env',{
-                    targets: 'defaults and not ie 11 and last 2 versions'
+                ['@babel/preset-env', {
+                    targets: 'defaults and not ie 11 and last 2 versions',
                 }],
                 '@babel/preset-react',
                 '@babel/preset-typescript',
-            ]
-        }).end()
-}
+            ],
+        })
+        .end();
+};

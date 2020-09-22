@@ -1,5 +1,8 @@
 {
     "git.ignoreLimitWarning": true,
     "deepscan.enable": true,
-    "debug.javascript.warnOnLongPrediction": false
+    "debug.javascript.warnOnLongPrediction": false,
+    "eslint.workingDirectories": [
+        "packages/cli"
+    ]
 }

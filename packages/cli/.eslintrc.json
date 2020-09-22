@@ -1,0 +1,17 @@
+{
+    "env": {
+        "node": true,
+        "jest": true,
+        "es2021": true
+    },
+    "extends": [
+        "airbnb-typescript/base"
+    ],
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "rules": {
+        "import/prefer-default-export": 0,
+        "@typescript-eslint/indent": ["error", 4]
+    }
+}
