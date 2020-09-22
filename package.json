@@ -1,8 +1,8 @@
 {
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "publish:alpha": "lerna publish --dist-tag alpha",
-    "publish:stable": "lerna publish",
+    "publish:alpha": "yarn bootstrap && lerna publish --dist-tag alpha",
+    "publish:stable": "yarn bootstrap && lerna publish",
     "lint:script": "lerna run lint:script",
     "test": "lerna run test"
   },
