@@ -31,7 +31,7 @@ export const Tools = () => {
 
     useEffect(() => {
         tree.current?.reload()
-    })
+    }, [globalStore.columns])
 
     useEffect(() => {
         autorun(() => {
