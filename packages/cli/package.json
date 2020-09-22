@@ -4,7 +4,8 @@
   "scripts": {
     "start": "tsc && cd example && npm install && npm run start",
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "lint:script": "eslint ./src/**/*.{js,jsx,ts,tsx}"
   },
   "license": "AGPL-3.0",
   "bin": {
