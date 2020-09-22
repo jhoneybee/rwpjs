@@ -51,6 +51,10 @@ export const presetEntry = (config: Config) => {
         template: join(process.cwd(), 'src', 'document.ejs'),
     }]).end();
 
+    if (!existsSync(join(process.cwd(), 'public'))) {
+        mkdirSync(join(process.cwd(), 'public'));
+    }
+    config.devServer.contentBase([join(process.cwd(), 'public')]).end();
     config.mode('development');
     config.devServer.stats('errors-only');
     // see https://github.com/facebook/react/issues/2402

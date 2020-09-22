@@ -20,15 +20,12 @@ const getConfig = () => {
 if (process.argv.length === 3) {
     const config = getConfig();
 
-    /**
-       *  - dev   开发
-       *  - build 编译
-       */
+    // dev 表示开发 build 表示编译
     const status = process.argv[2];
-
     // 开发环境, 运行webpack
     if (status === 'dev') {
-        const { devServer: devServerConfig, ...webpackConfig } = config.toConfig();
+        config.mode('development');
+        const { devServer: webpackServer, ...webpackConfig } = config.toConfig();
         const compiler = Webpack(webpackConfig);
         timefixWebpack(compiler);
         compiler.hooks.afterCompile.tapAsync('@rwp/cli', (compilation, callback) => {
@@ -41,10 +38,15 @@ if (process.argv.length === 3) {
             callback();
         });
 
-        const devServer = new WebpackDevServer(compiler, devServerConfig);
+        const devServer = new WebpackDevServer(compiler, webpackServer);
         const port = process.env.PORT ?? '1996';
         devServer.listen(Number.parseInt(port, 10), () => {
         });
+    } else if (status === 'build') {
+        const webpackConfig = config.toConfig();
+        config.mode('production');
+        const compiler = Webpack(webpackConfig);
+        compiler.run(() => {});
     }
 } else {
     throw new Error('The parameter is incorrect.');
