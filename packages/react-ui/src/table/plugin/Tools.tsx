@@ -111,27 +111,28 @@ export const Tools = () => {
                     </span>
                 </div>
                 {
-                    store.visible ? (
-                        <div
-                            className={`${tableClassPrefix}-right-content`}
-                            tabIndex={-1}
-                            ref={contentRef}
-                            onBlur={() => {
-                                if (isMouseOut.current) {
-                                    store.visible = false
-                                }
-                            }}
-                            onFocus={() => { }}
-                            onMouseOut={() => {
-                                isMouseOut.current = true
-                            }}
-                            onMouseOver={() => {
-                                isMouseOut.current = false
-                            }}
-                        >
-                            {switchContent()}
-                        </div>
-                    ) : undefined
+                    <div
+                        className={`${tableClassPrefix}-right-content`}
+                        tabIndex={-1}
+                        style={{
+                            display: !store.visible ? 'none' : undefined
+                        }}
+                        ref={contentRef}
+                        onBlur={() => {
+                            if (isMouseOut.current) {
+                                store.visible = false
+                            }
+                        }}
+                        onFocus={() => { }}
+                        onMouseOut={() => {
+                            isMouseOut.current = true
+                        }}
+                        onMouseOver={() => {
+                            isMouseOut.current = false
+                        }}
+                    >
+                        {switchContent()}
+                    </div>
                 }
                 
             </div>
