@@ -1,5 +1,13 @@
 # React 的构建工具，对Webpack的封装
 
+包含的功能点如下
+
+- less/css
+- react
+- typescript
+- 约定路由
+
+
 ## 项目结构介绍
 
 ```
@@ -38,5 +46,6 @@ src
 |http://localhost:1996/ | src/pages/index.route.tsx
 |http://localhost:1996/test |src/pages/test.route.tsx
 |http://localhost:1996/directory/directory1 |src/pages/directory/directory1.route.tsx
+
 
 > pages 目录下只有后缀为 `.route.tsx` 才会被解析为路由。
