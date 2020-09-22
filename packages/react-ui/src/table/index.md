@@ -331,7 +331,6 @@ export default () => {
               console.log(table.current.getDataSource())
               onCommit()
             }}
-            mode='SIMPLE'
             loadData={(pageNo , pageSize, params) => {  
               return new Promise((resolve) =>{
                 const datas = []

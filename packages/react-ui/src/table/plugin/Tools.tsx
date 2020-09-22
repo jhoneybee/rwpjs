@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { MenuOutlined } from '@ant-design/icons'
 import { useLocalStore, useObserver } from 'mobx-react-lite'
 import { EventDataNode } from 'antd/lib/tree'
-import { autorun } from 'mobx'
+import { autorun, toJS } from 'mobx'
 import { Tree } from '../../index'
 import { classPrefix } from '../../utils'
 import { useStore } from '../store'
@@ -30,6 +30,10 @@ export const Tools = () => {
     }, [])
 
     useEffect(() => {
+        tree.current?.reload()
+    })
+
+    useEffect(() => {
         autorun(() => {
             if (contentRef.current && store.visible) {
                 contentRef.current.focus()
@@ -42,7 +46,7 @@ export const Tools = () => {
             if (store.activeKey === 'column'){
                 const loadData = async (node: EventDataNode | null) => {
                     if(node === null){
-                        return globalStore.columns.map(column => ({
+                        return (toJS(globalStore.columns) as any[]).map(column => ({
                             title: column.title,
                             key: column.name,
                             isLeaf: true,
@@ -104,34 +108,35 @@ export const Tools = () => {
                         onClick={() => {
                             store.activeKey = 'column'
                             store.visible = !store.visible
-                            tree.current?.reload()
                         }}
                     >
                         <MenuOutlined style={{ paddingRight: 3}} />
                     </span>
                 </div>
-                <div
-                    className={`${tableClassPrefix}-right-content`}
-                    tabIndex={-1}
-                    style={{
-                        display: !store.visible ? 'none' : undefined
-                    }}
-                    ref={contentRef}
-                    onBlur={() => {
-                        if (isMouseOut.current) {
-                            store.visible = false
-                        }
-                    }}
-                    onFocus={() => { }}
-                    onMouseOut={() => {
-                        isMouseOut.current = true
-                    }}
-                    onMouseOver={() => {
-                        isMouseOut.current = false
-                    }}
-                >
-                    {switchContent()}
-                </div>
+                {
+                    store.visible ? (
+                        <div
+                            className={`${tableClassPrefix}-right-content`}
+                            tabIndex={-1}
+                            ref={contentRef}
+                            onBlur={() => {
+                                if (isMouseOut.current) {
+                                    store.visible = false
+                                }
+                            }}
+                            onFocus={() => { }}
+                            onMouseOut={() => {
+                                isMouseOut.current = true
+                            }}
+                            onMouseOver={() => {
+                                isMouseOut.current = false
+                            }}
+                        >
+                            {switchContent()}
+                        </div>
+                    ) : undefined
+                }
+                
             </div>
         )
     }) 
