@@ -19,6 +19,14 @@
     "bin",
     "template"
   ],
+  "homepage": "https://rwp.pub",
+  "bugs": {
+      "url": "https://github.com/jhoneybee/rwpjs/issues"
+  },
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/jhoneybee/rwpjs"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.13",
     "@types/node": "^14.11.2",
