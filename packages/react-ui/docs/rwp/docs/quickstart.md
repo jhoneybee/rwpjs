@@ -14,6 +14,21 @@ order: 0
 
 - 最新版本: [![react-ui](https://img.shields.io/npm/v/@rwp/react-ui.svg?style=flat-square)](https://www.npmjs.com/package/@rwp/react-ui)
 
+## 在 webpack 或者 create-react-app 中使用
+
+```sh
+npm install @rwp/react-ui
+# 或者
+yarn add @rwp/react-ui
+```
+
+直接采用以下方式使用即可
+
+```ts
+import { Button } from '@rwp/react-ui'
+```
+
+
 ## 在浏览器中使用
 
 在浏览器中使用 script 和 link 标签直接引入文件，并使用全局变量 `RWP`
@@ -28,7 +43,7 @@ order: 0
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script src="./ui.bundle.js"></script>
+    <script crossorigin src="https://unpkg.com/@rwp/react-ui@1.0.0/dist/rwp.bundle.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -43,16 +58,3 @@ order: 0
 </body>
 </html>
 ```
-
-## 使用后端管理的模板
-
-
-可以使用`pro-template`来快速创建项目 
-
-```shell
-git clone https://github.com/jhoneybee/pro-template.git
-```
-
-> 也可以直接打开 https://github.com/jhoneybee/pro-template 网页,然后点击 `Use this template`
-
-

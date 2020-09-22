@@ -5,9 +5,10 @@ nav:
   order: 0
 group:
   path: /changelog
+  title: 更新日志
 ---
 
-# 更新日志 
+# UI 更新日志
 
 遵循 Semantic Versioning 2.0.0 语义化版本规范。
 
