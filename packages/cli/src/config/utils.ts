@@ -19,7 +19,7 @@ export const copyFileTo = (source: string, targe: string) => {
     );
 };
 
-export function timefixWebpack(compiler, ...args) {
+export function timefixWebpack(compiler) {
     const timefix = 600;
     let watching: any = {};
     const onWatchRun = (c, callback) => {
@@ -33,7 +33,7 @@ export function timefixWebpack(compiler, ...args) {
     };
     const aspectWatch = compiler.watch;
     // eslint-disable-next-line no-param-reassign
-    compiler.watch = () => {
+    compiler.watch = (...args) => {
         watching = aspectWatch.apply(compiler, args);
         return watching;
     };
@@ -69,15 +69,15 @@ export const writeRouteFile = () => {
     ) => {
         const pathname = join(dir, file);
         if (pathname.substr(pathname.length - 10) === '.route.tsx') {
-            const component = pathname.split('.').slice(0, -1).join('.').split(sep)
-                .join(sep + sep);
+            const currenPath = pathname.replace(join(process.cwd(), 'src', 'pages'), '');
+            const component = currenPath.split('.').slice(0, -1).join('.');
 
-            let path = component.replace(join(process.cwd(), 'src', 'pages').split(sep).join(sep + sep), '');
+            let path = currenPath;
             path = path.split('.').slice(0, -1).join('.');
             if (file === 'index.route.tsx') {
                 path = `${dir.replace(join(process.cwd(), 'src', 'pages'), '').split(sep).join('/')}/`;
             }
-            code += `\n\t{\n\t\tcomponent: React.lazy(() => import('${component}')),\n\t\tpath: '${path}'\n\t},\n`;
+            code += `\n\t{\n\t\tcomponent: React.lazy(() => import('../pages${component.split(sep).join('/')}')),\n\t\tpath: '${path}'\n\t},\n`;
         }
     });
     code += ']';

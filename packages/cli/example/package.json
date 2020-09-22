@@ -1,7 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "start": "rwp dev"
+    "start": "rwp dev",
+    "build": "rwp build"
   },
   "dependencies": {
     "@rwp/cli": "file:..",
