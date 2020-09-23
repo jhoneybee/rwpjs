@@ -1,6 +1,6 @@
 name: NPM publish package verification 
 on:
-  push:
+  pull_request:
     branches:
     - 'canary'
     - 'v*'
