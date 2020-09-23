@@ -2963,10 +2963,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-helmet@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@types/react-helmet/-/react-helmet-6.0.0.tgz#5b74e44a12662ffb12d1c97ee702cf4e220958cf"
-  integrity sha512-NBMPAxgjpaMooXa51cU1BTgrX6T+hQbMiLm77JhBbfOzPQea3RB5rNpPOD5xGWHIVpGXHd59cltEzIq0qglGcQ==
+"@types/react-helmet@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@types/react-helmet/-/react-helmet-6.1.0.tgz#af586ed685f4905e2adc7462d1d65ace52beee7a"
+  integrity sha512-PYRoU1XJFOzQ3BHvWL1T8iDNbRjdMDJMT5hFmZKGbsq09kbSqJy61uwEpTrbTNWDopVphUT34zUSVLK9pjsgYQ==
   dependencies:
     "@types/react" "*"
 
@@ -3448,6 +3448,38 @@
     babel-plugin-transform-react-remove-prop-types "0.4.24"
     babel-plugin-transform-typescript-metadata "0.3.0"
 
+"@umijs/babel-preset-umi@3.2.21":
+  version "3.2.21"
+  resolved "https://registry.yarnpkg.com/@umijs/babel-preset-umi/-/babel-preset-umi-3.2.21.tgz#deb62f5eb348f07c3d5fd90edaee38d956e00482"
+  integrity sha512-gquLdotQ9wMJH3QJWY/NjeAkgkZKvAh9rvDNnRYVSJFobq/2o1bxYFWf7ardqNnyAM6qPQzzP5YlJA4gn558jg==
+  dependencies:
+    "@babel/plugin-proposal-class-properties" "7.10.4"
+    "@babel/plugin-proposal-decorators" "7.10.4"
+    "@babel/plugin-proposal-do-expressions" "7.10.4"
+    "@babel/plugin-proposal-export-default-from" "7.10.4"
+    "@babel/plugin-proposal-function-bind" "7.10.4"
+    "@babel/plugin-proposal-logical-assignment-operators" "7.10.4"
+    "@babel/plugin-proposal-nullish-coalescing-operator" "7.10.4"
+    "@babel/plugin-proposal-optional-chaining" "7.10.4"
+    "@babel/plugin-proposal-pipeline-operator" "7.10.4"
+    "@babel/plugin-syntax-top-level-await" "7.10.4"
+    "@babel/plugin-transform-destructuring" "7.10.4"
+    "@babel/plugin-transform-runtime" "7.10.4"
+    "@babel/preset-env" "7.10.4"
+    "@babel/preset-react" "7.10.4"
+    "@babel/preset-typescript" "7.10.4"
+    "@babel/runtime" "7.10.4"
+    "@svgr/webpack" "4.3.3"
+    "@umijs/babel-plugin-auto-css-modules" "3.2.21"
+    "@umijs/babel-plugin-import-to-await-require" "3.2.21"
+    "@umijs/babel-plugin-lock-core-js-3" "3.2.21"
+    babel-plugin-dynamic-import-node "2.3.3"
+    babel-plugin-import "^1.13.0"
+    babel-plugin-named-asset-import "0.3.6"
+    babel-plugin-react-require "3.1.3"
+    babel-plugin-transform-react-remove-prop-types "0.4.24"
+    babel-plugin-transform-typescript-metadata "0.3.0"
+
 "@umijs/bundler-utils@3.2.20":
   version "3.2.20"
   resolved "https://registry.yarnpkg.com/@umijs/bundler-utils/-/bundler-utils-3.2.20.tgz#09710196661181d9b8bf8e46ee972c37a49d5f2a"
@@ -3575,10 +3607,10 @@
   resolved "https://registry.yarnpkg.com/@umijs/plugin-analytics/-/plugin-analytics-0.2.2.tgz#575fd231d4327ea13413217aa1b5fc6bdd89465e"
   integrity sha512-dVDzUfgIdEwdCC6a5IsMYpIPI+bEZjBEqIhAvw9dic6Vk77w9RxQxyRfW11dDmdXLAwWphp22NntQNt1ejZPtg==
 
-"@umijs/plugin-antd@0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-antd/-/plugin-antd-0.7.0.tgz#c9bbfd9f29bd1f6be7cc36d7226ffa5fbde1b9cc"
-  integrity sha512-IK580GohCnOInlZVsmG868sZnLxJxpI0w8h7jDlse6S6j+nNOQ8XQHsHYC+W6SBHjoQ0l6JY8uRgqnotLVcL5A==
+"@umijs/plugin-antd@0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-antd/-/plugin-antd-0.8.0.tgz#0dae96f2aada81dbd494ee19f9329f1a63cff1ff"
+  integrity sha512-Pz9DOd6kwYvAQUGbKfyVnezCROGLLQzwfi6QFvMnsCh1iV2g1Kfk0tg3hEbzsUkXHPgeMLx+qj7KQFwHWWM1+w==
   dependencies:
     antd "^4.1.3"
     antd-mobile "^2.3.1"
@@ -3588,43 +3620,43 @@
   resolved "https://registry.yarnpkg.com/@umijs/plugin-crossorigin/-/plugin-crossorigin-1.1.1.tgz#0e5ffb8013c95470fce79cfbd6a29a9ad58df4c9"
   integrity sha512-2ryOjsGqgRv6YqSHqHRqvPc6cg0JSYAnqr9OB2bOjZVAQevFpovetHGDXxIKzUtb09MwrrSQvaH9K7uGZtACow==
 
-"@umijs/plugin-dva@0.7.4":
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-dva/-/plugin-dva-0.7.4.tgz#07e1c2dcb466df0187cd9ec483598b267628095c"
-  integrity sha512-kWpfbTEeV0AJcap4xhAL8J6T5W/Y1VZT7EU7H9KcMQ+QLX+jdBwmftxJ4BP9DY0cCee1NYv/UWTkbVw3GJwZHw==
+"@umijs/plugin-dva@0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-dva/-/plugin-dva-0.9.0.tgz#898de8284e30add4c81c662f489b7e0f3752a750"
+  integrity sha512-v59huDHZGM9Ugy+gmMAQef+DXRAs+ZBhWOaSLUQxTzSHHzVaIvqh0CXAwilSTeF6d3Pt2KuStsoYV6QSJPqi0A==
   dependencies:
     babel-plugin-dva-hmr "^0.4.2"
     dva "^2.6.0-beta.20"
     dva-immer "^0.4.19"
     dva-loading "^3.0.20"
 
-"@umijs/plugin-helmet@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-helmet/-/plugin-helmet-1.0.2.tgz#9db9d1d257778f94d12587dd6b717af91970e4c9"
-  integrity sha512-GBGQk8VPqEPj3EQnVGmQfI4iGTlwr/kiQZUWm4zrbfDgXf9ydz8sxrQnHWZ1TDu37EnPvaxFHqIAb6KR547JlQ==
+"@umijs/plugin-helmet@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-helmet/-/plugin-helmet-1.1.1.tgz#841aea37b5076b51c2f332659bf9c671cf63794d"
+  integrity sha512-S2MyqjLddQ4o9jTqfEdEsZhhmHTPUlqoLYdsMtbaTUlfChnQ/ed+3WCwuF5bkVVqhea+Yi4ctxPa+k3xBUhmcg==
   dependencies:
-    "@types/react-helmet" "6.0.0"
-    react-helmet "6.0.0"
+    "@types/react-helmet" "^6.1.0"
+    react-helmet "^6.1.0"
 
 "@umijs/plugin-initial-state@2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@umijs/plugin-initial-state/-/plugin-initial-state-2.2.1.tgz#cd7592aa90b6b369bd0df297254320088397ff67"
   integrity sha512-qDtWguduISeG+EObgKbImuRX3FyLrNcj3yQtY24HdYkDTGmtsmA4ZKB7Q/N+V/O0Yxep06bCotTK3jFV9KXuEA==
 
-"@umijs/plugin-layout@0.11.15":
-  version "0.11.15"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-layout/-/plugin-layout-0.11.15.tgz#1209a5b1ae05aa7ec3a8e35b7c5ef83a86b3ad5a"
-  integrity sha512-wyjoCN4eDF7yCKDoFzBdGDOqp9KO7gFx6WOEK6D2h4deTKMD8+IAxj8MPnifVQgd+HQvGgAAqZ+5q9nv25N30A==
+"@umijs/plugin-layout@0.12.2":
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-layout/-/plugin-layout-0.12.2.tgz#729930e82a62a930950d2e466de6fa350190c1c0"
+  integrity sha512-EqdhzLS9+wS80ZpAFK04aZUCaiU3IWKfaLh2j8qWh4C0cTRtmLRBgake6suV8AHIQj3NPwohsq2s55Qt/S/sLw==
   dependencies:
     "@umijs/route-utils" "^1.0.7"
     antd "^4.1.2"
     lodash "^4.17.15"
     path-to-regexp "1.x"
 
-"@umijs/plugin-locale@0.9.1":
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-locale/-/plugin-locale-0.9.1.tgz#bf1bd948f615b7860c0d67e41b93ebb843a997f1"
-  integrity sha512-Z5/riKkBDSNEDD9qE/K0AcGJoggZVuEzrjBCYGek6P95Hc55TZdHXdFtM2lfW9gWpFSpqeL59UyHk2lGbpkagA==
+"@umijs/plugin-locale@0.10.2":
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-locale/-/plugin-locale-0.10.2.tgz#8ed5ec62d5fd6690a196ab71e379e1626139ac49"
+  integrity sha512-vr9vY5aaOBJKsBibdATYMOoupstgEylN5fJXW30nIU+ZZviaFh9H6G6Fkk7nAj81DbFZ7WE1xWVq5A6UyDWAWw==
   dependencies:
     "@ant-design/icons" "^4.1.0"
     "@formatjs/intl-pluralrules" "^1.5.0"
@@ -3634,17 +3666,17 @@
     react-intl "3.12.0"
     warning "^4.0.3"
 
-"@umijs/plugin-model@2.5.3":
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-model/-/plugin-model-2.5.3.tgz#2d932daa67dee78f405b9b9e0aa2a44721305d33"
-  integrity sha512-36bxjWfm4diCkZmZMMY2hMLWCAoZ+hxsQ1g439bS6nNDL1yQz8J7Vh55R8UpTVA2Djm8zKUBjgCsmbBvYpVtMg==
+"@umijs/plugin-model@2.5.4":
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-model/-/plugin-model-2.5.4.tgz#7b91d1886195793a2a97b0b2d7994c72b7604719"
+  integrity sha512-5r4U+HpNlZ8a7dtrwhObHDbwIj6EmUecU9v9SgrcUnEFjNk375MFTvEeFgM5ZmES0LFEKSJfmolvrNiT1uNfcw==
   dependencies:
     fast-deep-equal "3.1.1"
 
-"@umijs/plugin-request@2.4.2":
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-request/-/plugin-request-2.4.2.tgz#9fa59d355dd6018b6bd14573c4413d2ea2f3fd1e"
-  integrity sha512-Og5Uc8Q72SefSAC0G1gnTQpjH5+GWBdDweOPCJ3EyibJWSvukdOcoqmaTvfpltUu5Tx6g3ZRo1PB1LDwvhdEpg==
+"@umijs/plugin-request@2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-request/-/plugin-request-2.5.0.tgz#3b222be9400c3c21ac84bdeefbd4103e48690748"
+  integrity sha512-fC0zLMmMP0PGqFtI6pyb8fJd9HovMuNPUSrjDH2YFcyyd0m9FOdjnuL2VcfvHBI1RcpfdW6LJ/dxw+ggeeoyaQ==
   dependencies:
     "@ahooksjs/use-request" "^2.0.0"
     umi-request "^1.2.14"
@@ -3740,22 +3772,22 @@
     unist-util-visit "^2.0.1"
     unist-util-visit-parents "^3.0.1"
 
-"@umijs/preset-react@~1.5.22":
-  version "1.5.22"
-  resolved "https://registry.yarnpkg.com/@umijs/preset-react/-/preset-react-1.5.22.tgz#1c68e9990ef67c0d2db2d515a204c7fa99e00213"
-  integrity sha512-1FFz+1g8Nz/wRN9fAnGq1Ah7zmtVydc6UZEEQexu5e4+DNwLNW2/npd9PMm1VBZeL4Fn+cA8QDZ4qQ+0Mv1d9Q==
+"@umijs/preset-react@~1.6.7":
+  version "1.6.7"
+  resolved "https://registry.yarnpkg.com/@umijs/preset-react/-/preset-react-1.6.7.tgz#a99ca42cbed6f7f9650ca910869ec6556cfbc161"
+  integrity sha512-3EOXZ3FwK/2f/ZaWGSOxS1NpDwLNCsDuS/Cq+IYcqrJ8gbJGqEN/Dzt64jMeKu1A9s25UnSsy+8da72OCNDZvw==
   dependencies:
     "@umijs/plugin-access" "2.3.1"
     "@umijs/plugin-analytics" "0.2.2"
-    "@umijs/plugin-antd" "0.7.0"
+    "@umijs/plugin-antd" "0.8.0"
     "@umijs/plugin-crossorigin" "1.1.1"
-    "@umijs/plugin-dva" "0.7.4"
-    "@umijs/plugin-helmet" "1.0.2"
+    "@umijs/plugin-dva" "0.9.0"
+    "@umijs/plugin-helmet" "1.1.1"
     "@umijs/plugin-initial-state" "2.2.1"
-    "@umijs/plugin-layout" "0.11.15"
-    "@umijs/plugin-locale" "0.9.1"
-    "@umijs/plugin-model" "2.5.3"
-    "@umijs/plugin-request" "2.4.2"
+    "@umijs/plugin-layout" "0.12.2"
+    "@umijs/plugin-locale" "0.10.2"
+    "@umijs/plugin-model" "2.5.4"
+    "@umijs/plugin-request" "2.5.0"
     "@umijs/plugin-test" "1.0.0"
 
 "@umijs/renderer-mpa@3.2.20":
@@ -16756,10 +16788,10 @@ react-error-overlay@6.0.7, react-error-overlay@^6.0.7:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.7.tgz#1dcfb459ab671d53f660a991513cb2f0a0553108"
   integrity sha512-TAv1KJFh3RhqxNvhzxj6LeT5NWklP6rDr2a0jaTfsZ5wSZWHOGeqQyejUp3xxLfPt2UpyJEcVQB/zyPcmonNFA==
 
-react-fast-compare@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
-  integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
+react-fast-compare@^3.1.1:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
+  integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
 
 react-grid-layout@^1.1.0:
   version "1.1.1"
@@ -16772,14 +16804,14 @@ react-grid-layout@^1.1.0:
     react-draggable "^4.0.0"
     react-resizable "^1.10.0"
 
-react-helmet@6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-6.0.0.tgz#fcb93ebaca3ba562a686eb2f1f9d46093d83b5f8"
-  integrity sha512-My6S4sa0uHN/IuVUn0HFmasW5xj9clTkB9qmMngscVycQ5vVG51Qp44BEvLJ4lixupTwDlU9qX1/sCrMN4AEPg==
+react-helmet@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-6.1.0.tgz#a750d5165cb13cf213e44747502652e794468726"
+  integrity sha512-4uMzEY9nlDlgxr61NL3XbKRy1hEkXmKNXhjbAIOVw5vcFrsdYbH2FEwcNyWvWinl103nXgzYNlns9ca+8kFiWw==
   dependencies:
     object-assign "^4.1.1"
     prop-types "^15.7.2"
-    react-fast-compare "^2.0.4"
+    react-fast-compare "^3.1.1"
     react-side-effect "^2.1.0"
 
 react-intl@3.12.0:
