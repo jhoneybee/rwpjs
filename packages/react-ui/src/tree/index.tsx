@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Tree as AntTree, Dropdown } from 'antd'
-import { isArray, isObject, uniqWith } from 'lodash'
+import { uniqWith } from 'lodash'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import RcTree from 'rc-tree';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -108,15 +108,6 @@ export const Tree = (props: Props) => {
             setExpandedKeys(expandedKeys.concat(tempTreeNode.map(ele => ele.key)))
         }
 
-        const { checkedKeys: propsCheckedKeys } = props
-        const realCheckedKeys: Key[] | {
-            checked: Key[];
-            halfChecked: Key[];
-        } = isArray(propsCheckedKeys) ? [] : {
-            checked: [],
-            halfChecked: []
-        }
-
         const joinExpandedKeys: Key[] = []
         tempTreeNode.forEach(ele => {
             if(props.expandedKeys?.includes(ele.key)){
@@ -127,35 +118,6 @@ export const Tree = (props: Props) => {
 
         setTreeNodes(tempTreeNode.map(ele => {
             const chil = ele as EventDataNode
-            if (
-                propsCheckedKeys
-                &&
-                isArray(propsCheckedKeys)
-                &&
-                isArray(realCheckedKeys)
-                &&
-                propsCheckedKeys.includes(ele.key)
-            ) {
-                realCheckedKeys.push(ele.key as Key)
-            }else if (
-                propsCheckedKeys
-                &&
-                isObject(propsCheckedKeys)
-                &&
-                isObject(realCheckedKeys)
-            ){
-                const tempCheckedKeys = realCheckedKeys as {
-                    checked: Key[];
-                    halfChecked: Key[];
-                }
-                if (tempCheckedKeys.checked && tempCheckedKeys.checked.includes(ele.key)) {
-                    tempCheckedKeys.checked.push(ele.key)
-                }
-                if (tempCheckedKeys.halfChecked && tempCheckedKeys.halfChecked.includes(ele.key)) {
-                    tempCheckedKeys.halfChecked.push(ele.key)
-                }
-            }
-
             let { title } = chil
             if (props.overlay){
                 title = (
@@ -174,7 +136,6 @@ export const Tree = (props: Props) => {
             }
         }))
         setExpandedKeys(expandedKeys.concat(joinExpandedKeys))
-        setCheckedKeys(realCheckedKeys)
     }
 
 
@@ -321,6 +282,10 @@ export const Tree = (props: Props) => {
         setSelectedKeys(props.selectedKeys || [])
     }, [props.selectedKeys])
 
+    useEffect(() => {
+        setCheckedKeys(props.checkedKeys || [])
+    }, [props.checkedKeys])
+
     const TreeNode = props.enableDirectoryTree ? AntTree.DirectoryTree : AntTree
     return (
         <TreeNode
@@ -334,15 +299,7 @@ export const Tree = (props: Props) => {
                 if (props.expandAll) {
                     setExpandedKeys(expandedKeys.concat(children.map(ele => ele.key)))
                 }
-                const { checkedKeys: propsCheckedKeys } = props
-                const realCheckedKeys: Key[] | {
-                    checked: Key[];
-                    halfChecked: Key[];
-                } = isArray(propsCheckedKeys) ? [] : {
-                    checked: [],
-                    halfChecked: []
-                }
-                
+
                 findTreeNode(treeNodes, ele => {
                     if (ele.key === treeNode.key) {
                         // eslint-disable-next-line no-param-reassign
@@ -363,43 +320,12 @@ export const Tree = (props: Props) => {
                                 ...chil,
                                 parent: ele,
                                 title,
-
                             }
                         })
-                        if(!propsCheckedKeys) return true
-                    }
-                    if (
-                        propsCheckedKeys
-                        &&
-                        isArray(propsCheckedKeys)
-                        &&
-                        isArray(realCheckedKeys)
-                        &&
-                        propsCheckedKeys.includes(ele.key)
-                    ) {
-                        realCheckedKeys.push(ele.key as Key)
-                    }else if (
-                        propsCheckedKeys
-                        &&
-                        isObject(propsCheckedKeys)
-                        &&
-                        isObject(realCheckedKeys)
-                    ){
-                        const tempCheckedKeys = realCheckedKeys as {
-                            checked: Key[];
-                            halfChecked: Key[];
-                        }
-                        if (tempCheckedKeys.checked && tempCheckedKeys.checked.includes(ele.key)) {
-                            tempCheckedKeys.checked.push(ele.key)
-                        }
-                        if (tempCheckedKeys.halfChecked && tempCheckedKeys.halfChecked.includes(ele.key)) {
-                            tempCheckedKeys.halfChecked.push(ele.key)
-                        }
                     }
                     return false
                 })
                 setTreeNodes([...treeNodes])
-                setCheckedKeys(realCheckedKeys)
                 const joinExpandedKeys: Key[] = []
                 children.forEach(ele => {
                     if(props.expandedKeys?.includes(ele.key)){
