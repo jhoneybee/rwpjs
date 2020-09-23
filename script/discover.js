@@ -9,7 +9,7 @@ exec('npm view @rwp/react-ui versions', (error, stdout) => {
         throw error 
     }
     const versions = JSON.parse(stdout.replace(/'/g, '"'))
-    if (!versions.includes(reactUIPackages.version)) {
+    if (versions.includes(reactUIPackages.version)) {
         throw new Error(`@rwp/react-ui version already exists. [${reactUIPackages.version}]`)
     }
 
