@@ -1,8 +1,7 @@
-name: NPM publish package canary
+name: npm publish package canary
 on:
   push:
     branches:
-    - 'canary'
     - 'v*'
 
 jobs:
@@ -10,11 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    # Setup .npmrc file to publish to npm
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'
         registry-url: 'https://registry.npmjs.org'
-    - run: cd packages/react-ui && npm install && npm publish
+    - run: cd packages/react-ui && npm install && npm publish --access public
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -23,21 +23,17 @@ export const Tools = () => {
     const isMouseOut = useRef<boolean>(false)
     const globalStore = useStore()
     const contentRef = useRef<HTMLDivElement | null>(null)
-    useEffect(() => {
-        autorun(() => {
-            store.treeHeight = divRef.current!.clientHeight - 30
-        })
-    }, [])
 
     useEffect(() => {
         tree.current?.reload()
-    }, [globalStore.columns])
+    })
 
     useEffect(() => {
         autorun(() => {
             if (contentRef.current && store.visible) {
                 contentRef.current.focus()
             }
+            store.treeHeight = divRef.current!.clientHeight - 30
         })
     }, [store.visible])
     
@@ -117,31 +113,33 @@ export const Tools = () => {
         }
 
         return (
-            <div
-                className={`${tableClassPrefix}-right`}
-                ref={divRef}
-                style={{
-                    width: 20,
-                    overflow: 'visible'
-                }}
-            >
-                <div
-                    className={`${tableClassPrefix}-right-button`}
-                >
-                    <span
-                        style={{
-                            pointerEvents: store.visible ? 'none' : undefined
-                        }}
-                        onClick={() => {
-                            store.activeKey = 'column'
-                            store.visible = !store.visible
-                        }}
-                    >
-                        <MenuOutlined style={{ paddingRight: 3}} />
-                    </span>
-                </div>
+            <>
                 {content}
-            </div>
+                <div
+                    className={`${tableClassPrefix}-right`}
+                    ref={divRef}
+                    style={{
+                        width: 20,
+                        overflow: 'visible'
+                    }}
+                >
+                    <div
+                        className={`${tableClassPrefix}-right-button`}
+                    >
+                        <span
+                            style={{
+                                pointerEvents: store.visible ? 'none' : undefined
+                            }}
+                            onClick={() => {
+                                store.activeKey = 'column'
+                                store.visible = !store.visible
+                            }}
+                        >
+                            <MenuOutlined style={{ paddingRight: 3}} />
+                        </span>
+                    </div>
+                </div>
+            </>
         )
     }) 
 }

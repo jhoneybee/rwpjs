@@ -9,6 +9,9 @@ import {
     CalculatedColumn,
     RowsUpdateEvent,
 } from 'react-data-grid-temp';
+
+import { CheckboxProps } from 'antd/lib/checkbox';
+
 import { OverlayFunc } from '../interface';
 
 export interface Row {
@@ -93,6 +96,7 @@ export interface TableHandle extends DataGridHandle {
      */
     add: (rows: Row[], start?: number) => void
 
+
 }
 
 export interface ColumnProps {
@@ -141,6 +145,17 @@ type LoadDataRespType = {
     datas: Object[]
 }
 
+type Expandable = {
+    // 展开的高度
+    height?: number
+    // 展开的className
+    expandedRowClassName?: (row: Row) => boolean
+    // 是否允许展开
+    rowExpandable?: (row: Row) => boolean
+    // 额外的展开行
+    expandedRowRender?: (row: Row) => ReactNode
+}
+
 export interface TableProps {
 
     /**
@@ -168,16 +183,7 @@ export interface TableProps {
     /**
      * 展开表格
      */
-    expandable?: {
-        // 展开的高度
-        height?: number
-        // 展开的className
-        expandedRowClassName?: (row: Row) => boolean
-        // 是否允许展开
-        rowExpandable?: (row: Row) => boolean
-        // 额外的展开行
-        expandedRowRender?: (row: Row) => ReactNode
-    }
+    expandable?: Expandable
 
     // 表格列的信息
     columns: ColumnProps[]
@@ -209,6 +215,9 @@ export interface TableProps {
 
     // 表格选中框的render
     selectRenderer?: React.ComponentType<FormatterProps<any, unknown>>
+
+    // 表格选中的头部渲染
+    selectHeaderRenderer?: React.ComponentType<CheckboxProps>
     
     // 用户唯一的rowKey
     rowKey?: string

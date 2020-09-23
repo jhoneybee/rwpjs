@@ -1,9 +1,8 @@
-name: npm publish package verification 
+name: npm publish package canary
 on:
-  pull_request:
+  push:
     branches:
     - 'canary'
-    - 'v*'
 
 jobs:
   build:
@@ -13,6 +12,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - run: node script/discover.js
+        registry-url: 'https://registry.npmjs.org'
+    - run: node ./script/release-canary.js
       env:
-        PR_TITLE: ${{ github.event.pull_request.title }}
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
