@@ -15,4 +15,4 @@ jobs:
         node-version: '12.x'
     - run: node script/discover.js
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        PR_TITLE: ${{ github.event.pull_request.title }}
