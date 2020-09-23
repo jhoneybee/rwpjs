@@ -12,4 +12,5 @@ if (/release:\s+.*/.test(PR_TITLE)) {
     execSync(`cd ./packages/react-ui/ && npm publish`)
     execSync(`git commit -m '${version}'`)
     execSync(`git push`)
+    execSync('cd packages/react-ui && npm install && npm publish --access public --tag canary')
 }
