@@ -39,7 +39,6 @@ export const Table = observer<TableProps>((props: TableProps) => {
     const store = useLocalStore(createStore)
 
     const gridRef = useRef<DataGridHandle | null>(null)
-
     const { table, enableInitLoadData } = props
 
     // 防止timeout内存溢出
