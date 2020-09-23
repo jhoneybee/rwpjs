@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { MenuOutlined } from '@ant-design/icons'
 import { useLocalStore, useObserver } from 'mobx-react-lite'
 import { EventDataNode } from 'antd/lib/tree'
-import { autorun } from 'mobx'
+import { autorun, toJS } from 'mobx'
 import { Tree } from '../../index'
 import { classPrefix } from '../../utils'
 import { useStore } from '../store'
@@ -30,6 +30,10 @@ export const Tools = () => {
     }, [])
 
     useEffect(() => {
+        tree.current?.reload()
+    }, [globalStore.columns])
+
+    useEffect(() => {
         autorun(() => {
             if (contentRef.current && store.visible) {
                 contentRef.current.focus()
@@ -42,7 +46,7 @@ export const Tools = () => {
             if (store.activeKey === 'column'){
                 const loadData = async (node: EventDataNode | null) => {
                     if(node === null){
-                        return globalStore.columns.map(column => ({
+                        return (toJS(globalStore.columns) as any[]).map(column => ({
                             title: column.title,
                             key: column.name,
                             isLeaf: true,
@@ -104,7 +108,6 @@ export const Tools = () => {
                         onClick={() => {
                             store.activeKey = 'column'
                             store.visible = !store.visible
-                            tree.current?.reload()
                         }}
                     >
                         <MenuOutlined style={{ paddingRight: 3}} />

@@ -1,6 +1,6 @@
 {
   "name": "@rwp/cli",
-  "version": "0.0.1",
+  "version": "1.21.1-alpha.0",
   "scripts": {
     "start": "tsc && cd example && npm install && npm run start",
     "build": "tsc",
@@ -21,11 +21,11 @@
   ],
   "homepage": "https://rwp.pub",
   "bugs": {
-      "url": "https://github.com/jhoneybee/rwpjs/issues"
+    "url": "https://github.com/jhoneybee/rwpjs/issues"
   },
   "repository": {
-      "type": "git",
-      "url": "https://github.com/jhoneybee/rwpjs"
+    "type": "git",
+    "url": "https://github.com/jhoneybee/rwpjs"
   },
   "devDependencies": {
     "@types/jest": "^26.0.13",
@@ -54,5 +54,6 @@
     "webpack": "^4.44.1",
     "webpack-chain": "^6.5.1",
     "webpack-dev-server": "^3.11.0"
-  }
+  },
+  "gitHead": "bc578b4e12066309e4ad09f2b598d499e7f7297a"
 }
