@@ -35,7 +35,7 @@
         "@ant-design/pro-layout": "~6.4.11",
         "antd": "~4.6.1",
         "classnames": "~2.2.6",
-        "codemirror": "~5.57.0",
+        "codemirror": "~5.58.0",
         "filtrex-x": "~2.0.0",
         "immer": "~7.0.7",
         "lodash": "~4.17.15",
