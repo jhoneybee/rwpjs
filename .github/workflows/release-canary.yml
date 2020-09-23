@@ -13,6 +13,6 @@ jobs:
       with:
         node-version: '12.x'
         registry-url: 'https://registry.npmjs.org'
-    - run: cd packages/react-ui && npm install && npm publish --access public --tag canary
+    - run: node script/discover.js && cd packages/react-ui && npm install && npm publish --access public --tag canary
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
