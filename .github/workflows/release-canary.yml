@@ -13,6 +13,6 @@ jobs:
       with:
         node-version: '12.x'
         registry-url: 'https://registry.npmjs.org'
-    - run: node script/discover.js
+    - run: node script/release-canary.js
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
