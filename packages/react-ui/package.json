@@ -9,7 +9,6 @@
         "build": "father-build && yarn build:browser ",
         "build:browser": "webpack --config webpack.config.js",
         "deploy": "yarn docs:build && yarn run docs:deploy",
-        "release": "yarn && yarn build && npm publish",
         "lint:script": "eslint ./src/**/*.{js,jsx,ts,tsx}",
         "lint:fix": "eslint ./src/**/*.{js,jsx,ts,tsx} --fix",
         "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
