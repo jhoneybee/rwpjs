@@ -2,7 +2,6 @@ const { execSync } = require("child_process");
 const { join } = require('path')
 const { writeFileSync } = require('fs');
 
-const PR_TITLE = process.env.PR_TITLE
 
 console.log(PR_TITLE)
 if (/release:\s+.*/.test(PR_TITLE)) {
