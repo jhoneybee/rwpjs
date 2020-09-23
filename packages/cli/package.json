@@ -1,6 +1,6 @@
 {
   "name": "@rwp/cli",
-  "version": "1.21.1-alpha.0",
+  "version": "1.21.3-alpha.0",
   "scripts": {
     "start": "tsc && cd example && npm install && npm run start",
     "build": "tsc",
