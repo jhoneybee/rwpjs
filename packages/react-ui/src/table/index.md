@@ -21,7 +21,6 @@ title: Table 表格
  */
 
 import React, { useState, useEffect } from 'react'
-import ReactDOM from 'react-dom'
 import { Table, Select, toDoubleClick, Row, Menu, Space, Button } from '@rwp/react-ui'
 
 
