@@ -14,14 +14,13 @@ exec('npm view @rwp/react-ui versions', (error, stdout) => {
     }
 
     const PR_TITLE = process.env.PR_TITLE
-    if (!/release:\s+.*/.test(PR_TITLE)) {
-        throw new Error(`@rwp/react-ui incorrect title format. [${PR_TITLE}]`)
+    if (/release:\s+.*/.test(PR_TITLE)) {
+        const version = PR_TITLE.replace(/release:\s+/i, '').trim()
+        reactUIPackages.version = version
+        writeFileSync(join(__dirname, '..', 'packages', 'react-ui', 'package.json'), JSON.stringify(reactUIPackages))
+        execSync(`git add --all`)
+        execSync(`git commit -m '${version}'`)
+        execSync(`git push`)
     }
 
-    const version = PR_TITLE.replace(/release:\s+/i, '').trim()
-    reactUIPackages.version = version
-    writeFileSync(join(__dirname, '..', 'packages', 'react-ui', 'package.json'), JSON.stringify(reactUIPackages))
-    execSync(`git add --all`)
-    execSync(`git commit -m '${version}'`)
-    execSync(`git push`)
 })
