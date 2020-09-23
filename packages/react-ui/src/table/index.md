@@ -259,6 +259,7 @@ export default MyTable;
  */
 
 import React, { useState } from 'react'
+import { render } from 'react-dom'
 import { Table, Input} from '@rwp/react-ui'
 import { Menu, Button, DatePicker } from 'antd'
 import moment from 'moment'
