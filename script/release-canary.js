@@ -1,10 +1,9 @@
-const { execSync } = require("child_process");
+const { execSync, exec } = require("child_process");
 const { join } = require('path')
 const { writeFileSync } = require('fs');
 
 const PR_TITLE = process.env.PR_TITLE
 
-const { exec } = require("child_process");
 const reactUIPackages = require('../packages/react-ui/package.json')
 
 if (/release:\s+.*/.test(PR_TITLE)) {
