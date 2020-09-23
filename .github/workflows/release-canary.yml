@@ -1,9 +1,8 @@
-name: NPM publish package canary
+name: npm publish package canary
 on:
   push:
     branches:
     - 'canary'
-    - 'v*'
 
 jobs:
   build:
