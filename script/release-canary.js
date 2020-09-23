@@ -6,6 +6,7 @@ const PR_TITLE = process.env.PR_TITLE
 
 const reactUIPackages = require('../packages/react-ui/package.json')
 
+console.log(PR_TITLE)
 if (/release:\s+.*/.test(PR_TITLE)) {
     const version = PR_TITLE.replace(/release:\s+/i, '').trim()
     reactUIPackages.version = version
