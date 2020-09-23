@@ -1,4 +1,4 @@
-name: NPM publish package verification 
+name: npm publish package verification 
 on:
   pull_request:
     branches:
