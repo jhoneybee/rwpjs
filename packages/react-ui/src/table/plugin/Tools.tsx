@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, ReactNode } from 'react'
 import { MenuOutlined } from '@ant-design/icons'
 import { useLocalStore, useObserver } from 'mobx-react-lite'
 import { EventDataNode } from 'antd/lib/tree'
@@ -89,6 +89,33 @@ export const Tools = () => {
 
             return undefined
         }
+
+        let content: ReactNode
+
+        if (store.visible) {
+            content = (
+                <div
+                    className={`${tableClassPrefix}-right-content`}
+                    tabIndex={-1}
+                    ref={contentRef}
+                    onBlur={() => {
+                        if (isMouseOut.current) {
+                            store.visible = false
+                        }
+                    }}
+                    onFocus={() => { }}
+                    onMouseOut={() => {
+                        isMouseOut.current = true
+                    }}
+                    onMouseOver={() => {
+                        isMouseOut.current = false
+                    }}
+                >
+                    {switchContent()}
+                </div>
+            )
+        }
+
         return (
             <div
                 className={`${tableClassPrefix}-right`}
@@ -113,31 +140,7 @@ export const Tools = () => {
                         <MenuOutlined style={{ paddingRight: 3}} />
                     </span>
                 </div>
-                {
-                    <div
-                        className={`${tableClassPrefix}-right-content`}
-                        tabIndex={-1}
-                        style={{
-                            display: !store.visible ? 'none' : undefined
-                        }}
-                        ref={contentRef}
-                        onBlur={() => {
-                            if (isMouseOut.current) {
-                                store.visible = false
-                            }
-                        }}
-                        onFocus={() => { }}
-                        onMouseOut={() => {
-                            isMouseOut.current = true
-                        }}
-                        onMouseOver={() => {
-                            isMouseOut.current = false
-                        }}
-                    >
-                        {switchContent()}
-                    </div>
-                }
-                
+                {content}
             </div>
         )
     }) 
