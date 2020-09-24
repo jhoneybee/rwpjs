@@ -1,7 +1,7 @@
 ---
 name: bug
 about: 提交反馈BUG
-title: "[BUG \U0001F41E] - "
+title: "[BUG 🐛] - "
 labels: bug
 assignees: jhoneybee
 
