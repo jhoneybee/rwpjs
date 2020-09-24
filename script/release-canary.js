@@ -6,8 +6,7 @@ const { writeFileSync } = require('fs');
 const reactUIPackages = require('../packages/react-ui/package.json')
 
 exec('git log -p -1',(error, stdout) => {
-    const commitText = stdout.toString()
-    console.log(commitText)
+    const commitText = stdout
     if (/release:\s+.*/.test(commitText)) {
         const release = /release:\s+.*/.exec(commitText)[0]
         const version = release.replace(/release:\s+/i, '').trim()
@@ -21,9 +20,7 @@ exec('git log -p -1',(error, stdout) => {
             if (!versions.includes(reactUIPackages.version)) {
                 writeFileSync(join(__dirname, '..', 'packages', 'react-ui', 'package.json'), JSON.stringify(reactUIPackages))
                 execSync(`cd ./packages/react-ui/ && npm publish`)
-                execSync(`git commit -m '${version}'`)
-                execSync(`git push`)
-                execSync('cd packages/react-ui && npm install && npm publish --access public --tag canary')
+                execSync(`git commit -am '${version}'`)
             }
         })
     }
