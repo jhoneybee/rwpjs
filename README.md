@@ -10,10 +10,6 @@ RPW.JS 是一套 React 中 web网页开发的全栈解决方案。支持以下�
 - 40 + 的UI 组件, 通过 `@rwp/react-ui` 提供, 高性能组件,例如表格的虚拟滚动,以及无限滚动
 - 微前端架构, 通过注册中心引入其他的前端模块(PS: 在开发中)
 
-## 文档地址
-
-点击访问 [https://rwp.pub/components/base/alert](https://rwp.pub/components/base/alert) 来查看对应的文档说明。
-
 ## 贡献指南
 
 ### 行为准则
@@ -33,3 +29,6 @@ RPW.JS 是一套 React 中 web网页开发的全栈解决方案。支持以下�
 4. `npm test` 运行测试。(在运行测试前请确保 NODE_ENV 环境变量没有被设定，否则可能会引发一些问题)
 5. `npm run build` 构建 rwpjs 到 dist 目录。
 
+## 文档地址
+
+点击访问 [https://rwp.pub/components/base/alert](https://rwp.pub/components/base/alert) 来查看对应的文档说明。
