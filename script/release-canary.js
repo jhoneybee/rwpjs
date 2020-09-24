@@ -2,7 +2,6 @@ const { execSync, exec } = require("child_process");
 const { join } = require('path')
 const { writeFileSync } = require('fs');
 
-
 const reactUIPackages = require('../packages/react-ui/package.json')
 
 exec('git log -p -1',(error, stdout) => {
@@ -19,9 +18,8 @@ exec('git log -p -1',(error, stdout) => {
             const versions = JSON.parse(stdout.replace(/'/g, '"'))
             if (!versions.includes(reactUIPackages.version)) {
                 writeFileSync(join(__dirname, '..', 'packages', 'react-ui', 'package.json'), JSON.stringify(reactUIPackages))
-                execSync(`git commit -am '${version}'`)
+                execSync(`cd packages/react-ui && npm publish --access public --tag canary`)
             }
         })
     }
-
 })
