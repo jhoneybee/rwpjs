@@ -16,7 +16,7 @@ group:
 
 |名称 | 描述               | 版本号
 |----- |----                |------
-| `@rwp/react-ui` |alpha 内部测试版本   | [![react-ui](https://img.shields.io/npm/v/@rwp/react-ui/canary)](https://www.npmjs.com/package/@rwp/react-ui)
+| `@rwp/react-ui` | 金丝雀版本   | [![react-ui](https://img.shields.io/npm/v/@rwp/react-ui/canary)](https://www.npmjs.com/package/@rwp/react-ui)
 | |stable 稳定版本      | [![react-ui](https://img.shields.io/npm/v/@rwp/react-ui/latest)](https://www.npmjs.com/package/@rwp/react-ui)
 
 ## 发布周期
@@ -26,6 +26,13 @@ group:
  - 修订版本号：每周会进行日常 bugfix 更新。（如果有紧急的 bugfix，则任何时候都可发布）
  
 ## stable 稳定版本
+
+### 1.1.0
+
+- 🔥 Table 表格优化
+- 🔥 Form 表单优化
+- 🔥 Modal 弹出框优化
+
 
 ### 1.0.0
 
