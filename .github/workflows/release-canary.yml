@@ -13,9 +13,9 @@ jobs:
       with:
         node-version: '12.x'
         registry-url: 'https://registry.npmjs.org'
+    - run: cd packages/react-ui && npm install
     - run: node script/release-canary.js
-    - run: cd packages/react-ui && npm install && npm publish --access public --tag canary
+    - run: cd packages/react-ui && npm publish --access public --tag canary
     - run: git push
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        PR_TITLE: ${{ github.event.pull_request.title }}
