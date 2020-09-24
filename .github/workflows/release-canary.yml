@@ -13,6 +13,8 @@ jobs:
       with:
         node-version: '12.x'
         registry-url: 'https://registry.npmjs.org'
+    - run: git config --global user.name 'jhoneybee'
+    - run: git config --global user.email 'zhangjin19960908@gmail.com'
     - run: cd packages/react-ui && npm install
     - run: node script/release-canary.js
     - run: cd packages/react-ui && npm publish --access public --tag canary
