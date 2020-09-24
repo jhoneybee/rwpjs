@@ -141,6 +141,17 @@ type LoadDataRespType = {
     datas: Object[]
 }
 
+type Expandable = {
+    // 展开的高度
+    height?: number
+    // 展开的className
+    expandedRowClassName?: (row: Row) => boolean
+    // 是否允许展开
+    rowExpandable?: (row: Row) => boolean
+    // 额外的展开行
+    expandedRowRender?: (row: Row) => ReactNode
+}
+
 export interface TableProps {
 
     /**
@@ -168,16 +179,7 @@ export interface TableProps {
     /**
      * 展开表格
      */
-    expandable?: {
-        // 展开的高度
-        height?: number
-        // 展开的className
-        expandedRowClassName?: (row: Row) => boolean
-        // 是否允许展开
-        rowExpandable?: (row: Row) => boolean
-        // 额外的展开行
-        expandedRowRender?: (row: Row) => ReactNode
-    }
+    expandable?: Expandable
 
     // 表格列的信息
     columns: ColumnProps[]
