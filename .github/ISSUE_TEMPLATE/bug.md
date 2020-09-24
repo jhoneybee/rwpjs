@@ -1,8 +1,8 @@
 ---
 name: bug
 about: 提交反馈BUG
-title: "[BUG \U0001F41E] - "
-labels: bug
+title: 
+labels: 🐛 bug
 assignees: jhoneybee
 
 ---
