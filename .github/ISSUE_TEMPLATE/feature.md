@@ -1,5 +1,5 @@
 ---
-name: featuvzfre
+name: feature
 about: 功能要求
 title: 
 labels: ✨ enhancement
