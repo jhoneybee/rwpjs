@@ -29,7 +29,7 @@ export default () => {
     const tree = useRef()
     const search = useRef<string>('')
     const [selectKeys, setSelectKeys] = useState<(number | string)[]>([])
-    const [expandedKeys, setExpandedKeys] = useState<(string | number)[]>([])
+    const [expandedKeys, setExpandedKeys] = useState<(string | number)[]>([1])
     return (
         <>
             <Input.Search
