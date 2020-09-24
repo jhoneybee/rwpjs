@@ -19,7 +19,6 @@ exec('git log -p -1',(error, stdout) => {
             const versions = JSON.parse(stdout.replace(/'/g, '"'))
             if (!versions.includes(reactUIPackages.version)) {
                 writeFileSync(join(__dirname, '..', 'packages', 'react-ui', 'package.json'), JSON.stringify(reactUIPackages))
-                execSync(`cd ./packages/react-ui/ && npm publish`)
                 execSync(`git commit -am '${version}'`)
             }
         })
