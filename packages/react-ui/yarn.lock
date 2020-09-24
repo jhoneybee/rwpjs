@@ -3360,6 +3360,14 @@
   dependencies:
     "@umijs/utils" "3.2.20"
 
+"@umijs/babel-plugin-auto-css-modules@3.2.20":
+  version "3.2.20"
+  resolved "https://registry.yarnpkg.com/@umijs/babel-plugin-auto-css-modules/-/babel-plugin-auto-css-modules-3.2.20.tgz#445dc84ebcea2ca113f8b6f383ce6bfee8081c32"
+  integrity sha512-Sx7jCdern1YYcWkubct5d3Cqql2H4I86vYU1VSJ9SlL5Hb5ebMgleXd2IUi6bp0iIV/NNidQwDkfTf7ncORyDA==
+  dependencies:
+    "@babel/traverse" "7.10.4"
+    "@umijs/utils" "3.2.20"
+
 "@umijs/babel-plugin-auto-css-modules@3.2.21":
   version "3.2.21"
   resolved "https://registry.yarnpkg.com/@umijs/babel-plugin-auto-css-modules/-/babel-plugin-auto-css-modules-3.2.21.tgz#3db9a3b8048ed8f2e25980629f89d55925a93b65"
@@ -3368,6 +3376,14 @@
     "@babel/traverse" "7.10.4"
     "@umijs/utils" "3.2.21"
 
+"@umijs/babel-plugin-import-to-await-require@3.2.20":
+  version "3.2.20"
+  resolved "https://registry.yarnpkg.com/@umijs/babel-plugin-import-to-await-require/-/babel-plugin-import-to-await-require-3.2.20.tgz#c6794996e227a034388cc9fddcfc37e43cb88229"
+  integrity sha512-AdxOLY9gOt1vnHMGwgZj0ugRdQps3qGPAoVSf2kDA0CDFT5AbCP0bWp5WqP+7a5xBEAQY7px59WG+V5u62TlQQ==
+  dependencies:
+    "@babel/traverse" "7.10.4"
+    "@umijs/utils" "3.2.20"
+
 "@umijs/babel-plugin-import-to-await-require@3.2.21":
   version "3.2.21"
   resolved "https://registry.yarnpkg.com/@umijs/babel-plugin-import-to-await-require/-/babel-plugin-import-to-await-require-3.2.21.tgz#284edae97e56c0adbfa9a28b5652725bcd0f477a"
@@ -3375,6 +3391,14 @@
   dependencies:
     "@babel/traverse" "7.10.4"
     "@umijs/utils" "3.2.21"
+
+"@umijs/babel-plugin-lock-core-js-3@3.2.20":
+  version "3.2.20"
+  resolved "https://registry.yarnpkg.com/@umijs/babel-plugin-lock-core-js-3/-/babel-plugin-lock-core-js-3-3.2.20.tgz#000bca6c80816018589be5a050962eea7679f21c"
+  integrity sha512-c9Lz9COQ13jZW6lCjovycXs0JJyMZfRlqiR5fCuaE/69nbIiGVBr+y93O+Vm+Fl7dlPKE8VppVRS4GDiKyzA2g==
+  dependencies:
+    "@umijs/utils" "3.2.20"
+    core-js "3.6.5"
 
 "@umijs/babel-plugin-lock-core-js-3@3.2.21":
   version "3.2.21"
@@ -3409,38 +3433,6 @@
     "@umijs/babel-plugin-auto-css-modules" "3.2.20"
     "@umijs/babel-plugin-import-to-await-require" "3.2.20"
     "@umijs/babel-plugin-lock-core-js-3" "3.2.20"
-    babel-plugin-dynamic-import-node "2.3.3"
-    babel-plugin-import "^1.13.0"
-    babel-plugin-named-asset-import "0.3.6"
-    babel-plugin-react-require "3.1.3"
-    babel-plugin-transform-react-remove-prop-types "0.4.24"
-    babel-plugin-transform-typescript-metadata "0.3.0"
-
-"@umijs/babel-preset-umi@3.2.21":
-  version "3.2.21"
-  resolved "https://registry.yarnpkg.com/@umijs/babel-preset-umi/-/babel-preset-umi-3.2.21.tgz#deb62f5eb348f07c3d5fd90edaee38d956e00482"
-  integrity sha512-gquLdotQ9wMJH3QJWY/NjeAkgkZKvAh9rvDNnRYVSJFobq/2o1bxYFWf7ardqNnyAM6qPQzzP5YlJA4gn558jg==
-  dependencies:
-    "@babel/plugin-proposal-class-properties" "7.10.4"
-    "@babel/plugin-proposal-decorators" "7.10.4"
-    "@babel/plugin-proposal-do-expressions" "7.10.4"
-    "@babel/plugin-proposal-export-default-from" "7.10.4"
-    "@babel/plugin-proposal-function-bind" "7.10.4"
-    "@babel/plugin-proposal-logical-assignment-operators" "7.10.4"
-    "@babel/plugin-proposal-nullish-coalescing-operator" "7.10.4"
-    "@babel/plugin-proposal-optional-chaining" "7.10.4"
-    "@babel/plugin-proposal-pipeline-operator" "7.10.4"
-    "@babel/plugin-syntax-top-level-await" "7.10.4"
-    "@babel/plugin-transform-destructuring" "7.10.4"
-    "@babel/plugin-transform-runtime" "7.10.4"
-    "@babel/preset-env" "7.10.4"
-    "@babel/preset-react" "7.10.4"
-    "@babel/preset-typescript" "7.10.4"
-    "@babel/runtime" "7.10.4"
-    "@svgr/webpack" "4.3.3"
-    "@umijs/babel-plugin-auto-css-modules" "3.2.21"
-    "@umijs/babel-plugin-import-to-await-require" "3.2.21"
-    "@umijs/babel-plugin-lock-core-js-3" "3.2.21"
     babel-plugin-dynamic-import-node "2.3.3"
     babel-plugin-import "^1.13.0"
     babel-plugin-named-asset-import "0.3.6"
@@ -6222,9 +6214,9 @@ code-point-at@^1.0.0:
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
 codemirror@~5.58.0:
-  version "5.58.0"
-  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.58.0.tgz#1f1c4faacc8606587b6ac970f30e4fd37c61047f"
-  integrity sha512-OUK+7EgaYnLyC0F09UWjckLWvviy02IDDGTW5Zmj60a3gdGnFtUM6rVsqrfl5+YSylQVQBNfAGG4KF7tQOb4/Q==
+  version "5.58.1"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.58.1.tgz#ec6bf38ad2a17f74c61bd00cc6dc5a69bd167854"
+  integrity sha512-UGb/ueu20U4xqWk8hZB3xIfV2/SFqnSLYONiM3wTMDqko0bsYrsAkGGhqUzbRkYm89aBKPyHtuNEbVWF9FTFzw==
 
 collapse-white-space@^1.0.0, collapse-white-space@^1.0.2:
   version "1.0.6"
