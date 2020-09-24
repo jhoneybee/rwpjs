@@ -1,8 +1,8 @@
 ---
 name: featuvzfre
 about: 功能要求
-title: "[feature ✍] - "
-labels: bug
+title: 
+labels: ✨ enhancement
 assignees: jhoneybee
 
 ---
