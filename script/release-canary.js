@@ -19,6 +19,7 @@ exec('git log -p -1',(error, stdout) => {
             if (!versions.includes(reactUIPackages.version)) {
                 writeFileSync(join(__dirname, '..', 'packages', 'react-ui', 'package.json'), JSON.stringify(reactUIPackages, null, 4))
                 execSync(`cd packages/react-ui && npm publish --access public --tag canary`)
+                execSync(`git tag ${version}`)
             }
         })
     }

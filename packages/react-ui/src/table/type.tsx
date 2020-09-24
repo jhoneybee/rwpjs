@@ -93,6 +93,7 @@ export interface TableHandle extends DataGridHandle {
      */
     add: (rows: Row[], start?: number) => void
 
+
 }
 
 export interface ColumnProps {
