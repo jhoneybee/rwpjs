@@ -7,6 +7,7 @@ const reactUIPackages = require('../packages/react-ui/package.json')
 
 exec('git log -p -1',(error, stdout) => {
     const commitText = stdout.toString()
+    console.log(commitText)
     if (/release:\s+.*/.test(commitText)) {
         const release = /release:\s+.*/.exec(commitText)[0]
         const version = release.replace(/release:\s+/i, '').trim()
