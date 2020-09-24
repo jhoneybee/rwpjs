@@ -13,3 +13,23 @@ RPW.JS 是一套 React 中 web网页开发的全栈解决方案。支持以下�
 ## 文档地址
 
 点击访问 [https://rwp.pub/components/base/alert](https://rwp.pub/components/base/alert) 来查看对应的文档说明。
+
+## 贡献指南
+
+### 行为准则
+我们有一份 [行为准则](./CODE_OF_CONDUCT.md)，希望所有的贡献者都能遵守，请花时间阅读一遍全文以确保你能明白哪些是可以做的，哪些是不可以做的。
+
+### 透明的开发
+
+我们所有的工作都会放在 GitHub 上。不管是核心团队的成员还是外部贡献者的 pull request 都需要经过同样流程的 review。
+
+### 开发流程
+
+在你 clone 了 rwpjs 的代码并且使用 npm install 安装完依赖后，你还可以运行下面几个常用的命令:
+
+1. `npm start` 在本地运行 rwpjs 的网站。
+2. `npm run lint:script` 检查代码风格
+3. `npm run lint:fix` 修复代码风格
+4. `npm test` 运行测试。(在运行测试前请确保 NODE_ENV 环境变量没有被设定，否则可能会引发一些问题)
+5. `npm run build` 构建 rwpjs 到 dist 目录。
+
