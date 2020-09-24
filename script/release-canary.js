@@ -2,7 +2,6 @@ const { execSync } = require("child_process");
 const { join } = require('path')
 const { writeFileSync } = require('fs');
 
-
 console.log(PR_TITLE)
 if (/release:\s+.*/.test(PR_TITLE)) {
     const version = PR_TITLE.replace(/release:\s+/i, '').trim()

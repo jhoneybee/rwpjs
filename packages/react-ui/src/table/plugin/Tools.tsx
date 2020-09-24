@@ -133,9 +133,6 @@ export const Tools = () => {
                             onClick={() => {
                                 store.activeKey = 'column'
                                 store.visible = !store.visible
-
-                                // window.document.querySelectorAll('.rwp-table-right')[1].clientHeight
-                                console.log(divRef.current!.clientHeight)
                             }}
                         >
                             <MenuOutlined style={{ paddingRight: 3}} />

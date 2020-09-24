@@ -12,6 +12,7 @@
     "paths": {
       "@/*": ["src/*"],
       "@@/*": ["src/.umi/*"],
+      "@rwp/react-ui": ["src/*"]
     },
     "allowSyntheticDefaultImports": true
   },

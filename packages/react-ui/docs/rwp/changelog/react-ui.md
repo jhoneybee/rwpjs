@@ -16,7 +16,7 @@ group:
 
 |名称 | 描述               | 版本号
 |----- |----                |------
-| `@rwp/react-ui` |alpha 内部测试版本   | [![react-ui](https://img.shields.io/npm/v/@rwp/react-ui/alpha)](https://www.npmjs.com/package/@rwp/react-ui)
+| `@rwp/react-ui` | 金丝雀版本   | [![react-ui](https://img.shields.io/npm/v/@rwp/react-ui/canary)](https://www.npmjs.com/package/@rwp/react-ui)
 | |stable 稳定版本      | [![react-ui](https://img.shields.io/npm/v/@rwp/react-ui/latest)](https://www.npmjs.com/package/@rwp/react-ui)
 
 ## 发布周期
@@ -26,6 +26,13 @@ group:
  - 修订版本号：每周会进行日常 bugfix 更新。（如果有紧急的 bugfix，则任何时候都可发布）
  
 ## stable 稳定版本
+
+### 1.1.0
+
+- 🔥 Table 表格优化
+- 🔥 Form 表单优化
+- 🔥 Modal 弹出框优化
+
 
 ### 1.0.0
 
@@ -45,13 +52,26 @@ group:
 
 > (*/ω＼*) 是不是有些小贪心了。 (/ω＼*)……… (/ω•＼*)
 
-## canary 内测开发版本
+## canary 版本
 
-### 1.21.5-canary
+### 1.21.8-canary
+
+- Modal
+  - 🐞 修复modal强制渲染的时候会触发异常
+
+### 1.21.7-canary
+
+- Modal 
+  - 🐞 修复表格拖拽的问题,限制表格top不能拖拽出屏幕
+- Table
+  - 🆕 添加一个selectHeaderRenderer属性,自定义表格的选中框的头部
+
+### 1.21.6-canary
 
 - Table
   - 🐞 修复表格列拖拽的后不显示的问题
 
+<!--
 
 ### 1.22.2-alpha.0
 
@@ -392,4 +412,4 @@ group:
   - 🐞 修复 `NodeDragEventParams` 以及 `Key` 的ts引入问题。
   - 🐞 修复 `checkedKeys` 属性中存在未关联的key会导致在开发环境中出现警告的问题。
 - 🔥 新增对传统浏览器js开发方式的支持,可直接引用编译的js来使用组件
-- 🔥 [更新到antd 依赖到 4.6.0](https://ant.design/changelog-cn#4.6.0)
+- 🔥 [更新到antd 依赖到 4.6.0](https://ant.design/changelog-cn#4.6.0) -->

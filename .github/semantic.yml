@@ -1,2 +1,4 @@
 scopes:
   - release
+  - build(deps)
+  - build(deps-dev)

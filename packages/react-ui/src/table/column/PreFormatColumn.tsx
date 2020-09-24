@@ -104,25 +104,28 @@ export const preFormatColumn = (
             selectCell: false,
             maxWidth: 35,
             formatter: tableProps.selectRenderer ?? MultipleSelectColumn,
-            headerRenderer: tableProps.selectBox === 'multiple' ? () => (
-                <Checkbox
-                    checked={(
-                        store.selectedRows.size === store.datas.length
-                        &&
-                        store.datas.length !== 0
-                    )}
-                    onChange={e => {
-                        const selectKeys = new Set<Row[keyof Row]>()
-                        if (e.target.checked) {
-                            store.datas.forEach((ele: any) => {
-                                const value = ele[tableProps.rowKey!] as Row[keyof Row]
-                                selectKeys.add(value)
-                            })
-                        }
-                        store.setSelectedRows(selectKeys, tableProps.onSelectedRowsChange)
-                    }}
-                />
-            ) : undefined,
+            headerRenderer: tableProps.selectBox === 'multiple' ? () => {
+                const SelectHeaderRenderer = tableProps.selectHeaderRenderer || Checkbox
+                return (
+                    <SelectHeaderRenderer
+                        checked={(
+                            store.selectedRows.size === store.datas.length
+                            &&
+                            store.datas.length !== 0
+                        )}
+                        onChange={e => {
+                            const selectKeys = new Set<Row[keyof Row]>()
+                            if (e.target.checked) {
+                                store.datas.forEach((ele: any) => {
+                                    const value = ele[tableProps.rowKey!] as Row[keyof Row]
+                                    selectKeys.add(value)
+                                })
+                            }
+                            store.setSelectedRows(selectKeys, tableProps.onSelectedRowsChange)
+                        }}
+                    />
+                )
+            } : undefined,
         }
         columns.splice(0, 0, select)
     }
