@@ -3612,14 +3612,14 @@
   resolved "https://registry.yarnpkg.com/@umijs/plugin-crossorigin/-/plugin-crossorigin-1.1.1.tgz#0e5ffb8013c95470fce79cfbd6a29a9ad58df4c9"
   integrity sha512-2ryOjsGqgRv6YqSHqHRqvPc6cg0JSYAnqr9OB2bOjZVAQevFpovetHGDXxIKzUtb09MwrrSQvaH9K7uGZtACow==
 
-"@umijs/plugin-dva@0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-dva/-/plugin-dva-0.9.0.tgz#898de8284e30add4c81c662f489b7e0f3752a750"
-  integrity sha512-v59huDHZGM9Ugy+gmMAQef+DXRAs+ZBhWOaSLUQxTzSHHzVaIvqh0CXAwilSTeF6d3Pt2KuStsoYV6QSJPqi0A==
+"@umijs/plugin-dva@0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-dva/-/plugin-dva-0.9.1.tgz#08588b80ff9867e256368aa91923ac48c0a01602"
+  integrity sha512-ZaaZnrqFu9fRtyl7Ah8WN3RJHpJb4PM2ZH7BC0+BqMbEVOyUQkBgf4cy/ddkJ1skbKQVlHN1ZQIiaB6q1nxJww==
   dependencies:
     babel-plugin-dva-hmr "^0.4.2"
     dva "^2.6.0-beta.20"
-    dva-immer "^0.4.19"
+    dva-immer "^0.5.0"
     dva-loading "^3.0.20"
 
 "@umijs/plugin-helmet@1.1.1":
@@ -3765,15 +3765,15 @@
     unist-util-visit-parents "^3.0.1"
 
 "@umijs/preset-react@~1.6.7":
-  version "1.6.7"
-  resolved "https://registry.yarnpkg.com/@umijs/preset-react/-/preset-react-1.6.7.tgz#a99ca42cbed6f7f9650ca910869ec6556cfbc161"
-  integrity sha512-3EOXZ3FwK/2f/ZaWGSOxS1NpDwLNCsDuS/Cq+IYcqrJ8gbJGqEN/Dzt64jMeKu1A9s25UnSsy+8da72OCNDZvw==
+  version "1.6.8"
+  resolved "https://registry.yarnpkg.com/@umijs/preset-react/-/preset-react-1.6.8.tgz#d4b61d8f6e08b3ebf806e235675031520283950b"
+  integrity sha512-7zRH/k3/tyru/E37IwyBHW8TpS3su8CsZsjUBSx3E6B5zKDvATy5tJhGe9soxhkakBdN41icdZQfarqI8Lp/nA==
   dependencies:
     "@umijs/plugin-access" "2.3.1"
     "@umijs/plugin-analytics" "0.2.2"
     "@umijs/plugin-antd" "0.8.0"
     "@umijs/plugin-crossorigin" "1.1.1"
-    "@umijs/plugin-dva" "0.9.0"
+    "@umijs/plugin-dva" "0.9.1"
     "@umijs/plugin-helmet" "1.1.1"
     "@umijs/plugin-initial-state" "2.2.1"
     "@umijs/plugin-layout" "0.12.2"
@@ -7582,13 +7582,13 @@ dva-core@2.0.2:
     redux-saga "^0.16.0"
     warning "^3.0.0"
 
-dva-immer@^0.4.19:
-  version "0.4.19"
-  resolved "https://registry.yarnpkg.com/dva-immer/-/dva-immer-0.4.19.tgz#aabb52bcf69cea26f1a08a9c5b0670486e063011"
-  integrity sha512-AZ50w13yxlUC2lbLev1u6gtAC+AVlk3Cmy7ENx0958lC/bQLgwwQb/mIJvLuwzYsS6fdPJcno2ov1o5jn1J38g==
+dva-immer@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/dva-immer/-/dva-immer-0.5.0.tgz#cc949b20aae266f0a1ab76385ae567dd14a16ffa"
+  integrity sha512-pyKL35pxO6xXYzMtkXc9z4F2BmMbx6dyoEQxuXcxAVoOJMRTjt04RVoCxv/uwuYs8CBVdsj73P7gGCzV5i5cRg==
   dependencies:
     "@babel/runtime" "^7.0.0"
-    immer "^2.1.1"
+    immer "^7.0.5"
 
 dva-loading@^3.0.20:
   version "3.0.20"
@@ -10223,12 +10223,7 @@ immer@7.0.5:
   resolved "https://registry.yarnpkg.com/immer/-/immer-7.0.5.tgz#8af347db5b60b40af8ae7baf1784ea4d35b5208e"
   integrity sha512-TtRAKZyuqld2eYjvWgXISLJ0ZlOl1OOTzRmrmiY8SlB0dnAhZ1OiykIDL5KDFNaPHDXiLfGQFNJGtet8z8AEmg==
 
-immer@^2.1.1:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-2.1.5.tgz#0389947455c5a2c7a47f1e6f415c9d1a62a1ebed"
-  integrity sha512-xyjQyTBYIeiz6jd02Hg12jV+9QISwF1crLcwTlzHpWH4e0ryNWj1kacpTwimK3bJV5NKKXw458G2vpqoB/inFA==
-
-immer@~7.0.7:
+immer@^7.0.5, immer@~7.0.7:
   version "7.0.9"
   resolved "https://registry.yarnpkg.com/immer/-/immer-7.0.9.tgz#28e7552c21d39dd76feccd2b800b7bc86ee4a62e"
   integrity sha512-Vs/gxoM4DqNAYR7pugIxi0Xc8XAun/uy7AQu4fLLqaTBHxjOP9pJ266Q9MWA/ly4z6rAFZbvViOtihxUZ7O28A==
@@ -16640,10 +16635,10 @@ rc@^1.2.7, rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-re-resizable@~6.6.1:
-  version "6.6.1"
-  resolved "https://registry.yarnpkg.com/re-resizable/-/re-resizable-6.6.1.tgz#654a0edc1977e5d025c777a97f5555ef4bccea7f"
-  integrity sha512-ttWVasZ9X7c0ir0+4YK47tkmm9EAFssW07YLkeLzG5HCOuFgFAlSVzMlzAH0h3i6hDShQCHHJecVx5rk+snoFA==
+re-resizable@~6.5.4:
+  version "6.5.5"
+  resolved "https://registry.yarnpkg.com/re-resizable/-/re-resizable-6.5.5.tgz#f26ac5f6b6d1474fac62ee07e6b41a74df6c0e12"
+  integrity sha512-z7Vl5PStOxSDlpeLz73+hIKBC3raoy00KYNVGz1G4C01Q1goog6061lbXhWQsjS16DV59IPA2snjvZYPkxc2Vw==
   dependencies:
     fast-memoize "^2.5.1"
 
