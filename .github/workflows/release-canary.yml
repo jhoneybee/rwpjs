@@ -13,7 +13,7 @@ jobs:
       with:
         node-version: '12.x'
         registry-url: 'https://registry.npmjs.org'
-    - run: cd packages/react-ui && npm install
+    - run: cd packages/react-ui && yarn
     - run: node script/release-canary.js
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
