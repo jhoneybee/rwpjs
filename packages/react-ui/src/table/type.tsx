@@ -9,6 +9,9 @@ import {
     CalculatedColumn,
     RowsUpdateEvent,
 } from 'react-data-grid-temp';
+
+import { CheckboxProps } from 'antd/lib/checkbox';
+
 import { OverlayFunc } from '../interface';
 
 export interface Row {
@@ -212,6 +215,9 @@ export interface TableProps {
 
     // 表格选中框的render
     selectRenderer?: React.ComponentType<FormatterProps<any, unknown>>
+
+    // 表格选中的头部渲染
+    selectHeaderRenderer?: React.ComponentType<CheckboxProps>
     
     // 用户唯一的rowKey
     rowKey?: string

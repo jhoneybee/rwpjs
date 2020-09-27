@@ -23,11 +23,6 @@
     "files": [
         "dist/"
     ],
-    "husky": {
-        "hooks": {
-            "pre-commit": "yarn lint:script && yarn test && yarn build"
-        }
-    },
     "dependencies": {
         "@ant-design/icons": "~4.2.1",
         "@ant-design/pro-layout": "~6.4.11",
@@ -79,7 +74,6 @@
         "css-loader": "~4.3.0",
         "dumi": "~1.0.34",
         "father-build": "~1.18.2",
-        "husky": "~4.3.0",
         "jest": "~26.4.0",
         "less": "~3.12.2",
         "less-loader": "~7.0.0",
