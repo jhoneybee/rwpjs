@@ -3,7 +3,7 @@
  * desc: "通过 `expandable` 来设置可展开数据 \n\n 通过表格的 `expandable` 来设置展开信息`expandable` 的结构体如下\n- `height` 展开的高度\n- `expandedRowClassName` 展开的clssName\n- `rowExpandable` 是否允许展开\n- `expandedRowRender` 自定义展开渲染内容"
  */
 import React from 'react'
-// eslint-disable-next-line import/no-unresolved
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Table } from '@rwp/react-ui'
 import { columns, loadData } from './common/user'
 
