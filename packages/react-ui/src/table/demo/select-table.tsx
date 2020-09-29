@@ -15,7 +15,7 @@ export default () => {
             <Switch
                 checkedChildren="单选"
                 unCheckedChildren="多选"
-                onChange={value => {
+                onChange={(value: any) => {
                     if (value) {
                         setSelectBox('single')
                     } else {
