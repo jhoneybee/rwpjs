@@ -32,8 +32,7 @@ const DraggableContent = (props: any) => {
     const [disabled, setDisabled] = useState<boolean>(true)
 
     const getContent = () => {
-        const newChildren: any[] = []
-        children.map((element: any,index: number) => {
+        const newChildren = children.map((element: any,index: number) => {
             let childrenProps: any = { key: index}
             if (index === 1) {
                 childrenProps = {
@@ -52,7 +51,7 @@ const DraggableContent = (props: any) => {
             if (element) {
                 return cloneElement(element, childrenProps)
             }
-            return undefined
+            return element
         })
 
         return cloneElement(content,{
