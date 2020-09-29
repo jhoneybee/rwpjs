@@ -45,7 +45,31 @@ group:
 
 > (*/ω＼*) 是不是有些小贪心了。 (/ω＼*)……… (/ω•＼*)
 
-## alpha 内测开发版本
+## canary 版本
+
+### 1.21.9-canary
+
+- Modal
+  - 🐞 修复modal,未显示body,此问题是由于1.21.8-canary改动引起的
+
+### 1.21.8-canary
+
+- Modal
+  - 🐞 修复modal强制渲染的时候会触发异常
+
+### 1.21.7-canary
+
+- Modal 
+  - 🐞 修复表格拖拽的问题,限制表格top不能拖拽出屏幕
+- Table
+  - 🆕 添加一个selectHeaderRenderer属性,自定义表格的选中框的头部
+
+### 1.21.6-canary
+
+- Table
+  - 🐞 修复表格列拖拽的后不显示的问题
+
+<!--
 
 ### 1.22.2-alpha.0
 
