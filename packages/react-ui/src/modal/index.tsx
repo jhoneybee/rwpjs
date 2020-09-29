@@ -31,6 +31,37 @@ const DraggableContent = (props: any) => {
     const { children } = content.props
     const [disabled, setDisabled] = useState<boolean>(true)
 
+    const getContent = () => {
+        const newChildren: any[] = []
+        children.map((element: any,index: number) => {
+            let childrenProps: any = { key: index}
+            if (index === 1) {
+                childrenProps = {
+                    key: 1,
+                    style: {
+                        cursor: 'move'
+                    },
+                    onMouseEnter: () => {
+                        setDisabled(false)
+                    },
+                    onMouseLeave: () => {
+                        setDisabled(true)
+                    }
+                }
+            }
+            if (element) {
+                return cloneElement(element, childrenProps)
+            }
+            return undefined
+        })
+
+        return cloneElement(content,{
+            children: newChildren,
+            onBlur,
+            onMouseEnter,
+            onMouseLeave
+        })
+    }
     return (
         <Draggable
             disabled={disabled}
@@ -38,28 +69,7 @@ const DraggableContent = (props: any) => {
                 top: -style.top || -100
             }}
         >
-            {cloneElement(content,{
-                children: [
-                    cloneElement(children[0], {key: 0}),
-                    cloneElement(children[1], {
-                        key: 1,
-                        style: {
-                            cursor: 'move'
-                        },
-                        onMouseEnter: () => {
-                            setDisabled(false)
-                        },
-                        onMouseLeave: () => {
-                            setDisabled(true)
-                        }
-                    }),
-                    cloneElement(children[2], { key: 2 }),
-                    cloneElement(children[3], { key: 3 })
-                ],
-                onBlur,
-                onMouseEnter,
-                onMouseLeave
-            })}
+            {getContent()}
         </Draggable>
     )
 }
