@@ -1,6 +1,6 @@
 ---
-name: feature
-about: 功能要求
+name: 新功能要求
+about: 提交一个新的功能要求
 title: 
 labels: ✨ enhancement
 assignees: jhoneybee
