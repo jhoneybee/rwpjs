@@ -54,6 +54,11 @@ group:
 
 ## canary 版本
 
+### 1.21.9-canary
+
+- Modal
+  - 🐞 修复modal,未显示body,此问题是由于1.21.8-canary改动引起的
+
 ### 1.21.8-canary
 
 - Modal
