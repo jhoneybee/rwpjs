@@ -1,6 +1,6 @@
 ---
-name: bug
-about: 提交反馈BUG
+name: 提交问题反馈
+about: 提交一个新的问题反馈
 title: 
 labels: 🐛 bug
 assignees: jhoneybee
