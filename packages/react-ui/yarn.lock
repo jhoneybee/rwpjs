@@ -3613,10 +3613,10 @@
     lodash "^4.17.15"
     path-to-regexp "1.x"
 
-"@umijs/plugin-locale@0.10.2":
-  version "0.10.2"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-locale/-/plugin-locale-0.10.2.tgz#8ed5ec62d5fd6690a196ab71e379e1626139ac49"
-  integrity sha512-vr9vY5aaOBJKsBibdATYMOoupstgEylN5fJXW30nIU+ZZviaFh9H6G6Fkk7nAj81DbFZ7WE1xWVq5A6UyDWAWw==
+"@umijs/plugin-locale@0.10.3":
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-locale/-/plugin-locale-0.10.3.tgz#3ef83340b8fd7de3d097efed9d562ab24c96c8e6"
+  integrity sha512-ZqmSA+Tvd/qFGyyRBRb1mevu3/xeGwKHSjtGqPiYswWWwLBObw8N6N2bqa7JE7wMs9yICBznxOwbgbYC5zMcdg==
   dependencies:
     "@ant-design/icons" "^4.1.0"
     "@formatjs/intl-pluralrules" "^1.5.0"
@@ -3733,9 +3733,9 @@
     unist-util-visit-parents "^3.0.1"
 
 "@umijs/preset-react@~1.6.7":
-  version "1.6.8"
-  resolved "https://registry.yarnpkg.com/@umijs/preset-react/-/preset-react-1.6.8.tgz#d4b61d8f6e08b3ebf806e235675031520283950b"
-  integrity sha512-7zRH/k3/tyru/E37IwyBHW8TpS3su8CsZsjUBSx3E6B5zKDvATy5tJhGe9soxhkakBdN41icdZQfarqI8Lp/nA==
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/@umijs/preset-react/-/preset-react-1.6.9.tgz#088f2e1b1f22db8a4700afe05b713e8489daa18e"
+  integrity sha512-OB417hrFPdcj6ZrqDZi2321hNhwKE4tzXfOfwCdgIvZe8nhx7jWbUsgDFKWMfHhy0s/TN2aS1rtOQ+KdjpnRHg==
   dependencies:
     "@umijs/plugin-access" "2.3.1"
     "@umijs/plugin-analytics" "0.2.2"
@@ -3745,7 +3745,7 @@
     "@umijs/plugin-helmet" "1.1.1"
     "@umijs/plugin-initial-state" "2.2.1"
     "@umijs/plugin-layout" "0.12.2"
-    "@umijs/plugin-locale" "0.10.2"
+    "@umijs/plugin-locale" "0.10.3"
     "@umijs/plugin-model" "2.5.4"
     "@umijs/plugin-request" "2.5.0"
     "@umijs/plugin-test" "1.0.0"
