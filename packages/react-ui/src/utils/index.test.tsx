@@ -39,6 +39,11 @@ test('toDoubleClick', () => {
     fireEvent.click(divDom!)
     fireEvent.click(divDom!)
     expect(divDom?.style.width).toEqual('600px')
+    fireEvent.click(divDom!)
+    setTimeout(() => {
+        fireEvent.click(divDom!)
+        expect(divDom?.style.width).toEqual('600px')
+    },  600)
 })
 
 /**
