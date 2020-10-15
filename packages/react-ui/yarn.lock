@@ -47,14 +47,14 @@
     rc-util "^5.0.1"
 
 "@ant-design/pro-layout@~6.5.0":
-  version "6.5.0"
-  resolved "https://registry.yarnpkg.com/@ant-design/pro-layout/-/pro-layout-6.5.0.tgz#078ce732f56bdea73258df05b2fee33ff62fdb36"
-  integrity sha512-3RUc2g1fS2Dv0gY4NjtEbb2LoGpcNNhBMVxMmn+fYUy4uoQmKlFwXh6HSV5R193JQMawqR1Tx96IDtonnT0uWg==
+  version "6.5.1"
+  resolved "https://registry.yarnpkg.com/@ant-design/pro-layout/-/pro-layout-6.5.1.tgz#e6e7f3be47362415a4afaa2772a4659507759f29"
+  integrity sha512-eYh+2vfafRf2rbY6gj+U1s2i1Wco3Q507qIQX2pEaNaaY8eijTN8tFI7CdW/51Q7SusbKP3BPkReVoitQIMEmA==
   dependencies:
     "@ant-design/icons" "^4.0.0"
-    "@ant-design/pro-provider" "0.2.1"
+    "@ant-design/pro-provider" "0.2.2"
     "@ant-design/pro-utils" "0.5.0"
-    "@umijs/route-utils" "^1.0.5"
+    "@umijs/route-utils" "^1.0.33"
     classnames "^2.2.6"
     history "^4.10.1"
     memoize-one "^5.1.1"
@@ -74,6 +74,13 @@
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/@ant-design/pro-provider/-/pro-provider-0.2.1.tgz#afc80e17830b23f6386ed63565ffa574c3c317cc"
   integrity sha512-7zZTZZfn+F57v3ihmX9oeC+UNbHFAUyWWv5ev9JhnQcyUE+t11TLdmjmN/J5FFNPtwJZy33YOHnlbwhQQaForg==
+  dependencies:
+    rc-util "^5.0.1"
+
+"@ant-design/pro-provider@0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@ant-design/pro-provider/-/pro-provider-0.2.2.tgz#a02c98c8dd6b3c5ccabe301c7c38e39d94cc0bf5"
+  integrity sha512-ot88+k3cNkgLSPggxc78kxTJPvYRMOC2JYPuEFiqJb06VkZ7UctZTAfkE/L+fIBW0XjnStX8O0HEtwtSNWRMXg==
   dependencies:
     rc-util "^5.0.1"
 
@@ -3899,10 +3906,10 @@
     react-dom "^16.13.1"
     react-router-config "5.1.1"
 
-"@umijs/route-utils@^1.0.5", "@umijs/route-utils@^1.0.7":
-  version "1.0.32"
-  resolved "https://registry.yarnpkg.com/@umijs/route-utils/-/route-utils-1.0.32.tgz#9ea4d353027ba57e0fca018bfb9f19949ecfe354"
-  integrity sha512-ej/HoeTyJbO3OBlLH3NQqGAO4LDUuUZgN1wv+TZqIGPtAEcavml42jF2+hEM18aKdq3ToTliF1CvsKBx/mCpyg==
+"@umijs/route-utils@^1.0.33", "@umijs/route-utils@^1.0.7":
+  version "1.0.34"
+  resolved "https://registry.yarnpkg.com/@umijs/route-utils/-/route-utils-1.0.34.tgz#663d020669217dd7e8431a1b9ce9abea5fbbb6b8"
+  integrity sha512-5TUZCm5uuS3NbzdaoRDAfAIy6LDu+OCNL8xd+Dhth3YVFvbYkIeIG9/xl/5x1F+sWU8X/Oujlo6rfR8kgdB0Wg==
   dependencies:
     "@qixian.cs/path-to-regexp" "^6.1.0"
     hash.js "^1.1.7"
