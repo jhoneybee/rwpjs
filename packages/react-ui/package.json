@@ -12,6 +12,7 @@
         "lint:script": "eslint ./src/**/*.{js,jsx,ts,tsx}",
         "lint:fix": "eslint ./src/**/*.{js,jsx,ts,tsx} --fix",
         "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+        "release:canary": "npm publish --tag canary",
         "test": "umi-test",
         "test:watch": "umi-test --watch --coverage",
         "prepublishOnly": "yarn build",
