@@ -6,7 +6,7 @@
 import React, { useRef } from 'react'
 
 // eslint-disable-next-line import/no-unresolved
-import { Form, Input, Button } from '@rwp/react-ui'
+import { Form, Input } from '@rwp/react-ui'
 import { FormInstance } from 'antd/lib/form'
 
 
