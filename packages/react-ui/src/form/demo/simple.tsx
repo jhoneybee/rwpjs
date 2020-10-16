@@ -11,7 +11,7 @@ import { FormInstance } from 'antd/lib/form'
 
 
 export default () => {
-    const form = useRef<FormInstance | null>()
+    const form = useRef<FormInstance | null>(null)
     return (
         <>
             <Button
@@ -22,7 +22,7 @@ export default () => {
                 }}
             >
                 触发校验
-        </Button>
+            </Button>
             <br />
             <Form
                 form={form}
@@ -32,13 +32,13 @@ export default () => {
                     console.log(allValues)
                 }}
             >
-                <Form.Item key="Field 0" label="字段 0" >
+                <Form.Item key="Field 0" label="字段 0" rules={[{ required: true, message: 'Please input your username!' }]} >
                     <Input />
                 </Form.Item>
                 <Form.Item key="Field 1" label="字段 1" colSpan={2}>
                     <Input />
                 </Form.Item>
-                <Form.Item key="Field 2" label="字段 2">
+                <Form.Item key="Field 2" label="非常长的字段2">
                     <Input />
                 </Form.Item>
                 <Form.Item key="Field 3" label="字段 3">
@@ -53,7 +53,7 @@ export default () => {
                 <Form.Item key="Field 6" label="字段 6">
                     <Input />
                 </Form.Item>
-                <Form.Item key="Field 7" label="字段 7">
+                <Form.Item key="Field 7" label="字段 7" rules={[{ required: true, message: 'Please input your username!' }]} labelWidth="104.6px">
                     <Input />
                 </Form.Item>
                 <Form.Item key="Field 8" rowSpan={3}>

@@ -55,4 +55,6 @@ export interface FormItemProps extends AntFormItemProps {
     colSpan?: number
     // 跨行
     rowSpan?: number
+    // 固定label宽度
+    labelWidth?: string
 }

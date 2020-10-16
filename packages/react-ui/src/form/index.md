@@ -17,8 +17,6 @@ title: Form 表单组件
 
 <code src="./demo/linkage.tsx" />
 
-<code src="./demo/label-width.tsx" />
-
 ## API
 
 Form属性说明如下：
@@ -44,6 +42,7 @@ Form属性说明如下：
 |validateFirst| 当某一规则校验不通过时，是否停止剩下的规则的校验 | `boolean` | `false`
 |hidden       | 是否隐藏字段（依然会收集和校验字段） | `boolean`| `false`
 |dependencies | 设置依赖字段  | `string[]`  | -
+|labelWidth     | 固定Form的宽度 | `number`| -
 
 ### dependencies
 当字段间存在依赖关系时使用。如果一个字段设置了 `dependencies` 属性。那么它所依赖的字段更新时，该字段将自动触发更新与校验。一种常见的场景，就是注册用户表单的"密码"与"确认密码"字段。"确认密码"校验依赖于"密码"字段，设置 `dependencies` 后，“密码”字段更新会重新触发 "校验密码" 的校验逻辑。
