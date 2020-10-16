@@ -68,7 +68,7 @@ group:
 ### 1.21.13-canary
 
 - Form
-  - 🐞 修复Form固定label宽度
+  - 🆕 添加Form的 `labelWidth` 属性来固定label宽度
 
 ### 1.21.12-canary
 
