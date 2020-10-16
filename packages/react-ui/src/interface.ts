@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { LiteralUnion } from 'antd/lib/_util/type';
 import { FormItemProps as AntFormItemProps, FormProps as AntFormProps, FormInstance } from 'antd/lib/form';
 import { ButtonProps as AntButtonProps } from 'antd/lib/button';
@@ -55,4 +55,6 @@ export interface FormItemProps extends AntFormItemProps {
     colSpan?: number
     // 跨行
     rowSpan?: number
+    // 固定label宽度
+    labelWidth?: string
 }

@@ -17,8 +17,6 @@ title: Form 表单组件
 
 <code src="./demo/linkage.tsx" />
 
-<code src="./demo/label-width.tsx" />
-
 ## API
 
 Form属性说明如下：
@@ -31,7 +29,7 @@ Form属性说明如下：
 |onFieldsChange | 字段更新时触发回调事件                               | `Function(changedFields, allFields)`
 |onValuesChange | 字段值更新时触发回调事件                             | `Function(changedValues, allValues)`
 |form           | form实例对象                                       | `React.MutableRefObject` | -
-
+|labelWidth     | 固定Form的宽度                                      | `number`
 
 ## Form.Item
 

@@ -65,6 +65,23 @@ group:
 
 ## canary 版本
 
+### 1.21.13-canary
+
+- Form
+  - 🐞 修复Form固定label宽度
+
+### 1.21.12-canary
+
+- 修复utils里面的toDoubleClick的时间判断
+
+## 1.21.11-canary
+
+- 测试发布
+
+## 1.21.10-canary
+
+- 测试发布
+
 ### 1.21.9-canary
 
 - Modal

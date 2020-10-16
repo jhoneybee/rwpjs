@@ -11,7 +11,7 @@ import { FormInstance } from 'antd/lib/form'
 
 
 export default () => {
-    const form = useRef<FormInstance | null>()
+    const form = useRef<FormInstance | null>(null)
     return (
         <>
             <Form
