@@ -34,7 +34,7 @@
     "@types/webpack-dev-server": "^3.11.0",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "eslint": "^7.9.0",
-    "eslint-config-airbnb-typescript": "^11.0.0",
+    "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-plugin-import": "^2.22.0",
     "jest": "^26.4.2",
     "ts-jest": "^26.3.0",
