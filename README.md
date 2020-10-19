@@ -32,3 +32,10 @@ RPW.JS 是一套 React 中 web网页开发的全栈解决方案。支持以下�
 ## 文档地址
 
 点击访问 [https://rwp.pub](https://rwp.pub) 来查看对应的文档说明。
+
+## 打赏
+
+![https://rwp.pub/img/wechat.jpg](https://rwp.pub/img/wechat.jpg)
+
+![https://rwp.pub/img/alipay.jpg](https://rwp.pub/img/alipay.jpg)
+
