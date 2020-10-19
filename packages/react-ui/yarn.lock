@@ -3882,10 +3882,10 @@
   resolved "https://registry.yarnpkg.com/@umijs/plugin-initial-state/-/plugin-initial-state-2.2.1.tgz#cd7592aa90b6b369bd0df297254320088397ff67"
   integrity sha512-qDtWguduISeG+EObgKbImuRX3FyLrNcj3yQtY24HdYkDTGmtsmA4ZKB7Q/N+V/O0Yxep06bCotTK3jFV9KXuEA==
 
-"@umijs/plugin-layout@0.12.2":
-  version "0.12.2"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-layout/-/plugin-layout-0.12.2.tgz#729930e82a62a930950d2e466de6fa350190c1c0"
-  integrity sha512-EqdhzLS9+wS80ZpAFK04aZUCaiU3IWKfaLh2j8qWh4C0cTRtmLRBgake6suV8AHIQj3NPwohsq2s55Qt/S/sLw==
+"@umijs/plugin-layout@0.12.4":
+  version "0.12.4"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-layout/-/plugin-layout-0.12.4.tgz#8a307039b3b692eb55629283d6c6bc43c69da863"
+  integrity sha512-I4NwcmEYTVdRzjG+/ZhBAihSOwyE7ngbX8bB2NdaQGDm6h0fdZg3lX/eoPsnxpsFZR2dUKHrRq5NjmPNPhbptg==
   dependencies:
     "@umijs/route-utils" "^1.0.7"
     antd "^4.1.2"
@@ -3905,10 +3905,10 @@
     react-intl "3.12.1"
     warning "^4.0.3"
 
-"@umijs/plugin-model@2.5.4":
-  version "2.5.4"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-model/-/plugin-model-2.5.4.tgz#7b91d1886195793a2a97b0b2d7994c72b7604719"
-  integrity sha512-5r4U+HpNlZ8a7dtrwhObHDbwIj6EmUecU9v9SgrcUnEFjNk375MFTvEeFgM5ZmES0LFEKSJfmolvrNiT1uNfcw==
+"@umijs/plugin-model@2.5.5":
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-model/-/plugin-model-2.5.5.tgz#c4c199f01b1b9502cc9e118d43e87175450a38dd"
+  integrity sha512-fhXMH14YvRaitdJHr4EixH4bVSOAiZAJpKYYofn8iE5OvbSMwEYm1KSPZk1jGUCLqQywWRqpGef1QZfZHTNDxg==
   dependencies:
     fast-deep-equal "3.1.1"
 
@@ -4012,9 +4012,9 @@
     unist-util-visit-parents "^3.0.1"
 
 "@umijs/preset-react@~1.6.7":
-  version "1.6.10"
-  resolved "https://registry.yarnpkg.com/@umijs/preset-react/-/preset-react-1.6.10.tgz#d2a6ab0bc7ed669e93af63cce8c4b5d9c36f22c4"
-  integrity sha512-Loe6hibPsuEcBOuy9cX0Ym2PDe3flfbmGeNzW1E+Mcbc1pDxv/S13+VMAIf97dGGEHUzVPp2BJg+EL9x+Anv3A==
+  version "1.6.13"
+  resolved "https://registry.yarnpkg.com/@umijs/preset-react/-/preset-react-1.6.13.tgz#b2f09f81ceb4045f27e47e3b6a71f6fd60bc206e"
+  integrity sha512-+0SerrWFjDorlNSbxmLx/QWEnDS9ayvbKIyqT4OM2/i5kYsnpuzNWdImzMkrgRZfezjgO1+FUbMsUFAeQn23xA==
   dependencies:
     "@umijs/plugin-access" "2.3.1"
     "@umijs/plugin-analytics" "0.2.2"
@@ -4023,9 +4023,9 @@
     "@umijs/plugin-dva" "0.9.1"
     "@umijs/plugin-helmet" "1.1.1"
     "@umijs/plugin-initial-state" "2.2.1"
-    "@umijs/plugin-layout" "0.12.2"
+    "@umijs/plugin-layout" "0.12.4"
     "@umijs/plugin-locale" "0.10.4"
-    "@umijs/plugin-model" "2.5.4"
+    "@umijs/plugin-model" "2.5.5"
     "@umijs/plugin-request" "2.5.0"
     "@umijs/plugin-test" "1.0.0"
 
