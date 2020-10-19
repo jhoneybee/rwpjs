@@ -35,7 +35,7 @@ RPW.JS 是一套 React 中 web网页开发的全栈解决方案。支持以下�
 
 ## 打赏
 
-![https://rwp.pub/img/wechat.jpg](https://rwp.pub/img/wechat.jpg)
+<img src="https://rwp.pub/img/wechat.jpg" alt="微信打赏" width="500" height="313" align="bottom" />
 
-![https://rwp.pub/img/alipay.jpg](https://rwp.pub/img/alipay.jpg)
+<img src="https://rwp.pub/img/alipay.jpg" alt="支付宝打赏" width="500" height="313" align="bottom" />
 
