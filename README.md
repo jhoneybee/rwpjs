@@ -37,5 +37,5 @@ RPW.JS 是一套 React 中 web网页开发的全栈解决方案。支持以下�
 
 |微信 | 支付宝
 |---- |-------
-|![https://rwp.pub/img/wechat.jpg](https://rwp.pub/img/wechat.jpg)| ![https://rwp.pub/img/alipay.jpg](https://rwp.pub/img/alipay.jpg)
+| <img src="https://rwp.pub/img/wechat.jpg" width="60" />|   <img src="https://rwp.pub/img/alipay.jpg" width="60" />
 
