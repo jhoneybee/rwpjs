@@ -47,9 +47,9 @@
     rc-util "^5.0.1"
 
 "@ant-design/pro-layout@~6.5.0":
-  version "6.5.4"
-  resolved "https://registry.yarnpkg.com/@ant-design/pro-layout/-/pro-layout-6.5.4.tgz#68fb7ff8661c099dee1ad525c0d7a99155f82319"
-  integrity sha512-Kyv60Ogmwr6njwScniWSYjBpwNd2ddIUL0nFKrz85m5o3lXxgo0vEqrpACXyD5TgZtS5toBCU6Jv6+y7fZAx8Q==
+  version "6.5.6"
+  resolved "https://registry.yarnpkg.com/@ant-design/pro-layout/-/pro-layout-6.5.6.tgz#1a1bd9479617f1bdce8f2d24b3b9bc1600c3e2b5"
+  integrity sha512-tH3aHgJNn0zg5diCtBnmCwbIGJnPNapu2uDfyWvct1Pd9lDcMQ0OQ3cJSF+UHDMI7p1ZpfIH6ZwKUfG94+EJig==
   dependencies:
     "@ant-design/icons" "^4.0.0"
     "@ant-design/pro-provider" "1.0.1"
