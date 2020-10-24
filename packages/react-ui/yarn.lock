@@ -3766,10 +3766,10 @@
   resolved "https://registry.yarnpkg.com/@umijs/plugin-analytics/-/plugin-analytics-0.2.2.tgz#575fd231d4327ea13413217aa1b5fc6bdd89465e"
   integrity sha512-dVDzUfgIdEwdCC6a5IsMYpIPI+bEZjBEqIhAvw9dic6Vk77w9RxQxyRfW11dDmdXLAwWphp22NntQNt1ejZPtg==
 
-"@umijs/plugin-antd@0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-antd/-/plugin-antd-0.8.0.tgz#0dae96f2aada81dbd494ee19f9329f1a63cff1ff"
-  integrity sha512-Pz9DOd6kwYvAQUGbKfyVnezCROGLLQzwfi6QFvMnsCh1iV2g1Kfk0tg3hEbzsUkXHPgeMLx+qj7KQFwHWWM1+w==
+"@umijs/plugin-antd@0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-antd/-/plugin-antd-0.9.0.tgz#9e62bd8fad1e8f42a88ba74ae3c07f9642dcb74b"
+  integrity sha512-wDEHrJ5Vqxtrh0P1i4hu5EU9UUQgL2O4o53Y7ev09NnIqbDUlOTxIMPhZSWjdXv4K4agrcJrg49DDXFjYLvNDg==
   dependencies:
     antd "^4.1.3"
     antd-mobile "^2.3.1"
@@ -3932,13 +3932,13 @@
     unist-util-visit-parents "^3.0.1"
 
 "@umijs/preset-react@~1.6.7":
-  version "1.6.13"
-  resolved "https://registry.yarnpkg.com/@umijs/preset-react/-/preset-react-1.6.13.tgz#b2f09f81ceb4045f27e47e3b6a71f6fd60bc206e"
-  integrity sha512-+0SerrWFjDorlNSbxmLx/QWEnDS9ayvbKIyqT4OM2/i5kYsnpuzNWdImzMkrgRZfezjgO1+FUbMsUFAeQn23xA==
+  version "1.6.14"
+  resolved "https://registry.yarnpkg.com/@umijs/preset-react/-/preset-react-1.6.14.tgz#9ff967d217550ba3b64cf41e585803c49a52b6e5"
+  integrity sha512-zBghSXl3OKoF7KWaymJNfsBQX8HO0RWyG7dEFCbg3rO6NL4U2ECWCqoO5jAD7MfQyjg1EaDcrL0Q5RSKQiSNMA==
   dependencies:
     "@umijs/plugin-access" "2.3.1"
     "@umijs/plugin-analytics" "0.2.2"
-    "@umijs/plugin-antd" "0.8.0"
+    "@umijs/plugin-antd" "0.9.0"
     "@umijs/plugin-crossorigin" "1.1.1"
     "@umijs/plugin-dva" "0.9.1"
     "@umijs/plugin-helmet" "1.1.1"
