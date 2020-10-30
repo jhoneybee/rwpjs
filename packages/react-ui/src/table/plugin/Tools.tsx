@@ -17,10 +17,10 @@ export const Tools = () => {
         visible: false,
         activeKey: '',
         treeHeight: 0,
+        isFocus: false
     }))
     const tree = useRef<TreeHandle | null>(null)
     const divRef = useRef<HTMLDivElement | null>(null)
-    const isMouseOut = useRef<boolean>(false)
     const globalStore = useStore()
     const contentRef = useRef<HTMLDivElement | null>(null)
 
@@ -30,9 +30,6 @@ export const Tools = () => {
 
     useEffect(() => {
         autorun(() => {
-            if (contentRef.current && store.visible) {
-                contentRef.current.focus()
-            }
             store.treeHeight = divRef.current!.clientHeight - 30
         })
     }, [store.visible])
@@ -95,16 +92,11 @@ export const Tools = () => {
                     tabIndex={-1}
                     ref={contentRef}
                     onBlur={() => {
-                        if (isMouseOut.current) {
-                            store.visible = false
-                        }
+                        store.visible = false
+                        store.isFocus = false
                     }}
-                    onFocus={() => { }}
-                    onMouseOut={() => {
-                        isMouseOut.current = true
-                    }}
-                    onMouseOver={() => {
-                        isMouseOut.current = false
+                    onFocus={() => {
+                        store.isFocus = true
                     }}
                 >
                     {switchContent()}
@@ -128,7 +120,7 @@ export const Tools = () => {
                     >
                         <span
                             style={{
-                                pointerEvents: store.visible ? 'none' : undefined
+                                pointerEvents: store.isFocus ? 'none' : undefined
                             }}
                             onClick={() => {
                                 store.activeKey = 'column'
