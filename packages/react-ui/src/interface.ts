@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { LiteralUnion } from 'antd/lib/_util/type';
 import { FormItemProps as AntFormItemProps, FormProps as AntFormProps, FormInstance } from 'antd/lib/form';
 import { ButtonProps as AntButtonProps } from 'antd/lib/button';
@@ -45,7 +45,7 @@ export interface FormProps extends Omit<AntFormProps, 'form'>{
     // 当前列的总数
     cols?: number
     form?: React.MutableRefObject<FormInstance | null>
-    children: JSX.Element[]
+    children: ReactNode
 }
 
 export interface FormItemProps extends AntFormItemProps {
