@@ -288,6 +288,7 @@ export default () => {
 |onDragOver  | 当拖动的元素超过放置目标时发生 | `function({event, node})`| -
 |onDragStart | 当用户开始拖动元素时发生 | `function({event, node})` | -
 |onDrop      | 在将拖动的元素放到放置目标上时发生 | `function({event, node, dragNode, dragNodesKeys})`| -
+|onRightClick | 点击右键后触发的事件信息 | `onRightClick?: (info: event: React.MouseEvent; node: EventDataNode ;}) => void;`| -
 
 ## TreeNode 
 
