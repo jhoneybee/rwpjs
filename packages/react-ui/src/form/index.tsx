@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, isValidElement } from 'react'
 import { Form as AntForm } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { FormProps, FormItemProps } from '../interface'
+import { isArray } from 'lodash'
 
 export const Form = (props: FormProps) => {
     const { cols = 5, form: propsForm, children, ...restProps } = props
@@ -11,13 +12,20 @@ export const Form = (props: FormProps) => {
     }
 
     let isEnableLabelWidth = false;
-    children.some(ele => {
-        if (ele.props.labelWidth) {
+    if (isArray(children)) {
+        children.some(ele => {
+            if (isValidElement(ele) && ele.props.labelWidth) {
+                isEnableLabelWidth = true
+                return true
+            }
+            return false
+        })
+    }else if (isValidElement(children)) {
+        if (children.props.labelWidth) {
             isEnableLabelWidth = true
             return true
         }
-        return false
-    })
+    }
 
     const formRef = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
