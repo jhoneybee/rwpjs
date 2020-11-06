@@ -3767,10 +3767,10 @@
     stylelint-order "^4.0.0"
     typescript "^3.8.3"
 
-"@umijs/plugin-access@2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-access/-/plugin-access-2.3.1.tgz#016a1cae8583b878cbebb3ea6b07235a56f2c756"
-  integrity sha512-BXUkK6x+9xNRV1VYLDqQiocq3Bqil+EoDNZc9G48UD71jEmNugN+bwMZe99l5D9qBkWpxC92xKxsAc7zc0/YKw==
+"@umijs/plugin-access@2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-access/-/plugin-access-2.3.2.tgz#2d736e72bf27c69c7a0d1d1d1ac334a408e069c0"
+  integrity sha512-X6tgpnhoEx9F2dVv95Q40pWZBSSH7ltcHFe2tNn7O+zQwzCUIeYWz5wk2olodKjxL9VWYNtubSwJ9DaVYkApgQ==
 
 "@umijs/plugin-analytics@0.2.2", "@umijs/plugin-analytics@^0.2.2":
   version "0.2.2"
@@ -3943,11 +3943,11 @@
     unist-util-visit-parents "^3.0.1"
 
 "@umijs/preset-react@~1.6.7":
-  version "1.6.16"
-  resolved "https://registry.yarnpkg.com/@umijs/preset-react/-/preset-react-1.6.16.tgz#4740cecb01e722817254b4bd6c2e81cbc8f07ac0"
-  integrity sha512-uoMPv+AW1Fmk19Qv3/OxPM8vYqfd1Y4H1ItdRW0ojQVadYFd/U4PlLPTVC5FO+DE8h5tQqb0Ei2vCfkVwgoXiQ==
+  version "1.6.17"
+  resolved "https://registry.yarnpkg.com/@umijs/preset-react/-/preset-react-1.6.17.tgz#ccaecf6e81064b8d342d232300b9430d18d11778"
+  integrity sha512-Muw/oayIzrqNSf8+wn9z1mELW3JXHNc3M8htCRXL86cscplwZDnAKx+brihbVgGcp3YFgk9oaRZJr7qfqYLd5w==
   dependencies:
-    "@umijs/plugin-access" "2.3.1"
+    "@umijs/plugin-access" "2.3.2"
     "@umijs/plugin-analytics" "0.2.2"
     "@umijs/plugin-antd" "0.9.0"
     "@umijs/plugin-crossorigin" "1.2.0"
