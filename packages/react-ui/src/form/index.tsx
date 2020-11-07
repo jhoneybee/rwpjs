@@ -18,26 +18,25 @@ export const Form = (props: FormProps) => {
         propsForm.current = form
     }
 
-    let isEnableLabelWidth = false;
-    if (isArray(children)) {
-        children.some(ele => {
-            if (isValidElement(ele) && ele.props.labelWidth) {
-                isEnableLabelWidth = true
-                return true
-            }
-            return false
-        })
-    }else if (isValidElement(children)) {
-        if (children.props.labelWidth) {
-            isEnableLabelWidth = true
-            return true
-        }
-    }
-
     const formRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
       if (formRef.current) {
+        let isEnableLabelWidth = false;
+        if (isArray(children)) {
+            children.some(ele => {
+                if (isValidElement(ele) && ele.props.labelWidth) {
+                    isEnableLabelWidth = true
+                    return true
+                }
+                return false
+            })
+        }else if (isValidElement(children)) {
+            if (children.props.labelWidth) {
+                isEnableLabelWidth = true
+            }
+        }
+
         if (isEnableLabelWidth) {
             const antFormItems  = formRef.current.querySelectorAll('.ant-form-item')
             const itemLabels = formRef.current.querySelectorAll('.ant-form-item-label')
