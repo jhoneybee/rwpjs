@@ -1,0 +1,10 @@
+@import '../../style/core/global.less';
+
+@form-item-fixed-width: ~'@{rwp-prefix}-item-fixed-width';
+
+.@{form-item-fixed-width}{
+    display: flex;
+    .ant-form-item-label {
+        width: var(--label-width);
+    }
+}

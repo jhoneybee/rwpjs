@@ -1,8 +1,15 @@
 import React, { useRef, useEffect, isValidElement } from 'react'
 import { Form as AntForm } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import classNames from 'classnames'
+
 import { FormProps, FormItemProps } from '../interface'
 import { isArray } from 'lodash'
+import { classPrefix } from '../utils'
+import './style/index.less'
+
+
+const classNameFixedWidth = `${classPrefix}-item-fixed-width`
 
 export const Form = (props: FormProps) => {
     const { cols = 5, form: propsForm, children, ...restProps } = props
@@ -28,6 +35,7 @@ export const Form = (props: FormProps) => {
     }
 
     const formRef = useRef<HTMLDivElement | null>(null);
+
     useEffect(() => {
       if (formRef.current) {
         if (isEnableLabelWidth) {
@@ -38,13 +46,11 @@ export const Form = (props: FormProps) => {
             itemLabels.forEach((formItemLabel, index) => {
                 const labelWidth = antFormItems[index].getAttribute('data-label-width')
                 if (labelWidth) {
-                    formItemLabel.setAttribute('style', `width: ${labelWidth}`);
                     const className = formItemLabel.getAttribute('class')?.replace('ant-col', '')
                     formItemLabel.setAttribute('class', className!);
                 }
             })
 
-            
             itemControls.forEach((itemControl, index) => {
                 const labelWidth = antFormItems[index].getAttribute('data-label-width')
                 if (labelWidth) {
@@ -54,18 +60,17 @@ export const Form = (props: FormProps) => {
             })
             
             antFormItems.forEach(items => {
-                const labelWidth = items.getAttribute('data-label-width')
-                if (labelWidth) {
-                    const className = items.getAttribute('class')?.replace('ant-row', '')
-                    items.setAttribute('class', className!);
-                    const styles = items.getAttribute('style') || ''
-                    items.setAttribute('style',styles.concat('display: flex;'))
+                if (items.getAttribute('style')?.includes('--label-width')) {
+                    const newClassName = items.getAttribute('class')?.replace('ant-row', '')!
+                    items.setAttribute('class', classNames({
+                        [newClassName]: true,
+                        [classNameFixedWidth]: true
+                    }))
                 }
             })
         }
       }
-    }, [formRef])
-
+    })
 
     return (
         <div ref={formRef}>
@@ -104,9 +109,9 @@ const Item = (props: FormItemProps) => {
                 ...cleanMarginBottom,
                 ...style,
                 gridColumn,
-                gridRow: `auto / span ${rowSpanTemp}`
-            }}
-            data-label-width={labelWidth}
+                gridRow: `auto / span ${rowSpanTemp}`,
+                '--label-width': labelWidth && `${labelWidth}`
+            } as unknown  as React.CSSProperties}
             {...restProps}
         />
     )
