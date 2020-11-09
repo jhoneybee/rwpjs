@@ -126,9 +126,13 @@ export const UploadPicturesWall = ({
         files,
         upload,
     }: UploadRender) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const [images, setImages] = useState<UploadImageType[]>(imagesProp)
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const [selectKeys, setSelectKey] = useState<string[]>([])
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const modal = useRef<ModalHandle | null>(null)
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const [spinning, setSpinning] = useState<boolean>(false)
 
         const getImgsAsync = (imgFiles: FileList) => {
@@ -140,13 +144,13 @@ export const UploadPicturesWall = ({
                 setSpinning(false)
             })
         }
-
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         useEffect(() => {
             if(files){
                 getImgsAsync(files)
             }
         }, [files])
-
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const carousel = useRef<AntCarousel | null>(null)
         return (
             <>

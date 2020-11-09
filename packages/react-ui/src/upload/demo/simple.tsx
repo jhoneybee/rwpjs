@@ -21,8 +21,8 @@ export default () => {
     return (
         <UploadPicturesWall
             images={images}
-            onChange={images => {
-              console.log(images)
+            onChange={changeImage => {
+              console.log(changeImage)
             }}
             onUpload={async (files: FileList) => {
                 const promises: Promise<UploadImageType>[] = []
@@ -42,8 +42,8 @@ export default () => {
                         }
                     }))
                 }
-                const images = await Promise.all(promises)
-                return images
+                const resultImages = await Promise.all(promises)
+                return resultImages
             }}
         />
     )
