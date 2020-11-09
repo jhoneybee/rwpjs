@@ -63,6 +63,11 @@ group:
 
 ## canary 版本
 
+### 1.22.0-canary
+
+- Upload
+  - 添加 `UploadPicturesWall` 支持多选,和限制图片格式
+
 ### 1.21.17-canary
 
 - Form
