@@ -100,8 +100,7 @@ export const Modal = (props: Props) => {
                 [`${classPrefix}-modal`]: true,
                 [props.className || '']: true,
             })}
-            // @ts-ignore
-            modalRender={modal => (
+            modalRender={(modal: React.ReactNode) => (
                 <DraggableContent
                     content={modal}
                     style={props.style}

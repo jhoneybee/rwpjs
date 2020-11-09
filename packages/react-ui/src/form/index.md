@@ -17,6 +17,8 @@ title: Form 表单组件
 
 <code src="./demo/linkage.tsx" />
 
+<code src="./demo/modal.tsx" />
+
 ## API
 
 Form属性说明如下：

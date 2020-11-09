@@ -14,61 +14,65 @@ const classNameFixedWidth = `${classPrefix}-item-fixed-width`
 export const Form = (props: FormProps) => {
     const { cols = 5, form: propsForm, children, ...restProps } = props
     const [form] = useForm()
-    if (propsForm){
+    if (propsForm) {
         propsForm.current = form
     }
 
     const formRef = useRef<HTMLDivElement | null>(null);
 
-    useEffect(() => {
-      if (formRef.current) {
-        let isEnableLabelWidth = false;
-        if (isArray(children)) {
-            children.some(ele => {
-                if (isValidElement(ele) && ele.props.labelWidth) {
+    const changeFormItemDom = () => {
+        if (formRef.current) {
+            let isEnableLabelWidth = false;
+            if (isArray(children)) {
+                children.some(ele => {
+                    if (isValidElement(ele) && ele.props.labelWidth) {
+                        isEnableLabelWidth = true
+                        return true
+                    }
+                    return false
+                })
+            } else if (isValidElement(children)) {
+                if (children.props.labelWidth) {
                     isEnableLabelWidth = true
-                    return true
                 }
-                return false
-            })
-        }else if (isValidElement(children)) {
-            if (children.props.labelWidth) {
-                isEnableLabelWidth = true
+            }
+
+            if (isEnableLabelWidth) {
+                const antFormItems = formRef.current.querySelectorAll('.ant-form-item')
+                const itemLabels = formRef.current.querySelectorAll('.ant-form-item-label')
+                const itemControls = formRef.current.querySelectorAll('.ant-form-item-control')
+
+                itemLabels.forEach((formItemLabel, index) => {
+                    const labelWidth = antFormItems[index].getAttribute('data-label-width')
+                    if (labelWidth) {
+                        const className = formItemLabel.getAttribute('class')?.replace('ant-col', '')
+                        formItemLabel.setAttribute('class', className!);
+                    }
+                })
+
+                itemControls.forEach((itemControl, index) => {
+                    const labelWidth = antFormItems[index].getAttribute('data-label-width')
+                    if (labelWidth) {
+                        const className = itemControl.getAttribute('class')?.replace('ant-col', '')
+                        itemControl.setAttribute('class', className!);
+                    }
+                })
+
+                antFormItems.forEach(items => {
+                    if (items.getAttribute('style')?.includes('--label-width')) {
+                        const newClassName = items.getAttribute('class')?.replace('ant-row', '')!
+                        items.setAttribute('class', classNames({
+                            [newClassName]: true,
+                            [classNameFixedWidth]: true
+                        }))
+                    }
+                })
             }
         }
-
-        if (isEnableLabelWidth) {
-            const antFormItems  = formRef.current.querySelectorAll('.ant-form-item')
-            const itemLabels = formRef.current.querySelectorAll('.ant-form-item-label')
-            const itemControls = formRef.current.querySelectorAll('.ant-form-item-control')
-
-            itemLabels.forEach((formItemLabel, index) => {
-                const labelWidth = antFormItems[index].getAttribute('data-label-width')
-                if (labelWidth) {
-                    const className = formItemLabel.getAttribute('class')?.replace('ant-col', '')
-                    formItemLabel.setAttribute('class', className!);
-                }
-            })
-
-            itemControls.forEach((itemControl, index) => {
-                const labelWidth = antFormItems[index].getAttribute('data-label-width')
-                if (labelWidth) {
-                    const className = itemControl.getAttribute('class')?.replace('ant-col', '')
-                    itemControl.setAttribute('class', className!);
-                }
-            })
-            
-            antFormItems.forEach(items => {
-                if (items.getAttribute('style')?.includes('--label-width')) {
-                    const newClassName = items.getAttribute('class')?.replace('ant-row', '')!
-                    items.setAttribute('class', classNames({
-                        [newClassName]: true,
-                        [classNameFixedWidth]: true
-                    }))
-                }
-            })
-        }
-      }
+    }
+    
+    useEffect(() => {
+        changeFormItemDom()
     })
 
     return (
@@ -110,7 +114,7 @@ const Item = (props: FormItemProps) => {
                 gridColumn,
                 gridRow: `auto / span ${rowSpanTemp}`,
                 '--label-width': labelWidth && `${labelWidth}`
-            } as unknown  as React.CSSProperties}
+            } as unknown as React.CSSProperties}
             {...restProps}
         />
     )
