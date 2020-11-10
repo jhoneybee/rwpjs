@@ -13,10 +13,6 @@ export default defineConfig({
       name: 'description',
       content: '☘ 企业级的React开发的解决方案'
   }],
-  ssr: {
-  },
-  exportStatic: {
-  },
   targets: {
     ie: 11,
   },
