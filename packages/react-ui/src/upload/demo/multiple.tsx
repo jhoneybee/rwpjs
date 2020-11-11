@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react'
 
 // eslint-disable-next-line import/no-unresolved
 import { UploadPicturesWall } from '@rwp/react-ui'
+// eslint-disable-next-line import/no-unresolved
 import { UploadImageType } from '@rwp/react-ui/dist/upload'
 
 export default () => {
