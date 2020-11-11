@@ -28,6 +28,11 @@ group:
 
 ## canary 版本
 
+### 1.23.0-canary
+
+- 🆕 新增 Breadcrumb 面包屑组件
+- 🆕 新增 Descriptions 描述组件
+
 ### 1.22.0-canary
 
 - Upload
