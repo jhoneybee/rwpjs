@@ -1,0 +1,1 @@
+export { Descriptions } from 'antd'

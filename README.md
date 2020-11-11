@@ -33,6 +33,12 @@ RPW.JS 是一套 React 中 web网页开发的全栈解决方案。支持以下�
 
 点击访问 [https://rwp.pub](https://rwp.pub) 来查看对应的文档说明。
 
+## 附言
+
+请注意, 使用此库应该是自由的, 而并非指的是价格, 我希望任何使用这个库的人,可以自己改变代码, 从中学习,与他人一起分享等等, 所以才采用此开源协议。
+
+> Note that when we say "free" we mean freedom, not price. The goal of such freedom is that the people who use a given piece of software should be able to change it to fit their needs, learn from it, share it with their friends, etc. The GPL or LGPL licenses allows you those freedoms, so it is free software.
+
 ## 打赏
 
 |微信 | 支付宝
