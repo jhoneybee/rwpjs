@@ -71,17 +71,17 @@ group:
 
 - 测试发布
 
-### 1.21.9-canary
+## 1.21.9-canary
 
 - Modal
   - 🐞 修复modal,未显示body,此问题是由于1.21.8-canary改动引起的
 
-### 1.21.8-canary
+## 1.21.8-canary
 
 - Modal
   - 🐞 修复modal强制渲染的时候会触发异常
 
-### 1.21.7-canary
+## 1.21.7-canary
 
 - Modal 
   - 🐞 修复表格拖拽的问题,限制表格top不能拖拽出屏幕

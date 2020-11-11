@@ -2,9 +2,9 @@ import React, { useRef, useEffect, isValidElement } from 'react'
 import { Form as AntForm } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import classNames from 'classnames'
+import { isArray } from 'lodash'
 
 import { FormProps, FormItemProps } from '../interface'
-import { isArray } from 'lodash'
 import { classPrefix } from '../utils'
 import './style/index.less'
 
@@ -39,28 +39,9 @@ export const Form = (props: FormProps) => {
 
             if (isEnableLabelWidth) {
                 const antFormItems = formRef.current.querySelectorAll('.ant-form-item')
-                const itemLabels = formRef.current.querySelectorAll('.ant-form-item-label')
-                const itemControls = formRef.current.querySelectorAll('.ant-form-item-control')
-
-                itemLabels.forEach((formItemLabel, index) => {
-                    const labelWidth = antFormItems[index].getAttribute('data-label-width')
-                    if (labelWidth) {
-                        const className = formItemLabel.getAttribute('class')?.replace('ant-col', '')
-                        formItemLabel.setAttribute('class', className!);
-                    }
-                })
-
-                itemControls.forEach((itemControl, index) => {
-                    const labelWidth = antFormItems[index].getAttribute('data-label-width')
-                    if (labelWidth) {
-                        const className = itemControl.getAttribute('class')?.replace('ant-col', '')
-                        itemControl.setAttribute('class', className!);
-                    }
-                })
-
                 antFormItems.forEach(items => {
                     if (items.getAttribute('style')?.includes('--label-width')) {
-                        const newClassName = items.getAttribute('class')?.replace('ant-row', '')!
+                        const newClassName = items.getAttribute('class')?.replace('ant-row', '').replace(classNameFixedWidth, '')!
                         items.setAttribute('class', classNames({
                             [newClassName]: true,
                             [classNameFixedWidth]: true

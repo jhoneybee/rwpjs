@@ -6,6 +6,7 @@ import { Carousel as AntCarousel } from 'antd'
 import { Modal, Spin, Carousel } from '../index'
 import { ModalHandle } from '../modal/index'
 import { classPrefix } from '../utils'
+
 import './style/index.less'
 
 const classNameUpload = `${classPrefix}-upload`

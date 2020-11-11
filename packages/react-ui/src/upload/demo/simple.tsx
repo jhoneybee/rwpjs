@@ -6,7 +6,10 @@
 import React, { useState, useEffect } from 'react'
 
 // eslint-disable-next-line import/no-unresolved
-import { UploadPicturesWall, UploadImageType } from '@rwp/react-ui'
+import { UploadPicturesWall } from '@rwp/react-ui'
+
+// eslint-disable-next-line import/no-unresolved
+import { UploadImageType } from '@rwp/react-ui/dist/upload'
 
 export default () => {
     const [images, setImages] = useState<UploadImageType[]>([])
