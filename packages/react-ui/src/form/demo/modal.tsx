@@ -6,7 +6,10 @@
 import React, { useRef } from 'react'
 
 // eslint-disable-next-line import/no-unresolved
-import { Form, Input, Button, Modal, ModalHandle } from '@rwp/react-ui'
+import { Form, Input, Button, Modal } from '@rwp/react-ui'
+// eslint-disable-next-line import/no-unresolved
+import { ModalHandle } from '@rwp/react-ui/lib/modal/index'
+
 import { FormInstance } from 'antd/lib/form'
 
 export default () => {

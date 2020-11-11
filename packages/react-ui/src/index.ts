@@ -1,6 +1,5 @@
-import 'antd/dist/antd.less';
+import 'antd/dist/antd.css'
 
-export { notification } from 'antd';
 export { Button } from './button';
 export { Input } from './input';
 export { Table } from './table';
@@ -34,7 +33,7 @@ export { Timeline } from './timeline'
 export { Typography } from './typography'
 export { Select } from './select'
 export { Tree } from './tree'
-export { Modal, ModalHandle } from './modal'
+export { Modal } from './modal'
 export { Row, Col } from './layout/Grid'
 export { Tooltip } from './tooltip'
 export { Drawer } from './drawer'
@@ -42,6 +41,6 @@ export { Steps } from './steps'
 export { Empty } from './empty'
 export { Popconfirm } from './popconfirm'
 export { Skeleton } from './skeleton'
-export { Upload, UploadPicturesWall, UploadImageType } from './upload'
+export { Upload, UploadPicturesWall } from './upload'
 export { Carousel } from './carousel'
 export { Collapse } from './collapse'
