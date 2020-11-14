@@ -25,7 +25,7 @@
         "dist/"
     ],
     "dependencies": {
-        "@ant-design/icons": "~4.2.1",
+        "@ant-design/icons": "~4.3.0",
         "@ant-design/pro-layout": "~6.5.0",
         "antd": "~4.8.0",
         "classnames": "~2.2.6",
