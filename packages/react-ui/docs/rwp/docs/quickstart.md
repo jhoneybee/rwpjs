@@ -41,9 +41,9 @@ import { Button } from '@rwp/react-ui'
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script crossorigin src="https://unpkg.com/@rwp/react-ui@1.0.0/dist/rwp.bundle.js"></script>
+    <script crossorigin src="https://unpkg.com/react@latest/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@latest/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@rwp/react-ui@latest/dist/rwp.bundle.js"></script>
     <title>Document</title>
 </head>
 <body>
