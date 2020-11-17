@@ -1,5 +1,7 @@
 # RWP.JS
 
+[![react-ui](https://img.shields.io/github/license/jhoneybee/rwpjs)](../../LICENSE) [![DeepScan grade](https://deepscan.io/api/teams/11762/projects/14701/branches/278834/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=11762&pid=14701&bid=278834)
+
 ![微信图片_20200924202254](https://user-images.githubusercontent.com/24241052/94144519-cd8e4980-fea3-11ea-96c6-5996538bcf18.png)
 
 ## 说明

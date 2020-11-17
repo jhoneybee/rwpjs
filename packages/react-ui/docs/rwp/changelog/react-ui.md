@@ -28,6 +28,10 @@ group:
 
 ## canary 版本
 
+### 1.24.0-canary
+
+-  🆕 新增 incubator 插件,用来预览和编辑Office
+
 ### 1.23.0-canary
 
 - 🆕 新增 Breadcrumb 面包屑组件
