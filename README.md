@@ -31,6 +31,8 @@ RPW.JS 是一套 React 中 web网页开发的全栈解决方案。支持以下�
 4. `npm test` 运行测试。(在运行测试前请确保 NODE_ENV 环境变量没有被设定，否则可能会引发一些问题)
 5. `npm run build` 构建 rwpjs 到 dist 目录。
 
+> 当前项目在 https://github.com/jhoneybee/rwpjs 中进行开发
+
 ## 文档地址
 
 点击访问 [https://rwp.pub](https://rwp.pub) 来查看对应的文档说明。
