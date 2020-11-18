@@ -21,12 +21,22 @@ export default () => {
             <br/>
             <Button
                 onClick={() => {
-                    incubator.current.openPreviewFile({
+                    incubator.current?.openPreviewFile({
                         fileName: 'test.docx',
-                        targetUrl: url
+                        targetUrl: url,
                     });
                 }}
-            > 编辑Word </Button>
+            > 预览Word </Button>
+
+            <Button
+                onClick={() => {
+                    incubator.current?.openEditorFile({
+                        fileName: 'test.docx',
+                        targetUrl: url,
+                        saveUrl: url
+                    });
+                }}
+            > 预览Word </Button>
             <Incubator incubator={incubator} downloadAddress="http://127.0.0.1:8000/"/>
         </>
     )
