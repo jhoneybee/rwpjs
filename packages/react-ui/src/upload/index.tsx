@@ -2,7 +2,6 @@ import React, { ComponentType, useState, useRef, useEffect, CSSProperties, React
 import { PlusOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons'
 import { generate } from 'shortid'
 import classnames from 'classnames'
-import { Carousel as AntCarousel } from 'antd'
 import { Modal, Spin, Carousel } from '../index'
 import { ModalHandle } from '../modal/index'
 import { classPrefix } from '../utils'
@@ -152,7 +151,7 @@ export const UploadPicturesWall = ({
             }
         }, [files])
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const carousel = useRef<AntCarousel | null>(null)
+        const carousel = useRef<any | null>(null)
         return (
             <>
                 {images.map(ele => (

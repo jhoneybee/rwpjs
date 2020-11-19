@@ -1,3 +1,5 @@
+import React from 'react'
+
 type User = {
     // 当前页码
     pageNo: string
@@ -34,6 +36,9 @@ export const loadData = async (pageNo: number , pageSize: number) => {
 export const columns = [{
     name: '$index',
     title: '序号',
+    headerRenderer: (props: any) => (
+        <div>☘{props.column.name}</div>
+    )
 },{
     name: 'pageNo',
     title: '当前页码'

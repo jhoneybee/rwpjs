@@ -102,6 +102,7 @@ const Demo = () => {
 |editor | 单元格使用的编辑器| `React.ComponentType<EditorProps<T[keyof T], T, unknown>>`
 |cellClass | 设置单元格的class| `string` \| `((row: T) => string);`
 |editorOptions| 编辑器属性   | - | -
+|headerRenderer | 自定义渲染文件头 | - | -
 
 ### editorOptions 编辑器属性
 

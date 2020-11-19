@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ComponentType, ReactNode } from 'react'
 
 import {
     DataGridHandle,
@@ -8,6 +8,7 @@ import {
     SortColumn,
     CalculatedColumn,
     RowsUpdateEvent,
+    HeaderRendererProps,
 } from 'react-data-grid-temp';
 
 import { CheckboxProps } from 'antd/lib/checkbox';
@@ -128,6 +129,8 @@ export interface ColumnProps {
     editor?:React.ComponentType<EditorProps<Row[keyof Row], Row, unknown>>;
     // 单元格的class
     cellClass?: string | ((row: Row) => string);
+    // 渲染头部
+    headerRenderer?:  ComponentType<HeaderRendererProps<any, any>>;
     // 编辑器属性
     editorOptions?: {
         /** Default: true for editor1 and false for editor2 */

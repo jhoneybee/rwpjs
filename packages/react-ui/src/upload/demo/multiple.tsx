@@ -25,7 +25,8 @@ export default () => {
             images={images}
             multiple
             onChange={changeImage => {
-              console.log(changeImage)
+                // eslint-disable-next-line no-console
+                console.log(changeImage)
             }}
             onUpload={async (files: FileList) => {
                 const promises: Promise<UploadImageType>[] = []
