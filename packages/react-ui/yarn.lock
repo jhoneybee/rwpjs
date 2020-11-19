@@ -2644,9 +2644,9 @@
     pretty-format "^26.6.2"
 
 "@testing-library/react@~11.2.0":
-  version "11.2.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-11.2.0.tgz#ce977a76b6342ea95c71ccd6de3012b1635fb559"
-  integrity sha512-90xKYJzskZ7q/AoSuWraQL4EGZlr75uZvDt3nrO4M+rugN02zjO45tmOBq/JBOgDiMIL1tkhHioKXjJsVaSINA==
+  version "11.2.1"
+  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-11.2.1.tgz#01b3d2dd5768ac27402b5d7e41c87e605be3c326"
+  integrity sha512-/rKucr9p/mhMongaeTXwgIRfDnsAUu6LbfN+moNUn2oU0Kw5a7inN5vGvPWv7Ef0YndpERAfODjeseUIlhzRHw==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@testing-library/dom" "^7.27.1"
@@ -21412,10 +21412,10 @@ webpack@4.44.1:
     watchpack "^1.7.4"
     webpack-sources "^1.4.1"
 
-webpack@~5.4.0:
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.4.0.tgz#4fdc6ec8a0ff9160701fb8f2eb8d06b33ecbae0f"
-  integrity sha512-udpYTyqz8toTTdaOsL2QKPLeZLt2IEm9qY7yTXuFEQhKu5bk0yQD9BtAdVQksmz4jFbbWOiWmm3NHarO0zr/ng==
+webpack@~5.5.1:
+  version "5.5.1"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.5.1.tgz#d6537f85554a0e59f15e6e683af11befdd0476aa"
+  integrity sha512-v4RzZP9BG2xxMLhxcFIo89M+nyIqGjh35Bhm5EE+I2N8y3dc9jT5OSb1HewUMkzMPyyDscOkVD6pSn6EMtTwNQ==
   dependencies:
     "@types/eslint-scope" "^3.7.0"
     "@types/estree" "^0.0.45"
