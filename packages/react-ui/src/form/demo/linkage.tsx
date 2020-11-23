@@ -18,8 +18,11 @@ export default () => {
                 form={form}
                 cols={5}
                 onValuesChange={(changedValues: any, allValues: any) => {
+                    // eslint-disable-next-line no-console
                     console.log(form)
+                    // eslint-disable-next-line no-console
                     console.log(changedValues)
+                    // eslint-disable-next-line no-console
                     console.log(allValues)
                 }}
             >
@@ -30,7 +33,9 @@ export default () => {
                     key="Field 1"
                     shouldUpdate={(prevValues: any, curValues: any) => prevValues.Field0 !== curValues.Field0}
                 >
-                    {({ getFieldValue }: { getFieldValue: Function }) => {
+                    {
+                    // eslint-disable-next-line react/no-unused-prop-types
+                    ({ getFieldValue }: { getFieldValue: Function }) => {
                         const Field0 = getFieldValue('Field0') || '';
                         if (Field0 !== '') {
                             return (

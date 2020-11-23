@@ -17,6 +17,7 @@ export default () => {
             <Button
                 onClick={async () => {
                     form.current?.validateFields().then(value => {
+                        // eslint-disable-next-line no-console
                         console.log(value)
                     })
                 }}
@@ -28,7 +29,9 @@ export default () => {
                 form={form}
                 cols={5}
                 onValuesChange={(changedValues: any, allValues: any) => {
+                    // eslint-disable-next-line no-console
                     console.log(changedValues)
+                    // eslint-disable-next-line no-console
                     console.log(allValues)
                 }}
             >
