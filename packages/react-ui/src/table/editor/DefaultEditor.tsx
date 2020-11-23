@@ -10,6 +10,7 @@ interface CellEditorProps {
     onChange: (value: any) => void
 }
 interface DefaultEditorProps {
+    // eslint-disable-next-line react/no-unused-prop-types
     node: React.FunctionComponent<CellEditorProps> | React.ComponentClass<CellEditorProps, any>
     extProps: EditorProps<any, any, unknown>
 }

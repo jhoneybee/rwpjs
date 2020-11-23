@@ -23,19 +23,33 @@ export const preFormatColumn = (
     const columns: Column<Row, unknown>[] = store.columns.filter(
         column => store.visibleColumns?.includes(column.name)
     ).map((element => {
-        const { name, title, editor, editable, formatter, align = 'left', ...restProps } = element
-        const TempEditor = editable ? editor || Input : undefined
-
+        const { align: colAlign = 'left'} = element
         let bodyTextAlign: 'left' | 'right' | 'center' = 'left'
         let headerTextAlign: 'left' | 'right' | 'center' = 'left'
-        const aligns = align.split('|');
+        const aligns = colAlign.split('|');
         if (aligns.length >= 2) {
             headerTextAlign = aligns[0] as 'left' | 'right' | 'center'
             bodyTextAlign = aligns[1] as 'left' | 'right' | 'center'
-        } else if (['left', 'right', 'center'].includes(align)) {
-            bodyTextAlign = align as 'left' | 'right' | 'center'
-            headerTextAlign = align as 'left' | 'right' | 'center'
+        } else if (['left', 'right', 'center'].includes(colAlign)) {
+            bodyTextAlign = colAlign as 'left' | 'right' | 'center'
+            headerTextAlign = colAlign as 'left' | 'right' | 'center'
         }
+        const { 
+            name,
+            title,
+            editor,
+            editable,
+            formatter,
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            align,
+            headerRenderer = ({ column }: HeaderRendererProps<Row, unknown>) => (
+                <div style={{ textAlign: headerTextAlign }}>{column.name}</div>
+            ),
+            ...restProps
+        } = element
+        const TempEditor = editable ? editor || Input : undefined
+
+
 
         let format = (cellProps: FormatterProps) => (
             <div
@@ -64,15 +78,14 @@ export const preFormatColumn = (
                 </div>
             )
         }
+
         return {
             key: name,
             name: title,
             resizable: true,
             formatter: format,
             editable,
-            headerRenderer: ({ column }: HeaderRendererProps<Row, unknown>) => (
-                <div style={{ textAlign: headerTextAlign }}>{column.name}</div>
-            ),
+            headerRenderer,
             editor: TempEditor ? React.forwardRef((
                 eProps: EditorProps<Row[keyof Row], Row, unknown>,
                 ref,
