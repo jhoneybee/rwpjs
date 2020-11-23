@@ -33,7 +33,9 @@ export default () => {
                     key="Field 1"
                     shouldUpdate={(prevValues: any, curValues: any) => prevValues.Field0 !== curValues.Field0}
                 >
-                    {({ getFieldValue }: { getFieldValue: Function }) => {
+                    {
+                    // eslint-disable-next-line react/no-unused-prop-types
+                    ({ getFieldValue }: { getFieldValue: Function }) => {
                         const Field0 = getFieldValue('Field0') || '';
                         if (Field0 !== '') {
                             return (
