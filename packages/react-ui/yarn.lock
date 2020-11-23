@@ -17073,9 +17073,9 @@ react-css@0.0.2:
     to-camel-case "^0.2.1"
 
 react-data-grid-temp@~7.0.0-canary.22.3:
-  version "7.0.0-canary.22.3"
-  resolved "https://registry.yarnpkg.com/react-data-grid-temp/-/react-data-grid-temp-7.0.0-canary.22.3.tgz#bbdd5b170fabba6bbff7a430c21c2733181aaa78"
-  integrity sha512-90fienLfk5JI2M6/bSfg+fMOO7JfFZf02VxU+XcwXUsRDQx9zvAK4cnQ0vd3ijxysdMBjNLAUHLqy0cFo4aArA==
+  version "7.0.0-canary.22.4"
+  resolved "https://registry.yarnpkg.com/react-data-grid-temp/-/react-data-grid-temp-7.0.0-canary.22.4.tgz#51db73cd6f492e872d42a6aa6d6d81434caefcb1"
+  integrity sha512-816H5lppLbKhDhgn5/wkkOF/qpvwiX908ceWWOOtWr9Di4+aM+Aug+R6g9a6HchoWRc925ibzxxChrn0fyxTRQ==
   dependencies:
     clsx "^1.1.1"
 
