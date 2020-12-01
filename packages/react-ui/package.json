@@ -27,7 +27,7 @@
     "dependencies": {
         "@ant-design/icons": "~4.3.0",
         "@ant-design/pro-layout": "~6.5.0",
-        "antd": "~4.8.0",
+        "antd": "~4.9.1",
         "classnames": "~2.2.6",
         "lodash": "~4.17.15",
         "mobx": "~5.15.6",
