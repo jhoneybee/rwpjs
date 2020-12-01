@@ -3707,10 +3707,10 @@
   resolved "https://registry.yarnpkg.com/@umijs/plugin-initial-state/-/plugin-initial-state-2.3.0.tgz#b0afc6cf8446bddb0ed2c2fa4271c4cff993d688"
   integrity sha512-R1hhzwFX3GA+kP0sjci2DwfLStCeOCdE0EjOV4HgzBkWR1YhX4ytof+eTgJlwx7o27zRqGNfk4DZVO3wmYpc0w==
 
-"@umijs/plugin-layout@0.12.5":
-  version "0.12.5"
-  resolved "https://registry.yarnpkg.com/@umijs/plugin-layout/-/plugin-layout-0.12.5.tgz#ef6a426ea4decd787dea40933b132e08b66d80fa"
-  integrity sha512-iWWf5gn1MbzrJV1Vf1j3gNsWauEUt/82n5Im9JM8GQKpEgH5t5ham38WdOyjNwozUyi3qQ3HMnXA2b8TvXZlOQ==
+"@umijs/plugin-layout@0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@umijs/plugin-layout/-/plugin-layout-0.13.0.tgz#62cab30b5c1a401dbc6f01c661991c9488e8f6df"
+  integrity sha512-lYJshv8RI68dtDDYX+zpVNKTdZSddesr7/VZTQnQ5PUuNLCgme0/dGS/VOMBefKz15sOTUITZS1gdvAePhmO3Q==
   dependencies:
     "@umijs/route-utils" "^1.0.7"
     antd "^4.1.2"
@@ -3836,10 +3836,10 @@
     unist-util-visit "^2.0.1"
     unist-util-visit-parents "^3.0.1"
 
-"@umijs/preset-react@~1.6.7":
-  version "1.6.19"
-  resolved "https://registry.yarnpkg.com/@umijs/preset-react/-/preset-react-1.6.19.tgz#8acbfab77c10518d98c319b8eb8d5916174864ba"
-  integrity sha512-7QB7bpRyR9RRm8Xkn/a/5iczjPIAazqYgfybE76meY5Q3XJk4lNsx6q64hKUWIVwZTRobT9yjv5CsTaFLaTwmA==
+"@umijs/preset-react@~1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@umijs/preset-react/-/preset-react-1.7.1.tgz#8d941823166d662677032360b04c22b6dbab5fe8"
+  integrity sha512-S6KC2DRYJcUJIEPN0OjbzxZ9LAU8ZdGbJzBdlH04SfoOUpXx2n6t5WV/jrYBm/A5bDXBMRedLCFKfNEHyU3o6g==
   dependencies:
     "@umijs/plugin-access" "2.3.2"
     "@umijs/plugin-analytics" "0.2.2"
@@ -3848,7 +3848,7 @@
     "@umijs/plugin-dva" "0.9.1"
     "@umijs/plugin-helmet" "1.1.1"
     "@umijs/plugin-initial-state" "2.3.0"
-    "@umijs/plugin-layout" "0.12.5"
+    "@umijs/plugin-layout" "0.13.0"
     "@umijs/plugin-locale" "0.10.4"
     "@umijs/plugin-model" "2.5.6"
     "@umijs/plugin-request" "2.5.0"
