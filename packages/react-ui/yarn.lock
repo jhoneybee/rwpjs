@@ -34,10 +34,10 @@
     insert-css "^2.0.0"
     rc-util "^5.0.1"
 
-"@ant-design/pro-layout@~6.5.0":
-  version "6.5.19"
-  resolved "https://registry.yarnpkg.com/@ant-design/pro-layout/-/pro-layout-6.5.19.tgz#9a417a4c96ff1a3fd048ad29007bf6ef98fd0b8e"
-  integrity sha512-dx9Z1Q56hX9R0s4VxKcasEFCEUqbb6XnzqjOnhnEE4+dG0928Oo2FqFqWPO9b6uWVcbtUKUF7S2R7UFrQ9jBBA==
+"@ant-design/pro-layout@~6.6.0":
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/@ant-design/pro-layout/-/pro-layout-6.6.0.tgz#d3e4c06c4dfd926ffacc8ca7b722a35766d95919"
+  integrity sha512-FlbVJH1yQNaMmXathkpJXVYckBVVSS6MTwjWz0is4oXjNf2Ftw2C43QyM92d0b42DKPe+wxhK66QnQPP1CoIWQ==
   dependencies:
     "@ant-design/icons" "^4.0.0"
     "@ant-design/pro-provider" "1.2.3"
