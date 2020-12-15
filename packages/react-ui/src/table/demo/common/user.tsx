@@ -33,6 +33,36 @@ export const loadData = async (pageNo: number , pageSize: number) => {
     }
 }
 
+export const editColumns = [{
+    name: '$index',
+    title: '序号',
+},{
+    name: 'pageNo',
+    editable: true,
+    title: '当前页码'
+},{
+    name: 'idCard',
+    editable: true,
+    title: '身份证'
+},{
+    name: 'username',
+    editable: true,
+    title: '用户名称'
+},{
+    name: 'password',
+    editable: true,
+    title: '用户密码'
+},{
+    name: 'phone',
+    editable: true,
+    title: '电话号码'
+},{
+    name: 'dateBirth',
+    editable: true,
+    title: '出生日期'
+}]
+
+
 export const columns = [{
     name: '$index',
     title: '序号',

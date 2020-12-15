@@ -22,6 +22,7 @@ title: Table 表格
 
 <code src="./demo/select-table-custom-header.tsx" />
 
+<code src="./demo/modal-table.tsx" />
 
 ## API
 
