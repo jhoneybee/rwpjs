@@ -15,7 +15,7 @@
         "release:canary": "npm publish --tag canary",
         "test": "umi-test",
         "test:watch": "umi-test --watch --coverage",
-        "prepublishOnly": "yarn build",
+        "prepublishOnly": "npm run build",
         "test:coverage": "umi-test --coverage"
     },
     "main": "dist/index.js",
