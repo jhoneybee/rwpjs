@@ -5,7 +5,7 @@
     "start": "tsc && cd example && npm install && npm run start",
     "build": "tsc",
     "test": "jest",
-    "lint:script": "eslint ./src/**/*.{js,jsx,ts,tsx}",
+    "lint": "eslint ./src/**/*.{js,jsx,ts,tsx}",
     "lint:fix": "eslint ./src/**/*.{js,jsx,ts,tsx} --fix"
   },
   "license": "AGPL-3.0",
