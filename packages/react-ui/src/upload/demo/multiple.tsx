@@ -46,6 +46,7 @@ export default () => {
                         }
                     }))
                 }
+                console.log('---------------')
                 const resultImages = await Promise.all(promises)
                 return resultImages
             }}
