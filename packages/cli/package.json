@@ -47,7 +47,7 @@
     "@babel/preset-typescript": "~7.12.7",
     "babel-loader": "~8.2.2",
     "css-loader": "~5.0.0",
-    "html-webpack-plugin": "~4.4.1",
+    "html-webpack-plugin": "~4.5.0",
     "less": "~3.13.0",
     "less-loader": "~7.0.1",
     "style-loader": "~2.0.0",
