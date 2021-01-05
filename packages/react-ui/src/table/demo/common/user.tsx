@@ -15,22 +15,26 @@ type User = {
     dateBirth: string
 }
 
-export const loadData = async (pageNo: number , pageSize: number) => {
-    const userDatas: User[] = []
-    for (let i=0; i < pageSize; i += 1) {
-        userDatas.push({
-            pageNo: `当前加载第${pageNo}页`,
-            idCard: `429*******${Math.ceil(Math.random() * 100)}`,
-            username: 'Kotomi Ichinose',
-            password: '********',
-            phone: '+86 188*****12',
-            dateBirth: `19${Math.ceil(Math.random() * 100)}`
-        })
-    }
-    return {
-        datas: userDatas,
-        total: 150,
-    }
+export const loadData = (pageNo: number , pageSize: number) => {
+    return new Promise((resolve) => {
+        const userDatas: User[] = []
+        for (let i=0; i < pageSize; i += 1) {
+            userDatas.push({
+                pageNo: `当前加载第${pageNo}页`,
+                idCard: `429*******${Math.ceil(Math.random() * 100)}`,
+                username: 'Kotomi Ichinose',
+                password: '********',
+                phone: '+86 188*****12',
+                dateBirth: `19${Math.ceil(Math.random() * 100)}`
+            })
+        }
+        setTimeout(() => {
+            resolve({
+                datas: userDatas,
+                total: 1000,
+            })
+        }, 1000)
+    })
 }
 
 export const editColumns = [{

@@ -81,13 +81,13 @@ export const Upload = ({
                 }}
             />
         </div>
-    ) 
+    )
 }
 
 export interface UploadImageType {
     id: string
     url: string
-    name: string 
+    name: string
     state?: 'SUCCESS' | 'FAIL'
 }
 
@@ -104,6 +104,8 @@ interface UploadPicturesWallProps {
     style?: CSSProperties
     // 是否多选
     multiple?: boolean
+    // 设置images
+    onCallbackStateImages?: (images: UploadImageType[], setImages: (uploadImages: UploadImageType[]) => void) => void
     // 设置可以上传的后缀
     accept?: string
 }
@@ -114,6 +116,7 @@ interface UploadPicturesWallProps {
 export const UploadPicturesWall = ({
     onChange,
     onUpload,
+    onCallbackStateImages,
     images: imagesProp = [],
     actionRender: ActionRender = ({className, children}) => (
         <div className={className}>{children}</div>
@@ -134,7 +137,7 @@ export const UploadPicturesWall = ({
         const modal = useRef<ModalHandle | null>(null)
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [spinning, setSpinning] = useState<boolean>(false)
-
+        onCallbackStateImages?.(images, setImages);
         const getImgsAsync = (imgFiles: FileList) => {
             setSpinning(true)
             onUpload?.(imgFiles).then(resp => {

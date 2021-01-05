@@ -200,7 +200,7 @@ export interface TableProps {
      */
     loadData: (pageNo: number, pageSize: number, params: Object) => PromiseLike<LoadDataRespType>
     // 初始化页面的分页大小, 默认加载50条数据
-    pageSize?: number
+    // pageSize?: number
     // 装载数据的参数
     params?: Object
     // 是否初始化的时候自动装载数据, 默认为 true
