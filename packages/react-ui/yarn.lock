@@ -34,14 +34,14 @@
     insert-css "^2.0.0"
     rc-util "^5.0.1"
 
-"@ant-design/pro-layout@~6.6.0":
-  version "6.6.4"
-  resolved "https://registry.yarnpkg.com/@ant-design/pro-layout/-/pro-layout-6.6.4.tgz#276e21f3e6758abc8c4f16e5a6b0ccfb4f96cbb5"
-  integrity sha512-d83LuyGBiuhEf8yBgFoa00dfJcVDPALL+MPMIAziQT8LHKk5xPG54bj4xacr34X+SdiKUDZ7zZnPpKN7581D/g==
+"@ant-design/pro-layout@~6.10.5":
+  version "6.10.5"
+  resolved "https://registry.yarnpkg.com/@ant-design/pro-layout/-/pro-layout-6.10.5.tgz#8dfae7bf432606652f7b22796be8e464cc7029ec"
+  integrity sha512-ZdUt4lvT6aChG3f3yYrOgQgfByiQkXr5v7OwYcjbR+6MrHQFz7Nrh+870LzEe8h+D71oDWzIpKPv7ZSrhUFzgw==
   dependencies:
     "@ant-design/icons" "^4.0.0"
-    "@ant-design/pro-provider" "1.2.4"
-    "@ant-design/pro-utils" "1.5.1"
+    "@ant-design/pro-provider" "1.4.1"
+    "@ant-design/pro-utils" "1.10.2"
     "@umijs/route-utils" "^1.0.33"
     classnames "^2.2.6"
     history "^4.10.1"
@@ -59,20 +59,20 @@
     use-media-antd-query "^1.0.3"
     warning "^4.0.3"
 
-"@ant-design/pro-provider@1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@ant-design/pro-provider/-/pro-provider-1.2.4.tgz#de1dc8fdf9c3e3156e0540a4d5db61c4e6c4e2c1"
-  integrity sha512-tYk97VmhctXY/BAv6K+qVRBddHxmWkSf3QbU6cRhmnb0ofPV26wEX8oWa26MBqlS4QPry0+L4VO8n4iLQ8HaUw==
+"@ant-design/pro-provider@1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@ant-design/pro-provider/-/pro-provider-1.4.1.tgz#4d0c87fd6fe9b6f0c2e86dfd19ccc6ab5b68f9e6"
+  integrity sha512-oxSSVJ7csg9563Y1CgLPkjinpd8DjvLdp/+UtMFodW4e9rESJsBKBHFdftmMAWqhsnj/HElo3fs+u19JPyFu6A==
   dependencies:
     rc-util "^5.0.1"
 
-"@ant-design/pro-utils@1.5.1":
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/@ant-design/pro-utils/-/pro-utils-1.5.1.tgz#e3cc1ef352cd804d562fcf1049e8d490602b48f4"
-  integrity sha512-dM2Q9ex8d28+RuaoFczkCY50KHG5666RqryzxA1IeMNVNTsU8iqflPl3v94+yiYonDTyHECIm4ZKqUlz2H4c/g==
+"@ant-design/pro-utils@1.10.2":
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/@ant-design/pro-utils/-/pro-utils-1.10.2.tgz#03c77129e400c0a9666c877685cd158234065f14"
+  integrity sha512-qx8Rq9ty29Dms9fOvJqopLBCLcofYir3RYLq1f7s3nVORUDJIBFyu3XQ8wouh5ZNe5O3bcxmSL4mN9HtaWJbnw==
   dependencies:
     "@ant-design/icons" "^4.3.0"
-    "@ant-design/pro-provider" "1.2.4"
+    "@ant-design/pro-provider" "1.4.1"
     classnames "^2.2.6"
     fast-deep-equal "^3.1.3"
     moment "^2.27.0"
