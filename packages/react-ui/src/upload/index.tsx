@@ -99,13 +99,15 @@ interface UploadPicturesWallProps {
     // 图片上传的事件
     onUpload?: (file: FileList) => Promise<UploadImageType[]>
     // 渲染图标的render
-    actionRender?: ComponentType<{className: string, children: ReactNode}>
+    actionRender?: ComponentType<{className: string, children: ReactNode, file: UploadImageType}>
     // 样式
     style?: CSSProperties
     // 是否多选
     multiple?: boolean
     // 设置images
     onCallbackStateImages?: (images: UploadImageType[], setImages: (uploadImages: UploadImageType[]) => void) => void
+    // 获取选中的keys
+    onSelectKeys: (keys: string[]) => void
     // 设置可以上传的后缀
     accept?: string
 }
@@ -117,6 +119,7 @@ export const UploadPicturesWall = ({
     onChange,
     onUpload,
     onCallbackStateImages,
+    onSelectKeys,
     images: imagesProp = [],
     actionRender: ActionRender = ({className, children}) => (
         <div className={className}>{children}</div>
@@ -171,11 +174,12 @@ export const UploadPicturesWall = ({
                             }else{
                                 selectKeys.push(ele.id)
                             }
+                            onSelectKeys?.(selectKeys);
                             setSelectKey([...selectKeys])
                         }}
                     >
                         <img src={ele.url} alt={ele.name} />
-                        <ActionRender className={`${classNameUpload}-list-item-info`}>
+                        <ActionRender className={`${classNameUpload}-list-item-info`} file={ele}>
                             <EyeOutlined
                                 className="upload-action-icon"
                                 key='eye'
