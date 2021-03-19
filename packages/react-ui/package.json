@@ -64,7 +64,7 @@
         "@types/shortid": "~0.0.29",
         "@typescript-eslint/parser": "~3.10.1",
         "@umijs/fabric": "~2.2.2",
-        "@umijs/preset-react": "~1.7.7",
+        "@umijs/preset-react": "~1.8.2",
         "@umijs/test": "~3.3.0",
         "babel-loader": "~8.2.1",
         "css-loader": "~5.0.0",
