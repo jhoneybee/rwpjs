@@ -51,6 +51,7 @@ export const Upload = ({
     style,
 }: UploadProps) => {
     const [files, setFiles] = useState<FileList | undefined>(undefined)
+    const [key, setKey] = useState<string>(generate());
     const uploadRef = useRef<HTMLInputElement>(null)
     const upload = {
         showOpenDialog: () => {
@@ -69,7 +70,7 @@ export const Upload = ({
             />
             <input
                 ref={uploadRef}
-                key={generate()}
+                key={key}
                 className={`${classNameUpload}-input-file`}
                 multiple={multiple}
                 accept={accept}
@@ -78,16 +79,17 @@ export const Upload = ({
                     const { files: targeFiles } = event.target
                     setFiles(targeFiles as FileList | undefined)
                     onChange?.(targeFiles as FileList | undefined)
+                    setKey(generate())
                 }}
             />
         </div>
-    ) 
+    )
 }
 
 export interface UploadImageType {
     id: string
     url: string
-    name: string 
+    name: string
     state?: 'SUCCESS' | 'FAIL'
 }
 

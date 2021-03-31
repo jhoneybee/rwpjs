@@ -61,6 +61,10 @@ export const Table = observer<TableProps>((props: TableProps) => {
         store.setLoading(false)
     }
 
+    useEffect(() => {
+        store.changeColumnsEvent = props.onChangeColumn
+    }, [])
+
     /**
      * 装载表格数据
      */
@@ -73,6 +77,8 @@ export const Table = observer<TableProps>((props: TableProps) => {
         store.loadRows(resp.datas, pageNo)
         store.setLoading(false)
     }
+
+
 
     useEffect(() => {
         return () => {
@@ -161,7 +167,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
             // 判断数据大于0, 并且小于当前总数。
             store.datas.length > 0 && store.datas.length < store.total
             &&
-            target.scrollLeft === beforeScrollLeft.current            
+            target.scrollLeft === beforeScrollLeft.current
         ) {
             scrollTimeOut = setTimeout(() => {
                 loadDataFun()
@@ -283,7 +289,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
             />
         </div>
     )
-    
+
     const getPluginNode = (node: ReactNode) => {
         if(props.mode === 'SIMPLE') return undefined;
         return node

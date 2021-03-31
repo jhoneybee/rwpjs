@@ -50,6 +50,7 @@ export function createStore() {
             this.datas = formatData(this.datas.concat(rows))
             this.pageNo = pageNo
         },
+        changeColumnsEvent: {} as any,
         /**
          * 将两个节点进行交换
          * @param node 当前node节点
@@ -62,7 +63,7 @@ export function createStore() {
             let targeColumnIndex: number
             this.columns.forEach((value, index) => {
                 if (value.name === node){
-                    column = value 
+                    column = value
                     columnIndex = index
                 }
                 if (value.name === targeNode){
@@ -72,7 +73,7 @@ export function createStore() {
             })
             this.columns.splice(columnIndex!, 1, targeColumn!)
             this.columns.splice(targeColumnIndex!, 1, column!)
-
+            this.changeColumnsEvent(this.columns);
         },
         setSelectedRows(keys: Set<Row[keyof Row]>, onSelectedRowsChange?: (selectedRows: Set<Row[keyof Row]>) => void) {
             onSelectedRowsChange?.(keys)
@@ -128,7 +129,7 @@ export function createStore() {
                     if (ele.$parent === null) {
                         newData.push(ele)
                     }
-                    
+
                     if (ele.$parent && expandedKeys.includes(ele.$parent.$id)) {
                         historyExpandedKeys.push(ele.$parent.$id)
                         newData.push(ele)
@@ -187,7 +188,7 @@ export function createStore() {
                 }else {
                     this.setDataSource(datas)
                 }
-                
+
                 resolve()
             })
         },
@@ -249,7 +250,7 @@ export function createStore() {
         setDataSource(datas: any[]){
             if(this.isGroup){
                 this.groupDatas = datas
-                return 
+                return
             }
             this.datas = datas
         },
