@@ -11,5 +11,8 @@ export default () => (
     <Table
         columns={columns}
         loadData={loadData}
+        onChangeColumn={(data) => {
+            console.log(data)
+        }}
     />
 )

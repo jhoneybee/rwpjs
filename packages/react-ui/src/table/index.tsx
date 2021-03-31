@@ -36,6 +36,7 @@ import './style/index.less'
 const tableClassPrefix = `${classPrefix}-table`
 
 export const Table = observer<TableProps>((props: TableProps) => {
+    const pageSize = 100
     const store = useLocalStore(createStore)
 
     const gridRef = useRef<DataGridHandle | null>(null)
@@ -47,7 +48,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
     // 重新刷新数据,返回到第一行
     const reloadFun = async (param?: Object) => {
         store.setLoading(true)
-        const res = props.loadData(1, props.pageSize!, {
+        const res = props.loadData(1, pageSize, {
             ...props.params,
             ...param || {},
         })
@@ -61,18 +62,24 @@ export const Table = observer<TableProps>((props: TableProps) => {
         store.setLoading(false)
     }
 
+    useEffect(() => {
+        store.changeColumnsEvent = props.onChangeColumn
+    }, [])
+
     /**
      * 装载表格数据
      */
     const loadDataFun = async () => {
         store.setLoading(true)
         const pageNo = store.pageNo + 1
-        const res = props.loadData(pageNo, props.pageSize!, props.params!)
+        const res = props.loadData(pageNo, pageSize, props.params!)
         const resp = await (res as PromiseLike<{ total: number, datas: Row[] }>)
         store.setTotal(resp.total)
         store.loadRows(resp.datas, pageNo)
         store.setLoading(false)
     }
+
+
 
     useEffect(() => {
         return () => {
@@ -150,21 +157,26 @@ export const Table = observer<TableProps>((props: TableProps) => {
     }
 
     const beforeScrollLeft = useRef<number>(0)
+    let isDisableScroll = false
+
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         const target = e.currentTarget
         // 如果是分组状态,禁止操作
         if (isDisableLoadData()) return
         if (
             // 判断是否滚动到底部
-            target.scrollHeight - target.scrollTop <= target.clientHeight + 2
-            &&
+            target.scrollHeight - target.scrollTop <= target.clientHeight + 2 &&
             // 判断数据大于0, 并且小于当前总数。
-            store.datas.length > 0 && store.datas.length < store.total
-            &&
-            target.scrollLeft === beforeScrollLeft.current            
+            store.datas.length > 0 &&
+            store.datas.length < store.total &&
+            target.scrollLeft === beforeScrollLeft.current &&
+            !isDisableScroll
         ) {
+            isDisableScroll = true
             scrollTimeOut = setTimeout(() => {
-                loadDataFun()
+                loadDataFun().then(() => {
+                    isDisableScroll = false
+                })
             }, 200);
         }
         beforeScrollLeft.current = target.scrollLeft
@@ -283,7 +295,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
             />
         </div>
     )
-    
+
     const getPluginNode = (node: ReactNode) => {
         if(props.mode === 'SIMPLE') return undefined;
         return node
@@ -307,7 +319,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
 })
 
 Table.defaultProps = {
-    pageSize: 50,
+    // pageSize: 50,
     params: {},
     rowHeight: 35,
     enableInitLoadData: true,
