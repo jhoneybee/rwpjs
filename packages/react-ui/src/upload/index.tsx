@@ -1,4 +1,4 @@
-import React, { ComponentType, useState, useRef, useEffect, CSSProperties, ReactNode } from 'react'
+import React, { ComponentType, useState, useRef, useEffect, CSSProperties, ReactNode, useMemo } from 'react'
 import { PlusOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons'
 import { generate } from 'shortid'
 import classnames from 'classnames'
@@ -101,7 +101,7 @@ interface UploadPicturesWallProps {
     // 图片上传的事件
     onUpload?: (file: FileList) => Promise<UploadImageType[]>
     // 渲染图标的render
-    actionRender?: ComponentType<{className: string, children: ReactNode, file: UploadImageType}>
+    actionRender?: ComponentType<{ className: string, children: ReactNode, file: UploadImageType }>
     // 样式
     style?: CSSProperties
     // 是否多选
@@ -123,133 +123,137 @@ export const UploadPicturesWall = ({
     onCallbackStateImages,
     onSelectKeys,
     images: imagesProp = [],
-    actionRender: ActionRender = ({className, children}) => (
+    actionRender: ActionRender = ({ className, children }) => (
         <div className={className}>{children}</div>
     ),
     style,
     multiple,
     accept
 }: UploadPicturesWallProps) => {
-    const uploadRender = ({
-        files,
-        upload,
-    }: UploadRender) => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [images, setImages] = useState<UploadImageType[]>(imagesProp)
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [selectKeys, setSelectKey] = useState<string[]>([])
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const modal = useRef<ModalHandle | null>(null)
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [spinning, setSpinning] = useState<boolean>(false)
-        onCallbackStateImages?.(images, setImages);
-        const getImgsAsync = (imgFiles: FileList) => {
-            setSpinning(true)
-            onUpload?.(imgFiles).then(resp => {
-                const tempImages = images.concat(resp)
-                onChange?.(tempImages)
-                setImages(tempImages)
-                setSpinning(false)
-            })
-        }
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        useEffect(() => {
-            if(files){
-                getImgsAsync(files)
+    const uploadRender = useMemo(() => {
+        return ({
+            files,
+            upload,
+        }: UploadRender) => {
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            const [images, setImages] = useState<UploadImageType[]>(imagesProp)
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            const [selectKeys, setSelectKey] = useState<string[]>([])
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            const modal = useRef<ModalHandle | null>(null)
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            const [spinning, setSpinning] = useState<boolean>(false)
+            onCallbackStateImages?.(images, setImages);
+            const getImgsAsync = (imgFiles: FileList) => {
+                setSpinning(true)
+                onUpload?.(imgFiles).then(resp => {
+                    const tempImages = images.concat(resp)
+                    onChange?.(tempImages)
+                    setImages(tempImages)
+                    setSpinning(false)
+                })
             }
-        }, [files])
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const carousel = useRef<any | null>(null)
-        return (
-            <>
-                {images.map(ele => (
-                    <div
-                        key={ele.id}
-                        className={classnames({
-                            [`${classNameUpload}-list-item`]: true,
-                            [`${classNameUpload}-list-select-item`]: selectKeys.includes(ele.id)
-                        })}
-                        onClick={() => {
-                            const index = selectKeys.findIndex(key => ele.id === key)
-                            if(index !== -1){
-                                selectKeys.splice(index, 1)
-                            }else{
-                                selectKeys.push(ele.id)
-                            }
-                            onSelectKeys?.(selectKeys);
-                            setSelectKey([...selectKeys])
-                        }}
-                    >
-                        <img src={ele.url} alt={ele.name} />
-                        <ActionRender className={`${classNameUpload}-list-item-info`} file={ele}>
-                            <EyeOutlined
-                                className="upload-action-icon"
-                                key='eye'
-                                onClick={e => {
-                                    const index = images.findIndex(img => ele.id === img.id)
-                                    carousel.current?.goTo(index)
-                                    modal.current?.show()
-                                    e.stopPropagation()
-                                }}
-                            />
-                            <DeleteOutlined
-                                className="upload-action-icon"
-                                key='delete'
-                                onClick={e => {
-                                    const index = images.findIndex(img => ele.id === img.id)
-                                    images.splice(index, 1)
-                                    setImages([...images])
-                                    e.stopPropagation()
-                                }}
-                            />
-                        </ActionRender>
-                    </div>
-                ))}
-                <Spin
-                    spinning={spinning}
-                >
-                    <div
-                        className={`${classNameUpload}-select-picture-card`}
-                        onClick={() => {
-                            upload.showOpenDialog()
-                        }}
-                    >
-                        {spinning ? undefined : <PlusOutlined />}
-                    </div>
-                </Spin>
-                <Modal
-                    modal={modal}
-                    footer={false}
-                    width={900}
-                    forceRender
-                    title="图片预览"
-                >
-                    <div
-                        style={{
-                            margin: 20
-                        }}
-                    >
-                        <Carousel
-                            arrows
-                            ref={carousel}
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            useEffect(() => {
+                if (files) {
+                    getImgsAsync(files)
+                }
+            }, [files])
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            const carousel = useRef<any | null>(null)
+            return (
+                <>
+                    {images.map(ele => (
+                        <div
+                            key={ele.id}
+                            className={classnames({
+                                [`${classNameUpload}-list-item`]: true,
+                                [`${classNameUpload}-list-select-item`]: selectKeys.includes(ele.id)
+                            })}
+                            onClick={() => {
+                                const index = selectKeys.findIndex(key => ele.id === key)
+                                if (index !== -1) {
+                                    selectKeys.splice(index, 1)
+                                } else {
+                                    selectKeys.push(ele.id)
+                                }
+                                onSelectKeys?.(selectKeys);
+                                setSelectKey([...selectKeys])
+                            }}
                         >
-                            {images.map(ele => (
-                                <div
-                                    key={generate()}
-                                >
-                                    <img
-                                        src={ele.url}
-                                        style={{ width: '100%', height: 400 }}
-                                        alt={ele.name}
-                                    />
-                                </div>
-                            ))}
-                        </Carousel>
-                    </div>
-                </Modal>
-            </>
-        )
-    }
+                            <img src={ele.url} alt={ele.name} />
+                            <ActionRender className={`${classNameUpload}-list-item-info`} file={ele}>
+                                <EyeOutlined
+                                    className="upload-action-icon"
+                                    key='eye'
+                                    onClick={e => {
+                                        const index = images.findIndex(img => ele.id === img.id)
+                                        carousel.current?.goTo(index)
+                                        modal.current?.show()
+                                        e.stopPropagation()
+                                    }}
+                                />
+                                <DeleteOutlined
+                                    className="upload-action-icon"
+                                    key='delete'
+                                    onClick={e => {
+                                        const index = images.findIndex(img => ele.id === img.id)
+                                        images.splice(index, 1)
+                                        setImages([...images])
+                                        e.stopPropagation()
+                                    }}
+                                />
+                            </ActionRender>
+                        </div>
+                    ))}
+                    <Spin
+                        spinning={spinning}
+                    >
+                        <div
+                            className={`${classNameUpload}-select-picture-card`}
+                            onClick={() => {
+                                upload.showOpenDialog()
+                            }}
+                        >
+                            {spinning ? undefined : <PlusOutlined />}
+                        </div>
+                    </Spin>
+                    <Modal
+                        modal={modal}
+                        footer={false}
+                        width={900}
+                        forceRender
+                        title="图片预览"
+                    >
+                        <div
+                            style={{
+                                margin: 20
+                            }}
+                        >
+                            <Carousel
+                                arrows
+                                ref={carousel}
+                            >
+                                {images.map(ele => (
+                                    <div
+                                        key={generate()}
+                                    >
+                                        <img
+                                            src={ele.url}
+                                            style={{ width: '100%' }}
+                                            alt={ele.name}
+                                        />
+                                    </div>
+                                ))}
+                            </Carousel>
+                        </div>
+                    </Modal>
+                </>
+            )
+        }
+
+    }, [])
+
     return (
         <Upload
             style={style}
