@@ -115,7 +115,11 @@ export const Table = observer<TableProps>((props: TableProps) => {
 
     useEffect(() => {
         store.columns = props.columns
-        store.visibleColumns = props.columns.map(ele => ele.name)
+
+        if (store.visibleColumns && store.visibleColumns.length > 0) {
+            store.visibleColumns = props.columns.map(ele => ele.name)
+        }
+
     }, [props.columns])
 
     if (table && gridRef.current) {

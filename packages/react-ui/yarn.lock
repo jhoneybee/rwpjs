@@ -17186,10 +17186,10 @@ react-css@0.0.2:
     lodash "^2.4.1"
     to-camel-case "^0.2.1"
 
-react-data-grid-temp@~7.0.0-canary.22.4:
-  version "7.0.0-canary.22.4"
-  resolved "https://registry.yarnpkg.com/react-data-grid-temp/-/react-data-grid-temp-7.0.0-canary.22.4.tgz#51db73cd6f492e872d42a6aa6d6d81434caefcb1"
-  integrity sha512-816H5lppLbKhDhgn5/wkkOF/qpvwiX908ceWWOOtWr9Di4+aM+Aug+R6g9a6HchoWRc925ibzxxChrn0fyxTRQ==
+react-data-grid-temp@7.0.0-canary.22.1:
+  version "7.0.0-canary.22.1"
+  resolved "https://registry.yarnpkg.com/react-data-grid-temp/-/react-data-grid-temp-7.0.0-canary.22.1.tgz#69ddac61dff96e1412799aa709a62ad31977e62e"
+  integrity sha512-nDqihybtIR3qDIITmi5rHlNA8IWHDd77ui8jk3xnU8DrD6jWHJ0SXIAdPh6/Ia4pjvLUCHeJPgR5WeLaTf0ohw==
   dependencies:
     clsx "^1.1.1"
 

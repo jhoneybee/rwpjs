@@ -75,20 +75,26 @@ export const columns = [{
     )
 },{
     name: 'pageNo',
-    title: '当前页码'
+    title: '当前页码',
+    editable: true
 },{
     name: 'idCard',
-    title: '身份证'
+    title: '身份证',
+    editable: true
 },{
     name: 'username',
-    title: '用户名称'
+    title: '用户名称',
+    editable: true
 },{
     name: 'password',
-    title: '用户密码'
+    title: '用户密码',
+    editable: true
 },{
     name: 'phone',
-    title: '电话号码'
+    title: '电话号码',
+    editable: true
 },{
     name: 'dateBirth',
-    title: '出生日期'
+    title: '出生日期',
+    editable: true
 }]
