@@ -66,7 +66,6 @@ export const editColumns = [{
     title: '出生日期'
 }]
 
-
 export const columns = [{
     name: '$index',
     title: '序号',

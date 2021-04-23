@@ -10,10 +10,11 @@ import { UploadPicturesWall } from '@rwp/react-ui'
 
 // eslint-disable-next-line import/no-unresolved
 import { UploadImageType } from '@rwp/react-ui/dist/upload'
+import { Button } from 'antd'
 
 export default () => {
     const [images, setImages] = useState<UploadImageType[]>([])
-    
+
     useEffect(() => {
       setImages([{
         id: '1',
@@ -22,33 +23,51 @@ export default () => {
       }])
     }, [])
     return (
-        <UploadPicturesWall
-            images={images}
-            onChange={changeImage => {
-                // eslint-disable-next-line no-console
-                console.log(changeImage)
-            }}
-            onUpload={async (files: FileList) => {
-                const promises: Promise<UploadImageType>[] = []
-                for (let i = 0; i< files.length; i += 1) {
-                    promises.push(new Promise<UploadImageType>((resolve) => {
-                        const reader = new FileReader();
-                        reader.readAsDataURL(files.item(i)!)
-                        reader.onload = () => {
-                            const { result } = reader
-                            const data: UploadImageType = {
-                                id: `${new Date().getTime()}`,
-                                name: `${new Date().getTime()}`,
-                                url: result!.toString(),
-                                state: 'SUCCESS'
+        <>
+            <Button
+                onClick={() => {
+                    setImages([{
+                        id: '1',
+                        url: 'https://user-images.githubusercontent.com/24241052/91524537-0b925f00-e932-11ea-8f8d-d037d9520059.jpg',
+                        name: '可爱的小姐姐'
+                    },{
+                        id: '2',
+                        url: 'https://user-images.githubusercontent.com/24241052/91524537-0b925f00-e932-11ea-8f8d-d037d9520059.jpg',
+                        name: '可爱的小姐姐'
+                    }])
+                }}
+            >
+                点击添加
+            </Button>
+            <UploadPicturesWall
+                images={images}
+                onChange={changeImage => {
+                    // eslint-disable-next-line no-console
+                    console.log(changeImage)
+                }}
+                onUpload={async (files: FileList) => {
+                    console.log('files', files);
+                    const promises: Promise<UploadImageType>[] = []
+                    for (let i = 0; i< files.length; i += 1) {
+                        promises.push(new Promise<UploadImageType>((resolve) => {
+                            const reader = new FileReader();
+                            reader.readAsDataURL(files.item(i)!)
+                            reader.onload = () => {
+                                const { result } = reader
+                                const data: UploadImageType = {
+                                    id: `${new Date().getTime()}`,
+                                    name: `${new Date().getTime()}`,
+                                    url: result!.toString(),
+                                    state: 'SUCCESS'
+                                }
+                                resolve(data)
                             }
-                            resolve(data)
-                        }
-                    }))
-                }
-                const resultImages = await Promise.all(promises)
-                return resultImages
-            }}
-        />
+                        }))
+                    }
+                    const resultImages = await Promise.all(promises)
+                    return resultImages
+                }}
+            />
+        </>
     )
 }

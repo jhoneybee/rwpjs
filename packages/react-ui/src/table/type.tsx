@@ -23,7 +23,7 @@ export interface Row {
 
 
 export interface GroupRendererProps {
-    row: GroupRowData | Row 
+    row: GroupRowData | Row
 }
 
 // 定义分组结构
@@ -170,14 +170,12 @@ export interface TableProps {
      * 行高
      */
     rowHeight?: number;
-    
+
     /**
      * 表格头部高度
      */
     headerRowHeight?: number;
 
-    
-    
     /**
      * 汇总
      */
@@ -200,7 +198,7 @@ export interface TableProps {
      */
     loadData: (pageNo: number, pageSize: number, params: Object) => PromiseLike<LoadDataRespType>
     // 初始化页面的分页大小, 默认加载50条数据
-    // pageSize?: number
+    pageSize?: number
     // 装载数据的参数
     params?: Object
     // 是否初始化的时候自动装载数据, 默认为 true
@@ -221,7 +219,7 @@ export interface TableProps {
 
     // 表格选中的头部渲染
     selectHeaderRenderer?: React.ComponentType<CheckboxProps>
-    
+
     // 用户唯一的rowKey
     rowKey?: string
     /**
@@ -258,4 +256,9 @@ export interface TableProps {
      * 用户更新表格Rows的事件
      */
     onRowsUpdate?: <E extends RowsUpdateEvent>(event: E, onCommit: () => void) => Promise<void>;
+
+    /**
+     * 改变列的时候触发的事件
+     */
+    onChangeColumn?: (columns: ColumnProps[]) => void
 }

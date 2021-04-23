@@ -62,6 +62,10 @@ export const Table = observer<TableProps>((props: TableProps) => {
         store.setLoading(false)
     }
 
+    useEffect(() => {
+        store.changeColumnsEvent = props.onChangeColumn
+    }, [])
+
     /**
      * 装载表格数据
      */
@@ -74,6 +78,8 @@ export const Table = observer<TableProps>((props: TableProps) => {
         store.loadRows(resp.datas, pageNo)
         store.setLoading(false)
     }
+
+
 
     useEffect(() => {
         return () => {
@@ -116,7 +122,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
     useEffect(() => {
         store.columns = props.columns
 
-        if (store.visibleColumns && store.visibleColumns.length > 0) {
+        if (store.visibleColumns === null) {
             store.visibleColumns = props.columns.map(ele => ele.name)
         }
 
