@@ -1,4 +1,4 @@
-import React, { ComponentType, useState, useRef, useEffect, CSSProperties, ReactNode } from 'react'
+import React, { ComponentType, useState, useRef, useEffect, CSSProperties, ReactNode, HTMLAttributes } from 'react'
 import { PlusOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons'
 import { generate } from 'shortid'
 import classnames from 'classnames'
@@ -93,6 +93,10 @@ export interface UploadImageType {
     state?: 'SUCCESS' | 'FAIL'
 }
 
+interface ImageRenderProps extends HTMLAttributes<HTMLDivElement> {
+    file: UploadImageType
+}
+
 interface UploadPicturesWallProps {
     // 图片改变的时候触发的事件
     onChange?: (images: UploadImageType[]) => void
@@ -102,6 +106,8 @@ interface UploadPicturesWallProps {
     onUpload?: (file: FileList) => Promise<UploadImageType[]>
     // 渲染图标的render
     actionRender?: ComponentType<{className: string, children: ReactNode, file: UploadImageType}>
+    // 图片渲染的render
+    imageRender?: ComponentType<ImageRenderProps>
     // 样式
     style?: CSSProperties
     // 是否多选
@@ -122,6 +128,9 @@ export const UploadPicturesWall = ({
     onUpload,
     onCallbackStateImages,
     onSelectKeys,
+    imageRender: ImageRender = (props: HTMLAttributes<HTMLDivElement>) => (
+        <div {...props}/>
+    ),
     images: imagesProp = [],
     actionRender: ActionRender = ({className, children}) => (
         <div className={className}>{children}</div>
@@ -163,7 +172,8 @@ export const UploadPicturesWall = ({
         return (
             <>
                 {images.map(ele => (
-                    <div
+                    <ImageRender
+                        file={ele}
                         key={ele.id}
                         className={classnames({
                             [`${classNameUpload}-list-item`]: true,
@@ -203,7 +213,7 @@ export const UploadPicturesWall = ({
                                 }}
                             />
                         </ActionRender>
-                    </div>
+                    </ImageRender>
                 ))}
                 <Spin
                     spinning={spinning}

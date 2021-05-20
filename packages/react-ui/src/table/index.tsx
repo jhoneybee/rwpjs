@@ -122,9 +122,9 @@ export const Table = observer<TableProps>((props: TableProps) => {
     useEffect(() => {
         store.columns = props.columns
 
-        if (store.visibleColumns === null) {
+        if (store.visibleColumns === null || store.visibleColumns?.length === 0) {
             store.visibleColumns = props.columns.map(ele => ele.name)
-        }
+        } 
 
     }, [props.columns])
 

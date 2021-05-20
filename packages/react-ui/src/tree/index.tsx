@@ -426,7 +426,10 @@ export const Tree = (props: Props) => {
                                     result.push(treeNode)
                                     result.push(dragNode)
                                 }
-                            } else if (treeNode.children) {
+                            } else if (!dropToGap && dropPosition === 0) {
+                                treeNode.children?.splice(0, 0, dragNode)
+                                result.push(treeNode)
+                            }else if (treeNode.children) {
                                 treeNode.children.push(dragNode)
                                 result.push(treeNode)
                             } else {
