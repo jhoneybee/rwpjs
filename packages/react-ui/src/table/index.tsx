@@ -89,10 +89,19 @@ export const Table = observer<TableProps>((props: TableProps) => {
         }
     })
 
+    const currentRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         // 装载数据
         if (enableInitLoadData) reloadFun()
+
+        const ele = props.getPopupContainer?.(currentRef.current!)
+
+        ele?.addEventListener('scroll', () => {
+            gridRef.current?.selectCell(store.contextMenu.position, false)
+        })
     }, [])
+
+    
 
     useEffect(() => {
         store.setGroupColumn(props.groupColumn || [])
@@ -305,20 +314,24 @@ export const Table = observer<TableProps>((props: TableProps) => {
         return node
     }
     return (
-        <StoreContext.Provider value={store}>
-            <Spin
-                spinning={store.loading}
-                wrapperClassName={`${tableClassPrefix}-spin`}
-            >
-                <div
-                    className={`${tableClassPrefix}-content`}
+        <div
+            ref={currentRef}
+        >
+            <StoreContext.Provider value={store}>
+                <Spin
+                    spinning={store.loading}
+                    wrapperClassName={`${tableClassPrefix}-spin`}
                 >
-                   {rdg}
-                   {getPluginNode(<Tools />)}
-                </div>
-                {getPluginNode(footer)}
-            </Spin>
-        </StoreContext.Provider>
+                    <div
+                        className={`${tableClassPrefix}-content`}
+                    >
+                    {rdg}
+                    {getPluginNode(<Tools />)}
+                    </div>
+                    {getPluginNode(footer)}
+                </Spin>
+            </StoreContext.Provider>
+        </div>
     )
 })
 

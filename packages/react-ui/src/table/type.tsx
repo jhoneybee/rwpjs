@@ -261,4 +261,6 @@ export interface TableProps {
      * 改变列的时候触发的事件
      */
     onChangeColumn?: (columns: ColumnProps[]) => void
+
+    getPopupContainer?: (element: HTMLElement ) => HTMLElement
 }
