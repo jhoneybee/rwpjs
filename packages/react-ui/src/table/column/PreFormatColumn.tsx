@@ -47,6 +47,8 @@ export const preFormatColumn = (
             ),
             ...restProps
         } = element
+
+        console.log(editable)
         const TempEditor = editable ? editor || Input : undefined
 
 

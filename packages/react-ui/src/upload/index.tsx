@@ -1,4 +1,4 @@
-import React, { ComponentType, useState, useRef, useEffect, CSSProperties, ReactNode, useMemo } from 'react'
+import React, { ComponentType, useState, useRef, useEffect, CSSProperties, ReactNode, HTMLAttributes, useMemo } from 'react'
 import { PlusOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons'
 import { generate } from 'shortid'
 import classnames from 'classnames'
@@ -93,6 +93,10 @@ export interface UploadImageType {
     state?: 'SUCCESS' | 'FAIL'
 }
 
+interface ImageRenderProps extends HTMLAttributes<HTMLDivElement> {
+    file: UploadImageType
+}
+
 interface UploadPicturesWallProps {
     // 图片改变的时候触发的事件
     onChange?: (images: UploadImageType[]) => void
@@ -101,7 +105,9 @@ interface UploadPicturesWallProps {
     // 图片上传的事件
     onUpload?: (file: FileList) => Promise<UploadImageType[]>
     // 渲染图标的render
-    actionRender?: ComponentType<{ className: string, children: ReactNode, file: UploadImageType }>
+    actionRender?: ComponentType<{className: string, children: ReactNode, file: UploadImageType}>
+    // 图片渲染的render
+    imageRender?: ComponentType<ImageRenderProps>
     // 样式
     style?: CSSProperties
     // 是否多选
@@ -122,6 +128,9 @@ export const UploadPicturesWall = ({
     onUpload,
     onCallbackStateImages,
     onSelectKeys,
+    imageRender: ImageRender = (props: HTMLAttributes<HTMLDivElement>) => (
+        <div {...props}/>
+    ),
     images: imagesProp = [],
     actionRender: ActionRender = ({ className, children }) => (
         <div className={className}>{children}</div>
