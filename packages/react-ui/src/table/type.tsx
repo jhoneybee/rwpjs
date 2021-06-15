@@ -164,7 +164,7 @@ export interface TableProps {
     /**
      * 模式
      */
-    mode?: 'SIMPLE' | 'NORMAL',
+    mode?: 'SIMPLE' | 'NORMAL' | 'HIDE-FOOTER',
 
     /**
      * 行高

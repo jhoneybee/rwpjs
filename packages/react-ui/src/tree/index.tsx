@@ -9,6 +9,7 @@ import { Key } from 'rc-tree/lib/interface'
 import { NodeDragEventParams } from 'rc-tree/lib/contextTypes'
 import { EventDataNode, TreeProps, DataNode } from 'antd/lib/tree';
 import { OverlayFunc } from '../interface';
+import { ConsoleSqlOutlined } from '@ant-design/icons';
 
 const getPopupContainer = (container: HTMLElement) => {
     return container.parentNode?.parentNode?.parentNode?.parentNode?.parentElement!
@@ -409,6 +410,7 @@ export const Tree = (props: Props) => {
                    dropToGap,
                 } = info
                 
+                console.log('dropPosition', dropPosition)
                 const loops = (loopsTreeNodes: DataNode[]): DataNode[] => {
                     const result: DataNode[] = []
                     loopsTreeNodes.forEach((ele, index) => {
@@ -418,14 +420,8 @@ export const Tree = (props: Props) => {
                         }
                         if (treeNode.key === node.key) {
                             if (dropToGap) {
-                                if (dropPosition < index) {
-                                    result.push(dragNode)
-                                    result.push(treeNode)
-                                }
-                                if (dropPosition > index) {
-                                    result.push(treeNode)
-                                    result.push(dragNode)
-                                }
+                                result.push(treeNode)
+                                result.push(dragNode)
                             } else if (!dropToGap && dropPosition === 0) {
                                 treeNode.children?.splice(0, 0, dragNode)
                                 result.push(treeNode)
@@ -448,7 +444,10 @@ export const Tree = (props: Props) => {
 
                 const commit = () => {
                     if (preventDefault) return
-                    setTreeNodes(loops(treeNodes) as EventDataNode[])
+                    console.log('start:', new Date().getTime())
+                    const data = loops(treeNodes)
+                    setTreeNodes(data as EventDataNode[])
+                    console.log('end:', new Date().getTime())
                 }
                 if (props.onDrop) {
                     const onDropResult = props.onDrop({

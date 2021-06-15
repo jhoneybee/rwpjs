@@ -328,7 +328,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                     {rdg}
                     {getPluginNode(<Tools />)}
                     </div>
-                    {getPluginNode(footer)}
+                    {props.mode === 'HIDE-FOOTER' ?  null : getPluginNode(footer)}
                 </Spin>
             </StoreContext.Provider>
         </div>
