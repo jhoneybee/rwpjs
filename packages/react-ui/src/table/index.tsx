@@ -316,6 +316,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
     return (
         <div
             ref={currentRef}
+            className={`${tableClassPrefix}-container`}
         >
             <StoreContext.Provider value={store}>
                 <Spin
