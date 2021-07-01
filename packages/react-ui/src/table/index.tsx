@@ -97,7 +97,9 @@ export const Table = observer<TableProps>((props: TableProps) => {
         const ele = props.getPopupContainer?.(currentRef.current!)
 
         ele?.addEventListener('scroll', () => {
-            gridRef.current?.selectCell(store.contextMenu.position, false)
+            if (store.contextMenu.position && store.contextMenu.position.idx >= 0 && store.contextMenu.position.rowIdx >= 0) {
+                gridRef.current?.selectCell(store.contextMenu.position, false)
+            }
         })
     }, [])
 
