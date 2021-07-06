@@ -16,11 +16,11 @@ export default () => {
                 checkedChildren="单选"
                 unCheckedChildren="多选"
                 onChange={(value: any) => {
-                    if (value) {
-                        setSelectBox('single')
-                    } else {
-                        setSelectBox('multiple')
-                    }
+                    // if (value) {
+                    //     setSelectBox('single')
+                    // } else {
+                    //     setSelectBox('multiple')
+                    // }
                 }}
             />
             <br /> <br />
@@ -29,6 +29,9 @@ export default () => {
                 selectBox={selectBox}
                 columns={columns}
                 loadData={loadData}
+                onRowClick={(rowIdx) => {
+                    console.log('row', rowIdx)
+                }}
             />
         </>
     )
