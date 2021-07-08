@@ -46,6 +46,7 @@ export default () => {
                     console.log(changeImage)
                 }}
                 onUpload={async (files: FileList) => {
+                    console.log('onUpload')
                     console.log('files', files);
                     const promises: Promise<UploadImageType>[] = []
                     for (let i = 0; i< files.length; i += 1) {

@@ -173,7 +173,7 @@ export default () => {
                         setTimeout(() => {
                             console.log(info.event.preventDefault)
                             re()
-                        }, 1000)
+                        }, 10)
                     })
                 }}
                 onSelect={(keys) => {
