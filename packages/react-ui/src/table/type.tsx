@@ -66,8 +66,6 @@ export interface TableHandle extends DataGridHandle {
      */
     getDataSource: () => Row[]
 
-    getGroupDataSource: () => Row[]
-
     /**
      * 获取当前选择的数据
      */
