@@ -39,7 +39,9 @@ export default () => {
                 }}
                 onRowsUpdate={(data, onCommit) => {
                     // console.log([...data])
-                    onCommit()
+                    onCommit().then((ele) => {
+                        console.log(ele)
+                    })
                 }}
                 onChangeColumn={(data) => {
                     console.log(data)

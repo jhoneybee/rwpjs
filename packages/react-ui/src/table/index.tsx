@@ -265,7 +265,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 }}
                 onRowsUpdate={e => {
                     const onCommit = () => {
-                        store.commit(e)
+                        return store.commit(e)
                     }
                     props.onRowsUpdate!(e, onCommit)
                 }}

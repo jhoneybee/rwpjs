@@ -218,13 +218,15 @@ export function createStore() {
         },
         // 提交修改的信息
         commit(e: RowsUpdateEvent) {
-            return new Promise<void>(resolve => {
+            return new Promise<Row[]>(resolve => {
+                const updates: Row[] = []
                 const rows: Row[] = this.dataSource
                 const { datas } = this
                 if (e.action === 'CELL_UPDATE' || e.action === 'COPY_PASTE') {
                     rows[e.toRow] = { ...rows[e.toRow], ...(e.updated as any) }
                     const index = datas.findIndex(ele => ele.$index === rows[e.toRow].$index ) 
                     datas[index] = { ...rows[e.toRow], ...(e.updated as any) }
+                    updates.push({ ...rows[e.toRow], ...(e.updated as any) })
                 }
 
                 if (e.action === 'CELL_DRAG') {
@@ -236,6 +238,7 @@ export function createStore() {
                         if (cells.includes(index)) {
                             const dataIndex = datas.findIndex(ele => ele.$index === rows[index].$index ) 
                             datas[dataIndex] = { ...rows[index], ...(e.updated as any) }
+                            updates.push({ ...rows[index], ...(e.updated as any) })
                         }
                     })
                 }
@@ -243,7 +246,7 @@ export function createStore() {
                     this.cacheGroupDatas = undefined
                 }
                 this.setDataSource(rows)
-                resolve()
+                resolve(updates)
             })
         },
         get isGroup(){
