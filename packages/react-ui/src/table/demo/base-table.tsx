@@ -4,24 +4,37 @@
  */
 import React, { useRef } from 'react'
 // eslint-disable-next-line import/no-unresolved
-import { Table } from '@rwp/react-ui'
+import { Button, Table } from '@rwp/react-ui'
 import { columns, loadData } from './common/user'
+import { useState } from 'react';
 
 export default () => {
     const ref = useRef<HTMLDivElement>();
+    const [group,setGroup] = useState<string[]>()
     return (
         <div
             style={{
                 height: 500,
                 overflow: 'scroll'
             }}
-        >
+        >   
+            <Button
+                onClick={() => {
+                    setGroup(['dateBirth'])
+                }}
+            >
+                点击分组
+            </Button>
             <Table
                 ref={ref}
                 columns={columns}
+                groupColumn={group}
                 loadData={loadData}
                 getPopupContainer={(element: HTMLDivElement) => {
                     return element.parentElement!
+                }}
+                onRowsUpdate={(_, onCommit) => {
+                    onCommit()
                 }}
                 onChangeColumn={(data) => {
                     console.log(data)
