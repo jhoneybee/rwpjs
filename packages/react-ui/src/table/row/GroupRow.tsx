@@ -29,8 +29,9 @@ export const GroupRow = ({
     const store = useStore()
     if ($type === 'GROUP') {
         let groupTitle = <h4 >{$title}</h4>
+
         if (GroupRenderer) {
-            groupTitle = <GroupRenderer row={rowProps.row}/>
+            groupTitle = <GroupRenderer row={rowProps.row} />
         }
         const Icon = store.expandedKeys.includes($id) ?  DownOutlined : RightOutlined
         return (

@@ -145,6 +145,7 @@ export function createStore() {
 
                 })
             }
+
             loopsGroupData(groupDatas)
             return newData
         },

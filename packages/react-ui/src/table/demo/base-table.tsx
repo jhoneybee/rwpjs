@@ -29,16 +29,22 @@ export default () => {
                 ref={ref}
                 columns={columns}
                 groupColumn={group}
+                groupRenderer={({ row }) => {
+                    console.log(JSON.parse(JSON.stringify(row)))
+                    return JSON.stringify(row)
+                }}
                 loadData={loadData}
                 getPopupContainer={(element: HTMLDivElement) => {
                     return element.parentElement!
                 }}
-                onRowsUpdate={(_, onCommit) => {
+                onRowsUpdate={(data, onCommit) => {
+                    // console.log([...data])
                     onCommit()
                 }}
                 onChangeColumn={(data) => {
                     console.log(data)
                 }}
+                
             />
             <div
                 style={{
