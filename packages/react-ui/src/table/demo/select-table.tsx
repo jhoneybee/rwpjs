@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 // eslint-disable-next-line import/no-unresolved
 import { Table, Switch } from '@rwp/react-ui'
 import { columns, loadData } from './common/user'
+let i =0;
 
 export default () => {
     const [selectBox, setSelectBox] = useState<'multiple' | 'none' | 'single'>('multiple')
@@ -16,11 +17,11 @@ export default () => {
                 checkedChildren="单选"
                 unCheckedChildren="多选"
                 onChange={(value: any) => {
-                    if (value) {
-                        setSelectBox('single')
-                    } else {
-                        setSelectBox('multiple')
-                    }
+                    // if (value) {
+                    //     setSelectBox('single')
+                    // } else {
+                    //     setSelectBox('multiple')
+                    // }
                 }}
             />
             <br /> <br />
@@ -29,6 +30,9 @@ export default () => {
                 selectBox={selectBox}
                 columns={columns}
                 loadData={loadData}
+                onRowClick={(rowIdx) => {
+                    console.log('row', rowIdx)
+                }}
             />
         </>
     )

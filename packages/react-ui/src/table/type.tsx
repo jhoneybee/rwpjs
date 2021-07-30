@@ -164,7 +164,7 @@ export interface TableProps {
     /**
      * 模式
      */
-    mode?: 'SIMPLE' | 'NORMAL',
+    mode?: 'SIMPLE' | 'NORMAL' | 'HIDE-FOOTER',
 
     /**
      * 行高
@@ -263,4 +263,6 @@ export interface TableProps {
      * 改变列的时候触发的事件
      */
     onChangeColumn?: (columns: ColumnProps[]) => void
+
+    getPopupContainer?: (element: HTMLElement ) => HTMLElement
 }

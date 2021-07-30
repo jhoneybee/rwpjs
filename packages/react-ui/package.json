@@ -1,12 +1,12 @@
 {
     "name": "@rwp/react-ui",
-    "version": "1.27.1-canary",
+    "version": "1.28.7-canary",
     "license": "AGPL-3.0",
     "scripts": {
         "start": "dumi dev",
         "docs:build": "dumi build",
         "docs:deploy": "gh-pages -d docs-dist",
-        "build": "father-build && yarn build:browser ",
+        "build": "father-build",
         "build:browser": "webpack --config webpack.config.js",
         "deploy": "yarn docs:build && yarn run docs:deploy",
         "lint:script": "yarn build && eslint ./src/**/*.{js,jsx,ts,tsx}",
@@ -27,7 +27,7 @@
     "dependencies": {
         "@ant-design/icons": "~4.3.0",
         "@ant-design/pro-layout": "~6.13.0",
-        "antd": "~4.9.2",
+        "antd": "4.9.2",
         "classnames": "~2.2.6",
         "lodash": "~4.17.15",
         "mobx": "~5.15.6",

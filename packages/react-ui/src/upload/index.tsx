@@ -1,4 +1,4 @@
-import React, { ComponentType, useState, useRef, useEffect, CSSProperties, ReactNode } from 'react'
+import React, { ComponentType, useState, useRef, useEffect, CSSProperties, ReactNode, HTMLAttributes, useMemo } from 'react'
 import { PlusOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons'
 import { generate } from 'shortid'
 import classnames from 'classnames'
@@ -23,7 +23,7 @@ interface UploadRender {
 interface UploadProps {
 
     // 渲染upload的拦截方式
-    uploadRender: ComponentType<UploadRender>
+    uploadRender: (props: UploadRender) => ReactNode
 
     // 组件改变的时候触发的事件
     onChange?: (files: FileList | undefined) => void
@@ -45,7 +45,7 @@ interface UploadProps {
  */
 export const Upload = ({
     onChange,
-    uploadRender: UploadRender,
+    uploadRender,
     multiple,
     accept,
     style,
@@ -64,10 +64,7 @@ export const Upload = ({
             className={`${classNameUpload}-wrapper`}
             style={style}
         >
-            <UploadRender
-                files={files}
-                upload={upload}
-            />
+            {uploadRender({files, upload})}
             <input
                 ref={uploadRef}
                 key={key}
@@ -93,6 +90,10 @@ export interface UploadImageType {
     state?: 'SUCCESS' | 'FAIL'
 }
 
+interface ImageRenderProps extends HTMLAttributes<HTMLDivElement> {
+    file: UploadImageType
+}
+
 interface UploadPicturesWallProps {
     // 图片改变的时候触发的事件
     onChange?: (images: UploadImageType[]) => void
@@ -101,7 +102,9 @@ interface UploadPicturesWallProps {
     // 图片上传的事件
     onUpload?: (file: FileList) => Promise<UploadImageType[]>
     // 渲染图标的render
-    actionRender?: ComponentType<{className: string, children: ReactNode, file: UploadImageType}>
+    actionRender?: ComponentType<{ className: string, children: ReactNode, file: UploadImageType }>
+    // 图片渲染的render
+    imageRender?: ComponentType<ImageRenderProps>
     // 样式
     style?: CSSProperties
     // 是否多选
@@ -122,8 +125,11 @@ export const UploadPicturesWall = ({
     onUpload,
     onCallbackStateImages,
     onSelectKeys,
+    imageRender: ImageRender = (props: HTMLAttributes<HTMLDivElement>) => (
+        <div {...props} />
+    ),
     images: imagesProp = [],
-    actionRender: ActionRender = ({className, children}) => (
+    actionRender: ActionRender = ({ className, children }) => (
         <div className={className}>{children}</div>
     ),
     style,
@@ -154,26 +160,31 @@ export const UploadPicturesWall = ({
         }
         // eslint-disable-next-line react-hooks/rules-of-hooks
         useEffect(() => {
-            if(files){
+            if (files) {
                 getImgsAsync(files)
             }
         }, [files])
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useEffect(() => {
+            setImages(imagesProp)
+        }, [imagesProp])
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const carousel = useRef<any | null>(null)
         return (
             <>
                 {images.map(ele => (
-                    <div
+                    <ImageRender
                         key={ele.id}
+                        file={ele}
                         className={classnames({
                             [`${classNameUpload}-list-item`]: true,
                             [`${classNameUpload}-list-select-item`]: selectKeys.includes(ele.id)
                         })}
                         onClick={() => {
                             const index = selectKeys.findIndex(key => ele.id === key)
-                            if(index !== -1){
+                            if (index !== -1) {
                                 selectKeys.splice(index, 1)
-                            }else{
+                            } else {
                                 selectKeys.push(ele.id)
                             }
                             onSelectKeys?.(selectKeys);
@@ -203,7 +214,7 @@ export const UploadPicturesWall = ({
                                 }}
                             />
                         </ActionRender>
-                    </div>
+                    </ImageRender>
                 ))}
                 <Spin
                     spinning={spinning}
@@ -239,7 +250,7 @@ export const UploadPicturesWall = ({
                                 >
                                     <img
                                         src={ele.url}
-                                        style={{ width: '100%', height: 400 }}
+                                        style={{ width: '100%' }}
                                         alt={ele.name}
                                     />
                                 </div>
@@ -250,6 +261,8 @@ export const UploadPicturesWall = ({
             </>
         )
     }
+
+
     return (
         <Upload
             style={style}
