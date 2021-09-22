@@ -61,7 +61,7 @@ export const Tools = () => {
                                 checkedKeys={globalStore.visibleColumns || []}
                                 loadData={loadData}
                                 onCheck={checked => {
-                                    globalStore.visibleColumns = checked as string[]
+                                    globalStore.setVisibleColumns(checked as string[])
                                 }}
                                 height={store.treeHeight}
                                 draggable

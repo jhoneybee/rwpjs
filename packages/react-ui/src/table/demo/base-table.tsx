@@ -44,6 +44,7 @@ export default () => {
                     })
                 }}
                 onChangeColumn={(data) => {
+                    debugger
                     console.log(data)
                 }}
                 

@@ -8,7 +8,6 @@ import { Key } from 'rc-tree/lib/interface'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { NodeDragEventParams } from 'rc-tree/lib/contextTypes'
 import { EventDataNode, TreeProps, DataNode } from 'antd/lib/tree';
-import { ConsoleSqlOutlined } from '@ant-design/icons';
 import { OverlayFunc } from '../interface';
 
 const getPopupContainer = (container: HTMLElement) => {
@@ -233,7 +232,26 @@ export const Tree = (props: Props) => {
                 }
             },
             filter: async callback => {
-                const nodes = await callback()
+                let nodes = await callback()
+                nodes = nodes.map(ele => {
+                    const chil = ele as EventDataNode
+                    let { title } = chil
+                    if (props.overlay){
+                        title = (
+                            <Dropdown
+                                overlay={props.overlay}
+                                trigger={['contextMenu']}
+                                getPopupContainer={getPopupContainer}
+                            >
+                                <span>{chil.title}</span>
+                            </Dropdown>
+                        )
+                    }
+                    return {
+                        ...chil,
+                        title,
+                    }
+                })
                 const loadKeys: (string | number)[] = []
                 findTreeNode(nodes, ele => {
                     loadKeys.push(ele.key)
@@ -410,10 +428,9 @@ export const Tree = (props: Props) => {
                    dropToGap,
                 } = info
                 
-                console.log('dropPosition', dropPosition)
                 const loops = (loopsTreeNodes: DataNode[]): DataNode[] => {
                     const result: DataNode[] = []
-                    loopsTreeNodes.forEach((ele, index) => {
+                    loopsTreeNodes.forEach((ele) => {
                         const treeNode = { ...ele }
                         if (ele.children) {
                             treeNode.children = loops(ele.children)
@@ -444,10 +461,8 @@ export const Tree = (props: Props) => {
 
                 const commit = () => {
                     if (preventDefault) return
-                    console.log('start:', new Date().getTime())
                     const data = loops(treeNodes)
                     setTreeNodes(data as EventDataNode[])
-                    console.log('end:', new Date().getTime())
                 }
                 if (props.onDrop) {
                     const onDropResult = props.onDrop({

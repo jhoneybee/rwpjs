@@ -73,7 +73,7 @@ export function createStore() {
             })
             this.columns.splice(columnIndex!, 1, targeColumn!)
             this.columns.splice(targeColumnIndex!, 1, column!)
-            this.changeColumnsEvent(this.columns);
+            this.changeColumnsEvent?.(this.columns);
         },
         setSelectedRows(keys: Set<Row[keyof Row]>, onSelectedRowsChange?: (selectedRows: Set<Row[keyof Row]>) => void) {
             onSelectedRowsChange?.(keys)
@@ -279,6 +279,10 @@ export function createStore() {
             // 填充对应的数据到data
             this.setDataSource(newDataSource)
             this.expandedRowNumber = index
+        },
+        setVisibleColumns(data: string[] | null) {
+            this.visibleColumns = data
+            this.changeColumnsEvent?.(this.columns.filter(ele => data?.includes(ele.name)));
         }
     }
 }
