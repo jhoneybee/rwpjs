@@ -166,6 +166,7 @@ export default () => {
                 }}
                 draggable
                 checkable
+                blockNode
                 checkStrictly
                 tree={tree}
                 onDrop={(info) => {

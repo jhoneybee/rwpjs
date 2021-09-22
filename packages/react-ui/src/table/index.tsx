@@ -206,6 +206,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 rows={getRows()}
                 onScroll={onScroll}
                 rowKey={props.rowKey}
+                headerRowHeight={props.headerRowHeight}
                 enableCellCopyPaste={props.enableCellCopyPaste}
                 summaryRows={props.summaryRows}
                 rowHeight={props.rowHeight}

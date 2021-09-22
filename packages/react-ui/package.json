@@ -1,6 +1,6 @@
 {
     "name": "@rwp/react-ui",
-    "version": "1.28.7-canary",
+    "version": "1.28.8-canary",
     "license": "AGPL-3.0",
     "scripts": {
         "start": "dumi dev",
@@ -27,7 +27,7 @@
     "dependencies": {
         "@ant-design/icons": "~4.3.0",
         "@ant-design/pro-layout": "~6.13.0",
-        "antd": "4.9.2",
+        "antd": "4.16.11",
         "classnames": "~2.2.6",
         "lodash": "~4.17.15",
         "mobx": "~5.15.6",
