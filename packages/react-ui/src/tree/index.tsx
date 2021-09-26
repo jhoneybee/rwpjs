@@ -137,7 +137,7 @@ export const Tree = (props: Props) => {
             }
         })
       
-        update(tempTreeNode);
+        update(tempTreeNode, props.overlay);
 
         setTreeNodes(tempTreeNode as EventDataNode[])
         setExpandedKeys(expandedKeys.concat(joinExpandedKeys))
