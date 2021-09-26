@@ -82,6 +82,28 @@ const findTreeNode = (treeNodes: DataNode[], callback: (treeNode: DataNode) => b
     })
 }
 
+const update = (nodes: DataNode[], overlay?: React.ReactElement | OverlayFunc) => {
+    if (nodes) {
+        nodes.forEach((ele) => {
+            if (overlay){
+                // eslint-disable-next-line no-param-reassign
+                ele.title = (
+                    <Dropdown
+                        overlay={overlay}
+                        trigger={['contextMenu']}
+                        getPopupContainer={getPopupContainer}
+                    >
+                        <span>{ele.title}</span>
+                    </Dropdown>
+                )
+            }
+            if (ele.children) {
+                update(ele.children as EventDataNode[], overlay)
+            }
+
+        })
+    }
+}
 
 export const Tree = (props: Props) => {
     // 当前的树节点信息
@@ -115,26 +137,9 @@ export const Tree = (props: Props) => {
             }
         })
       
+        update(tempTreeNode);
 
-        setTreeNodes(tempTreeNode.map(ele => {
-            const chil = ele as EventDataNode
-            let { title } = chil
-            if (props.overlay){
-                title = (
-                    <Dropdown
-                        overlay={props.overlay}
-                        trigger={['contextMenu']}
-                        getPopupContainer={getPopupContainer}
-                    >
-                        <span>{chil.title}</span>
-                    </Dropdown>
-                )
-            }
-            return {
-                ...chil,
-                title,
-            }
-        }))
+        setTreeNodes(tempTreeNode as EventDataNode[])
         setExpandedKeys(expandedKeys.concat(joinExpandedKeys))
     }
 
@@ -232,32 +237,19 @@ export const Tree = (props: Props) => {
                 }
             },
             filter: async callback => {
-                let nodes = await callback()
-                nodes = nodes.map(ele => {
-                    const chil = ele as EventDataNode
-                    let { title } = chil
-                    if (props.overlay){
-                        title = (
-                            <Dropdown
-                                overlay={props.overlay}
-                                trigger={['contextMenu']}
-                                getPopupContainer={getPopupContainer}
-                            >
-                                <span>{chil.title}</span>
-                            </Dropdown>
-                        )
-                    }
-                    return {
-                        ...chil,
-                        title,
-                    }
-                })
+                const datas = await callback()
+
+
+
+                
+                update(datas, props.overlay)
+
                 const loadKeys: (string | number)[] = []
-                findTreeNode(nodes, ele => {
+                findTreeNode(datas, ele => {
                     loadKeys.push(ele.key)
                     return false;
                 })
-                setTreeNodes(nodes)
+                setTreeNodes(datas)
                 setLoadedKeys(loadKeys)
             },
             update: callback => {
