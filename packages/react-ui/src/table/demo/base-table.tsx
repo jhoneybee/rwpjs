@@ -2,17 +2,17 @@
  * title: 基础表格
  * desc: 这是一个基础的表格,通过`props.columns`来设置列信息, `props.loadData` 来加载表格数据
  */
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 // eslint-disable-next-line import/no-unresolved
 import { Button, Table } from '@rwp/react-ui'
 import { columns, loadData } from './common/user'
-import { useState } from 'react';
 import { TableHandle } from '../type';
 
 export default () => {
     const ref = useRef<HTMLDivElement>();
     const [group,setGroup] = useState<string[]>()
     const table = useRef<TableHandle>();
+    const [cols, setCols] = useState(columns)
     return (
         <div
             style={{
@@ -34,9 +34,21 @@ export default () => {
             >
                 点击取消所有的列显示
             </Button>
+            <Button
+                onClick={() => {
+                    cols.push({
+                        name: `pageNo${Date.now()}`,
+                        title: `测试数据${Date.now()}`,
+                        editable: true
+                    })
+                    setCols([...cols])
+                }}
+            >
+                新增列信息
+            </Button>
             <Table
                 ref={ref}
-                columns={columns}
+                columns={cols}
                 table={table}
                 groupColumn={group}
                 groupRenderer={({ row }) => {

@@ -131,9 +131,12 @@ export const Table = observer<TableProps>((props: TableProps) => {
     }
 
     useEffect(() => {
+
+        const noExist = props.columns.filter(ele => !store.columns.some((col) => col.name === ele.name))
+
         store.columns = props.columns
 
-        if (store.visibleColumns === null || store.visibleColumns?.length === 0) {
+        if (store.visibleColumns === null || store.visibleColumns?.length === 0 || noExist.length > 0) {
             store.visibleColumns = props.columns.map(ele => ele.name)
         } 
 
