@@ -77,6 +77,11 @@ export interface TableHandle extends DataGridHandle {
     setSelect:(selects: Set<Row[keyof Row]>) => void
 
     /**
+     * 设置显示的字段信息
+     */
+    setVisibleColumns: (keys: string[]) => void
+
+    /**
      * 更新表格数据
      */
     update: (change: (oldData: Row) => Row) => Promise<void>

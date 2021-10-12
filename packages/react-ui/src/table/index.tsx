@@ -149,6 +149,9 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 rowIdx: store.contextMenu!.rowIdx as number,
                 column: store.contextMenu!.column as Column<Row>,
             }),
+            setVisibleColumns: (visibleColumns: string[]) => {
+                store.setVisibleColumns(visibleColumns)
+            },
             getDataSource: () => cloneDeep(store.datas as Row[]),
             getSelect: () => {
                 const selectedRowsData = toJS(store.selectedRows) as unknown as Array<Row[keyof Row]>

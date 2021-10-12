@@ -7,10 +7,12 @@ import React, { useRef } from 'react'
 import { Button, Table } from '@rwp/react-ui'
 import { columns, loadData } from './common/user'
 import { useState } from 'react';
+import { TableHandle } from '../type';
 
 export default () => {
     const ref = useRef<HTMLDivElement>();
     const [group,setGroup] = useState<string[]>()
+    const table = useRef<TableHandle>();
     return (
         <div
             style={{
@@ -25,9 +27,17 @@ export default () => {
             >
                 点击分组
             </Button>
+            <Button
+                onClick={() => {
+                    table.current?.setVisibleColumns([])
+                }}
+            >
+                点击取消所有的列显示
+            </Button>
             <Table
                 ref={ref}
                 columns={columns}
+                table={table}
                 groupColumn={group}
                 groupRenderer={({ row }) => {
                     console.log(JSON.parse(JSON.stringify(row)))
