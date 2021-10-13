@@ -37,7 +37,7 @@ const tableClassPrefix = `${classPrefix}-table`
 
 export const Table = observer<TableProps>((props: TableProps) => {
     const pageSize = 100
-    const store = useLocalStore(createStore)
+    const store = useLocalStore(createStore, props)
 
     const gridRef = useRef<DataGridHandle | null>(null)
     const { table, enableInitLoadData } = props
@@ -62,10 +62,6 @@ export const Table = observer<TableProps>((props: TableProps) => {
         store.setLoading(false)
     }
 
-    useEffect(() => {
-        store.changeColumnsEvent = props.onChangeColumn
-    }, [])
-
     /**
      * 装载表格数据
      */
@@ -78,7 +74,6 @@ export const Table = observer<TableProps>((props: TableProps) => {
         store.loadRows(resp.datas, pageNo)
         store.setLoading(false)
     }
-
 
 
     useEffect(() => {

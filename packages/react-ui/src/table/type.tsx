@@ -218,6 +218,7 @@ export interface TableProps {
     selectBox?: 'multiple' | 'none' | 'single'
     // 根据分组的列进行分组，参数为列的name字段
     groupColumn?: string[]
+
     // 表格分组的渲染
     groupRenderer?: React.ComponentType<GroupRendererProps>
 
@@ -268,6 +269,11 @@ export interface TableProps {
      * 改变列的时候触发的事件
      */
     onChangeColumn?: (columns: ColumnProps[]) => void
+
+    /**
+     * 改变渲染的数据
+     */
+    onBeforeGroupData?: (rows: GroupRowData[]) => GroupRowData[]
 
     getPopupContainer?: (element: HTMLElement ) => HTMLElement
 }

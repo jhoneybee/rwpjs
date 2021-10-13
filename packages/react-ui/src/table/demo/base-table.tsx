@@ -52,12 +52,17 @@ export default () => {
                 table={table}
                 groupColumn={group}
                 groupRenderer={({ row }) => {
-                    console.log(JSON.parse(JSON.stringify(row)))
+                    // console.log(JSON.parse(JSON.stringify(row)))
                     return JSON.stringify(row)
                 }}
                 loadData={loadData}
                 getPopupContainer={(element: HTMLDivElement) => {
                     return element.parentElement!
+                }}
+            
+                onBeforeGroupData={(data) => {
+                    console.log(JSON.parse(JSON.stringify(data)), '----------')
+                    return data
                 }}
                 onRowsUpdate={(data, onCommit) => {
                     // console.log([...data])

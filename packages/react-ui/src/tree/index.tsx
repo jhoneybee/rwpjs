@@ -302,6 +302,7 @@ export const Tree = (props: Props) => {
         <TreeNode
             ref={treeRef}
             style={props.style}
+            titleRender={props.titleRender}
             loadData={async treeNode => {
                 if (treeNode){
                     loadedKeys.push(treeNode.key)
