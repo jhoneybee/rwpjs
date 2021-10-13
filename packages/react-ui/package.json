@@ -1,6 +1,6 @@
 {
     "name": "@rwp/react-ui",
-    "version": "1.28.12-canary",
+    "version": "1.29.0-canary",
     "license": "AGPL-3.0",
     "scripts": {
         "start": "dumi dev",
