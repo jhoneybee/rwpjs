@@ -4,7 +4,7 @@ import { groupBy, isEqual } from 'lodash'
 import { generate } from 'shortid'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Key } from 'rc-tree/lib/interface'
-import { Row, GroupRowData, ColumnProps } from './type'
+import { Row, GroupRowData, ColumnProps, TableProps } from './type'
 
 export type ContextMenu = {
     row: Row,
@@ -15,7 +15,8 @@ export type ContextMenu = {
 }
 
 
-export function createStore() {
+export function createStore(props: TableProps) {
+    const { onBeforeGroupData = (datas) => datas } = props
     const formatData = (datas: Row[]) => datas.map((ele, index) => ({
         ...ele,
         $index: index + 1,
@@ -50,7 +51,7 @@ export function createStore() {
             this.datas = formatData(this.datas.concat(rows))
             this.pageNo = pageNo
         },
-        changeColumnsEvent: {} as any,
+
         /**
          * 将两个节点进行交换
          * @param node 当前node节点
@@ -73,7 +74,7 @@ export function createStore() {
             })
             this.columns.splice(columnIndex!, 1, targeColumn!)
             this.columns.splice(targeColumnIndex!, 1, column!)
-            this.changeColumnsEvent?.(this.columns);
+            props.onChangeColumn?.(this.columns);
         },
         setSelectedRows(keys: Set<Row[keyof Row]>, onSelectedRowsChange?: (selectedRows: Set<Row[keyof Row]>) => void) {
             onSelectedRowsChange?.(keys)
@@ -125,13 +126,13 @@ export function createStore() {
 
             const historyExpandedKeys: string[] = []
             const loopsGroupData = (loppsData: GroupRowData[] | Row[]) => {
-                loppsData.forEach(ele => {
+                onBeforeGroupData(loppsData as GroupRowData[]).forEach(ele => {
                     if (ele.$parent === null) {
                         newData.push(ele)
                     }
 
-                    if (ele.$parent && expandedKeys.includes(ele.$parent.$id)) {
-                        historyExpandedKeys.push(ele.$parent.$id)
+                    if (ele.$parent && expandedKeys.includes(ele.$parent.$id as string)) {
+                        historyExpandedKeys.push(ele.$parent.$id as string)
                         newData.push(ele)
                     }
 
@@ -146,7 +147,7 @@ export function createStore() {
                 })
             }
 
-            loopsGroupData(groupDatas)
+            loopsGroupData(groupDatas!)
             return newData
         },
         setGroupColumn(groupColumn: string[]) {
@@ -282,7 +283,7 @@ export function createStore() {
         },
         setVisibleColumns(data: string[] | null) {
             this.visibleColumns = data
-            this.changeColumnsEvent?.(this.columns.filter(ele => data?.includes(ele.name)));
+            props.onChangeColumn?.(this.columns.filter(ele => data?.includes(ele.name)));
         }
     }
 }
