@@ -49,3 +49,5 @@ export { Collapse } from './collapse'
 export { Descriptions } from './descriptions' 
 export { Breadcrumb } from './breadcrumb'
 export { Incubator } from './incubator'
+
+export { FMReactRomponent } from './remote/FMReactRomponent'
