@@ -1,5 +1,6 @@
 /* eslint-disable */
-import React from 'react'
+import React, { ReactNode } from 'react'
+import { ComponentType } from 'react-dom/node_modules/@types/react';
 
 const loadDynamicScript: string[] = []
 
@@ -47,12 +48,19 @@ const useDynamicScript = (url: string) => {
     };
 };
 
-interface FMReactRomponentProps {
+
+type LoadingParam = {
+    url: string
+}
+
+interface FMReactComponentProps {
     url: string
     scope: string
     module: string
-    moduleDeps: {[dependencyName: string]: any}
-    [name: string]: any
+    moduleDeps?: {[dependencyName: string]: any}
+    componentProps?: {[name: string]: any}
+    loadingScript?: (param: LoadingParam) => ReactNode
+    loadingScriptFailed?: (param: LoadingParam) => ReactNode
 }
 
 const shareModuleDeps = async (scope: string, moduleDeps?: {[dependencyName: string]: any}) => {
@@ -77,13 +85,15 @@ const shareModuleDeps = async (scope: string, moduleDeps?: {[dependencyName: str
 const react = require("react")
 const reactDom = require("react-dom")
 
-export const FMReactRomponent = ({
+export const FMReactComponent = ({
     url,
     scope,
     module,
     moduleDeps = {},
-    ...props
-}: FMReactRomponentProps) => {
+    loadingScript = () => <div />,
+    loadingScriptFailed = () => <div />,
+    componentProps = {}
+}: FMReactComponentProps) => {
     const { ready, failed } = useDynamicScript(url);
   
     if (ready) {
@@ -95,11 +105,11 @@ export const FMReactRomponent = ({
     }
   
     if (!ready) {
-      return <h2>Loading dynamic script: {url}</h2>;
+      return loadingScript({ url })
     }
   
     if (failed) {
-      return <h2>Failed to load dynamic script: {url}</h2>;
+      return loadingScriptFailed({ url })
     }
   
     const Component = React.lazy(
@@ -112,8 +122,8 @@ export const FMReactRomponent = ({
     );
   
     return (
-      <React.Suspense fallback="Loading System">
-        <Component {...props} />
+      <React.Suspense fallback="">
+        <Component {...componentProps} />
       </React.Suspense>
     );
 }

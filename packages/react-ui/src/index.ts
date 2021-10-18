@@ -50,4 +50,4 @@ export { Descriptions } from './descriptions'
 export { Breadcrumb } from './breadcrumb'
 export { Incubator } from './incubator'
 
-export { FMReactRomponent } from './remote/FMReactRomponent'
+export { FMReactRomponent } from './remote/FMReactComponent'
