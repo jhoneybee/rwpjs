@@ -25,8 +25,8 @@ import { Result, Button, FMReactComponent} from '@rwp/react-ui'
 export default () => {
     return (
         <FMReactComponent
-            url="http://127.0.0.1:8001/fastpack.share.js"
-            module="$Index"
+            url="http://127.0.0.1:8085/fastpack.share.js"
+            module="Router$Index"
             scope="testModule"
         />
     )

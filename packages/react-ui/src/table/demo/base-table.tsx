@@ -61,7 +61,11 @@ export default () => {
                 }}
             
                 onBeforeGroupData={(data) => {
-                    console.log(JSON.parse(JSON.stringify(data)), '----------')
+                    debugger
+                    if (data.$parent && data.$parent.$column === 'dateBirth') {
+                        console.log(JSON.parse(JSON.stringify(data)), '----------')
+                        return data
+                    }
                     return data
                 }}
                 onRowsUpdate={(data, onCommit) => {

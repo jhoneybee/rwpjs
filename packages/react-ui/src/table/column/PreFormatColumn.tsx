@@ -138,7 +138,13 @@ export const preFormatColumn = (
                         }}
                     />
                 )
-            } : undefined,
+            } : () => {
+                if (tableProps.selectHeaderRenderer ) {
+                    const SelectHeaderRenderer = tableProps.selectHeaderRenderer 
+                    return <SelectHeaderRenderer />
+                }
+                return null
+            },
         }
         columns.splice(0, 0, select)
     }

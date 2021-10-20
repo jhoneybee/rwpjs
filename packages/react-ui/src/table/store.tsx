@@ -126,6 +126,7 @@ export function createStore(props: TableProps) {
 
             const historyExpandedKeys: string[] = []
             const loopsGroupData = (loppsData: GroupRowData[] | Row[]) => {
+                
                 onBeforeGroupData(loppsData as GroupRowData[]).forEach(ele => {
                     if (ele.$parent === null) {
                         newData.push(ele)
