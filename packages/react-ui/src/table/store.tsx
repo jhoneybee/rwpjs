@@ -81,16 +81,17 @@ export function createStore(props: TableProps) {
             this.selectedRows = keys
 
         },
-        setExpandedKeys(keys: string[]) {
+        setExpandedKeys(keys: string[], id: string) {
             this.expandedKeys = keys
-            this.groupDatas = this.getGroupDatas()
+            this.groupDatas = this.getGroupDatas(id)
         },
         // 重新装载数据
         reloadRows(rows: any[]) {
             this.datas = formatData(rows)
             this.pageNo = 1
         },
-        getGroupDatas() {
+        getGroupDatas(id?: string) {
+
             const { expandedKeys } = this
             const loops = (parent: any, datas: Row[], currentLevel: number) => {
                 const groupColumns = this.groupColumn
@@ -125,9 +126,10 @@ export function createStore(props: TableProps) {
             const newData: Row[] = []
 
             const historyExpandedKeys: string[] = []
+
             const loopsGroupData = (loppsData: GroupRowData[] | Row[]) => {
                 
-                onBeforeGroupData(loppsData as GroupRowData[]).forEach(ele => {
+                loppsData.forEach(ele => {
                     if (ele.$parent === null) {
                         newData.push(ele)
                     }
@@ -142,13 +144,19 @@ export function createStore(props: TableProps) {
                     }
 
                     if (ele.$children && ele.$children.length > 0) {
-                        loopsGroupData(ele.$children)
+
+                        let children = ele.$children
+
+                        if (ele.$id === id) {
+                            children = onBeforeGroupData(children)
+                        }
+                        loopsGroupData(children)
                     }
 
                 })
             }
 
-            loopsGroupData(groupDatas!)
+            loopsGroupData(id === undefined ? onBeforeGroupData(groupDatas! as any[]) : groupDatas)
             return newData
         },
         setGroupColumn(groupColumn: string[]) {

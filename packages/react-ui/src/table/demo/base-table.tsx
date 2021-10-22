@@ -22,7 +22,7 @@ export default () => {
         >   
             <Button
                 onClick={() => {
-                    setGroup(['dateBirth'])
+                    setGroup(['dateBirth', 'username'])
                 }}
             >
                 点击分组
@@ -61,11 +61,7 @@ export default () => {
                 }}
             
                 onBeforeGroupData={(data) => {
-                    debugger
-                    if (data.$parent && data.$parent.$column === 'dateBirth') {
-                        console.log(JSON.parse(JSON.stringify(data)), '----------')
-                        return data
-                    }
+                    console.log(JSON.parse(JSON.stringify(data)), '----------')
                     return data
                 }}
                 onRowsUpdate={(data, onCommit) => {
