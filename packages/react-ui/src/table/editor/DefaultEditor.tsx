@@ -18,6 +18,8 @@ interface DefaultEditorProps {
 export const DefaultEditor = React.forwardRef((props: DefaultEditorProps, ref) => {
     const [value, setValue] = useState(props.extProps.value)
     const inputRef = useRef<HTMLElement>(null);
+    const curentData = useRef<number>(Date.now())
+
     useImperativeHandle(ref, () => ({
         getValue: () => ({ [props.extProps.column.key]: value }),
         getInputNode: () => inputRef.current,
@@ -28,12 +30,19 @@ export const DefaultEditor = React.forwardRef((props: DefaultEditorProps, ref) =
             inputRef.current.focus()
         }
     }, [])
-    return <props.node
-        row={props.extProps.row}
-        column={props.extProps.column}
-        ref={inputRef}
-        style={{ height: props.extProps.height }}
-        value={value}
-        onChange={(changeValue: string) => setValue(changeValue)}
-    />
+
+    return (
+        <props.node
+            row={props.extProps.row}
+            column={props.extProps.column}
+            ref={inputRef}
+            style={{ height: props.extProps.height }}
+            value={value}
+            onChange={(changeValue: string) => {
+                if ((Date.now() - curentData.current) > 100) {
+                    setValue(changeValue)
+                }
+            }}
+        />
+    )
 })
