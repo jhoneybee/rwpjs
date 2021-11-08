@@ -65,15 +65,15 @@ export const Table = observer<TableProps>((props: TableProps) => {
     /**
      * 装载表格数据
      */
-    const loadDataFun = async () => {
-        store.setLoading(true)
-        const pageNo = store.pageNo + 1
-        const res = props.loadData(pageNo, pageSize, props.params!)
-        const resp = await (res as PromiseLike<{ total: number, datas: Row[] }>)
-        store.setTotal(resp.total)
-        store.loadRows(resp.datas, pageNo)
-        store.setLoading(false)
-    }
+    // const loadDataFun = async () => {
+    //     store.setLoading(true)
+    //     const pageNo = store.pageNo + 1
+    //     const res = props.loadData(pageNo, pageSize, props.params!)
+    //     const resp = await (res as PromiseLike<{ total: number, datas: Row[] }>)
+    //     store.setTotal(resp.total)
+    //     store.loadRows(resp.datas, pageNo)
+    //     store.setLoading(false)
+    // }
 
 
     useEffect(() => {
@@ -303,6 +303,9 @@ export const Table = observer<TableProps>((props: TableProps) => {
                     store.setTotal(resp.total)
                     store.loadRows(resp.datas, pageNo)
                     store.setLoading(false)
+                    if (gridRef.current) {
+                        gridRef.current.scrollToRow(0)
+                    }
                 }}
             />
             <span
