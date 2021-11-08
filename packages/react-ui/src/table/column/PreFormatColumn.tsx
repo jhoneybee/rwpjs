@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useRef } from 'react'
+import React, { useImperativeHandle, useRef, createRef, MutableRefObject } from 'react'
 import {
     Column,
     FormatterProps,
@@ -19,6 +19,7 @@ const tableClassPrefix = `${classPrefix}-table`
 export const preFormatColumn = (
     store: TableStore,
     tableProps: TableProps,
+    refs: {name: string, value: MutableRefObject<any>}[]
 ) => {
     const columns: Column<Row, unknown>[] = store.columns.filter(
         column => store.visibleColumns?.includes(column.name)
@@ -48,45 +49,10 @@ export const preFormatColumn = (
             ...restProps
         } = element
 
-        const TempEditor = editable ? editor || Input : undefined
-
-
-        let format = (cellProps: FormatterProps) => (
-            <div
-                className={`${tableClassPrefix}-cell`}
-                style={{
-                    textAlign: bodyTextAlign,
-                }}>
-                {cellProps.row[cellProps.column.key]}
-            </div>
-        )
-        if (formatter) {
-            const Formatter = formatter
-            // 如果字符串不超过对应的长度,则使用默认的div
-            format = (cellProps: FormatterProps) => (
-                <div
-                    className={`${tableClassPrefix}-cell`}
-                    style={{
-                        textAlign: bodyTextAlign,
-                    }}>
-                    {
-                        cellProps.row.$type ? (
-                            cellProps.row[cellProps.column.key]
-                        ) : (
-                            <Formatter {...cellProps} />
-                        )}
-                </div>
-            )
-        }
-
-        return {
-            key: name,
-            name: title,
-            resizable: true,
-            formatter: format,
-            editable,
-            headerRenderer,
-            editor: TempEditor ? React.forwardRef((
+       
+        const getEditor = () => {
+            const TempEditor = editable ? editor || Input : undefined
+            return TempEditor ? React.forwardRef((
                 eProps: EditorProps<Row[keyof Row], Row, unknown>,
                 ref,
             ) => {
@@ -105,7 +71,94 @@ export const preFormatColumn = (
                         extProps={eProps}
                     />
                 )
-            }) as React.ComponentType<EditorProps<Row[keyof Row], Row, unknown>> : undefined,
+            }) as React.ComponentType<EditorProps<Row[keyof Row], Row, unknown>> : undefined
+        }
+
+        const getFormat = () => {
+            let format = (cellProps: FormatterProps) => (
+                <div
+                    className={`${tableClassPrefix}-cell`}
+                    style={{
+                        textAlign: bodyTextAlign,
+                    }}>
+                    {cellProps.row[cellProps.column.key]}
+                </div>
+            )
+            if (formatter) {
+                const Formatter = formatter
+                // 如果字符串不超过对应的长度,则使用默认的div
+                format = (cellProps: FormatterProps) => (
+                    <div
+                        className={`${tableClassPrefix}-cell`}
+                        style={{
+                            textAlign: bodyTextAlign,
+                        }}>
+                        {
+                            cellProps.row.$type ? (
+                                cellProps.row[cellProps.column.key]
+                            ) : (
+                                <Formatter {...cellProps} />
+                            )}
+                    </div>
+                )
+            }
+
+            const Editor = getEditor()
+            const colRef = createRef<any>()
+            refs.push({
+                name: element.name,
+                value: colRef
+            })
+            if (tableProps.editorMode?.type === 'ROW' && Editor) {
+                format = (cellProps: FormatterProps) => (
+                    <div
+                        className={`${tableClassPrefix}-cell`}
+                        style={{
+                            textAlign: bodyTextAlign,
+                        }}>
+                        {
+                            cellProps.row[tableProps.rowKey!] !== tableProps.editorMode?.rowId ? (
+                                cellProps.row[cellProps.column.key]
+                            ) : (
+                                <Editor
+                                    ref={colRef}
+                                    value={cellProps.row[cellProps.column.key]}
+                                    column={cellProps.column}
+                                    row={cellProps.row}
+                                    height={29}
+                                    onCommit={() => {
+                                        // eslint-disable-next-line no-param-reassign
+                                        cellProps.row[cellProps.column.key] = colRef.current?.getValue?.()
+                                    }}
+                                    onCommitCancel={() => {
+                                    }}
+                                    onOverrideKeyDown={() => {
+                                    }}
+                                />
+                            )}
+                    </div>
+                )
+                return format
+            }
+
+            return format
+        }
+
+        const getEditorCol = () => {
+            if (tableProps.editorMode?.type === 'ROW') {
+                return null
+            }
+            return getEditor()
+        }
+        return {
+            key: name,
+            name: title,
+            resizable: true,
+            formatter: getFormat(),
+            selectCell: tableProps.editorMode?.type !== 'ROW',
+            editable: tableProps.editorMode?.type === 'ROW' ? false : editable,
+            headerRenderer,
+            editor: getEditorCol(),
             ...restProps,
         }
     }))

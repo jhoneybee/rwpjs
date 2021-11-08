@@ -29,6 +29,8 @@ export function createStore(props: TableProps) {
         expandedRowNumber:  -1,
         // 当前显示的数据
         datas: [] as Row[],
+        // 行编辑数据
+        rowEditData: {} as any,
         // 分组数据
         groupDatas: [] as GroupRowData[] | Row[],
         cacheGroupDatas: undefined as GroupRowData[] | Row[] | undefined,

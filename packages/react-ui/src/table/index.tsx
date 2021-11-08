@@ -112,9 +112,11 @@ export const Table = observer<TableProps>((props: TableProps) => {
         return false
     }
 
+    const refs: any[] = []
     const columns = preFormatColumn(
         store,
         props,
+        refs,
     )
 
     const getRows = () => {
@@ -165,6 +167,12 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 // 如果是分组状态,禁止操作
                 if (isDisableLoadData()) return;
                 await reloadFun(param)
+            },
+            getRowEditData: () => {
+                return refs.map((ele) => ({
+                    name: ele.name,
+                    value: ele.value.current?.getValue?.()
+                }))
             },
             del: filter => store.del(filter),
             add: (rows, start) => store.add(rows, start)

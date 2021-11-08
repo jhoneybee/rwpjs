@@ -13,6 +13,9 @@ export default () => {
     const [group,setGroup] = useState<string[]>()
     const table = useRef<TableHandle>();
     const [cols, setCols] = useState(columns)
+
+
+    const [eid, setEID] = useState(0)
     return (
         <div
             style={{
@@ -46,14 +49,35 @@ export default () => {
             >
                 新增列信息
             </Button>
+
+            <Button
+                onClick={() => {
+                    setEID(1)
+                }}
+            >
+                打开第一行编辑
+            </Button>
+
+            <Button
+               onClick={() => {
+                   alert(JSON.stringify(table.current?.getRowEditData())) 
+                }} 
+            >
+                保存编辑结果
+            </Button>
             <Table
                 ref={ref}
                 columns={cols}
+                rowKey="$index"
                 table={table}
+                editorMode={{
+                    type: 'ROW',
+                    rowId: eid,
+                }}
                 groupColumn={group}
                 groupRenderer={({ row }) => {
                     // console.log(JSON.parse(JSON.stringify(row)))
-                    return JSON.stringify(row)
+                    return JSON.stringify(row.$id)
                 }}
                 loadData={loadData}
                 getPopupContainer={(element: HTMLDivElement) => {

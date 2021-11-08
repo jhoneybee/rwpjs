@@ -77,16 +77,6 @@ export const columns = [{
     name: 'pageNo',
     title: '当前页码',
     editable: true,
-    editor: () => {
-        return (
-            <Input.TextArea
-                onKeyDown={(e) => {
-                    e.stopPropagation()
-                }}
-            
-            /> 
-        )
-    }
 },{
     name: 'idCard',
     title: '身份证',

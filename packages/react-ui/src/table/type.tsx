@@ -103,6 +103,7 @@ export interface TableHandle extends DataGridHandle {
     add: (rows: Row[], start?: number) => void
 
 
+    getRowEditData: () => { name: string, value: any}[]
 }
 
 export interface ColumnProps {
@@ -181,7 +182,13 @@ export interface TableProps {
      */
     headerRowHeight?: number;
 
-
+    /**
+     * 编辑模式
+     */
+    editorMode?: {
+        type: 'ROW' | 'CELL',
+        rowId?: string
+    }
 
     /**
      * 汇总
