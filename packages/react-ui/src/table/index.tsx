@@ -12,7 +12,7 @@ import ReactDataGrid, {
 } from 'react-data-grid-temp'
 
 import { cloneDeep, ceil } from 'lodash'
-import { Progress } from 'antd'
+import { Progress, Pagination } from 'antd'
 import { ReloadOutlined } from '@ant-design/icons'
 import { observer, useLocalStore } from 'mobx-react-lite'
 import { toJS } from 'mobx'
@@ -172,31 +172,32 @@ export const Table = observer<TableProps>((props: TableProps) => {
         table.current = tempTable
     }
 
-    const beforeScrollLeft = useRef<number>(0)
-    let isDisableScroll = false
+    // const beforeScrollLeft = useRef<number>(0)
+    // let isDisableScroll = false
 
-    const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
-        const target = e.currentTarget
-        // 如果是分组状态,禁止操作
-        if (isDisableLoadData()) return
-        if (
-            // 判断是否滚动到底部
-            target.scrollHeight - target.scrollTop <= target.clientHeight + 2 &&
-            // 判断数据大于0, 并且小于当前总数。
-            store.datas.length > 0 &&
-            store.datas.length < store.total &&
-            target.scrollLeft === beforeScrollLeft.current &&
-            !isDisableScroll
-        ) {
-            isDisableScroll = true
-            scrollTimeOut = setTimeout(() => {
-                loadDataFun().then(() => {
-                    isDisableScroll = false
-                })
-            }, 200);
-        }
-        beforeScrollLeft.current = target.scrollLeft
-    }
+    // const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+    //     const target = e.currentTarget
+    //     // 如果是分组状态,禁止操作
+    //     if (isDisableLoadData()) return
+    //     if (
+    //         // 判断是否滚动到底部
+    //         target.scrollHeight - target.scrollTop <= target.clientHeight + 2 &&
+    //         // 判断数据大于0, 并且小于当前总数。
+    //         store.datas.length > 0 &&
+    //         store.datas.length < store.total &&
+    //         target.scrollLeft === beforeScrollLeft.current &&
+    //         !isDisableScroll
+    //     ) {
+    //         isDisableScroll = true
+    //         scrollTimeOut = setTimeout(() => {
+    //             loadDataFun().then(() => {
+    //                 isDisableScroll = false
+    //             })
+    //         }, 200);
+    //     }
+    //     beforeScrollLeft.current = target.scrollLeft
+    // }
+
     const [sortDirection, setSortDirection] = useState<SortColumn[]>([]);
 
     const rdg = (
@@ -205,7 +206,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 ref={gridRef}
                 columns={columns}
                 rows={getRows()}
-                onScroll={onScroll}
+                // onScroll={onScroll}
                 rowKey={props.rowKey}
                 headerRowHeight={props.headerRowHeight}
                 enableCellCopyPaste={props.enableCellCopyPaste}
@@ -283,6 +284,27 @@ export const Table = observer<TableProps>((props: TableProps) => {
         <div
             className={`${tableClassPrefix}-footer`}
         >
+            <Pagination
+                style={{
+                    marginLeft: '.5rem'
+                }}
+                size="small"
+                total={store.total}
+                current={store.pageNo}
+                disabled={isDisableLoadData()}
+                defaultPageSize={50}
+                pageSizeOptions={['50', '100', '500']}
+                showSizeChanger
+                onChange={async (page, size) => {
+                    store.setLoading(true)
+                    const pageNo = page
+                    const res = props.loadData(pageNo, size!, props.params!)
+                    const resp = await (res as PromiseLike<{ total: number, datas: Row[] }>)
+                    store.setTotal(resp.total)
+                    store.loadRows(resp.datas, pageNo)
+                    store.setLoading(false)
+                }}
+            />
             <span
                 className={`${tableClassPrefix}-footer-total`}
             >
@@ -334,6 +356,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                     {getPluginNode(<Tools />)}
                     </div>
                     {props.mode === 'HIDE-FOOTER' ?  null : getPluginNode(footer)}
+
                 </Spin>
             </StoreContext.Provider>
         </div>

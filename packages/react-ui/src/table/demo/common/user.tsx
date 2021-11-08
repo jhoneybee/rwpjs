@@ -1,4 +1,5 @@
 import React from 'react'
+import { Input } from 'antd'
 
 type User = {
     // 当前页码
@@ -75,7 +76,17 @@ export const columns = [{
 },{
     name: 'pageNo',
     title: '当前页码',
-    editable: true
+    editable: true,
+    editor: () => {
+        return (
+            <Input.TextArea
+                onKeyDown={(e) => {
+                    e.stopPropagation()
+                }}
+            
+            /> 
+        )
+    }
 },{
     name: 'idCard',
     title: '身份证',
