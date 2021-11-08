@@ -146,7 +146,7 @@ export const preFormatColumn = (
 
         const getEditorCol = () => {
             if (tableProps.editorMode?.type === 'ROW') {
-                return null
+                return undefined
             }
             return getEditor()
         }
