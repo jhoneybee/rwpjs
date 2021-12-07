@@ -17,6 +17,7 @@ type User = {
 }
 
 export const loadData = (pageNo: number , pageSize: number) => {
+    console.log(pageNo, pageSize)
     return new Promise((resolve) => {
         const userDatas: User[] = []
         for (let i=0; i < pageSize; i += 1) {

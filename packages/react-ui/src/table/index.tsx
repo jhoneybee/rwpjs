@@ -11,9 +11,9 @@ import ReactDataGrid, {
     SortColumn
 } from 'react-data-grid-temp'
 
-import { cloneDeep, ceil } from 'lodash'
-import { Progress, Pagination } from 'antd'
-import { ReloadOutlined } from '@ant-design/icons'
+import { cloneDeep } from 'lodash'
+import { Pagination } from 'antd'
+// import { ReloadOutlined } from '@ant-design/icons'
 import { observer, useLocalStore } from 'mobx-react-lite'
 import { toJS } from 'mobx'
 import { Spin } from '../index'
@@ -284,14 +284,20 @@ export const Table = observer<TableProps>((props: TableProps) => {
         </>
     )
 
-    const percent = Number.parseInt(
-        (ceil(store.datas.length / store.total, 2) * 100).toFixed(),
-        10)
+    // const percent = Number.parseInt(
+    //     (ceil(store.datas.length / store.total, 2) * 100).toFixed(),
+    //     10)
 
     const footer = (
         <div
             className={`${tableClassPrefix}-footer`}
         >
+           
+            <span
+                className={`${tableClassPrefix}-footer-total`}
+            >
+                {store.total}
+            </span>
             <Pagination
                 style={{
                     marginLeft: '.5rem'
@@ -300,9 +306,10 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 total={store.total}
                 current={store.pageNo}
                 disabled={isDisableLoadData()}
-                defaultPageSize={50}
+                defaultPageSize={pageSize}
                 pageSizeOptions={['50', '100', '500']}
                 showSizeChanger
+                showQuickJumper
                 onChange={async (page, size) => {
                     store.setLoading(true)
                     const pageNo = page
@@ -316,19 +323,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                     }
                 }}
             />
-            <span
-                className={`${tableClassPrefix}-footer-total`}
-            >
-                {store.total}
-            </span>
-            <Progress
-                style={{
-                    width: 100,
-                    marginRight: 10,
-                }}
-                percent={percent}
-            />
-            <ReloadOutlined
+            {/* <ReloadOutlined
                 disabled
                 style={{
                     marginLeft: 0,
@@ -342,7 +337,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                         reloadFun()
                     }
                 }}
-            />
+            /> */}
         </div>
     )
 

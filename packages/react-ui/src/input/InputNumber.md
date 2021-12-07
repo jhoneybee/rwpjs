@@ -26,7 +26,7 @@ import { InputNumber } from '@rwp/react-ui'
 export default () => {
     return (
         <>
-          <InputNumber /> 
+          <InputNumber  value={0}/> 
         </>
     )
 }
