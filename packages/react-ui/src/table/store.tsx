@@ -209,6 +209,7 @@ export function createStore(props: TableProps) {
         add(rows: Row[], start?: number ){
             const addRows: Row[] = rows.map(ele => ({ ...ele, $state: 'CREATE'}))
             this.dataSource.splice(start || 0, 0, ...addRows)
+            this.setDataSource([...this.dataSource])
         },
         // 更新数据
         update(change: (data: Row) => Row) {

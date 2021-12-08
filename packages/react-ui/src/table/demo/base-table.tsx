@@ -50,6 +50,16 @@ export default () => {
                 新增列信息
             </Button>
 
+
+            <Button
+                onClick={() => {
+                    table.current?.add([{
+                        id: '0'
+                    }])
+                }}
+            >
+                新增行信息
+            </Button>
             <Button
                 onClick={() => {
                     setEID(1)
