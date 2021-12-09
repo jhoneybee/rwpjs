@@ -283,4 +283,5 @@ export interface TableProps {
     onBeforeGroupData?: (rows: GroupRowData[]) => GroupRowData[]
 
     getPopupContainer?: (element: HTMLElement ) => HTMLElement
+    
 }
