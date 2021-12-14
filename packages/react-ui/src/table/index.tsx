@@ -124,7 +124,6 @@ export const Table = observer<TableProps>((props: TableProps) => {
         if (props.groupColumn && props.groupColumn.length > 0){
             rows = store.groupDatas
         }
-        console.log(rows[0])
         return rows
     }
 
