@@ -36,7 +36,7 @@ import './style/index.less'
 const tableClassPrefix = `${classPrefix}-table`
 
 export const Table = observer<TableProps>((props: TableProps) => {
-    const { pageSize = 100 } = props
+    const { pageSize = 100, pageSizeOptions = ['50', '100', '500', '1000'] } = props
     const store = useLocalStore(createStore, props)
 
     const gridRef = useRef<DataGridHandle | null>(null)
@@ -124,6 +124,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
         if (props.groupColumn && props.groupColumn.length > 0){
             rows = store.groupDatas
         }
+        console.log(rows[0])
         return rows
     }
 
@@ -307,7 +308,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 current={store.pageNo}
                 disabled={isDisableLoadData()}
                 defaultPageSize={pageSize}
-                pageSizeOptions={['50', '100', '500', '1000']}
+                pageSizeOptions={pageSizeOptions}
                 showSizeChanger
                 showQuickJumper
                 onChange={async (page, size) => {

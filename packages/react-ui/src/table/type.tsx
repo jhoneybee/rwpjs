@@ -284,4 +284,5 @@ export interface TableProps {
 
     getPopupContainer?: (element: HTMLElement ) => HTMLElement
     
+    pageSizeOptions?: string[]
 }

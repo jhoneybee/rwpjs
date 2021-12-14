@@ -10,7 +10,15 @@ let i =0;
 
 export default () => {
     const [selectBox, setSelectBox] = useState<'multiple' | 'none' | 'single'>('multiple')
-
+    const test = (onCommit) => {
+        return new Promise((re) => {
+            
+            setTimeout(() => {
+                onCommit()
+                re()
+            }, 1000)
+        })
+    }
     return (
         <>
             <Switch
@@ -32,6 +40,11 @@ export default () => {
                 loadData={loadData}
                 onRowClick={(rowIdx) => {
                     console.log('row', rowIdx)
+                }}
+                onRowsUpdate={async (ev, onCommit) => {
+                    
+                    await test(onCommit)
+                    
                 }}
             />
         </>
