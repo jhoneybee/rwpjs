@@ -13,7 +13,7 @@ import ReactDataGrid, {
 
 import { cloneDeep } from 'lodash'
 import { Pagination } from 'antd'
-// import { ReloadOutlined } from '@ant-design/icons'
+import { ReloadOutlined } from '@ant-design/icons'
 import { observer, useLocalStore } from 'mobx-react-lite'
 import { toJS } from 'mobx'
 import { Spin } from '../index'
@@ -323,7 +323,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                     }
                 }}
             />
-            {/* <ReloadOutlined
+            <ReloadOutlined
                 disabled
                 style={{
                     marginLeft: 0,
@@ -337,7 +337,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                         reloadFun()
                     }
                 }}
-            /> */}
+            />
         </div>
     )
 

@@ -258,7 +258,7 @@ export function createStore(props: TableProps) {
                 if (this.isGroup) {
                     this.cacheGroupDatas = undefined
                 }
-                this.setDataSource([...rows])
+                this.setDataSource(rows.slice())
                 resolve(updates)
             })
         },
