@@ -36,7 +36,7 @@ import './style/index.less'
 const tableClassPrefix = `${classPrefix}-table`
 
 export const Table = observer<TableProps>((props: TableProps) => {
-    const { pageSize = 100, pageSizeOptions = ['50', '100', '500', '1000'] } = props
+    const { pageSize = 100, pageSizeOptions = ['50', '100', '500', '1000'], onPageChange } = props
     const store = useLocalStore(createStore, props)
 
     const gridRef = useRef<DataGridHandle | null>(null)
@@ -306,7 +306,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 total={store.total}
                 current={store.pageNo}
                 disabled={isDisableLoadData()}
-                defaultPageSize={pageSize}
+                pageSize={pageSize}
                 pageSizeOptions={pageSizeOptions}
                 showSizeChanger
                 showQuickJumper
@@ -321,12 +321,15 @@ export const Table = observer<TableProps>((props: TableProps) => {
                     if (gridRef.current) {
                         gridRef.current.scrollToRow(0)
                     }
+                    onPageChange?.(page, size)
                 }}
+                {...(props.pageOtherProps || {})}
             />
             <ReloadOutlined
                 disabled
                 style={{
-                    marginLeft: 0,
+                    marginLeft: 10,
+                    marginRight: 20,
                     top: 2,
                     position: 'relative',
                     cursor: isDisableLoadData() ? 'not-allowed': 'pointer',
