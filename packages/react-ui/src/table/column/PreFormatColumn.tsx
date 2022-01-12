@@ -46,6 +46,7 @@ export const preFormatColumn = (
             headerRenderer = ({ column }: HeaderRendererProps<Row, unknown>) => (
                 <div style={{ textAlign: headerTextAlign }}>{column.name}</div>
             ),
+            formatter1,
             ...restProps
         } = element
 
@@ -155,6 +156,7 @@ export const preFormatColumn = (
             name: title,
             resizable: true,
             formatter: getFormat(),
+            render: formatter1,
             selectCell: tableProps.editorMode?.type !== 'ROW',
             editable: tableProps.editorMode?.type === 'ROW' ? false : editable,
             headerRenderer,

@@ -17925,10 +17925,10 @@
     "lodash" "^2.4.1"
     "to-camel-case" "^0.2.1"
 
-"react-data-grid-temp@~7.0.0-canary.22.4":
-  "integrity" "sha512-34gFNeVeKugwxKwrNl0lHOzyyygqXMuxi9giMqxDdbANl9JkD+sM0XKVyQ107rUIShLPhbMJ4GAoz/KUZ7FJqg=="
-  "resolved" "https://registry.npmjs.org/react-data-grid-temp/-/react-data-grid-temp-7.0.0-canary.22.5.tgz"
-  "version" "7.0.0-canary.22.5"
+"react-data-grid-temp@~7.0.0-canary.22.7":
+  "integrity" "sha512-HOLIUpikMddXNyIaGFEUY6kQJvh3jI9TAC5+lrwA+P9dDF+EK0ynswdi3DxdWW/m1T/RAG+hqL9ODXu6lB/YtQ=="
+  "resolved" "https://registry.npmjs.org/react-data-grid-temp/-/react-data-grid-temp-7.0.0-canary.22.7.tgz"
+  "version" "7.0.0-canary.22.7"
   dependencies:
     "clsx" "^1.1.1"
 

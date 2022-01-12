@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Input } from 'antd'
 
 type User = {
@@ -68,6 +68,14 @@ export const editColumns = [{
     title: '出生日期'
 }]
 
+const DataTemp = () => {
+    useEffect(() => {
+        console.log('-----------')
+    }, [])
+
+    return <div>123132</div>
+}
+
 export const columns = [{
     name: '$index',
     title: '序号',
@@ -78,6 +86,11 @@ export const columns = [{
     name: 'pageNo',
     title: '当前页码',
     editable: true,
+    formatter1: () => {
+        return (
+            <DataTemp />
+        )
+    }
 },{
     name: 'idCard',
     title: '身份证',

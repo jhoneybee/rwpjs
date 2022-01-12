@@ -131,6 +131,7 @@ export interface ColumnProps {
     frozen?: boolean;
     // 格式化当前列的数据。返回一个 React.ComponentType 对象
     formatter?: React.ComponentType<FormatterProps<Row, unknown>>;
+    formatter1?: (props: FormatterProps<Row, unknown>) => ReactNode
     // 当前列的编辑器
     editor?:React.ComponentType<EditorProps<Row[keyof Row], Row, unknown>>;
     // 单元格的class
@@ -285,8 +286,5 @@ export interface TableProps {
     getPopupContainer?: (element: HTMLElement ) => HTMLElement
     
     pageSizeOptions?: string[]
-
     pageOtherProps?: any
-
-    onPageChange?: (page: number, pageSize?: number) => void
 }
