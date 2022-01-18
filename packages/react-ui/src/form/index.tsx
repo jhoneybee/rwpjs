@@ -45,10 +45,10 @@ const Item = (props: FormItemProps) => {
         <AntForm.Item
             style={{
                 ...cleanMarginBottom,
-                ...style,
                 gridColumn,
                 gridRow: `auto / span ${rowSpanTemp}`,
-                '--label-width': labelWidth && `${labelWidth}`
+                '--label-width': labelWidth && `${labelWidth}`,
+                ...style
             } as unknown as React.CSSProperties}
             {...restProps}
         />
