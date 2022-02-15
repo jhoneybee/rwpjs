@@ -151,18 +151,22 @@ export const preFormatColumn = (
             }
             return getEditor()
         }
-        return {
+
+        const tempCol = {
             key: name,
             name: title,
             resizable: true,
             formatter: getFormat(),
-            render: formatter1,
             selectCell: tableProps.editorMode?.type !== 'ROW',
             editable: tableProps.editorMode?.type === 'ROW' ? false : editable,
             headerRenderer,
             editor: getEditorCol(),
+            render: formatter1,
             ...restProps,
         }
+
+        delete tempCol.render
+        return tempCol
     }))
     if (tableProps.selectBox !== 'none') {
         const select: Column<Row, unknown> = {

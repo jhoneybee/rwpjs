@@ -79,6 +79,9 @@ const DataTemp = () => {
 export const columns = [{
     name: '$index',
     title: '序号',
+    render: () => {
+        return ""
+    },
     headerRenderer: (props: any) => (
         <div>☘{props.column.name}</div>
     )

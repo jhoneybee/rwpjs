@@ -285,6 +285,8 @@ export interface TableProps {
 
     getPopupContainer?: (element: HTMLElement ) => HTMLElement
     
+    renderPluginToolExt?: (globalStore: any) => ReactNode
+
     pageSizeOptions?: string[]
     pageOtherProps?: any
 }

@@ -105,10 +105,14 @@ export const Modal = (props: Props) => {
                     content={modal}
                     style={props.style}
                     onMouseEnter={() => {
-                        setMaskHide(false)
+                        if (props.mask === false) {
+                            setMaskHide(false)
+                        }
                     }}
                     onMouseLeave={() => {
-                        setMaskHide(true)
+                        if (props.mask === false) {
+                            setMaskHide(true)
+                        }
                     }}
                 />
             )}

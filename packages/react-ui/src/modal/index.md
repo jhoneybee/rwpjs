@@ -45,7 +45,7 @@ export default () => {
               modal={modal}
               width={900}
               mask={false}
-              maskClosable={false}
+              maskClosable={true}
               onOk={async () => {
                 // modal2.current.show()
                 return true

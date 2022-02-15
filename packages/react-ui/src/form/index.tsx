@@ -6,7 +6,7 @@ import { FormProps, FormItemProps } from '../interface'
 import './style/index.less'
 
 export const Form = (props: FormProps) => {
-    const { cols = 5, form: propsForm, children, ...restProps } = props
+    const { cols = 5, form: propsForm, style, children, ...restProps } = props
     const [form] = useForm()
     if (propsForm) {
         propsForm.current = form
@@ -19,6 +19,7 @@ export const Form = (props: FormProps) => {
                 display: 'grid',
                 gridTemplateColumns: `repeat(${cols}, auto)`,
                 columnGap: 4,
+                ...style
             }}
             form={form}
         >

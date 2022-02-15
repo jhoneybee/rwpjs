@@ -1,7 +1,8 @@
-import React, { useRef, useEffect, ReactNode } from 'react'
+import React, { useRef, useEffect, ReactNode, FC } from 'react'
 import { MenuOutlined } from '@ant-design/icons'
 import { useLocalStore, useObserver } from 'mobx-react-lite'
 import { EventDataNode } from 'antd/lib/tree'
+import { Checkbox } from 'antd'
 import { autorun, toJS } from 'mobx'
 import { Tree } from '../../index'
 import { classPrefix } from '../../utils'
@@ -12,7 +13,11 @@ import './style/tools.less'
 
 const tableClassPrefix = `${classPrefix}-table`
 
-export const Tools = () => {
+export const Tools: FC<{
+    renderPluginToolExt?: (globalStore: any) => ReactNode
+}> = ({
+    renderPluginToolExt
+}) => {
     const store = useLocalStore(() => ({
         visible: false,
         activeKey: '',
@@ -30,7 +35,7 @@ export const Tools = () => {
 
     useEffect(() => {
         autorun(() => {
-            store.treeHeight = divRef.current!.clientHeight - 30
+            store.treeHeight = divRef.current!.clientHeight - 30 - 200
         })
     }, [store.visible])
     
@@ -56,6 +61,23 @@ export const Tools = () => {
                             <h4>
                                 列信息
                             </h4>
+                            <Checkbox
+                                defaultChecked
+                                style={{
+                                    marginLeft: 10,
+                                    marginTop: 5,
+                                    marginBottom: 5
+                                }}
+                                onChange={({ target }) => {
+                                    if (target.checked) {
+                                        globalStore.setVisibleColumns(globalStore.columns.map(ele => ele.name))
+                                    } else {
+                                        globalStore.setVisibleColumns([])
+                                    }
+                                }}
+                            >
+                                全选/全不选
+                            </Checkbox>
                             <Tree
                                 tree={tree}
                                 checkedKeys={globalStore.visibleColumns || []}
@@ -63,6 +85,7 @@ export const Tools = () => {
                                 onCheck={checked => {
                                     globalStore.setVisibleColumns(checked as string[])
                                 }}
+                                
                                 height={store.treeHeight}
                                 draggable
                                 onDrop={info => {
@@ -75,6 +98,13 @@ export const Tools = () => {
                                 }}
                                 checkable
                             />
+                            <div
+                                style={{
+                                    height: 200
+                                }}
+                            >
+                                {renderPluginToolExt?.(globalStore)}
+                            </div>
                         </div>
                     </>
                 )
@@ -91,13 +121,13 @@ export const Tools = () => {
                     className={`${tableClassPrefix}-right-content`}
                     tabIndex={-1}
                     ref={contentRef}
-                    onBlur={() => {
-                        store.visible = false
-                        store.isFocus = false
-                    }}
-                    onFocus={() => {
-                        store.isFocus = true
-                    }}
+                    // onBlur={() => {
+                    //     store.visible = false
+                    //     store.isFocus = false
+                    // }}
+                    // onFocus={() => {
+                    //     store.isFocus = true
+                    // }}
                 >
                     {switchContent()}
                 </div>

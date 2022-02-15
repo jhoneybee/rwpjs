@@ -158,7 +158,7 @@ export function createStore(props: TableProps) {
                 })
             }
 
-            loopsGroupData(id === undefined ? onBeforeGroupData(groupDatas! as any[]) : groupDatas)
+            loopsGroupData(onBeforeGroupData(groupDatas! as any[]))
             return newData
         },
         setGroupColumn(groupColumn: string[]) {

@@ -87,7 +87,7 @@ export default () => {
                 groupColumn={group}
                 groupRenderer={({ row }) => {
                     // console.log(JSON.parse(JSON.stringify(row)))
-                    return JSON.stringify(row.$id)
+                    return JSON.stringify(row.$title)
                 }}
                 loadData={loadData}
                 getPopupContainer={(element: HTMLDivElement) => {
