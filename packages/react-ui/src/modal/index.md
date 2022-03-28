@@ -46,9 +46,13 @@ export default () => {
               width={900}
               mask={false}
               maskClosable={true}
-              onOk={async () => {
+              onOk={() => {
                 // modal2.current.show()
-                return true
+                return new Promise((re) => {
+                    setTimeout(() => {
+                        re();
+                    }, 1000)
+                })
               }}
               title="这是一个简单的对话框"
             >

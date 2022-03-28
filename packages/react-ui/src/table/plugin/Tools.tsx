@@ -14,9 +14,11 @@ import './style/tools.less'
 const tableClassPrefix = `${classPrefix}-table`
 
 export const Tools: FC<{
-    renderPluginToolExt?: (globalStore: any) => ReactNode
+    renderPluginToolExt?: (globalStore: any) => ReactNode,
+    renderPluginToolHeight?: number
 }> = ({
-    renderPluginToolExt
+    renderPluginToolExt,
+    renderPluginToolHeight
 }) => {
     const store = useLocalStore(() => ({
         visible: false,
@@ -35,7 +37,7 @@ export const Tools: FC<{
 
     useEffect(() => {
         autorun(() => {
-            store.treeHeight = divRef.current!.clientHeight - 30 - 200
+            store.treeHeight = divRef.current!.clientHeight - 30 - (renderPluginToolHeight || 0)
         })
     }, [store.visible])
     
@@ -100,7 +102,7 @@ export const Tools: FC<{
                             />
                             <div
                                 style={{
-                                    height: 200
+                                    height: renderPluginToolHeight
                                 }}
                             >
                                 {renderPluginToolExt?.(globalStore)}

@@ -364,7 +364,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                         className={`${tableClassPrefix}-content`}
                     >
                     {rdg}
-                    {getPluginNode(<Tools renderPluginToolExt={props.renderPluginToolExt} />)}
+                    {getPluginNode(<Tools renderPluginToolExt={props.renderPluginToolExt} renderPluginToolHeight={props.renderPluginToolHeight} />)}
                     </div>
                     {props.mode === 'HIDE-FOOTER' ?  null : getPluginNode(footer)}
 
