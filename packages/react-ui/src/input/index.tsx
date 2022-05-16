@@ -19,7 +19,7 @@ interface InputProps extends AntInputProps {
     bordered?: boolean
 }
 
-export const Input = React.forwardRef<AntInput>((props: InputProps, ref) => {
+export const Input = React.forwardRef<any>((props: InputProps, ref) => {
     const { onChange, ...restProps } = props
     return <AntInput ref={ref} {...restProps} onChange={e => {
         if (onChange) {

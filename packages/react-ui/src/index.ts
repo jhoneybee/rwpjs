@@ -1,4 +1,4 @@
-import 'antd/dist/antd.css'
+// import 'antd/dist/antd.css'
 
 import './polyfill/sort'
 
@@ -46,7 +46,7 @@ export { Skeleton } from './skeleton'
 export { Upload, UploadPicturesWall } from './upload'
 export { Carousel } from './carousel'
 export { Collapse } from './collapse'
-export { Descriptions } from './descriptions' 
+export { Descriptions } from './descriptions'
 export { Breadcrumb } from './breadcrumb'
 export { Incubator } from './incubator'
 

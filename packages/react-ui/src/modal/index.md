@@ -75,6 +75,90 @@ export default () => {
 ```
 
 
+```tsx
+/**
+ * debug: true
+ * title: 测试高阶函数
+ */
+import React, { useState, useRef } from 'react';
+import { Modal, Button } from '@rwp/react-ui';
+import { message, Input } from 'antd';
+import 'antd/dist/antd.css'
+
+/** Mock 请求数据, 或则一些耗时操作 */
+const requestData = () => {
+    return new Promise<void>((resolve) => {
+        setTimeout(() => {
+            resolve('模拟任务执行完成.');
+        }, 3000);
+    });
+};
+
+
+const withTestModal = (Component) => {
+    return class extends React.Component {
+        modal = React.createRef()
+
+
+        render() {
+            return (
+                <>
+                    <Button
+                        onClick={() => {
+                            this.modal.current.show()
+                        }}
+                    >
+                        点击显示弹出框
+                    </Button>
+                    <Modal
+                        title="这是一个弹出框"
+                        modal={this.modal}
+                    >
+                        <Component
+                            ref={(ref) => {
+                                console.log('test ref', ref)
+                            }}
+                        />
+                    </Modal>
+                </>
+            )
+        }
+    }
+}
+
+
+
+// const withTestComponent = (Component) => {
+//     return class extends React.Component {
+//         render() {
+//             return <Component />
+//         }
+//     }
+// }
+
+
+class TestComponent extends React.Component {
+    render() {
+        return (
+            <div> test 数据信息 </div>
+        )
+    }
+}
+
+// const Test = withTestComponent(TestComponent)
+
+const TempModal = withTestModal(TestComponent)
+
+export default () => {
+    return (
+        <>
+            <TempModal />
+        </>
+    );
+};
+```
+
+
 ## API
 
 

@@ -100,7 +100,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
         })
     }, [])
 
-    
+
 
     useEffect(() => {
         store.setGroupColumn(props.groupColumn || [])
@@ -137,7 +137,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
 
         if (store.visibleColumns === null || store.visibleColumns?.length === 0 || noExist.length > 0) {
             store.visibleColumns = props.columns.map(ele => ele.name)
-        } 
+        }
 
     }, [props.columns])
 
@@ -259,15 +259,19 @@ export const Table = observer<TableProps>((props: TableProps) => {
                     // 如果是单选
                     if (props.selectBox === 'single') {
                         if (store.selectedRows.size > 0) {
-                            store.setSelectedRows(new Set<any>([Array.from(select)[1]]), props.onSelectedRowsChange)
+                            const newKeys = new Set<any>([Array.from(select)[1]])
+                            props.onSelectedRowsChange?.(newKeys)
+                            store.setSelectedRows(newKeys)
                         } else {
-                            store.setSelectedRows(select, props.onSelectedRowsChange)
+                            props?.onSelectedRowsChange?.(select)
+                            store.setSelectedRows(select)
                         }
                     }
 
                     // 如果是多选
                     if (props.selectBox === 'multiple') {
-                        store.setSelectedRows(select, props.onSelectedRowsChange)
+                        props?.onSelectedRowsChange?.(select)
+                        store.setSelectedRows(select)
                     }
                 }}
                 rowClass={props.rowClass}
@@ -294,7 +298,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
         <div
             className={`${tableClassPrefix}-footer`}
         >
-           
+
             <span
                 className={`${tableClassPrefix}-footer-total`}
             >

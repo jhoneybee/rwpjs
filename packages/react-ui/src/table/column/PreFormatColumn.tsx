@@ -35,7 +35,7 @@ export const preFormatColumn = (
             bodyTextAlign = colAlign as 'left' | 'right' | 'center'
             headerTextAlign = colAlign as 'left' | 'right' | 'center'
         }
-        const { 
+        const {
             name,
             title,
             editor,
@@ -50,7 +50,7 @@ export const preFormatColumn = (
             ...restProps
         } = element
 
-       
+
         const getEditor = () => {
             const TempEditor = editable ? editor || Input : undefined
             return TempEditor ? React.forwardRef((
@@ -193,13 +193,14 @@ export const preFormatColumn = (
                                     selectKeys.add(value)
                                 })
                             }
-                            store.setSelectedRows(selectKeys, tableProps.onSelectedRowsChange)
+                            tableProps?.onSelectedRowsChange?.(selectKeys)
+                            store.setSelectedRows(selectKeys)
                         }}
                     />
                 )
             } : () => {
                 if (tableProps.selectHeaderRenderer ) {
-                    const SelectHeaderRenderer = tableProps.selectHeaderRenderer 
+                    const SelectHeaderRenderer = tableProps.selectHeaderRenderer
                     return <SelectHeaderRenderer />
                 }
                 return null

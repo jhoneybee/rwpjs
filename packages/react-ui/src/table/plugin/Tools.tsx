@@ -40,7 +40,7 @@ export const Tools: FC<{
             store.treeHeight = divRef.current!.clientHeight - 30 - (renderPluginToolHeight || 0)
         })
     }, [store.visible])
-    
+
     return useObserver(() => {
         const switchContent = () => {
             if (store.activeKey === 'column'){
@@ -74,7 +74,7 @@ export const Tools: FC<{
                                     if (target.checked) {
                                         globalStore.setVisibleColumns(globalStore.columns.map(ele => ele.name))
                                     } else {
-                                        globalStore.setVisibleColumns([])
+                                        globalStore.setVisibleColumns(['$select'])
                                     }
                                 }}
                             >
@@ -87,7 +87,7 @@ export const Tools: FC<{
                                 onCheck={checked => {
                                     globalStore.setVisibleColumns(checked as string[])
                                 }}
-                                
+
                                 height={store.treeHeight}
                                 draggable
                                 onDrop={info => {
@@ -165,5 +165,5 @@ export const Tools: FC<{
                 </div>
             </>
         )
-    }) 
+    })
 }

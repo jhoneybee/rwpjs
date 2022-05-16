@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { ReactNode, useEffect, useRef } from 'react'
 
 import { Modal, ModalHandle } from '../modal'
 
@@ -32,21 +32,25 @@ export interface IncubatorProps {
      */
     downloadAddress: string
 
+
     /**
      * 当前实例，可以用来open打开
      */
     incubator: React.MutableRefObject<IncubatorHandle | null>
-    
+
     /**
      * 保存文件触发的事件
      */
     onSaveFile?: (params: Object) => void
+
+    renderModalContent?: (node: ReactNode) => ReactNode
 }
 
 export const Incubator = ({
     downloadAddress,
     incubator,
-    onSaveFile
+    onSaveFile,
+    renderModalContent = (node) => node
 }: IncubatorProps) => {
     const modal = useRef<ModalHandle>(null)
 
@@ -69,11 +73,11 @@ export const Incubator = ({
             }
         }
     }
-    useEffect(() => {        
+    useEffect(() => {
         // 如果没有连接上则提示用户下载插件
         if (incubatorSocket.readyState === incubatorSocket.CLOSED) {
             modal.current?.show();
-            
+
             // 每4秒尝试重新连接
             const reconnect = setInterval(() => {
                 if (incubatorSocket.readyState === incubatorSocket.CLOSED) {
@@ -96,7 +100,11 @@ export const Incubator = ({
         <Modal
             modal={modal}
         >
-            点击下载 RWP-Incubator 插件, 下载地址 <a href={downloadAddress}>{downloadAddress}</a>
+            {renderModalContent((
+                <>
+                    点击下载 RWP-Incubator 插件, 下载地址 <a href={downloadAddress}>{downloadAddress}</a>
+                </>
+            ))}
         </Modal>
     )
 }

@@ -78,10 +78,8 @@ export function createStore(props: TableProps) {
             this.columns.splice(targeColumnIndex!, 1, column!)
             props.onChangeColumn?.(this.columns);
         },
-        setSelectedRows(keys: Set<Row[keyof Row]>, onSelectedRowsChange?: (selectedRows: Set<Row[keyof Row]>) => void) {
-            onSelectedRowsChange?.(keys)
+        setSelectedRows(keys: Set<Row[keyof Row]>) {
             this.selectedRows = keys
-
         },
         setExpandedKeys(keys: string[], id: string) {
             this.expandedKeys = keys
@@ -130,7 +128,7 @@ export function createStore(props: TableProps) {
             const historyExpandedKeys: string[] = []
 
             const loopsGroupData = (loppsData: GroupRowData[] | Row[]) => {
-                
+
                 loppsData.forEach(ele => {
                     if (ele.$parent === null) {
                         newData.push(ele)
@@ -237,7 +235,7 @@ export function createStore(props: TableProps) {
                 const { datas } = this
                 if (e.action === 'CELL_UPDATE' || e.action === 'COPY_PASTE') {
                     rows[e.toRow] = { ...rows[e.toRow], ...(e.updated as any) }
-                    const index = datas.findIndex(ele => ele.$index === rows[e.toRow].$index ) 
+                    const index = datas.findIndex(ele => ele.$index === rows[e.toRow].$index )
                     datas[index] = { ...rows[e.toRow], ...(e.updated as any) }
                     updates.push({ ...rows[e.toRow], ...(e.updated as any) })
                 }
@@ -249,7 +247,7 @@ export function createStore(props: TableProps) {
                     }
                     rows.forEach((value, index) => {
                         if (cells.includes(index)) {
-                            const dataIndex = datas.findIndex(ele => ele.$index === rows[index].$index ) 
+                            const dataIndex = datas.findIndex(ele => ele.$index === rows[index].$index )
                             datas[dataIndex] = { ...rows[index], ...(e.updated as any) }
                             updates.push({ ...rows[index], ...(e.updated as any) })
                         }
