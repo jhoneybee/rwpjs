@@ -23,6 +23,7 @@ export const Modal = ({
     modal,
     className,
     wrapClassName,
+    onOk,
     ...restProps
 }: Props) => {
 
@@ -50,6 +51,13 @@ export const Modal = ({
                 [`${classPrefix}-modal`]: true,
                 [className || '']: true,
             })}
+            onOk={(event) => {
+                const result = onOk?.(event)
+                if (result === true) {
+                    return result
+                }
+                return false
+            }}
             wrapClassName={classNames({
                 // [`${classPrefix}-modal-mask-hide`]: maskHide,
                 [wrapClassName || '']: true,
