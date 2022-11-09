@@ -51,13 +51,7 @@ export const Modal = ({
                 [`${classPrefix}-modal`]: true,
                 [className || '']: true,
             })}
-            onOk={(event) => {
-                const result = onOk?.(event)
-                if (result === true) {
-                    return result
-                }
-                return false
-            }}
+            onOk={onOk}
             wrapClassName={classNames({
                 // [`${classPrefix}-modal-mask-hide`]: maskHide,
                 [wrapClassName || '']: true,

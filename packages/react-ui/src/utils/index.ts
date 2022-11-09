@@ -24,7 +24,7 @@ let beforeIdx: number | undefined
  */
 export const toDoubleClick = (callback: () => void, idx?: number) => {
     if (idx === beforeIdx || beforeIdx === undefined) {
-        singleClickNumber += 1 
+        singleClickNumber += 1
         if (
             lastClickDate !== null &&
             singleClickNumber > 1 &&
@@ -35,7 +35,7 @@ export const toDoubleClick = (callback: () => void, idx?: number) => {
         }
         lastClickDate = new Date()
     }else {
-        singleClickNumber = 1 
+        singleClickNumber = 1
         lastClickDate = new Date()
     }
     beforeIdx = idx

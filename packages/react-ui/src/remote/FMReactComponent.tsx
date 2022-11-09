@@ -1,11 +1,11 @@
 /* eslint-disable */
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import { ComponentType } from 'react-dom/node_modules/@types/react';
 
 const loadDynamicScript: string[] = []
 
 const useDynamicScript = (url: string) => {
-    
+
     const [ready, setReady] = React.useState(false);
     const [failed, setFailed] = React.useState(false);
 
@@ -65,7 +65,7 @@ interface FMReactComponentProps {
 
 const shareModuleDeps = async (scope: string, moduleDeps?: {[dependencyName: string]: any}) => {
     if (!moduleDeps || moduleDeps.length <= 0 ) return
-    let sharedScope: {[key: string] : object} = {}  
+    let sharedScope: {[key: string] : object} = {}
     for (const dep in moduleDeps) {
         const required = moduleDeps[dep]
         sharedScope[dep] = {
@@ -95,7 +95,20 @@ export const FMReactComponent = ({
     componentProps = {}
 }: FMReactComponentProps) => {
     const { ready, failed } = useDynamicScript(url);
-  
+
+    const [component , setComponent] = useState<any>(<div />)
+    useEffect(() => {
+        const LazyComponent = React.lazy(
+            async () =>
+              // eslint-disable-next-line no-return-await
+              await (window as any)[scope].get(module).then((factory: any) => {
+                const Module = factory();
+                return Module;
+              })
+        );
+        setComponent(<LazyComponent {...componentProps} />)
+    }, [])
+
     if (ready) {
         shareModuleDeps(scope, {
             "react": react,
@@ -103,27 +116,18 @@ export const FMReactComponent = ({
             ...moduleDeps
         })
     }
-  
+
     if (!ready) {
       return loadingScript({ url })
     }
-  
+
     if (failed) {
       return loadingScriptFailed({ url })
     }
-  
-    const Component = React.lazy(
-      async () =>
-        // eslint-disable-next-line no-return-await
-        await (window as any)[scope].get(module).then((factory: any) => {
-          const Module = factory();
-          return Module;
-        })
-    );
-  
+
     return (
       <React.Suspense fallback="">
-        <Component {...componentProps} />
+          {component}
       </React.Suspense>
     );
 }
