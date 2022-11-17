@@ -12,7 +12,7 @@ export interface ModalHandle {
 
 interface Props extends Omit<ModalProps,
     'visible' |
-    'changeVisible'
+    'onChangeVisible'
     > {
     modal?: React.MutableRefObject<ModalHandle | null>
     children?: ReactNode,
@@ -46,7 +46,7 @@ export const Modal = ({
     return (
         <AntModal
             visible={visible}
-            changeVisible={setVisible}
+            onChangeVisible={setVisible}
             className={classNames({
                 [`${classPrefix}-modal`]: true,
                 [className || '']: true,
