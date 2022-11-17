@@ -30,7 +30,10 @@
     "dependencies": {
         "@ant-design/icons": "~4.3.0",
         "@ant-design/pro-layout": "~6.13.0",
-        "@weblif/fast-ui": "^0.2.4-canary",
+        "@dnd-kit/core": "~6.0.5",
+        "@dnd-kit/modifiers": "~6.0.0",
+        "@dnd-kit/utilities": "~3.2.0",
+        "@weblif/fast-ui": "~0.29.8-react16",
         "classnames": "~2.2.6",
         "lodash": "~4.17.15",
         "mobx": "~5.15.6",
