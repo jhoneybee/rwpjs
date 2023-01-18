@@ -1,6 +1,5 @@
 /* eslint-disable */
 import React, { ReactNode, useEffect, useRef, useState } from 'react'
-import { ComponentType } from 'react-dom/node_modules/@types/react';
 
 const loadDynamicScript: string[] = []
 

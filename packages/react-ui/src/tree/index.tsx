@@ -17,27 +17,27 @@ const getPopupContainer = (container: HTMLElement) => {
 export interface TreeHandle {
 
     // 重新加载表格信息
-    reload: (treeNode?: EventDataNode) => Promise<void>,
+    reload: (treeNode?: EventDataNode<any>) => Promise<void>,
 
     // 滚动到指定的位置
     scrollTo: (key: string) => void
 
     // 更新节点数据
-    update: (callback: (dataNode: EventDataNode) => void) => void
+    update: (callback: (dataNode: EventDataNode<any>) => void) => void
 
     // 删除指定的节点,callback返回为true则删除此节点
-    del: (callback: (dataNode: EventDataNode) => boolean) => void
+    del: (callback: (dataNode: EventDataNode<any>) => boolean) => void
 
     // 筛选节点,
-    filter: (callback: () => Promise<EventDataNode[]>) => void
+    filter: (callback: () => Promise<EventDataNode<any>[]>) => void
 
     /**
      * 获取当前右键的上下文
      */
-    rightContext: () => EventDataNode | null
+    rightContext: () => EventDataNode<any> | null
 }
 
-interface CustomEventDataNode extends EventDataNode{
+interface CustomEventDataNode extends EventDataNode<any>{
     parent?: CustomEventDataNode
 }
 
@@ -55,7 +55,7 @@ export interface Props extends Omit<TreeProps,
     'onDrop'
     > {
     // 装载数据的信息
-    loadData: (treeNode: EventDataNode | null) => Promise<DataNode[]>;
+    loadData: (treeNode: EventDataNode<any> | null) => Promise<DataNode[]>;
     overlay?: React.ReactElement | OverlayFunc
     tree?: React.MutableRefObject<TreeHandle | null>
     // 采用文件目录的结构
@@ -63,7 +63,7 @@ export interface Props extends Omit<TreeProps,
     // 全部展开节点
     expandAll?: boolean
     onDrop?: (info: NodeDragEventParams & {
-        dragNode: EventDataNode;
+        dragNode: EventDataNode<any>;
         dragNodesKeys: Key[];
         dropPosition: number;
         dropToGap: boolean;
@@ -93,12 +93,12 @@ const update = (nodes: DataNode[], overlay?: React.ReactElement | OverlayFunc) =
                         trigger={['contextMenu']}
                         getPopupContainer={getPopupContainer}
                     >
-                        <span>{ele.title}</span>
+                        <span>{ele.title as any}</span>
                     </Dropdown>
                 )
             }
             if (ele.children) {
-                update(ele.children as EventDataNode[], overlay)
+                update(ele.children as EventDataNode<any>[], overlay)
             }
 
         })
@@ -115,7 +115,7 @@ export const Tree = (props: Props) => {
     // 设置选中的节点
     const [selectedKeys, setSelectedKeys] = useState<(string | number)[]>(props.selectedKeys || [])
     // 获取当前右键的节点
-    const contextNode = useRef<EventDataNode | null>(null)
+    const contextNode = useRef<EventDataNode<any> | null>(null)
     // 设置选中的tree
     const [checkedKeys, setCheckedKeys] = useState<Key[] | {
         checked: Key[];
@@ -139,18 +139,18 @@ export const Tree = (props: Props) => {
       
         update(tempTreeNode, props.overlay);
 
-        setTreeNodes(tempTreeNode as EventDataNode[])
+        setTreeNodes(tempTreeNode as EventDataNode<any>[])
         setExpandedKeys(expandedKeys.concat(joinExpandedKeys))
     }
 
 
-    const filter = (callback: (dataNode: EventDataNode) => boolean) => {
-        const loopsDel = (loopNodes: EventDataNode[]): EventDataNode[] => {
-            const resultNodes: EventDataNode[] = []
+    const filter = (callback: (dataNode: EventDataNode<any>) => boolean) => {
+        const loopsDel = (loopNodes: EventDataNode<any>[]): EventDataNode<any>[] => {
+            const resultNodes: EventDataNode<any>[] = []
             loopNodes.forEach(ele => {
                 if (callback(ele)) return
                 if (ele.children && ele.children.length > 0) {
-                    const children: EventDataNode[] = ele.children as EventDataNode[]
+                    const children: EventDataNode<any>[] = ele.children as EventDataNode<any>[]
                     resultNodes.push({
                         ...ele,
                         children: loopsDel(children),
@@ -183,7 +183,7 @@ export const Tree = (props: Props) => {
                         const some = (chil: DataNode) => {
                             if (chil.key === treeNode.key) {
                                 currentNode = ele as CustomEventDataNode
-                                props.loadData(ele as EventDataNode).then(nodeData => {
+                                props.loadData(ele as EventDataNode<any>).then(nodeData => {
                                     // eslint-disable-next-line no-param-reassign
                                     ele.children = nodeData.map(node => {
                                         let { title } = node
@@ -194,7 +194,7 @@ export const Tree = (props: Props) => {
                                                     getPopupContainer={getPopupContainer}
                                                     trigger={['contextMenu']}
                                                 >
-                                                    <span>{node.title}</span>
+                                                    <span>{node.title as any}</span>
                                                 </Dropdown>
                                             )
                                         }
@@ -213,7 +213,7 @@ export const Tree = (props: Props) => {
                         }
                         return children.some(some)
                     }
-                    findTreeNode(treeNodes, findTreeNodeFun)
+                    findTreeNode(treeNodes as any, findTreeNodeFun)
                 })
                 if (currentNode) {
                     const loops = (node: CustomEventDataNode) => {
@@ -253,8 +253,8 @@ export const Tree = (props: Props) => {
                 setLoadedKeys(loadKeys)
             },
             update: callback => {
-                findTreeNode(treeNodes, treeNode => {
-                    callback(treeNode as EventDataNode);
+                findTreeNode(treeNodes as any, treeNode => {
+                    callback(treeNode as EventDataNode<any>);
                     let { title } = treeNode
                     if (props.overlay) {
                         title = (
@@ -263,7 +263,7 @@ export const Tree = (props: Props) => {
                                 trigger={['contextMenu']}
                                 getPopupContainer={getPopupContainer}
                             >
-                                <span>{treeNode.title}</span>
+                                <span>{treeNode.title as any}</span>
                             </Dropdown>
                         )
                     }
@@ -273,7 +273,7 @@ export const Tree = (props: Props) => {
                 })
                 setTreeNodes([...treeNodes])
             },
-            del: (callback: (dataNode: EventDataNode) => boolean) => {
+            del: (callback: (dataNode: EventDataNode<any>) => boolean) => {
                 setTreeNodes(filter(callback))
             },
             rightContext: () => contextNode.current,
@@ -312,7 +312,7 @@ export const Tree = (props: Props) => {
                     setExpandedKeys(expandedKeys.concat(children.map(ele => ele.key)))
                 }
 
-                findTreeNode(treeNodes, ele => {
+                findTreeNode(treeNodes as any, ele => {
                     if (ele.key === treeNode.key) {
                         // eslint-disable-next-line no-param-reassign
                         ele.children = children.map(chil => {
@@ -324,7 +324,7 @@ export const Tree = (props: Props) => {
                                         trigger={['contextMenu']}
                                         getPopupContainer={getPopupContainer}
                                     >
-                                        <span>{chil.title}</span>
+                                        <span>{chil.title as any}</span>
                                     </Dropdown>
                                 )
                             }
@@ -356,7 +356,7 @@ export const Tree = (props: Props) => {
             expandedKeys={expandedKeys}
             selectedKeys={selectedKeys}
             loadedKeys={loadedKeys}
-            treeData={treeNodes}
+            treeData={treeNodes as any}
             checkStrictly={props.checkStrictly}
             height={props.height}
             autoExpandParent={props.autoExpandParent}
@@ -454,8 +454,8 @@ export const Tree = (props: Props) => {
 
                 const commit = () => {
                     if (preventDefault) return
-                    const data = loops(treeNodes)
-                    setTreeNodes(data as EventDataNode[])
+                    const data = loops(treeNodes as any)
+                    setTreeNodes(data as EventDataNode<any>[])
                 }
                 if (props.onDrop) {
                     const onDropResult = props.onDrop({

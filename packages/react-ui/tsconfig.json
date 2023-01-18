@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "importHelpers": true,
     "jsx": "react",
@@ -23,6 +23,7 @@
     "dist",
     "typings",
     "**/__test__",
+    "**/demo",
     "test"
   ]
 }

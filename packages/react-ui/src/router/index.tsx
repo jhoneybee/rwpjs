@@ -50,7 +50,7 @@ const Loading = () => {
 
 interface RouterProps {
     // 当前路由的布局信息
-    layout: React.FunctionComponent
+    layout: React.FunctionComponent<any>
     // 当前的路由信息
     routes: Component[]
 }
