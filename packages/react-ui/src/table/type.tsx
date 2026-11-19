@@ -66,6 +66,9 @@ export interface TableHandle extends DataGridHandle {
      */
     getDataSource: () => Row[]
 
+    /** 获取全部业务列；可选择包含选择列、展开列，并附带当前显示索引和实际宽度 */
+    getColumns: (options?: { includeSystem?: boolean }) => TableColumnInfo[]
+
     /**
      * 获取当前选择的数据
      */
@@ -87,10 +90,10 @@ export interface TableHandle extends DataGridHandle {
     update: (change: (oldData: Row) => Row) => Promise<void>
 
     /**
-     * 重新装载表格数据
+     * 重新装载表格数据，按 rowKey 保留本地未保存的编辑字段
      * @param 表格请求数据的参数
      */
-    reload: (param: Object) => Promise<void>
+    reload: (param?: Object) => Promise<void>
 
     /**
      * 删除返回为true的数据
@@ -104,6 +107,9 @@ export interface TableHandle extends DataGridHandle {
 
 
     getRowEditData: () => { name: string, value: any}[]
+    setExpandedKeys: (keys: string[], id: string) => void
+    getExpandedKeys: () => string[]
+    getGroupDatas: () => Row[]
 }
 
 export interface ColumnProps {
@@ -146,6 +152,18 @@ export interface ColumnProps {
         editOnClick?: boolean;
         onCellKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
     };
+}
+
+export interface TableColumnInfo extends ColumnProps {
+    key: string
+    kind: 'data' | 'selection' | 'expandable'
+    visible: boolean
+    /** 当前显示索引，包含系统列；隐藏列为 -1 */
+    idx: number
+    left?: number
+    configuredWidth?: number | string
+    /** 当前实际宽度（像素）；隐藏列未参与布局计算时为空 */
+    actualWidth?: number
 }
 
 export declare type TableFunc = (table: TableHandle) => void;
@@ -271,12 +289,15 @@ export interface TableProps {
     /**
      * 用户更新表格Rows的事件
      */
-    onRowsUpdate?: <E extends RowsUpdateEvent>(event: E, onCommit: () => void) => Promise<void>;
+    onRowsUpdate?: <E extends RowsUpdateEvent>(event: E, onCommit: () => Promise<Row[]>) => void | Promise<void | Row[]>;
 
     /**
      * 改变列的时候触发的事件
      */
     onChangeColumn?: (columns: ColumnProps[]) => void
+
+    /** idx 是包含固定列重排、选择列和展开列后的显示索引，width 是约束后的实际像素宽度 */
+    onColumnResize?: (idx: number, width: number, column: TableColumnInfo, columns: TableColumnInfo[]) => void
 
     /**
      * 改变渲染的数据

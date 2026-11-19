@@ -44,7 +44,7 @@ export const Tools: FC<{
     return useObserver(() => {
         const switchContent = () => {
             if (store.activeKey === 'column'){
-                const loadData = async (node: EventDataNode | null) => {
+                const loadData = async (node: EventDataNode<any> | null) => {
                     if(node === null){
                         return (toJS(globalStore.columns) as any[]).map(column => ({
                             title: column.title,

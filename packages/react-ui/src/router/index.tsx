@@ -1,10 +1,10 @@
 import React, { Suspense, useEffect } from 'react';
 
 import {
-    BrowserRouter,
     Switch,
     Route,
     RouteComponentProps,
+    BrowserRouter,
 } from 'react-router-dom';
 
 import nprogress from 'nprogress'
@@ -20,6 +20,7 @@ interface Component {
     component: React.FunctionComponent<RouteComponentProps>
 }
 
+// @ts-check
 /**
  *  path       路由路径
  *  routes     子路由信息
@@ -50,13 +51,14 @@ const Loading = () => {
 
 interface RouterProps {
     // 当前路由的布局信息
-    layout: React.FunctionComponent
+    layout: React.FunctionComponent<any>
     // 当前的路由信息
     routes: Component[]
 }
 
+const BrowserRouters = BrowserRouter as any
 export const Router = ({ routes, layout: Layout }: RouterProps) => (
-    <BrowserRouter>
+    <BrowserRouters>
         <Layout>
             <Suspense fallback={<Loading />}>
                 <Switch>
@@ -73,5 +75,5 @@ export const Router = ({ routes, layout: Layout }: RouterProps) => (
                 </Switch>
             </Suspense>
         </Layout>
-    </BrowserRouter>
+    </BrowserRouters>
 )

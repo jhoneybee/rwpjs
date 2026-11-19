@@ -14,6 +14,8 @@ title: Table 表格
 
 ## 代码演示
 
+<code src="./demo/group-edit-table.tsx" />
+
 <code src="./demo/base-table.tsx" />
 
 <code src="./demo/select-table.tsx" />
@@ -47,7 +49,9 @@ title: Table 表格
 |overlay | 右键菜单   | `React.ReactElement`&#124;`OverlayFunc`|
 |onSort      | 排序触发的事件| `(sortColumns: SortColumn[]) => void;`| -
 |onRowClick  | 表格的row的点击事件| `(rowIdx: number, row: T, column: CalculatedColumn<T>) => void;`
-|onRowsUpdate| 用户更新表格触发的事件| ` <E extends RowsUpdateEvent>(event: E, onCommit: () => void) => Promise<boolean>;`
+|onRowsUpdate| 用户更新表格触发的事件，调用 onCommit 提交本地修改 | `(event: RowsUpdateEvent, onCommit: () => Promise<Row[]>) => void \| Promise<void \| Row[]>`
+|onColumnResize| 拖动列宽时触发，返回实际显示索引、像素宽度、当前列及全部业务列快照 | `(idx: number, width: number, column: TableColumnInfo, columns: TableColumnInfo[]) => void`
+|onChangeColumn| 列顺序、显隐或业务列宽度变化时触发 | `(columns: ColumnProps[]) => void`
 |onSelectedRowsChange| 用户改变行选择框的时候触发事件| `onSelectedRowsChange?: (selectedRows: Set<Row[keyof Row]>) => void`
 |table       | 用来获取当前的表格进行数据操作 | `TableHandle`
 |rowClass | 设置当前行的class名称 | `(row: T) => string` \| `undefined`;
@@ -63,9 +67,10 @@ title: Table 表格
 | rightContext     | 获取右键的上下文信息| `() => { row, rowIdx, column }` 
 | update           | 更新表格的数据  | `(change: (oldData: T) => T) => void`
 | getDataSource    | 获取当前表格的所有数据| `() => T[]`
+| getColumns       | 获取全部业务列的完整配置和布局信息；可选择包含系统列 | `(options?: { includeSystem?: boolean }) => TableColumnInfo[]`
 | getSelect        | 获取当前选中的数据    | `() => Set<T[keyof T]>`
 | setSelect        | 设置选中的数据        | `(selects: Set<T[keyof T]>) => void`
-| reload           | 重新装载表格         | `(param: Object) => void`
+| reload           | 重新装载表格，保留本地编辑字段和有效的分组展开状态 | `(param?: Object) => Promise<void>`
 | del              | 删除返回为true的数据 | `(filter: (ele: T) => boolean) => void`
 | add              | 新增表格一行数据     | `(rows: Row[], start: number) => void`
 
@@ -118,6 +123,60 @@ const Demo = () => {
 ```
 
 ## FAQ 
+
+#### 拖动列宽后如何获取最新的完整列配置？
+
+使用 `onColumnResize` 获取即时结果，或随时调用 `table.current.getColumns()`。回调内调用 getter 也能同步得到本次拖动后的宽度，不需要等待重绘。
+
+```tsx | pure
+import React, { useRef } from 'react'
+import { Table, TableHandle } from '@rwp/react-ui'
+
+const table = useRef<TableHandle | null>(null);
+
+<Table
+    table={table}
+    columns={columns}
+    loadData={loadData}
+    onColumnResize={(idx, width, column, allColumns) => {
+        console.log(column.name, width, idx)
+        console.log(allColumns) // 全部业务列，含隐藏列，按配置顺序排列
+        console.log(table.current?.getColumns()) // 与 allColumns 一致
+    }}
+/>
+
+// 包含选择列、展开列的布局快照：可见列按实际显示顺序，隐藏业务列放在末尾。
+const layout = table.current?.getColumns({ includeSystem: true })
+```
+
+业务列保留原始配置中的标题、编辑器、formatter 及自定义字段，并附加以下信息：
+
+| 字段 | 含义 |
+| --- | --- |
+| `name` / `key` | 业务字段名；系统列使用 `$select`、`$expandable` |
+| `kind` | `data`、`selection`、`expandable` |
+| `visible` | 是否参与当前显示布局 |
+| `idx` | 底层实际显示索引，包含固定列重排及系统列；隐藏列为 `-1` |
+| `width` | 可见列的实际像素宽度；隐藏列保留配置宽度或最近拖动后的受约束宽度 |
+| `actualWidth` | 可见列的实际像素宽度；隐藏列为 `undefined` |
+| `configuredWidth` | 当前配置值，尚未手动调整的百分比宽度仍保留百分比字符串 |
+| `left` | 列在网格布局中的偏移；隐藏列为 `undefined` |
+
+`getColumns()` 默认只返回业务列，按业务配置顺序排列。数组下标不等于显示索引，请用 `name`/`key` 匹配列。`includeSystem: true` 会额外返回系统列的布局信息；它们不会被误写到业务列配置中。`onColumnResize` 的 `width` 已应用 `minWidth`/`maxWidth` 约束；业务列变宽时也会触发 `onChangeColumn`，该回调仍返回 `ColumnProps[]`。
+
+返回值是独立配置快照，修改它不会直接改变表格。百分比宽度、自适应宽度以及固定列排序使用底层网格的同一套计算规则；尺寸由网格容器的 ResizeObserver 更新。
+
+#### 编辑后刷新会丢失输入吗？
+
+刷新按钮和 `table.current.reload()` 都支持分组状态。刷新会按 `rowKey` 将本地修改的字段合并到新的 `loadData` 响应，其他字段使用服务端最新值；行编辑中的输入在普通重绘时也会保留。`getDataSource()` 可读取合并后的数据。刷新不会自动调用服务端保存接口。
+
+请为 `rowKey` 使用稳定、唯一的业务标识，例如 `rowKey="id"`，并保持该标识不被编辑。`$index` 和未指定 `rowKey` 时的默认行序号，只适用于刷新前后顺序不变的数据。只会对新响应中标识匹配的行合并修改，不会把已过滤或已删除的行强行加入响应。
+
+服务端返回与某个本地编辑字段相同的值时，该字段的本地覆盖会自动清除，后续刷新可以正常接收该字段的新值。默认单元格更新会提交到本地；自定义 `onRowsUpdate` 时，仍由业务代码在合适时机调用 `await onCommit()`，并自行完成服务端保存。
+
+双击单元格后，可以按 Enter、Tab，或让输入框失焦提交本地修改；Esc 取消当前编辑。点击其他单元格或表格刷新按钮时，会先提交当前输入，再切换单元格或刷新数据。自定义编辑器需要将收到的 `onBlur` 和 `onKeyDown` 传给实际输入控件。
+
+分组数据使用原始数据统一写回，重新分组后保留有效的展开状态。刷新失败时会保留数据和本地修改，并结束 loading；通过 `reload()` 调用的失败会继续返回给调用方处理。
 
 #### 如何将单击事件转换为一个双击事件？
 

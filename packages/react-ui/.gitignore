@@ -9,6 +9,7 @@
 /dist
 /docs-dist
 /coverage
+/.artifacts
 
 # misc
 .DS_Store

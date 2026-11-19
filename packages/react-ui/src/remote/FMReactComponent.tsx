@@ -1,6 +1,5 @@
 /* eslint-disable */
 import React, { ReactNode, useEffect, useRef, useState } from 'react'
-import { ComponentType } from 'react-dom/node_modules/@types/react';
 
 const loadDynamicScript: string[] = []
 
@@ -93,7 +92,7 @@ export const FMReactComponent = ({
     loadingScript = () => <div />,
     loadingScriptFailed = () => <div />,
     componentProps = {}
-}: FMReactComponentProps) => {
+}: FMReactComponentProps): number | boolean | React.ReactFragment | React.JSX.Element | null | undefined => {
     const { ready, failed } = useDynamicScript(url);
 
     const [component , setComponent] = useState<any>(<div />)

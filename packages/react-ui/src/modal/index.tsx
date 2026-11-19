@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactNode } from 'react'
-import { Modal as AntModal, ModalProps } from '@weblif/fast-ui'
+import AntModal, { ModalProps } from '@weblif/fast-ui/es/modal'
 import classNames from 'classnames'
 import { classPrefix } from '../utils'
 
@@ -12,7 +12,7 @@ export interface ModalHandle {
 
 interface Props extends Omit<ModalProps,
     'visible' |
-    'onChangeVisible'
+    'onOpenChange'
     > {
     modal?: React.MutableRefObject<ModalHandle | null>
     children?: ReactNode,
@@ -45,8 +45,8 @@ export const Modal = ({
 
     return (
         <AntModal
-            visible={visible}
-            onChangeVisible={setVisible}
+            open={visible}
+            onOpenChange={setVisible}
             className={classNames({
                 [`${classPrefix}-modal`]: true,
                 [className || '']: true,

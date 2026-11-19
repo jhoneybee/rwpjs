@@ -46,7 +46,7 @@ export const GroupRow = ({
                     onClick={() => {
                         // 如果节点是展开的,则删除对应的数据
                         if(store.expandedKeys.includes($id)){
-                            store.setExpandedKeys(store.expandedKeys.filter(ele => !ele.includes($id)), $id)
+                            store.setExpandedKeys(store.expandedKeys.filter(ele => ele !== $id && !ele.startsWith(`${$id}/`)), $id)
                             return;
                         }
                         store.setExpandedKeys(store.expandedKeys.concat($id), $id)

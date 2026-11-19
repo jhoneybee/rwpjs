@@ -1,5 +1,6 @@
 import React, {
     useEffect,
+    useLayoutEffect,
     useRef,
     useState,
     ReactNode,
@@ -19,6 +20,7 @@ import { toJS } from 'mobx'
 import { Spin } from '../index'
 import { useRowRenderer } from './row'
 import { preFormatColumn } from './column'
+import { calculateColumns, cloneColumnConfig, getColumnInfo } from './column/layout'
 import { classPrefix } from '../utils'
 import { StoreContext, createStore } from './store'
 import { Tools } from './plugin/Tools'
@@ -35,11 +37,21 @@ import './style/index.less'
 
 const tableClassPrefix = `${classPrefix}-table`
 
+type GridResizeObserver = new (callback: (entries: { contentRect: { width: number } }[]) => void) => {
+    observe: (target: Element) => void
+    disconnect: () => void
+}
+
 export const Table = observer<TableProps>((props: TableProps) => {
     const { pageSize: pageSizeTemp = 100, pageSizeOptions = ['50', '100', '500', '1000'] } = props
 
     const [pageSize, setPageSize] = useState<number>(pageSizeTemp)
     const store = useLocalStore(createStore, props)
+    const loadRequest = useRef(0)
+    const resizedColumnWidths = useRef(new Map<string, number>())
+    const gridWidth = useRef(1)
+    const currentProps = useRef(props)
+    currentProps.current = props
 
     const gridRef = useRef<DataGridHandle | null>(null)
     const { table, enableInitLoadData } = props
@@ -49,19 +61,23 @@ export const Table = observer<TableProps>((props: TableProps) => {
 
     // 重新刷新数据,返回到第一行
     const reloadFun = async (param?: Object) => {
+        const request = ++loadRequest.current
         store.setLoading(true)
-        const res = props.loadData(1, pageSize, {
-            ...props.params,
-            ...param || {},
-        })
-        const resp = await (res as PromiseLike<{ total: number, datas: Row[] }>)
-        store.reloadRows(resp.datas)
-        store.setTotal(resp.total)
-        if (gridRef.current) {
-            gridRef.current.scrollToRow(0)
+        try {
+            const resp = await props.loadData(1, pageSize, {
+                ...props.params,
+                ...param || {},
+            })
+            if (request !== loadRequest.current) return
+            store.reloadRows(resp.datas)
+            store.setTotal(resp.total)
+            if (gridRef.current) {
+                gridRef.current.scrollToRow(0)
+            }
+            store.setSelectedRows(new Set())
+        } finally {
+            if (request === loadRequest.current) store.setLoading(false)
         }
-        store.setSelectedRows(new Set())
-        store.setLoading(false)
     }
 
     /**
@@ -87,6 +103,40 @@ export const Table = observer<TableProps>((props: TableProps) => {
     })
 
     const currentRef = useRef<HTMLDivElement>(null);
+    useLayoutEffect(() => {
+        const grid = currentRef.current?.querySelector('[role="grid"], [role="treegrid"]')
+        const ResizeObserver = (window as Window & { ResizeObserver?: GridResizeObserver }).ResizeObserver
+        if (!grid || !ResizeObserver) return undefined
+        const observer = new ResizeObserver(entries => {
+            if (entries[0]) gridWidth.current = entries[0].contentRect.width
+        })
+        observer.observe(grid)
+        return () => observer.disconnect()
+    }, [])
+
+    const getColumns: TableHandle['getColumns'] = options => getColumnInfo(
+        store.columns, store.visibleColumns, currentProps.current,
+        resizedColumnWidths.current, gridWidth.current, options?.includeSystem,
+    )
+
+    const onColumnResize = (idx: number, width: number) => {
+        if (!Number.isInteger(idx) || !Number.isFinite(width) || width <= 0) return
+        const calculated = calculateColumns(
+            store.columns, store.visibleColumns, currentProps.current,
+            resizedColumnWidths.current, gridWidth.current,
+        )
+        const column = calculated[idx]
+        if (!column) return
+        resizedColumnWidths.current.set(column.key, width)
+        const measured = getColumns({ includeSystem: true }).find(item => item.key === column.key)!
+        if (measured.kind === 'data') {
+            store.columns = store.columns.map(item => item.name === column.key ? { ...item, width: measured.width } : item)
+        }
+        const allColumns = getColumns()
+        const resized = measured.kind === 'data' ? allColumns.find(item => item.key === column.key)! : measured
+        if (resized.kind === 'data') currentProps.current.onChangeColumn?.(cloneColumnConfig(store.columns))
+        currentProps.current.onColumnResize?.(idx, resized.actualWidth!, resized, allColumns)
+    }
     useEffect(() => {
         // 装载数据
         if (enableInitLoadData) reloadFun()
@@ -155,6 +205,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 store.setVisibleColumns(visibleColumns)
             },
             getDataSource: () => cloneDeep(store.datas as Row[]),
+            getColumns,
             getSelect: () => {
                 const selectedRowsData = toJS(store.selectedRows) as unknown as Array<Row[keyof Row]>
                 const rowData = getRows()
@@ -165,9 +216,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 store.setSelectedRows(selects)
             },
             update: change => store.update(change),
-            reload: async (param: Object) => {
-                // 如果是分组状态,禁止操作
-                if (isDisableLoadData()) return;
+            reload: async (param?: Object) => {
                 await reloadFun(param)
             },
             getRowEditData: () => {
@@ -177,7 +226,16 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 }))
             },
             del: filter => store.del(filter),
-            add: (rows, start) => store.add(rows, start)
+            add: (rows, start) => store.add(rows, start),
+            setExpandedKeys: (keys, id) => {
+                store.setExpandedKeys(keys, id)
+            },
+            getExpandedKeys: () => {
+                return cloneDeep(store.expandedKeys)
+            },
+            getGroupDatas: () => {
+                return cloneDeep(store.groupDatas)
+            }
         }
         table.current = tempTable
     }
@@ -215,6 +273,7 @@ export const Table = observer<TableProps>((props: TableProps) => {
             <ReactDataGrid
                 ref={gridRef}
                 columns={columns}
+                onColumnResize={onColumnResize}
                 rows={getRows()}
                 // onScroll={onScroll}
                 rowKey={props.rowKey}
@@ -281,10 +340,11 @@ export const Table = observer<TableProps>((props: TableProps) => {
                     return useRowRenderer(rowProps, isDisableLoadData(), props)
                 }}
                 onRowsUpdate={e => {
+                    const sourceRows = store.dataSource.slice()
                     const onCommit = () => {
-                        return store.commit(e)
+                        return store.commit(e, sourceRows)
                     }
-                    props.onRowsUpdate!(e, onCommit)
+                    return props.onRowsUpdate!(e, onCommit)
                 }}
             />
         </>
@@ -332,17 +392,16 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 {...(props.pageOtherProps || {})}
             />
             <ReloadOutlined
-                disabled
                 style={{
                     marginLeft: 10,
                     marginRight: 20,
                     top: 2,
                     position: 'relative',
-                    cursor: isDisableLoadData() ? 'not-allowed': 'pointer',
-                    opacity: isDisableLoadData() ? 0.1 : 1,
+                    cursor: store.loading ? 'not-allowed': 'pointer',
+                    opacity: store.loading ? 0.1 : 1,
                 }}
                 onClick={() => {
-                    if(!isDisableLoadData()){
+                    if(!store.loading){
                         reloadFun()
                     }
                 }}
@@ -385,7 +444,7 @@ Table.defaultProps = {
     enableInitLoadData: true,
     enableCellCopyPaste: true,
     enableCellDragAndDrop: false,
-    onRowsUpdate: async () => {},
+    onRowsUpdate: async (_event: unknown, onCommit: () => Promise<Row[]>) => { await onCommit() },
     selectBox: 'none',
     mode: 'NORMAL',
     onSort: () => { },

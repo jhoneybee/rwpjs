@@ -51,3 +51,5 @@ export { Breadcrumb } from './breadcrumb'
 export { Incubator } from './incubator'
 
 export { FMReactComponent } from './remote/FMReactComponent'
+
+export type { TableColumnInfo, TableHandle } from './table/type'

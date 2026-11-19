@@ -1,10 +1,14 @@
 import React from 'react'
 import { Column, RowsUpdateEvent, Position } from 'react-data-grid-temp'
-import { groupBy, isEqual } from 'lodash'
-import { generate } from 'shortid'
+import { cloneDeep, groupBy, isEqual } from 'lodash'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Key } from 'rc-tree/lib/interface'
 import { Row, GroupRowData, ColumnProps, TableProps } from './type'
+
+const groupFields = new Set([
+    '$index', '$state', '$parent', '$children', '$type', '$id',
+    '$title', '$column', '$space', '$level',
+])
 
 export type ContextMenu = {
     row: Row,
@@ -30,7 +34,7 @@ export function createStore(props: TableProps) {
         // 当前显示的数据
         datas: [] as Row[],
         // 行编辑数据
-        rowEditData: {} as any,
+        rowEditData: new Map<unknown, Row>(),
         // 分组数据
         groupDatas: [] as GroupRowData[] | Row[],
         cacheGroupDatas: undefined as GroupRowData[] | Row[] | undefined,
@@ -50,8 +54,9 @@ export function createStore(props: TableProps) {
         contextMenu: {} as ContextMenu,
         // 装载数据
         loadRows(rows: any[], pageNo: number) {
-            this.datas = formatData(rows)
+            this.datas = this.mergeEdits(formatData(rows))
             this.pageNo = pageNo
+            this.refreshGroups()
         },
 
         /**
@@ -87,10 +92,63 @@ export function createStore(props: TableProps) {
         },
         // 重新装载数据
         reloadRows(rows: any[]) {
-            this.datas = formatData(rows)
-            this.pageNo = 1
+            this.loadRows(rows, 1)
         },
-        getGroupDatas(id?: string) {
+        getRowKey(row: Row) {
+            return row[props.rowKey || '$index']
+        },
+        mergeEdits(rows: Row[]) {
+            return rows.map(row => {
+                const key = this.getRowKey(row)
+                const edits = this.rowEditData.get(key)
+                if (!edits) return row
+                const pending: Row = {}
+                Object.keys(edits).forEach(field => {
+                    if (!isEqual(row[field], edits[field])) {
+                        pending[field] = edits[field]
+                    }
+                })
+                if (Object.keys(pending).length === 0) {
+                    this.rowEditData.delete(key)
+                    return row
+                }
+                this.rowEditData.set(key, pending)
+                return { ...row, ...pending, $state: 'UPDATE' as const }
+            })
+        },
+        recordEdit(before: Row, after: Row): Row {
+            const key = this.getRowKey(before)
+            const edits: Row = { ...this.rowEditData.get(key) }
+            let changed = false
+            const fields = new Set([...Object.keys(before), ...Object.keys(after)])
+            fields.forEach(field => {
+                if (!groupFields.has(field) && !isEqual(before[field], after[field])) {
+                    edits[field] = cloneDeep(after[field])
+                    changed = true
+                }
+            })
+            if (!changed) return after
+            this.rowEditData.set(key, edits)
+            return { ...after, $state: before.$state === 'CREATE' ? 'CREATE' : 'UPDATE' }
+        },
+        editRow(row: Row, values: Row) {
+            const index = this.datas.findIndex(data => this.getRowKey(data) === this.getRowKey(row))
+            if (index < 0) return
+            const before = this.datas[index]
+            const updated = this.recordEdit(before, { ...before, ...values })
+            this.datas = this.datas.map((data, rowIndex) => rowIndex === index ? updated : data)
+            this.refreshGroups()
+        },
+        refreshGroups() {
+            const visibleRows = new Set(this.groupDatas
+                .filter(row => row.$type !== 'GROUP' && row.$type !== 'FILL')
+                .map(row => this.getRowKey(row)))
+            this.cacheGroupDatas = undefined
+            if (this.isGroup) {
+                this.groupDatas = this.getGroupDatas(undefined, visibleRows)
+            }
+        },
+        getGroupDatas(id?: string, visibleRows?: Set<unknown>) {
 
             const { expandedKeys } = this
             const loops = (parent: any, datas: Row[], currentLevel: number) => {
@@ -103,7 +161,7 @@ export function createStore(props: TableProps) {
                 const groupData = groupBy(datas, columnName)
                 Object.keys(groupData).forEach(key => {
                     const dataNode: GroupRowData = {
-                        $id: parent === null ?  `root/${generate()}` : `${parent.$id}/${generate()}`,
+                        $id: `${parent === null ? 'root' : parent.$id}/${encodeURIComponent(columnName)}:${encodeURIComponent(key)}`,
                         $title: key,
                         $type: 'GROUP',
                         $parent: parent,
@@ -123,49 +181,46 @@ export function createStore(props: TableProps) {
                 groupDatas = loops(null, this.datas, 0)
                 this.cacheGroupDatas = groupDatas
             }
+            const groupIds = new Set<string>()
+            const retainedKeys = new Set(expandedKeys)
+            const collectIds = (rows: Row[]) => rows.forEach(row => {
+                if (row.$type === 'GROUP') {
+                    groupIds.add(row.$id)
+                    collectIds(row.$children || [])
+                } else if (visibleRows?.has(this.getRowKey(row))) {
+                    let parent = row.$parent
+                    while (parent) {
+                        retainedKeys.add(parent.$id)
+                        parent = parent.$parent
+                    }
+                }
+            })
+            collectIds(groupDatas)
+            this.expandedKeys = Array.from(retainedKeys).filter(key => groupIds.has(key))
+            const expanded = new Set(this.expandedKeys)
             const newData: Row[] = []
-
-            const historyExpandedKeys: string[] = []
-
-            const loopsGroupData = (loppsData: GroupRowData[] | Row[]) => {
-
-                loppsData.forEach(ele => {
-                    if (ele.$parent === null) {
-                        newData.push(ele)
-                    }
-
-                    if (ele.$parent && expandedKeys.includes(ele.$parent.$id as string)) {
-                        historyExpandedKeys.push(ele.$parent.$id as string)
-                        newData.push(ele)
-                    }
-
-                    if (isEqual(historyExpandedKeys, expandedKeys)){
-                        return;
-                    }
-
-                    if (ele.$children && ele.$children.length > 0) {
-
-                        let children = ele.$children
-
-                        if (ele.$id === id) {
-                            children = onBeforeGroupData(children)
-                        }
-                        loopsGroupData(children)
-                    }
-
-                })
-            }
+            const loopsGroupData = (rows: Row[]) => rows.forEach(row => {
+                newData.push(row)
+                if (row.$type === 'GROUP' && expanded.has(row.$id)) {
+                    const children = row.$id === id ? onBeforeGroupData(row.$children) : row.$children
+                    loopsGroupData(children || [])
+                }
+            })
 
             loopsGroupData(onBeforeGroupData(groupDatas! as any[]))
             return newData
         },
         setGroupColumn(groupColumn: string[]) {
-            this.groupColumn = groupColumn
+            if (isEqual(this.groupColumn, groupColumn)) return
+            this.groupColumn = groupColumn.slice()
+            this.cacheGroupDatas = undefined
+            this.expandedKeys = []
             // 没有分组信息,则不执行分组逻辑
             if (this.groupColumn.length === 0) {
                 // 退出分组的时候，清空缓存，重新计算
                 this.cacheGroupDatas = undefined
                 this.expandedKeys = []
+                this.groupDatas = []
                 return;
             }
             this.groupDatas = this.getGroupDatas()
@@ -212,51 +267,39 @@ export function createStore(props: TableProps) {
         // 更新数据
         update(change: (data: Row) => Row) {
             return new Promise<void>(resolve => {
-                const datas = this.dataSource.map(ele => {
+                const datas = this.datas.map(ele => {
+                    if (ele.$type === 'FILL') return ele
+                    const before = cloneDeep(ele)
                     const row = change(ele)
-                    if (isEqual(row, ele)) {
-                        return ele
-                    }
-                    let newState = 'UPDATE'
-                    if (ele.$state !== undefined && ele.$state !== 'UPDATE') {
-                        newState = ele.$state
-                    }
-                    return {...row, $state: newState}
+                    return this.recordEdit(before, row)
                 })
-                this.setDataSource(datas)
+                this.datas = datas
+                this.refreshGroups()
                 resolve()
             })
         },
         // 提交修改的信息
-        commit(e: RowsUpdateEvent) {
+        commit(e: RowsUpdateEvent, sourceRows?: Row[]) {
             return new Promise<Row[]>(resolve => {
+                const rows = sourceRows || this.dataSource.slice()
                 const updates: Row[] = []
-                const rows: Row[] = this.dataSource
-                const { datas } = this
-                if (e.action === 'CELL_UPDATE' || e.action === 'COPY_PASTE') {
-                    rows[e.toRow] = { ...rows[e.toRow], ...(e.updated as any) }
-                    const index = datas.findIndex(ele => ele.$index === rows[e.toRow].$index )
-                    datas[index] = { ...rows[e.toRow], ...(e.updated as any) }
-                    updates.push({ ...rows[e.toRow], ...(e.updated as any) })
-                }
-
-                if (e.action === 'CELL_DRAG') {
-                    const cells: number[] = []
-                    for (let i = e.fromRow; i <= e.toRow; i += 1) {
-                        cells.push(i)
+                const from = e.action === 'CELL_DRAG' ? e.fromRow : e.toRow
+                const supported = ['CELL_UPDATE', 'COPY_PASTE', 'CELL_DRAG'].includes(e.action)
+                if (supported) {
+                    const datas = this.datas.slice()
+                    for (let i = from; i <= e.toRow; i += 1) {
+                        const row = rows[i]
+                        if (!row || ['GROUP', 'FILL', 'EXPANDABLE'].includes(row.$type)) continue
+                        const index = datas.findIndex(data => this.getRowKey(data) === this.getRowKey(row))
+                        if (index < 0) continue
+                        const before = datas[index]
+                        const updated = this.recordEdit(before, { ...before, ...(e.updated as any) })
+                        datas[index] = updated
+                        updates.push({ ...updated })
                     }
-                    rows.forEach((value, index) => {
-                        if (cells.includes(index)) {
-                            const dataIndex = datas.findIndex(ele => ele.$index === rows[index].$index )
-                            datas[dataIndex] = { ...rows[index], ...(e.updated as any) }
-                            updates.push({ ...rows[index], ...(e.updated as any) })
-                        }
-                    })
+                    this.datas = datas
+                    this.refreshGroups()
                 }
-                if (this.isGroup) {
-                    this.cacheGroupDatas = undefined
-                }
-                this.setDataSource(rows.slice())
                 resolve(updates)
             })
         },

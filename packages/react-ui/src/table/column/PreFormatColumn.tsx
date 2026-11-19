@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useRef, createRef, MutableRefObject } from 'react'
+import React, { createRef, MutableRefObject } from 'react'
 import {
     Column,
     FormatterProps,
@@ -13,14 +13,44 @@ import { Row, TableProps } from '../type'
 import { DefaultEditor } from '../editor/DefaultEditor'
 import { MultipleSelectColumn } from './MultipleSelectColumn'
 import { TableStore, useStore } from '../store'
+import { selectionColumn, expandableColumn } from './layout'
 
 const tableClassPrefix = `${classPrefix}-table`
+
+const createColumnRenderer = (store: TableStore) => {
+    const current = {
+        node: undefined as React.ComponentType<any> | undefined,
+        rowKey: '$index',
+        rowEditing: false,
+        render: (_props: FormatterProps): JSX.Element => <></>,
+    }
+    const Editor = React.forwardRef<any, EditorProps<any, any, unknown>>((props, ref) => (
+        <DefaultEditor
+            ref={ref}
+            node={current.node!}
+            extProps={props}
+            rowKey={current.rowKey}
+            onValueChange={current.rowEditing ? value => {
+                store.editRow(props.row, { [props.column.key]: value })
+            } : undefined}
+        />
+    ))
+    const Formatter = (props: FormatterProps) => current.render(props)
+    return { current, Editor, Formatter, ref: createRef<any>() }
+}
+
+const columnRenderers = new WeakMap<TableStore, Map<string, ReturnType<typeof createColumnRenderer>>>()
 
 export const preFormatColumn = (
     store: TableStore,
     tableProps: TableProps,
     refs: {name: string, value: MutableRefObject<any>}[]
 ) => {
+    let renderers = columnRenderers.get(store)
+    if (!renderers) {
+        renderers = new Map()
+        columnRenderers.set(store, renderers)
+    }
     const columns: Column<Row, unknown>[] = store.columns.filter(
         column => store.visibleColumns?.includes(column.name)
     ).map((element => {
@@ -51,29 +81,15 @@ export const preFormatColumn = (
         } = element
 
 
-        const getEditor = () => {
-            const TempEditor = editable ? editor || Input : undefined
-            return TempEditor ? React.forwardRef((
-                eProps: EditorProps<Row[keyof Row], Row, unknown>,
-                ref,
-            ) => {
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                const domRef = useRef<any>(null);
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                useImperativeHandle(ref, () => ({
-                    getValue: () => domRef.current.getValue(),
-                    getInputNode: () => domRef.current.getInputNode(),
-                }))
-                return (
-                    <DefaultEditor
-                        ref={domRef}
-                        // @ts-ignore
-                        node={TempEditor}
-                        extProps={eProps}
-                    />
-                )
-            }) as React.ComponentType<EditorProps<Row[keyof Row], Row, unknown>> : undefined
+        let renderer = renderers!.get(name)
+        if (!renderer) {
+            renderer = createColumnRenderer(store)
+            renderers!.set(name, renderer)
         }
+        renderer.current.node = editable ? editor || Input : undefined
+        renderer.current.rowKey = tableProps.rowKey || '$index'
+        renderer.current.rowEditing = tableProps.editorMode?.type === 'ROW'
+        const Editor = renderer.current.node ? renderer.Editor : undefined
 
         const getFormat = () => {
             let format = (cellProps: FormatterProps) => (
@@ -85,8 +101,8 @@ export const preFormatColumn = (
                     {cellProps.row[cellProps.column.key]}
                 </div>
             )
-            if (formatter) {
-                const Formatter = formatter
+            const Formatter = formatter
+            if (Formatter) {
                 // 如果字符串不超过对应的长度,则使用默认的div
                 format = (cellProps: FormatterProps) => (
                     <div
@@ -104,41 +120,46 @@ export const preFormatColumn = (
                 )
             }
 
-            const Editor = getEditor()
-            const colRef = createRef<any>()
+            const colRef = renderer!.ref
             refs.push({
                 name: element.name,
                 value: colRef
             })
             if (tableProps.editorMode?.type === 'ROW' && Editor) {
-                format = (cellProps: FormatterProps) => (
-                    <div
-                        className={`${tableClassPrefix}-cell`}
-                        style={{
-                            textAlign: bodyTextAlign,
-                        }}>
-                        {
-                            cellProps.row[tableProps.rowKey!] !== tableProps.editorMode?.rowId ? (
-                                cellProps.row[cellProps.column.key]
-                            ) : (
-                                <Editor
-                                    ref={colRef}
-                                    value={cellProps.row[cellProps.column.key]}
-                                    column={cellProps.column}
-                                    row={cellProps.row}
-                                    height={29}
-                                    onCommit={() => {
-                                        // eslint-disable-next-line no-param-reassign
-                                        cellProps.row[cellProps.column.key] = colRef.current?.getValue?.()
-                                    }}
-                                    onCommitCancel={() => {
-                                    }}
-                                    onOverrideKeyDown={() => {
-                                    }}
-                                />
-                            )}
-                    </div>
-                )
+                format = (cellProps: FormatterProps) => {
+                    let tempFormatter = cellProps.row[cellProps.column.key]
+                    if (Formatter != null) {
+                        tempFormatter = <Formatter {...cellProps} />
+                    }
+                    return (
+                        <div
+                            className={`${tableClassPrefix}-cell`}
+                            style={{
+                                textAlign: bodyTextAlign,
+                            }}>
+                            {
+                                cellProps.row[tableProps.rowKey!] !== tableProps.editorMode?.rowId ? (
+                                    tempFormatter
+                                ) : (
+                                    <Editor
+                                        ref={colRef}
+                                        value={cellProps.row[cellProps.column.key]}
+                                        column={cellProps.column}
+                                        row={cellProps.row}
+                                        height={29}
+                                        onCommit={() => {
+                                            const values = colRef.current?.getValue?.()
+                                            if (values) store.editRow(cellProps.row, values)
+                                        }}
+                                        onCommitCancel={() => {
+                                        }}
+                                        onOverrideKeyDown={() => {
+                                        }}
+                                    />
+                                )}
+                        </div>
+                    )
+                }
                 return format
             }
 
@@ -149,14 +170,16 @@ export const preFormatColumn = (
             if (tableProps.editorMode?.type === 'ROW') {
                 return undefined
             }
-            return getEditor()
+            return Editor
         }
+
+        renderer.current.render = getFormat()
 
         const tempCol = {
             key: name,
             name: title,
             resizable: true,
-            formatter: getFormat(),
+            formatter: renderer.Formatter,
             selectCell: tableProps.editorMode?.type !== 'ROW',
             editable: tableProps.editorMode?.type === 'ROW' ? false : editable,
             headerRenderer,
@@ -170,11 +193,7 @@ export const preFormatColumn = (
     }))
     if (tableProps.selectBox !== 'none') {
         const select: Column<Row, unknown> = {
-            key: '$select',
-            name: '',
-            frozen: true,
-            selectCell: false,
-            maxWidth: 35,
+            ...selectionColumn,
             formatter: tableProps.selectRenderer ?? MultipleSelectColumn,
             headerRenderer: tableProps.selectBox === 'multiple' ? () => {
                 const SelectHeaderRenderer = tableProps.selectHeaderRenderer || Checkbox
@@ -211,11 +230,7 @@ export const preFormatColumn = (
 
     if (tableProps.expandable?.expandedRowRender) {
         const expandable: Column<Row, unknown> = {
-            key: '$expandable',
-            name: '',
-            frozen: true,
-            maxWidth: 35,
-            selectCell: false,
+            ...expandableColumn,
             formatter: formatterProps => {
                 // eslint-disable-next-line react-hooks/rules-of-hooks
                 const globalStore = useStore()

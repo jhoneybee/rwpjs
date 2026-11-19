@@ -7,8 +7,11 @@
     "jsx": "react",
     "esModuleInterop": true,
     "sourceMap": true,
+    "newLine": "crlf",
+    "types": ["react", "react-dom", "node", "jest"],
     "baseUrl": "./",
     "strict": true,
+    "skipLibCheck": true,
     "paths": {
       "@/*": ["src/*"],
       "@@/*": ["src/.umi/*"],
@@ -22,6 +25,7 @@
     "es",
     "dist",
     "typings",
+    "src/**/demo/**",
     "**/__test__",
     "test"
   ]
