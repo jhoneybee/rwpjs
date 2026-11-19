@@ -33,6 +33,16 @@ RPW.JS 是一套 React 中 web网页开发的全栈解决方案。支持以下�
 
 > 当前项目在 https://github.com/jhoneybee/rwpjs 中进行开发
 
+### npm 发版
+
+1. 在仓库根目录运行 `npm --prefix .github/release ci --ignore-scripts`，再运行 `node .github/release/node_modules/@changesets/cli/bin.js`。
+2. 将生成的 changeset 随代码合入 `canary`。GitHub Actions 会创建或更新版本 PR，记录版本号和 changelog。
+3. 合并版本 PR 后，Release 工作流只发布本次推送中版本号增加的包。npm 上已有的同版本会跳过上传。稳定版使用 `latest`，预发布版使用版本号中的渠道，例如 `alpha` 或 `canary`。
+
+发版使用各包原有的构建脚本和 npm 打包配置。`@rwp/cli` 沿用 Yarn Classic 安装，发版时给 `npm run build` 传入 `--skipLibCheck`，跳过旧 Webpack 依赖间的声明冲突。`@rwp/react-ui` 使用包内的 npm 锁文件，由 `npm publish` 触发原有的 `prepublishOnly`。
+
+首次发版前，将现有的 `packages/react-ui/package-lock.json` 纳入版本控制，在 GitHub 仓库配置具备相应 npm 包发布权限的 `NPM_TOKEN`，并允许 GitHub Actions 创建 pull requests。
+
 ## 文档地址
 
 点击访问 [https://rwp.pub](https://rwp.pub) 来查看对应的文档说明。

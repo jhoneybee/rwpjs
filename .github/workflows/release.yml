@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+    branches: [canary]
+
+concurrency:
+  group: release-${{ github.ref }}
+  queue: max
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+      - name: Install release tooling
+        run: npm --prefix .github/release ci --ignore-scripts
+      - name: Create Release PR or Publish to npm
+        uses: changesets/action@v1
+        with:
+          version: node .github/release/node_modules/@changesets/cli/bin.js version
+          publish: npm --prefix .github/release run publish:npm
+          commit: "chore(repo): version packages"
+          title: "chore(repo): version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_PATH: ${{ github.workspace }}/.github/release/node_modules
+          RELEASE_BASE_SHA: ${{ github.event.before }}
