@@ -1,6 +1,6 @@
 {
     "name": "@rwp/react-ui",
-    "version": "1.36.16",
+    "version": "1.36.17",
     "license": "AGPL-3.0",
     "scripts": {
         "start": "set NODE_OPTIONS=--openssl-legacy-provider && dumi dev ",
